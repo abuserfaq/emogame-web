@@ -103,21 +103,27 @@ function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListe
 
 function go(n,a){ tickNeeds(); clear(); setPhaseClass(); cur=n;
   const bannerOn=S.consent!=null && n!=='consent' && n!=='consentSet' && n!=='onboardCare' && n!=='create' && !SHOT;
+  const nativeAds=!!(window.AdBridge); // Android Yandex banner lives outside WebView
+  if(nativeAds) document.documentElement.classList.add('eg-native-ads');
   PL.ads.banner(bannerOn);
   if(window.EGModules) EGModules.onScreen(n,S);
   SCR[n](a); bindNav();
-  // Recreate banner after innerHTML (lives inside #app so screen swaps wipe it)
+  // Web placeholder only for web/VK; on Android hide it (native banner fills bottom slot)
   let bs=document.getElementById('bannerStrip');
-  if(!bs){
-    bs=document.createElement('div'); bs.id='bannerStrip';
-    bs.innerHTML='<span class="ad-label">реклама</span>';
+  if(nativeAds){
+    if(bs){ bs.classList.remove('on'); bs.setAttribute('aria-hidden','true'); bs.style.display='none'; }
+  } else {
+    if(!bs){
+      bs=document.createElement('div'); bs.id='bannerStrip';
+      bs.innerHTML='<span class="ad-label">реклама</span>';
+    }
+    if(bannerOn){ bs.classList.add('on'); bs.setAttribute('aria-hidden','false'); bs.style.display=''; }
+    else { bs.classList.remove('on'); bs.setAttribute('aria-hidden','true'); }
+    const navEl=app.querySelector('.nav-dock')||app.querySelector('.nav');
+    const host=(navEl&&navEl.parentElement&&navEl.parentElement.classList.contains('screen')&&!navEl.parentElement.classList.contains('immersive'))
+      ? navEl.parentElement : app;
+    host.appendChild(bs);
   }
-  if(bannerOn){ bs.classList.add('on'); bs.setAttribute('aria-hidden','false'); }
-  else { bs.classList.remove('on'); bs.setAttribute('aria-hidden','true'); }
-  const navEl=app.querySelector('.nav-dock')||app.querySelector('.nav');
-  const host=(navEl&&navEl.parentElement&&navEl.parentElement.classList.contains('screen')&&!navEl.parentElement.classList.contains('immersive'))
-    ? navEl.parentElement : app;
-  host.appendChild(bs);
   try{ PL.event('screen',{n}); }catch(e){}
 }
 

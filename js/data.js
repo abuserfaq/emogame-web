@@ -1,7 +1,7 @@
 // Compat bootstrap — real content loads from content/*.json via EGContent.
 // Kept so older references to EG.* before async load still have safe defaults.
 window.EG=window.EG||{};
-EG.STYLES=[{id:'emo',name:'Эмо',blurb:'Чёрно-розовая классика'},{id:'alt',name:'Альт',blurb:'e-girl / e-boy вайб'},{id:'idol',name:'Айдол',blurb:'K-pop сцена и танцы'}];
+EG.STYLES=[{id:'emo',name:'Эмо',blurb:'Чёрно-розовая классика'},{id:'alt',name:'Альт',blurb:'e-girl / e-boy вайб'},{id:'idol',name:'Айдол',blurb:'K-pop сцена и танцы'},{id:'goth',name:'Гот',blurb:'Тьма и кружево'},{id:'punk',name:'Панк',blurb:'Ирокез и шипы'},{id:'skater',name:'Скейтер',blurb:'Доска и вайб'}];
 EG.GENDERS=[{id:'guy',name:'Парень'},{id:'girl',name:'Девушка'}];
 EG.charImg=(s,g)=>`img/chars/${s}_${g}.webp`;
 EG.PHASES=['morning','day','evening','night'];

@@ -36,22 +36,22 @@ const Content={
     return EG;
   },
   _compat(EG){
-    EG.STYLES=EG.STYLES||[
+    EG.STYLES=[
       {id:'emo',name:'Эмо',blurb:'Чёрно-розовая классика'},
-      {id:'alt',name:'Альт',blurb:'e-girl / e-boy'},
-      {id:'idol',name:'Айдол',blurb:'K-pop сцена'},
+      {id:'alt',name:'Альт',blurb:'e-girl / e-boy вайб'},
+      {id:'idol',name:'Айдол',blurb:'K-pop сцена и танцы'},
       {id:'goth',name:'Гот',blurb:'Тьма и кружево'},
       {id:'punk',name:'Панк',blurb:'Ирокез и шипы'},
       {id:'skater',name:'Скейтер',blurb:'Доска и вайб'}
     ];
     EG.GENDERS=EG.GENDERS||[{id:'guy',name:'Парень'},{id:'girl',name:'Девушка'}];
     EG.charImg=(s,g)=>{
-      const prefer={goth:'girl',punk:'guy',skater:'girl'};
-      let gg=g; if(prefer[s] && !(window.__EG_CHAR_JPG&&window.__EG_CHAR_JPG[s+'_'+g])) gg=prefer[s]||g;
-      const jpg=`img/chars/${s}_${gg}.webp`;
-      const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[s+'_'+gg];
+      // Prefer requested gender; fall back to known sprite if a combo is missing
+      const fallback={goth_guy:'goth_girl',goth_girl:'goth_girl',punk_girl:'punk_guy',skater_guy:'skater_guy'};
+      let key=s+'_'+g;
+      const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[key];
       if(fs&&fs.idle) return fs.idle;
-      return jpg;
+      return `img/chars/${key}.webp`;
     };
     EG.PHASES=['morning','day','evening','night'];
     EG.phaseLabel={morning:'Утро',day:'День',evening:'Вечер',night:'Ночь'};

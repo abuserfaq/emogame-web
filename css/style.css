@@ -57,9 +57,17 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .chars .pick.on{border-color:var(--accent,#ff4d9a);box-shadow:0 0 12px var(--glow)}
 .chars .pick img{width:100%;height:140px;object-fit:contain;object-position:bottom}
 .chars .pick span{display:block;font-size:12px;margin-top:4px;color:#ccc}
-.seg{display:flex;gap:6px;margin-bottom:14px}
-.seg button{flex:1;padding:10px;border-radius:10px;border:1px solid #2a1a24;background:#161018;color:#ccc;cursor:pointer}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.seg button{flex:1 1 calc(33.33% - 6px);min-width:88px;padding:10px 6px;border-radius:10px;border:1px solid #2a1a24;background:#161018;color:#ccc;cursor:pointer;font-size:12px}
 .seg button.on{border-color:var(--accent,#ff4d9a);color:#fff}
+.create .chars{max-height:none;overflow:visible;grid-template-columns:1fr 1fr;gap:8px}
+.create .chars .pick img{height:96px}
+.create .chars .pick span{font-size:11px}
+.create .chars .pick small{font-size:9px;color:#888}
+.create{padding:12px 12px 8px}
+.create h2{margin:4px 0 10px;font-size:18px}
+.create #nm,.create input#nm{margin-bottom:8px!important;padding:10px!important}
+.create .btn{padding:12px}
 .toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(20,10,18,.95);border:1px solid var(--accent,#ff4d9a);
   color:#fff;padding:8px 14px;border-radius:999px;font-size:13px;z-index:20;pointer-events:none;transition:opacity .3s}
 .chat-bubbles{display:flex;flex-direction:column;gap:8px;padding:12px;min-height:180px;max-height:40%;overflow:auto}
@@ -484,7 +492,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 }
 .loc-panel .lp-bars{display:grid;gap:3px;padding:4px 10px 8px}
 .loc-panel .lp-row{display:flex;align-items:center;gap:8px;font-size:11px;color:#ccc}
-.loc-panel .lp-row .nm{width:58px;flex-shrink:0}
+.loc-panel .lp-row .nm{width:72px;min-width:72px;flex-shrink:0;font-size:11px;white-space:nowrap;overflow:visible}
 .loc-panel .lp-row .bar{flex:1;height:9px;background:#141018;border:1px solid #2a2a32;border-radius:2px;overflow:hidden}
 .loc-panel .lp-row .bar>i{display:block;height:100%;background:linear-gradient(90deg,#ff2d8a,#ff6eb0)}
 .loc-panel .lp-row:nth-child(2) .bar>i{background:linear-gradient(90deg,#3d7dff,#6aa0ff)}
@@ -600,3 +608,10 @@ button.sheet-card{font:inherit}
   .map-pin img.pin-art{width:78px}
   .map-pin .pin-lab{font-size:18px!important;padding:8px 16px!important}
 }
+
+
+/* Android: native Yandex banner is outside WebView — hide web placeholder, dock at bottom */
+html.eg-native-ads #bannerStrip{display:none!important}
+html.eg-native-ads .nav-dock{bottom:6px!important}
+html.eg-native-ads #bannerStrip.on{display:none!important}
+html.eg-native-ads .screen:not(.immersive) > .nav-dock{margin-bottom:6px}
