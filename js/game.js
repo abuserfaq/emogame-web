@@ -254,10 +254,10 @@ function openShop(){
 }
 
 SCR.feed=()=>{
-  app.innerHTML=`<div class="screen">${statRow()}${careBanner()}
-    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:none">
-      <h3>Еда</h3><div class="grid">${(EG.FOOD||[]).filter(f=>!window.EGUnlocks||EGUnlocks.foodOk(S,f.id||f)).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-f="${f.id}">${f.name}<span class="sub">+${f.hunger} голод · ${f.cost}</span></button>`).join('')}</div>
-      <h3 style="margin-top:14px">Напитки</h3><div class="grid">${(EG.DRINKS||[]).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-d="${f.id}">${f.name}<span class="sub">+${f.thirst||0} жажда · ${f.cost}</span></button>`).join('')}</div>
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel eg-scroll" style="position:relative;inset:auto;margin:10px;max-height:none;flex:1;overflow:auto;border:3px solid #ff4d9a;border-radius:12px">
+      <h3>${ico('food')} Еда</h3><div class="grid">${(EG.FOOD||[]).filter(f=>!window.EGUnlocks||EGUnlocks.foodOk(S,f.id||f)).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-f="${f.id}">${ico('hunger')} ${f.name}<span class="sub">+${f.hunger} голод · ${f.cost}</span></button>`).join('')}</div>
+      <h3 style="margin-top:14px">${ico('thirst')} Напитки</h3><div class="grid">${(EG.DRINKS||[]).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-d="${f.id}">${ico('thirst')} ${f.name}<span class="sub">+${f.thirst||0} жажда · ${f.cost}</span></button>`).join('')}</div>
     </div>${nav('feed')}</div>`;
   bindNav();
   app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
@@ -467,24 +467,50 @@ SCR.chat=()=>{
   const peer=(window.EGAuth&&EGAuth.uiName())||(S.name)||'xShadow_666';
   const st=(S.style==='goth'||S.style==='skater'||S.style==='punk')?'alt':S.style;
   const av=EG.charImg(st,S.gender);
-  const cats=[{id:'greet',name:'Привет',ic:'mood'},{id:'mood',name:'Настроение',ic:'mood'},{id:'food',name:'Еда',ic:'food'},{id:'locs',name:'Локации',ic:'map'},{id:'support',name:'Поддержка',ic:'gifts'},{id:'concert',name:'Концерт',ic:'fame'}];
+  const cats=(EG.CHAT_CATS&&EG.CHAT_CATS.length)?EG.CHAT_CATS:[
+    {id:'greet',name:'Привет',icon:'cat_heart'},{id:'mood',name:'Настроение',icon:'cat_smile'},
+    {id:'loc',name:'Локации',icon:'cat_pin'},{id:'support',name:'Поддержка',icon:'cat_support'},
+    {id:'concert',name:'Концерт',icon:'cat_note'}
+  ];
+  const PICO={
+    'Привет':'hand','Йо':'hand','Рад(а) видеть':'hand','Как дела?':'sparkle','Давно не виделись':'hand','Чем занят?':'sparkle',
+    'Норм, вайбую':'flame','Вайб огонь':'flame','Мне грустно':'heart','Сегодня ок':'cat_smile','Нужен сон':'sparkle','Ищу, куда пойти':'cat_pin',
+    'Идём в парк':'tree','На концерт':'ticket','Метро через 5':'cat_pin','Кладбище вечером?':'sparkle','Домой':'cat_pin','На крышу':'cat_pin',
+    'Держись':'heart','Держись там':'heart','Ты крут(а)':'heart','Обнимаю':'cat_support','Музыка поможет':'cat_note','Отдыхай':'heart',
+    'Этот трек!':'cat_note','Танцуем':'cat_note','Фото?':'sparkle','Ещё раз!':'flame','Было круто':'flame',
+    'Пока':'bye','Спокойной ночи':'bye','До завтра':'bye','Удачи':'hand','До связи':'bye','Бай':'bye'
+  };
+  const pico=k=>'<img class="pxico chat-ico" src="img/ui/chat/'+(PICO[k]||'sparkle')+'.png" alt="">';
+  const cico=c=>'<img class="pxico chat-cat-ico" src="img/ui/chat/'+(c.icon||'cat_heart')+'.png" alt="">';
   const paint=()=>{
-    const phrases=Array.isArray(EG.CHAT&&EG.CHAT[cat])?(EG.CHAT[cat]):(Array.isArray(EG.CHAT&&EG.CHAT.greet)?EG.CHAT.greet:['Привет','Йо','Как дела?']);
+    const phrases=Array.isArray(EG.CHAT&&EG.CHAT[cat])?EG.CHAT[cat]:(EG.CHAT&&EG.CHAT.greet)||['Привет','Йо'];
     const free=!!(window.EGAuth&&EGAuth.canFreeChat());
-    let hist=(S.chat||[]).slice(-12); if(!hist.length){ hist=[{me:false,t:'Выбери фразу ниже'},{me:true,t:'Привет'}]; }
+    let hist=(S.chat||[]).slice(-10);
+    if(!hist.length){
+      hist=[
+        {me:false,t:'Йо'},{me:true,t:'Норм, вайбую'},
+        {me:false,t:'Как дела?'},{me:true,t:'Ищу, куда пойти'},
+        {me:false,t:'Чем занят?'},{me:true,t:'Держись там'}
+      ];
+    }
     const bubbles=hist.map(m=>{
-      const avHtml=m.me?'':'<img class="av-inline" src="'+av+'" alt="">';
-      return '<div class="bub '+(m.me?'me':'them')+'">'+avHtml+m.t+'</div>';
-    }).join('')||'<div class="bub them">Выбери фразу ниже</div>';
-    const upsell=free?'':'<div class="chat-upsell">Свободный чат — подписка + верификация телефона (VK ID / Яндекс / Telegram). Пресеты бесплатны.<button class="btn" id="upsell">Открыть свободный чат</button></div>';
-    app.innerHTML='<div class="screen chat-screen">'+statRow()+
-      '<div class="chat-peer"><img class="av" src="'+av+'" alt=""><div><div class="nm">'+peer+'</div><div class="on">онлайн</div></div>'+
-      '<button class="btn ghost" id="acc" style="margin-left:auto;width:auto;padding:8px 10px;font-size:11px">Аккаунт</button></div>'+
-      '<div class="chat-bubbles eg-scroll" id="bub">'+bubbles+'</div>'+upsell+
-      '<div class="chat-cats">'+cats.map(c=>'<button data-c="'+c.id+'" class="'+(cat===c.id?'on':'')+'">'+ico(c.ic)+'<span>'+c.name+'</span></button>').join('')+'</div>'+
-      '<div class="phrases eg-scroll">'+phrases.map(p=>'<button data-p="'+p+'">'+ico('chat')+p+'</button>').join('')+'</div>'+
-      '<div class="chat-mod"><button class="btn ghost" id="rep">Жалоба</button><button class="btn ghost" id="blk">Блок</button></div>'+
-      nav('chat')+'</div>';
+      const side=m.me?'me':'them';
+      const ico=m.me?'':'<span class="bub-ico">'+pico(m.t)+'</span>';
+      return '<div class="bub-row '+side+'">'+ico+'<div class="bub '+side+'">'+m.t+(m.t==='Держись там'?' <img class="inline-sk" src="img/ui/chat/sparkle.png" alt="">':'')+'</div></div>';
+    }).join('');
+    const upsell=free?'':'<div class="chat-upsell slim">Свободный чат — подписка + телефон (VK/Яндекс/Telegram). Пресеты бесплатны. <button class="btn" id="upsell">Открыть</button></div>';
+    app.innerHTML=
+      '<div class="screen chat-screen mock-chat">'+
+        '<div class="chat-head"><button class="chat-back" id="back">◀</button>'+
+          '<div class="chat-titles"><div class="t1">Emogame <img class="sk" src="img/ui/chat/sparkle.png" alt=""></div><div class="t2">PRESET CHAT</div></div>'+
+          '<button class="chat-menu" id="acc">☰</button></div>'+
+        '<div class="chat-peer"><img class="av" src="'+av+'" alt=""><div><div class="nm">'+peer+'</div><div class="on">онлайн ●</div></div></div>'+
+        '<div class="chat-bubbles eg-scroll" id="bub">'+bubbles+'</div>'+upsell+
+        '<div class="chat-cats">'+cats.map(c=>'<button data-c="'+c.id+'" class="'+(cat===c.id?'on':'')+'">'+cico(c)+'<span>'+c.name+'</span></button>').join('')+'</div>'+
+        '<div class="phrases eg-scroll">'+phrases.slice(0,6).map((p,i)=>'<button data-p="'+p+'" class="'+(i===phrases.slice(0,6).length-1?'alt':'')+'">'+pico(p)+'<span>'+p+'</span></button>').join('')+'</div>'+
+        '<div class="chat-mod"><button class="btn ghost" id="rep">Жалоба</button><button class="btn ghost" id="blk">Блок</button></div>'+
+        nav('chat')+
+      '</div>';
     bindNav();
     const bub=$('#bub'); if(bub) bub.scrollTop=bub.scrollHeight;
     app.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{cat=b.dataset.c;paint();});
@@ -493,13 +519,17 @@ SCR.chat=()=>{
       const allowed=[].concat(...Object.values(EG.CHAT||{}).map(v=>Array.isArray(v)?v:[]));
       if(allowed.length && !allowed.includes(raw)) return;
       const f=window.EGChatMod?EGChatMod.filter(raw):{text:raw};
-      S.chat=(S.chat||[]).concat([{me:true,t:f.text}]);
+      if(!(S.chat&&S.chat.length)) S.chat=[];
+      // if was showing demo, start fresh transcript
+      if(!S.chat.length){ /* keep */ }
+      S.chat=S.chat.concat([{me:true,t:f.text}]);
       const pool=phrases; const reply=pool[Math.floor(Math.random()*pool.length)];
       S.chat.push({me:false,t:reply}); if(S.chat.length>40) S.chat=S.chat.slice(-40);
       S.chats++; S.social=clamp(S.social+2,0,100); qAdd('chats',1); addXp(2); save(); paint();
     });
     const up=$('#upsell'); if(up) up.onclick=()=>go('account');
     const acc=$('#acc'); if(acc) acc.onclick=()=>go('account');
+    const back=$('#back'); if(back) back.onclick=()=>go('home');
     const rep=$('#rep'); if(rep) rep.onclick=()=>{ EGChatMod&&EGChatMod.report(S,'peer','spam'); save(); toast('Жалоба отправлена'); };
     const blk=$('#blk'); if(blk) blk.onclick=()=>{ EGChatMod&&EGChatMod.block(S,'peer'); save(); toast('Заблокировано'); };
   };
