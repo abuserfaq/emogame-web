@@ -50,21 +50,38 @@ function dirtRow(){
 function bindClean(){
   app.querySelectorAll('[data-clean]').forEach(b=>b.onclick=()=>{
     EGCare.clean(S,b.dataset.clean); S.cleans++; qAdd('cleans',1); addXp(6); save();
-    toast('Чисто!'); go('home');
+    toast('Чисто!'); go(cur==='home'?'home':cur);
   });
 }
-
-function statRow(){
+function hudHTML(){
   const rows=[['Голод',S.hunger,'hunger'],['Жажда',S.thirst,'thirst'],['Энергия',S.energy,'energy'],['Настрой',S.mood,'mood']];
-  return `<div class="topbar">${rows.map(([l,v,i])=>`<div class="stat"><div class="lab">${ico(i)} ${l}</div><div class="bar"><i style="width:${clamp(v,0,100)}%"></i></div></div>`).join('')}
-    <div class="phase-pill">${EG.phaseLabel[phase()]}</div></div>
-    <div class="resbar">${ico('coins')} <b>${S.coins}</b> · ${ico('gems')} <b>${S.gems}</b> · ур. <b>${S.level}</b> · стиль <b>${Math.round(S.styleStat)}</b> · слава <b>${Math.round(S.fame||0)}</b>
-      · <span class="streak-pill">${ico('streak')}${(S.streak&&S.streak.n)||0}</span></div>`;
+  const need=xpNeed(S.level); const pct=Math.round(clamp((S.xp/need)*100,0,100));
+  return `<div class="hud">
+    <div class="hud-stats">${rows.map(([l,v,i])=>`<div class="hud-stat"><div class="lab">${ico(i)} ${l}</div><div class="bar"><i style="width:${clamp(v,0,100)}%"></i></div></div>`).join('')}</div>
+    <div class="hud-res">
+      <div class="hud-chip">${ico('coins')} ${S.coins}</div>
+      <div class="hud-chip">${ico('gems')} ${S.gems}</div>
+      <div class="hud-chip xp">${ico('level')} ${S.level}<div class="xpbar"><i style="width:${pct}%"></i><span>${pct}%</span></div></div>
+      <button class="hud-gear" id="hudGear" type="button">${ico('settings')}</button>
+    </div>
+  </div>`;
+}
+function statRow(){
+  // legacy fallback for older screens
+  return hudHTML().replace('class="hud"','class="hud" style="position:relative;padding-bottom:8px"');
 }
 function nav(active){
   const inbox=(S.gifts&&S.gifts.inbox||[]).some(m=>!m.seen);
-  const items=[['home','home','Дом'],['feed','food','Еда'],['map','map','Карта'],['gifts','gifts','Подарки'],['hub','hub','Ещё'],['chat','chat','Чат']];
-  return `<div class="nav">${items.map(([id,ic,lab])=>`<button data-go="${id}" class="${active===id?'on':''}"><span class="ic">${ico(ic,'lg')}</span>${lab}${id==='gifts'&&inbox?' ·':''}</button>`).join('')}</div>`;
+  const items=[['home','home','Дом'],['feed','food','Еда'],['map','map','Карта'],['gifts','gifts','Подарки'],['chat','chat','Чат']];
+  return `<div class="nav-dock">${items.map(([id,ic,lab])=>`<button data-go="${id}" class="${active===id?'on':''}"><span class="ic">${ico(ic)}</span><span class="lab">${lab}${id==='chat'&&inbox?' ·':''}</span></button>`).join('')}</div>`;
+}
+function dirtHotspots(){
+  const d=S.dirt||{trash:0,dishes:0,laundry:0};
+  const mk=(k,cls,ic)=>{
+    const n=Math.round(d[k]||0); if(n<=0) return '';
+    return `<button class="hot ${cls}" data-clean="${k}" type="button"><img src="img/ui/icons/${ic}.png" alt=""><span class="n">${n}</span></button>`;
+  };
+  return `<div class="dirt-hotspots">${mk('trash','hot-trash','trash')}${mk('dishes','hot-dishes','dishes')}${mk('laundry','hot-laundry','laundry')}</div>`;
 }
 function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go))); }
 
@@ -76,7 +93,7 @@ function go(n,a){ tickNeeds(); clear(); setPhaseClass(); cur=n;
   if(window.EGModules) EGModules.onScreen(n,S);
   SCR[n](a); bindNav();
   const navEl=app.querySelector('.nav');
-  if(bs&&navEl&&bs.classList.contains('on')&&navEl.parentElement){ navEl.parentElement.insertBefore(bs, navEl); }
+  if(bs&&navEl&&bs.classList.contains('on')&&navEl.parentElement){ navEl.parentElement.insertBefore(bs, navEl.nextSibling); }
   try{ PL.event('screen',{n}); }catch(e){}
 }
 
@@ -161,12 +178,13 @@ function decorHTML(){
   }).join('');
 }
 
-function stageHTML(locId){
+function stageHTML(locId, bleed){
   const ph=phase(); const bg=EG.locBg(locId,ph);
   const loc=(EG.LOCS||[]).find(l=>l.id===locId)||{name:locId};
   const floorCls='floor-'+(locId||'room');
-  return `<div class="stage ${floorCls}" data-loc="${locId||'room'}"><img class="bg" src="${bg}" alt="" onerror="this.src='img/loc/room_morning.jpg'">
-    <div class="loc-title">${loc.name||locId}</div>
+  const cls=bleed?'stage-bleed':'stage';
+  return `<div class="${cls} ${floorCls}" data-loc="${locId||'room'}"><img class="bg" src="${bg}" alt="" onerror="this.src='img/loc/room_morning.webp'">
+    ${bleed?'':`<div class="loc-title">${loc.name||locId}</div>`}
     ${decorHTML()}
     <img class="char" id="charSpr" src="${(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})()}" alt=""></div>`;
 }
@@ -179,20 +197,27 @@ function mountAnim(){
 
 SCR.home=()=>{
   S.loc='room'; save();
-  app.innerHTML=`<div class="screen">${statRow()}${careBanner()}${stageHTML('room')}${dirtRow()}
-    <div style="padding:8px 12px;display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn ghost" id="wardrobe" style="flex:1"><img class="pxico" src="${(EGUI&&EGUI.wardrobeIcon(S.gender))||'img/ui/icons/wardrobe.png'}" alt=""> Гардероб</button>
-      <button class="btn ghost" id="quests" style="flex:1">${ico('quests')} Квесты</button>
-      <button class="btn ghost" id="shop" style="flex:1">${ico('shop')}</button>
-      <button class="btn ghost" id="freeze" style="flex:1">${ico('freeze')} Стрик</button>
-    </div>${nav('home')}</div>`;
+  const stN=(S.streak&&S.streak.n)||0;
+  app.innerHTML=`<div class="screen immersive">
+    ${stageHTML('room', true)}
+    ${dirtHotspots()}
+    <div class="scene-overlays">
+      <button class="scene-ov" id="quests" type="button" title="Квесты">${ico('quests')}</button>
+      <button class="scene-ov" id="freeze" type="button" title="Серия">${ico('streak')}<span class="badge">${stN}</span></button>
+      <button class="scene-ov" id="shop" type="button" title="Магазин">${ico('shop')}</button>
+    </div>
+    <button class="scene-fab" id="wardrobe" type="button" aria-label="Гардероб"><img src="img/ui/chrome/fab_wardrobe.webp" alt="ГАРДЕРОБ"></button>
+    ${hudHTML()}
+    ${nav('home')}
+  </div>`;
   bindNav(); bindClean(); mountAnim();
-  $('#wardrobe').onclick=()=>openWardrobe();
+  const g=$('#hudGear'); if(g) g.onclick=()=>go('consentSet');
+  $('#wardrobe').onclick=()=>go('wardrobe');
   $('#quests').onclick=()=>openQuests();
   $('#shop').onclick=()=>openShop();
   $('#freeze').onclick=()=>{
-    if(!PL.ads.rewardedAvail()){ if(EGCare.freezeStreak(S)){ save(); toast('Серия заморожена (демо)'); } return; }
-    W.__adResult=(k,ok)=>{ if(ok&&EGCare.freezeStreak(S)){ save(); toast('Серия заморожена'); } };
+    if(!PL.ads.rewardedAvail()){ if(EGCare.freezeStreak(S)){ save(); toast('Серия заморожена (демо)'); go('home'); } return; }
+    W.__adResult=(k,ok)=>{ if(ok&&EGCare.freezeStreak(S)){ save(); toast('Серия заморожена'); go('home'); } };
     PL.ads.showRewarded('streak_freeze');
   };
 };
@@ -209,31 +234,32 @@ function qAdd(stat,n){
   }); save();
 }
 
-function openWardrobe(){
+
+SCR.wardrobe=()=>{
   const giftWear=(EG.GIFTS&&EG.GIFTS.items||[]).filter(g=>g.kind==='wear'&&(S.gifts&&S.gifts.inv[g.id]>0));
   const slots=['top','bottom','shoes','acc','hair'];
   const slotRu={top:'Верх',bottom:'Низ',shoes:'Обувь',acc:'Аксессуар',hair:'Волосы'};
   S.equip=S.equip||{};
   const previewSrc=(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})();
-  const bySlot=slots.map(sl=>{
-    const items=(EG.SHOP||[]).filter(it=>it.slot===sl);
-    if(!items.length) return '';
-    return `<div class="ward-slot"><div class="ward-slot-h">${slotRu[sl]||sl}</div><div class="grid ward-grid">${items.map(it=>{
-      const owned=!!S.wardrobe[it.id]; const eq=S.equip[sl]===it.id;
-      const need=it.unlockLevel||it.minLevel||1; const locked=(S.level|0)<need && !owned;
-      return `<button class="card food-card ward-card ${eq?'on':''} ${locked?'locked':''}" data-w="${it.id}" data-slot="${sl}" ${locked?'disabled':''}>
-        <img class="food-art" src="${EG.shopImg(it)}" alt="">
-        <b>${it.name}</b>
-        <span class="sub">${locked?('🔒 ур.'+need):((owned?(eq?'надет':'есть'):'купить')+' +'+(it.style||it.mood||0)+' стиль')} · <img class="coin" src="img/ui/icons/coins.png" alt=""> ${it.cost}</span>
-      </button>`;
-    }).join('')}</div></div>`;
+  const cards=(EG.SHOP||[]).map(it=>{
+    const owned=!!S.wardrobe[it.id]; const eq=S.equip[it.slot]===it.id;
+    const need=it.unlockLevel||it.minLevel||1; const locked=(S.level|0)<need && !owned;
+    return `<button class="card food-card ward-card ${eq?'on':''} ${locked?'locked':''}" data-w="${it.id}" data-slot="${it.slot}" ${locked?'disabled':''}>
+      <img class="food-art" src="${EG.shopImg(it)}" alt="">
+      <b>${it.name}</b>
+      <span class="sub">${locked?('🔒 ур.'+need):(owned?(eq?'✓ надет':'есть'):'купить')} · <img class="coin" src="img/ui/icons/coins.png" alt=""> ${it.cost}</span>
+    </button>`;
   }).join('');
-  const body=`<div class="ward-preview"><img id="wardPrev" src="${previewSrc}" alt=""></div>
-  ${bySlot}
-  <h3 style="margin-top:10px;color:#ff4d9a;font-size:14px">Подарки — надеть</h3>
-  <div class="grid">${giftWear.map(g=>`<button class="card food-card" data-gw="${g.id}"><img class="food-art" src="${EG.giftImg(g)}" alt=""><b>${g.name}</b></button>`).join('')||'<p style="color:#888;font-size:12px">Пока нет носимых подарков</p>'}</div>`;
-  const root=EGUI.openSheet({title:'Гардероб', icon:EGUI.wardrobeIcon(S.gender), bodyHtml:body});
-  root.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{
+  app.innerHTML=`<div class="screen ward-screen">
+    <div class="ward-head">Гардероб<div class="ward-heart hud-chip">${ico('mood')} ${Math.round(S.styleStat||0)}</div></div>
+    <div class="ward-preview"><img id="wardPrev" src="${previewSrc}" alt=""></div>
+    <div class="ward-body eg-scroll"><div class="grid ward-grid">${cards}</div>
+      ${giftWear.length?`<h3 style="margin-top:10px;color:#ff4d9a;font-size:14px">Подарки</h3><div class="grid">${giftWear.map(g=>`<button class="card food-card" data-gw="${g.id}"><img class="food-art" src="${EG.giftImg(g)}" alt=""><b>${g.name}</b></button>`).join('')}</div>`:''}
+    </div>
+    ${nav('home')}
+  </div>`;
+  bindNav();
+  app.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{
     const it=EG.SHOP.find(x=>x.id===b.dataset.w); if(!it)return;
     if(!S.wardrobe[it.id]){
       if(S.coins<it.cost){ toast('Мало монет'); return; }
@@ -241,14 +267,14 @@ function openWardrobe(){
       toast('Куплено: '+it.name);
     }
     S.equip=S.equip||{}; S.equip[it.slot]=it.id; save();
-    const prev=root.querySelector('#wardPrev'); if(prev) prev.src=EG.shopImg(it);
-    root.querySelectorAll('.ward-card').forEach(x=>x.classList.toggle('on', S.equip[x.dataset.slot]===x.dataset.w));
-    toast('Надето: '+it.name);
+    go('wardrobe');
   });
-  root.querySelectorAll('[data-gw]').forEach(b=>b.onclick=()=>{
-    const r=EGGifts.wear(S,b.dataset.gw); if(r.ok){ save(); toast('Надето'); root._close(); go('home'); EGAnim&&EGAnim.play('happy'); }
+  app.querySelectorAll('[data-gw]').forEach(b=>b.onclick=()=>{
+    const r=EGGifts.wear(S,b.dataset.gw); if(r.ok){ save(); toast('Надето'); go('home'); EGAnim&&EGAnim.play('happy'); }
   });
-}
+};
+function openWardrobe(){ go('wardrobe'); }
+
 function openQuests(){
   ensureQuests();
   const body=(EG.QUESTS||[]).map(q=>{
@@ -281,14 +307,22 @@ SCR.feed=()=>{
     return `<button class="card food-card ${locked?'locked':''}" data-${kind==='food'?'f':'d'}="${f.id}" ${locked?'disabled':''}>
       <img class="food-art" src="${kind==='food'?EG.foodImg(f):EG.drinkImg(f)}" alt="">
       <b>${f.name}</b>
-      <span class="sub">${locked?('🔒 ур.'+need):('+'+ (kind==='food'?f.hunger:(f.thirst||0))+' '+(kind==='food'?'голод':'жажда')+' · ')} ${locked?'':''}<img class="coin" src="img/ui/icons/coins.png" alt=""> ${f.cost}</span>
+      <span class="sub">${locked?('🔒 ур.'+need):('+'+ (kind==='food'?f.hunger:(f.thirst||0))+' '+(kind==='food'?'голод':'жажда')+' · ')} <img class="coin" src="img/ui/icons/coins.png" alt=""> ${f.cost}</span>
     </button>`;
   };
-  app.innerHTML=`<div class="screen">${statRow()}${careBanner()}
-    <div class="panel feed-panel" style="position:relative;inset:auto;margin:10px;max-height:none">
-      <h3>Еда</h3><div class="grid food-grid">${(EG.FOOD||[]).map(f=>foodCard(f,'food')).join('')}</div>
-      <h3 style="margin-top:14px">Напитки</h3><div class="grid food-grid">${(EG.DRINKS||[]).map(f=>foodCard(f,'drink')).join('')}</div>
-    </div>${nav('feed')}</div>`;
+  app.innerHTML=`<div class="screen">
+    <div class="feed-head"><h1>♡ Еда ♡</h1></div>
+    <div class="feed-currency">
+      <div class="hud-chip">${ico('coins')} ${S.coins} <b style="color:#ff4d9a">+</b></div>
+      <div class="hud-chip">${ico('gems')} ${S.gems} <b style="color:#ff4d9a">+</b></div>
+    </div>
+    <div class="feed-body eg-scroll">
+      <div class="grid food-grid">${(EG.FOOD||[]).map(f=>foodCard(f,'food')).join('')}</div>
+      <h3 style="margin:14px 0 8px;color:#ff4d9a">Напитки</h3>
+      <div class="grid food-grid">${(EG.DRINKS||[]).map(f=>foodCard(f,'drink')).join('')}</div>
+    </div>
+    ${nav('feed')}
+  </div>`;
   bindNav();
   app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
     const f=EG.FOOD.find(x=>x.id===b.dataset.f); if(!f||S.coins<f.cost)return toast('Мало монет');
@@ -318,24 +352,26 @@ SCR.sleep=()=>{
 
 SCR.map=()=>{
   const ph=phase();
-  app.innerHTML=`<div class="screen">${statRow()}
-    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:none">
-      <h3>Куда идём? · ${EG.phaseLabel[ph]}</h3><p style="color:#aaa;font-size:12px">${ico('mood')} ${(EGWeather&&EGWeather.sync(S), (EG.weatherText&&EG.weatherText(S))||S.weatherText||'')} · подп. ${S.followers|0}</p>
-      <div class="grid">${(EG.LOCS||[]).filter(l=>l.id!=='room').map(l=>{
-        const phaseOk=!l.phases||l.phases.includes(ph);
-        const lvOk=unlockOk(l);
-        const ok=phaseOk&&lvOk;
-        return `<button class="card" data-l="${l.id}" ${ok?'':'disabled'} style="${ok?'':'opacity:.4'}">${l.name}
-          <span class="sub">${!lvOk?('ур.'+l.minLevel):(!phaseOk?'сейчас закрыто':(l.phases||[]).join('/'))} · ${ico('energy')}${l.energy||0}</span></button>`;
-      }).join('')}</div>
-      <button class="card" data-l="room" style="margin-top:8px">Домой</button>
-      <button class="btn ghost" id="coop" style="margin-top:10px">Кооп-лобби</button>
-      ${PL.share?`<button class="btn ghost" id="inv" style="margin-top:8px">Пригласить друзей</button>`:''}
-    </div>${nav('map')}</div>`;
+  const pins=[
+    {id:'metro',lab:'Метро',x:'20%',y:'40%'},
+    {id:'cafe',lab:'Кафе',x:'52%',y:'34%'},
+    {id:'skate',lab:'Скейтпарк',x:'78%',y:'46%'},
+    {id:'concert',lab:'Концерт',x:'62%',y:'66%'},
+    {id:'mall',lab:'Магазин',x:'28%',y:'70%'}
+  ];
+  app.innerHTML=`<div class="screen immersive">
+    <div class="map-bleed"><img class="mapbg" src="img/loc/city_map.webp" alt=""></div>
+    <div class="map-pins">${pins.map(p=>{
+      const loc=(EG.LOCS||[]).find(l=>l.id===p.id)||{id:p.id,minLevel:1};
+      const ok=unlockOk(loc)&&(!loc.phases||loc.phases.includes(ph));
+      return `<button class="map-pin" style="left:${p.x};top:${p.y}" data-l="${p.id}" ${ok?'':'disabled'}><span class="pin-ico">▼</span>${p.lab}</button>`;
+    }).join('')}</div>
+    ${hudHTML()}
+    ${nav('map')}
+  </div>`;
   bindNav();
+  const g=$('#hudGear'); if(g) g.onclick=()=>go('consentSet');
   app.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>go('loc',b.dataset.l));
-  const inv=$('#inv'); if(inv) inv.onclick=()=>PL.share.invite();
-  $('#coop').onclick=()=>go('coop');
 };
 
 SCR.loc=(id)=>{
@@ -357,15 +393,29 @@ SCR.loc=(id)=>{
     if(npcHere){ EGNpc.meet(S,npcHere.id); toast(npcHere.name+' здесь'); }
     addXp(10); if(window.EGAch) EGAch.check(S); save();
   } else { S.loc='room'; save(); return go('home'); }
-  app.innerHTML=`<div class="screen">${statRow()}${stageHTML(loc.id)}
-    <div style="padding:10px;display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn ghost" id="back" style="flex:1">← Карта</button>
-      <button class="btn" id="chat" style="flex:1">Чат</button>
-      ${['concert','karaoke','arcade','skate','garage','idol_stage','nightclub','records'].includes(loc.id)?`<button class="btn" id="mini" style="flex:1">Мини-игра</button>`:''}
-      ${loc.id==='garage'||loc.id==='nightclub'||loc.id==='festival'?`<button class="btn" id="gig" style="flex:1">Гиги</button>`:''}
+  const wtxt=(EG.weatherText&&EG.weatherText(S))||S.weatherText||((S.weather||'')+' · '+(S.season||''));
+  const isMetro=loc.id==='metro'||loc.id==='station';
+  app.innerHTML=`<div class="screen immersive">
+    ${stageHTML(loc.id, true)}
+    <div class="loc-head"><div><div class="mt">${isMetro?'СТАНЦИЯ: СЕВЕРНАЯ':(loc.name||loc.id).toUpperCase()}</div>
+      <div class="ms">${isMetro?'ЛИНИЯ 1 · МОСКВА':(wtxt||'')}</div></div>
+      <button class="btn ghost" id="back" style="margin-left:auto;width:auto;padding:6px 10px;font-size:11px">← Карта</button></div>
+    <div class="loc-panel">
+      <div class="lp-title">${isMetro?'МЕТРО · СЕВЕРНАЯ':(loc.name||'')}</div>
+      <div class="lp-sub">${wtxt||'Подземная станция'}</div>
+      <div style="color:#ff4d9a;font-size:11px;margin-bottom:6px">СТАТУС</div>
+      <div class="lp-bars">
+        ${[['Голод',S.hunger],['Жажда',S.thirst],['Энергия',S.energy],['Настрой',S.mood]].map(([n,v])=>`
+          <div class="lp-row"><span class="nm">${n}</span><div class="bar"><i style="width:${clamp(v,0,100)}%"></i></div><span class="val">${Math.round(v)}/100</span></div>`).join('')}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn" id="chat" style="flex:1">Чат</button>
+        ${['concert','karaoke','arcade','skate','garage','idol_stage','nightclub','records'].includes(loc.id)?`<button class="btn" id="mini" style="flex:1">Мини-игра</button>`:''}
+        ${loc.id==='garage'||loc.id==='nightclub'||loc.id==='festival'?`<button class="btn" id="gig" style="flex:1">Гиги</button>`:''}
+      </div>
     </div>
-    <div style="padding:0 10px 10px;color:#c8a0b8;font-size:12px">${(EG.weatherText&&EG.weatherText(S))||S.weatherText||((S.weather||'')+' · '+(S.season||''))}</div>
-    ${nav('map')}</div>`;
+    ${nav('map')}
+  </div>`;
   bindNav(); mountAnim(); if(EGAnim) EGAnim.play('walk');
   $('#back').onclick=()=>go('map');
   $('#chat').onclick=()=>go('chat');
@@ -493,45 +543,37 @@ SCR.coop=()=>{
 };
 
 SCR.chat=()=>{
-  let cat='greet';
-  const peer=(window.EGAuth&&EGAuth.uiName())||(S.name)||'xShadow_666';
-  const st=(S.style==='goth'||S.style==='skater'||S.style==='punk')?'alt':S.style;
-  const av=EG.charImg(st,S.gender);
-  const cats=[{id:'greet',name:'Привет',ic:'mood'},{id:'mood',name:'Настроение',ic:'mood'},{id:'food',name:'Еда',ic:'food'},{id:'locs',name:'Локации',ic:'map'},{id:'support',name:'Поддержка',ic:'gifts'},{id:'concert',name:'Концерт',ic:'fame'}];
+  const peers=[
+    {name:'Лила', t:'Наконец-то пятница... Мир такой скучный без вас'},
+    {name:'ДемонX', t:'Согласен... Спасает только музыка'},
+    {name:'Кошмарик', t:'Кто со мной в заброшку сегодня?'},
+    {name:'raven', t:'Я с вами! Берите фонарики'}
+  ];
+  const quick=['Привет','Как дела','Идём гулять'];
+  const av=EG.charImg(S.style,S.gender);
+  const hist=(S.chat&&S.chat.length)?S.chat.slice(-8):null;
   const paint=()=>{
-    const phrases=Array.isArray(EG.CHAT&&EG.CHAT[cat])?(EG.CHAT[cat]):(Array.isArray(EG.CHAT&&EG.CHAT.greet)?EG.CHAT.greet:['Привет','Йо','Как дела?']);
-    const free=!!(window.EGAuth&&EGAuth.canFreeChat());
-    let hist=(S.chat||[]).slice(-12); if(!hist.length){ hist=[{me:false,t:'Выбери фразу ниже'},{me:true,t:'Привет'}]; }
-    const bubbles=hist.map(m=>{
-      const avHtml=m.me?'':'<img class="av-inline" src="'+av+'" alt="">';
-      return '<div class="bub '+(m.me?'me':'them')+'">'+avHtml+m.t+'</div>';
-    }).join('')||'<div class="bub them">Выбери фразу ниже</div>';
-    const upsell=free?'':'<div class="chat-upsell">Свободный чат — подписка + верификация телефона (VK ID / Яндекс / Telegram). Пресеты бесплатны.<button class="btn" id="upsell">Открыть свободный чат</button></div>';
-    app.innerHTML='<div class="screen chat-screen">'+statRow()+
-      '<div class="chat-peer"><img class="av" src="'+av+'" alt=""><div><div class="nm">'+peer+'</div><div class="on">онлайн</div></div>'+
-      '<button class="btn ghost" id="acc" style="margin-left:auto;width:auto;padding:8px 10px;font-size:11px">Аккаунт</button></div>'+
-      '<div class="chat-bubbles eg-scroll" id="bub">'+bubbles+'</div>'+upsell+
-      '<div class="chat-cats">'+cats.map(c=>'<button data-c="'+c.id+'" class="'+(cat===c.id?'on':'')+'">'+ico(c.ic)+'<span>'+c.name+'</span></button>').join('')+'</div>'+
-      '<div class="phrases eg-scroll">'+phrases.map(p=>'<button data-p="'+p+'">'+ico('chat')+p+'</button>').join('')+'</div>'+
-      '<div class="chat-mod"><button class="btn ghost" id="rep">Жалоба</button><button class="btn ghost" id="blk">Блок</button></div>'+
-      nav('chat')+'</div>';
+    const list=hist?hist.map((m,i)=>{
+      const name=m.me?'Ты':(peers[i%peers.length].name);
+      const src=m.me?av:EG.charImg((['emo','goth','punk','alt'][i%4]), i%2?'girl':'guy');
+      return `<div class="msg"><img class="av" src="${src}" alt=""><div class="bubble"><div><span class="nm">${name}</span><span class="tm">сейчас</span></div><div class="tx">${m.t}</div></div></div>`;
+    }).join(''):peers.map((p,i)=>{
+      const src=EG.charImg((['emo','goth','punk','alt'][i%4]), i%2?'girl':'guy');
+      return `<div class="msg"><img class="av" src="${src}" alt=""><div class="bubble"><div><span class="nm">${p.name}</span><span class="tm">сейчас</span></div><div class="tx">${p.t}</div></div></div>`;
+    }).join('');
+    app.innerHTML=`<div class="screen chat-v2">
+      <div class="chat-title"><span class="hrt">♡</span>Чат<span class="hrt">♡</span></div>
+      <div class="chat-list eg-scroll" id="bub">${list}</div>
+      <div class="quick">${quick.map(q=>`<button data-p="${q}">${q}</button>`).join('')}</div>
+      ${nav('chat')}
+    </div>`;
     bindNav();
-    const bub=$('#bub'); if(bub) bub.scrollTop=bub.scrollHeight;
-    app.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{cat=b.dataset.c;paint();});
     app.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{
-      const raw=b.dataset.p;
-      const allowed=[].concat(...Object.values(EG.CHAT||{}).map(v=>Array.isArray(v)?v:[]));
-      if(allowed.length && !allowed.includes(raw)) return;
-      const f=window.EGChatMod?EGChatMod.filter(raw):{text:raw};
-      S.chat=(S.chat||[]).concat([{me:true,t:f.text}]);
-      const pool=phrases; const reply=pool[Math.floor(Math.random()*pool.length)];
+      S.chat=(S.chat||[]).concat([{me:true,t:b.dataset.p}]);
+      const reply=quick[Math.floor(Math.random()*quick.length)];
       S.chat.push({me:false,t:reply}); if(S.chat.length>40) S.chat=S.chat.slice(-40);
-      S.chats++; S.social=clamp(S.social+2,0,100); qAdd('chats',1); addXp(2); save(); paint();
+      S.chats++; S.social=clamp(S.social+2,0,100); qAdd('chats',1); addXp(2); save(); SCR.chat();
     });
-    const up=$('#upsell'); if(up) up.onclick=()=>go('account');
-    const acc=$('#acc'); if(acc) acc.onclick=()=>go('account');
-    const rep=$('#rep'); if(rep) rep.onclick=()=>{ EGChatMod&&EGChatMod.report(S,'peer','spam'); save(); toast('Жалоба отправлена'); };
-    const blk=$('#blk'); if(blk) blk.onclick=()=>{ EGChatMod&&EGChatMod.block(S,'peer'); save(); toast('Заблокировано'); };
   };
   paint();
 };
@@ -808,10 +850,10 @@ async function boot(){
     S.consent=S.consent||Date.now(); S.name=S.name||'xShadow_666';
     S.hunger=72; S.thirst=65; S.energy=80; S.mood=70; S.coins=Math.max(S.coins,1200); S.gems=Math.max(S.gems,40);
     S.level=Math.max(S.level,5); S.streak=S.streak||{n:3,last:'',freeze:0}; S.streak.n=Math.max(S.streak.n,3);
-    S.dirt=S.dirt||{trash:18,dishes:12,laundry:8};
+    S.dirt={trash:28,dishes:22,laundry:16};
     localStorage.setItem('eg_created','1'); localStorage.setItem('eg_care_onboard','1');
     save();
-    if(shotGo==='wardrobe'){ go('home'); try{ openWardrobe(); }catch(e){}; return; }
+    if(shotGo==='metro'){ go('loc','metro'); return; }
     go(shotGo, q.get('a')||undefined); return;
   }
   if(S.consent==null) go('consent');
