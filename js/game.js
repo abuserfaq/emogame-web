@@ -49,8 +49,12 @@ function dirtRow(){
 }
 function bindClean(){
   app.querySelectorAll('[data-clean]').forEach(b=>b.onclick=()=>{
-    EGCare.clean(S,b.dataset.clean); S.cleans++; qAdd('cleans',1); addXp(6); save();
-    toast('Чисто!'); go(cur==='home'?'home':cur);
+    const kind=b.dataset.clean;
+    walkCharTo('.'+({trash:'hot-trash',dishes:'hot-dishes',laundry:'hot-laundry'}[kind]||'hot-trash'), 'clean');
+    setTimeout(()=>{
+      EGCare.clean(S,kind); S.cleans++; qAdd('cleans',1); addXp(6); save();
+      toast('Чисто!'); go(cur==='home'?'home':cur);
+    }, 800);
   });
 }
 
@@ -93,11 +97,33 @@ function nav(active){
 }
 function dirtHotspots(){
   const d=S.dirt||{trash:0,dishes:0,laundry:0};
-  const mk=(k,cls,ic)=>{
+  const mk=(k,cls)=>{
     const n=Math.round(d[k]||0); if(n<=0) return '';
-    return `<button class="hot ${cls}" data-clean="${k}" type="button"><img src="img/ui/icons/${ic}.png" alt=""><span class="n">${n}</span></button>`;
+    return `<button class="hot ${cls}" data-clean="${k}" type="button"><img src="img/props/${k}.webp" alt=""><span class="n">${n}</span></button>`;
   };
-  return `<div class="dirt-hotspots">${mk('trash','hot-trash','trash')}${mk('dishes','hot-dishes','dishes')}${mk('laundry','hot-laundry','laundry')}</div>`;
+  return `<div class="dirt-hotspots">${mk('trash','hot-trash')}${mk('dishes','hot-dishes')}${mk('laundry','hot-laundry')}</div>`;
+}
+function roomInteract(){
+  return `<div class="room-interact">
+    <button class="ri hot-bed" data-ri="bed" type="button" title="Кровать"></button>
+    <button class="ri hot-fridge" data-ri="fridge" type="button" title="Холодильник"></button>
+    <button class="ri hot-window" data-ri="window" type="button" title="Окно"></button>
+    <button class="ri hot-table" data-ri="table" type="button" title="Стол"></button>
+  </div>`;
+}
+function bindRoomInteract(){
+  app.querySelectorAll('[data-ri]').forEach(b=>b.onclick=()=>{
+    const kind=b.dataset.ri;
+    const map={bed:['.hot-bed','sleep'],fridge:['.hot-fridge','eat'],window:['.hot-window','react'],table:['.hot-table','drink']};
+    const [sel,anim]=map[kind]||['.hot-bed','idle'];
+    walkCharTo(sel, anim);
+    setTimeout(()=>{
+      if(kind==='bed'){ S.energy=Math.min(100,(S.energy||0)+12); toast('Сладких снов'); }
+      else if(kind==='fridge'||kind==='table'){ S.hunger=Math.min(100,(S.hunger||0)+8); S.thirst=Math.min(100,(S.thirst||0)+6); toast(kind==='fridge'?'Перекус':'Глоток'); }
+      else { S.mood=Math.min(100,(S.mood||0)+5); toast('У окна…'); }
+      save();
+    }, 900);
+  });
 }
 function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go))); }
 
@@ -213,11 +239,39 @@ function stageHTML(locId, bleed){
   const loc=(EG.LOCS||[]).find(l=>l.id===locId)||{name:locId};
   const floorCls='floor-'+(locId||'room');
   const cls=bleed?'stage-bleed':'stage';
+  const ambient=ambientHTML(locId||'room');
   return `<div class="${cls} ${floorCls}" data-loc="${locId||'room'}"><img class="bg" src="${bg}" alt="" onerror="this.src='img/loc/room_morning.webp'">
     ${bleed?'':`<div class="loc-title">${loc.name||locId}</div>`}
     ${decorHTML()}
-    <img class="char" id="charSpr" src="${(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})()}" alt=""></div>`;
+    ${ambient}
+    <div class="char-wrap" id="charWrap"><img class="char-shadow" src="img/chars/shadow.webp" alt=""><img class="char" id="charSpr" src="${(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})()}" alt=""></div></div>`;
 }
+function ambientHTML(locId){
+  const ph=phase();
+  const bits=[];
+  if(locId==='metro'||locId==='station'||locId==='nightclub'||locId==='arcade') bits.push('<div class="fx-neon"></div>');
+  if(ph==='night'||ph==='evening') bits.push('<div class="fx-neon" style="opacity:.35"></div>');
+  if(ph==='night'||ph==='evening') bits.push('<div class="fx-flicker"></div>');
+  if((S.weather||'').includes('снег')||(S.weather||'')==='snow'||locId==='metro') bits.push('<div class="fx-snow"></div>');
+  if((S.weather||'').includes('дожд')||(S.weather||'')==='rain'||ph==='evening') bits.push('<div class="fx-rain"></div>');
+  if(locId==='cafe'||locId==='bookcafe') bits.push('<div class="fx-steam"></div>');
+  if(locId==='room'){ bits.push('<div class="fx-cat" title="cat"></div>'); bits.push('<div class="fx-candle"></div>'); bits.push('<div class="fx-candle c2"></div>'); }
+  if(locId==='park'||locId==='cemetery'||locId==='rooftop') bits.push('<div class="fx-leaves"></div>');
+  if(locId==='metro'||locId==='station') bits.push('<div class="fx-train"></div>');
+  return bits.length?`<div class="ambient">${bits.join('')}</div>`:'';
+}
+function walkCharTo(sel, thenPlay){
+  const wrap=$('#charWrap'); const el=$('#charSpr'); if(!wrap||!el) return;
+  const t=app.querySelector(sel); if(!t){ if(EGAnim) EGAnim.play(thenPlay||'idle'); return; }
+  const sr=wrap.getBoundingClientRect(); const tr=t.getBoundingClientRect(); const ar=app.getBoundingClientRect();
+  const nx=((tr.left+tr.width/2)-ar.left)/ar.width*100;
+  const nb=100-((tr.top+tr.height)-ar.top)/ar.height*100;
+  wrap.classList.add('walking');
+  wrap.style.left=nx+'%'; wrap.style.bottom=Math.max(12, Math.min(40, nb-2))+'%';
+  if(EGAnim) EGAnim.play('walk');
+  setTimeout(()=>{ wrap.classList.remove('walking'); if(EGAnim) EGAnim.play(thenPlay||'happy'); }, 750);
+}
+
 function mountAnim(){
   const el=$('#charSpr'); if(!el||!window.EGAnim) return;
   (function(){ let st=S.style,g=S.gender; const fs=EG.ANIMS&&EG.ANIMS.frameSets;
@@ -231,6 +285,7 @@ SCR.home=()=>{
   app.innerHTML=`<div class="screen immersive">
     ${stageHTML('room', true)}
     ${dirtHotspots()}
+    ${roomInteract()}
     <div class="scene-overlays">
       <button class="scene-ov" id="quests" type="button" title="Квесты">${ico('quests')}</button>
       <button class="scene-ov" id="freeze" type="button" title="Серия">${ico('streak')}<span class="badge">${stN}</span></button>
@@ -240,7 +295,7 @@ SCR.home=()=>{
     ${hudHTML()}
     ${nav('home')}
   </div>`;
-  bindNav(); bindClean(); mountAnim();
+  bindNav(); bindClean(); bindRoomInteract(); mountAnim();
   const g=$('#hudGear'); if(g) g.onclick=()=>go('consentSet');
   $('#wardrobe').onclick=()=>go('wardrobe');
   $('#quests').onclick=()=>openQuests();
@@ -455,12 +510,13 @@ SCR.loc=(id)=>{
   } else { S.loc='room'; save(); return go('home'); }
   const wtxt=(EG.weatherText&&EG.weatherText(S))||S.weatherText||((S.weather||'')+' · '+(S.season||''));
   const isMetro=loc.id==='metro'||loc.id==='station';
-  app.innerHTML=`<div class="screen immersive">
+  app.innerHTML=`<div class="screen immersive loc-mode">
     ${stageHTML(loc.id, true)}
     <div class="loc-head"><div><div class="mt">${isMetro?'СТАНЦИЯ: СЕВЕРНАЯ':(loc.name||loc.id).toUpperCase()}</div>
       <div class="ms">${isMetro?'ЛИНИЯ 1 · МОСКВА':(wtxt||'')}</div></div>
       <button class="btn ghost" id="back" style="margin-left:auto;width:auto;padding:6px 10px;font-size:11px">← Карта</button></div>
-    <div class="loc-panel">
+    <div class="loc-panel" id="locPanel">
+      <button class="lp-toggle" id="lpToggle" type="button">СТАТУС ▴</button>
       <div class="lp-top">
         <img class="lp-pin" src="img/ui/pins/${isMetro?'metro':(loc.id||'metro')}.webp" alt="" onerror="this.src='img/ui/chrome/map_pin_generic.webp'">
         <div><div class="lp-title">${isMetro?'МЕТРО · СЕВЕРНАЯ':(loc.name||'')}</div>
@@ -481,6 +537,8 @@ SCR.loc=(id)=>{
     ${nav('map')}
   </div>`;
   bindNav(); mountAnim(); if(EGAnim) EGAnim.play('walk');
+  const lp=$('#locPanel'), tg=$('#lpToggle');
+  if(tg&&lp) tg.onclick=()=>{ lp.classList.toggle('compact'); tg.textContent=lp.classList.contains('compact')?'СТАТУС ▾':'СТАТУС ▴'; };
   $('#back').onclick=()=>go('map');
   $('#chat').onclick=()=>go('chat');
   const m=$('#mini'); if(m) m.onclick=()=>go(loc.id==='skate'?'mg_skate':loc.id==='arcade'?'mg_arcade':loc.id==='karaoke'?'mg_karaoke':loc.id==='records'?'mg_music':'minigame');

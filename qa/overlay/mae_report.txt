@@ -1,0 +1,8 @@
+home	mock_home_dark_ru.jpg	30.55
+metro	mock_metro_dark_ru.jpg	33.84
+food	mock_food_dark_ru.jpg	50.40
+map	mock_map_dark_ru.jpg	45.29
+chat	mock_chat_dark_ru.jpg	34.42
+wardrobe	mock_wardrobe_dark_ru.jpg	40.83
+park	mock_park_evening_dark_ru.jpg	14.49
+cafe	mock_cafe_morning_dark_ru.jpg	21.79

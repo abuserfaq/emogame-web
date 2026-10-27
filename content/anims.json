@@ -8,12 +8,13 @@
       "drink": "img/chars/frames/emo_guy/drink.webp",
       "happy": "img/chars/frames/emo_guy/happy.webp",
       "sad": "img/chars/frames/emo_guy/sad.webp",
-      "walk": "img/chars/frames/emo_guy/walk.png",
-      "walk2": "img/chars/frames/emo_guy/walk2.png",
-      "sleep": "img/chars/frames/emo_guy/sleep.png",
-      "hungry": "img/chars/frames/emo_guy/hungry.png",
-      "sick": "img/chars/frames/emo_guy/sick.png",
-      "dance": "img/chars/frames/emo_guy/dance.png"
+      "walk": "img/chars/frames/emo_guy/walk.webp",
+      "walk2": "img/chars/frames/emo_guy/walk2.webp",
+      "sleep": "img/chars/frames/emo_guy/sleep.webp",
+      "hungry": "img/chars/frames/emo_guy/hungry.webp",
+      "sick": "img/chars/frames/emo_guy/sick.webp",
+      "dance": "img/chars/frames/emo_guy/dance.webp",
+      "clean": "img/chars/frames/emo_guy/clean.webp"
     },
     "emo_girl": {
       "idle": "img/chars/frames/emo_girl/idle.webp",
@@ -23,12 +24,12 @@
       "drink": "img/chars/frames/emo_girl/drink.webp",
       "happy": "img/chars/frames/emo_girl/happy.webp",
       "sad": "img/chars/frames/emo_girl/sad.webp",
-      "walk": "img/chars/frames/emo_girl/walk.png",
-      "walk2": "img/chars/frames/emo_girl/walk2.png",
-      "sleep": "img/chars/frames/emo_girl/sleep.png",
-      "hungry": "img/chars/frames/emo_girl/hungry.png",
-      "sick": "img/chars/frames/emo_girl/sick.png",
-      "dance": "img/chars/frames/emo_girl/dance.png"
+      "walk": "img/chars/frames/emo_girl/walk.webp",
+      "walk2": "img/chars/frames/emo_girl/walk2.webp",
+      "sleep": "img/chars/frames/emo_girl/sleep.webp",
+      "hungry": "img/chars/frames/emo_girl/hungry.webp",
+      "sick": "img/chars/frames/emo_girl/sick.webp",
+      "dance": "img/chars/frames/emo_girl/dance.webp"
     },
     "alt_guy": {
       "idle": "img/chars/frames/alt_guy/idle.webp",
@@ -38,12 +39,12 @@
       "drink": "img/chars/frames/alt_guy/drink.webp",
       "happy": "img/chars/frames/alt_guy/happy.webp",
       "sad": "img/chars/frames/alt_guy/sad.webp",
-      "walk": "img/chars/frames/alt_guy/walk.png",
-      "walk2": "img/chars/frames/alt_guy/walk2.png",
-      "sleep": "img/chars/frames/alt_guy/sleep.png",
-      "hungry": "img/chars/frames/alt_guy/hungry.png",
-      "sick": "img/chars/frames/alt_guy/sick.png",
-      "dance": "img/chars/frames/alt_guy/dance.png"
+      "walk": "img/chars/frames/alt_guy/walk.webp",
+      "walk2": "img/chars/frames/alt_guy/walk2.webp",
+      "sleep": "img/chars/frames/alt_guy/sleep.webp",
+      "hungry": "img/chars/frames/alt_guy/hungry.webp",
+      "sick": "img/chars/frames/alt_guy/sick.webp",
+      "dance": "img/chars/frames/alt_guy/dance.webp"
     },
     "alt_girl": {
       "idle": "img/chars/frames/alt_girl/idle.webp",
@@ -53,12 +54,12 @@
       "drink": "img/chars/frames/alt_girl/drink.webp",
       "happy": "img/chars/frames/alt_girl/happy.webp",
       "sad": "img/chars/frames/alt_girl/sad.webp",
-      "walk": "img/chars/frames/alt_girl/walk.png",
-      "walk2": "img/chars/frames/alt_girl/walk2.png",
-      "sleep": "img/chars/frames/alt_girl/sleep.png",
-      "hungry": "img/chars/frames/alt_girl/hungry.png",
-      "sick": "img/chars/frames/alt_girl/sick.png",
-      "dance": "img/chars/frames/alt_girl/dance.png"
+      "walk": "img/chars/frames/alt_girl/walk.webp",
+      "walk2": "img/chars/frames/alt_girl/walk2.webp",
+      "sleep": "img/chars/frames/alt_girl/sleep.webp",
+      "hungry": "img/chars/frames/alt_girl/hungry.webp",
+      "sick": "img/chars/frames/alt_girl/sick.webp",
+      "dance": "img/chars/frames/alt_girl/dance.webp"
     },
     "idol_guy": {
       "idle": "img/chars/frames/idol_guy/idle.webp",
@@ -68,27 +69,27 @@
       "drink": "img/chars/frames/idol_guy/drink.webp",
       "happy": "img/chars/frames/idol_guy/happy.webp",
       "sad": "img/chars/frames/idol_guy/sad.webp",
-      "walk": "img/chars/frames/idol_guy/walk.png",
-      "walk2": "img/chars/frames/idol_guy/walk2.png",
-      "sleep": "img/chars/frames/idol_guy/sleep.png",
-      "hungry": "img/chars/frames/idol_guy/hungry.png",
-      "sick": "img/chars/frames/idol_guy/sick.png",
-      "dance": "img/chars/frames/idol_guy/dance.png"
+      "walk": "img/chars/frames/idol_guy/walk.webp",
+      "walk2": "img/chars/frames/idol_guy/walk2.webp",
+      "sleep": "img/chars/frames/idol_guy/sleep.webp",
+      "hungry": "img/chars/frames/idol_guy/hungry.webp",
+      "sick": "img/chars/frames/idol_guy/sick.webp",
+      "dance": "img/chars/frames/idol_guy/dance.webp"
     },
     "idol_girl": {
-      "idle": "img/chars/frames/idol_girl/idle.png",
-      "idle2": "img/chars/frames/idol_girl/idle2.png",
-      "blink": "img/chars/frames/idol_girl/blink.png",
-      "eat": "img/chars/frames/idol_girl/eat.png",
-      "drink": "img/chars/frames/idol_girl/drink.png",
-      "happy": "img/chars/frames/idol_girl/happy.png",
-      "sad": "img/chars/frames/idol_girl/sad.png",
-      "walk": "img/chars/frames/idol_girl/walk.png",
-      "walk2": "img/chars/frames/idol_girl/walk2.png",
-      "sleep": "img/chars/frames/idol_girl/sleep.png",
-      "hungry": "img/chars/frames/idol_girl/hungry.png",
-      "sick": "img/chars/frames/idol_girl/sick.png",
-      "dance": "img/chars/frames/idol_girl/dance.png"
+      "idle": "img/chars/frames/idol_girl/idle.webp",
+      "idle2": "img/chars/frames/idol_girl/idle2.webp",
+      "blink": "img/chars/frames/idol_girl/blink.webp",
+      "eat": "img/chars/frames/idol_girl/eat.webp",
+      "drink": "img/chars/frames/idol_girl/drink.webp",
+      "happy": "img/chars/frames/idol_girl/happy.webp",
+      "sad": "img/chars/frames/idol_girl/sad.webp",
+      "walk": "img/chars/frames/idol_girl/walk.webp",
+      "walk2": "img/chars/frames/idol_girl/walk2.webp",
+      "sleep": "img/chars/frames/idol_girl/sleep.webp",
+      "hungry": "img/chars/frames/idol_girl/hungry.webp",
+      "sick": "img/chars/frames/idol_girl/sick.webp",
+      "dance": "img/chars/frames/idol_girl/dance.webp"
     },
     "goth_girl": {
       "idle": "img/chars/frames/goth_girl/idle.webp",
@@ -98,12 +99,12 @@
       "drink": "img/chars/frames/goth_girl/drink.webp",
       "happy": "img/chars/frames/goth_girl/happy.webp",
       "sad": "img/chars/frames/goth_girl/sad.webp",
-      "walk": "img/chars/frames/goth_girl/walk.png",
-      "walk2": "img/chars/frames/goth_girl/walk2.png",
-      "sleep": "img/chars/frames/goth_girl/sleep.png",
-      "hungry": "img/chars/frames/goth_girl/hungry.png",
-      "sick": "img/chars/frames/goth_girl/sick.png",
-      "dance": "img/chars/frames/goth_girl/dance.png"
+      "walk": "img/chars/frames/goth_girl/walk.webp",
+      "walk2": "img/chars/frames/goth_girl/walk2.webp",
+      "sleep": "img/chars/frames/goth_girl/sleep.webp",
+      "hungry": "img/chars/frames/goth_girl/hungry.webp",
+      "sick": "img/chars/frames/goth_girl/sick.webp",
+      "dance": "img/chars/frames/goth_girl/dance.webp"
     },
     "punk_guy": {
       "idle": "img/chars/frames/punk_guy/idle.webp",
@@ -113,12 +114,12 @@
       "drink": "img/chars/frames/punk_guy/drink.webp",
       "happy": "img/chars/frames/punk_guy/happy.webp",
       "sad": "img/chars/frames/punk_guy/sad.webp",
-      "walk": "img/chars/frames/punk_guy/walk.png",
-      "walk2": "img/chars/frames/punk_guy/walk2.png",
-      "sleep": "img/chars/frames/punk_guy/sleep.png",
-      "hungry": "img/chars/frames/punk_guy/hungry.png",
-      "sick": "img/chars/frames/punk_guy/sick.png",
-      "dance": "img/chars/frames/punk_guy/dance.png"
+      "walk": "img/chars/frames/punk_guy/walk.webp",
+      "walk2": "img/chars/frames/punk_guy/walk2.webp",
+      "sleep": "img/chars/frames/punk_guy/sleep.webp",
+      "hungry": "img/chars/frames/punk_guy/hungry.webp",
+      "sick": "img/chars/frames/punk_guy/sick.webp",
+      "dance": "img/chars/frames/punk_guy/dance.webp"
     },
     "skater_girl": {
       "idle": "img/chars/frames/skater_girl/idle.webp",
@@ -128,12 +129,12 @@
       "drink": "img/chars/frames/skater_girl/drink.webp",
       "happy": "img/chars/frames/skater_girl/happy.webp",
       "sad": "img/chars/frames/skater_girl/sad.webp",
-      "walk": "img/chars/frames/skater_girl/walk.png",
-      "walk2": "img/chars/frames/skater_girl/walk2.png",
-      "sleep": "img/chars/frames/skater_girl/sleep.png",
-      "hungry": "img/chars/frames/skater_girl/hungry.png",
-      "sick": "img/chars/frames/skater_girl/sick.png",
-      "dance": "img/chars/frames/skater_girl/dance.png"
+      "walk": "img/chars/frames/skater_girl/walk.webp",
+      "walk2": "img/chars/frames/skater_girl/walk2.webp",
+      "sleep": "img/chars/frames/skater_girl/sleep.webp",
+      "hungry": "img/chars/frames/skater_girl/hungry.webp",
+      "sick": "img/chars/frames/skater_girl/sick.webp",
+      "dance": "img/chars/frames/skater_girl/dance.webp"
     },
     "punk_girl": {
       "idle": "img/chars/frames/punk_girl/idle.webp",
@@ -143,12 +144,12 @@
       "drink": "img/chars/frames/punk_girl/drink.webp",
       "happy": "img/chars/frames/punk_girl/happy.webp",
       "sad": "img/chars/frames/punk_girl/sad.webp",
-      "walk": "img/chars/frames/punk_girl/walk.png",
-      "walk2": "img/chars/frames/punk_girl/walk2.png",
-      "sleep": "img/chars/frames/punk_girl/sleep.png",
-      "hungry": "img/chars/frames/punk_girl/hungry.png",
-      "sick": "img/chars/frames/punk_girl/sick.png",
-      "dance": "img/chars/frames/punk_girl/dance.png"
+      "walk": "img/chars/frames/punk_girl/walk.webp",
+      "walk2": "img/chars/frames/punk_girl/walk2.webp",
+      "sleep": "img/chars/frames/punk_girl/sleep.webp",
+      "hungry": "img/chars/frames/punk_girl/hungry.webp",
+      "sick": "img/chars/frames/punk_girl/sick.webp",
+      "dance": "img/chars/frames/punk_girl/dance.webp"
     },
     "skater_guy": {
       "idle": "img/chars/frames/skater_guy/idle.webp",
@@ -158,12 +159,12 @@
       "drink": "img/chars/frames/skater_guy/drink.webp",
       "happy": "img/chars/frames/skater_guy/happy.webp",
       "sad": "img/chars/frames/skater_guy/sad.webp",
-      "walk": "img/chars/frames/skater_guy/walk.png",
-      "walk2": "img/chars/frames/skater_guy/walk2.png",
-      "sleep": "img/chars/frames/skater_guy/sleep.png",
-      "hungry": "img/chars/frames/skater_guy/hungry.png",
-      "sick": "img/chars/frames/skater_guy/sick.png",
-      "dance": "img/chars/frames/skater_guy/dance.png"
+      "walk": "img/chars/frames/skater_guy/walk.webp",
+      "walk2": "img/chars/frames/skater_guy/walk2.webp",
+      "sleep": "img/chars/frames/skater_guy/sleep.webp",
+      "hungry": "img/chars/frames/skater_guy/hungry.webp",
+      "sick": "img/chars/frames/skater_guy/sick.webp",
+      "dance": "img/chars/frames/skater_guy/dance.webp"
     },
     "goth_guy": {
       "idle": "img/chars/frames/goth_guy/idle.webp",
@@ -185,8 +186,12 @@
     "idle": [
       "idle",
       "idle",
+      "idle2",
+      "idle",
       "blink",
-      "idle2"
+      "idle",
+      "idle2",
+      "idle"
     ],
     "idle2": [
       "idle2",
@@ -209,7 +214,7 @@
     ],
     "happy": [
       "happy",
-      "happy",
+      "idle2",
       "idle"
     ],
     "sad": [
@@ -217,34 +222,58 @@
       "idle"
     ],
     "hungry": [
+      "hungry",
       "sad",
       "idle"
     ],
     "sick": [
-      "sad",
+      "sick",
       "idle"
     ],
     "sleep": [
-      "sad",
+      "sleep",
+      "sleep",
       "idle"
     ],
     "dance": [
+      "dance",
       "happy",
-      "idle2",
-      "happy"
+      "idle2"
     ],
     "walk": [
-      "idle",
-      "idle2"
+      "walk",
+      "walk2",
+      "walk",
+      "walk2"
+    ],
+    "clean": [
+      "walk",
+      "walk2",
+      "clean",
+      "clean",
+      "happy",
+      "idle"
+    ],
+    "react": [
+      "happy",
+      "blink",
+      "idle2",
+      "idle"
     ]
   },
   "fps": {
-    "idle": 2,
-    "eat": 3,
-    "drink": 3,
-    "happy": 4,
-    "sad": 2,
-    "blink": 4,
-    "dance": 5
+    "idle": 4,
+    "eat": 4,
+    "drink": 4,
+    "happy": 5,
+    "sad": 3,
+    "blink": 5,
+    "dance": 6,
+    "walk": 6,
+    "sleep": 2,
+    "clean": 5,
+    "react": 5,
+    "hungry": 3,
+    "sick": 3
   }
 }

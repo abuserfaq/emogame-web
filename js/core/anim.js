@@ -6,11 +6,16 @@ const Anim={
     this.el=imgEl; this.key=(style||'emo')+'_'+(gender||'guy');
     if(this.el){
       this.el.classList.remove('char-sheet');
-      this.el.style.width=''; this.el.style.objectPosition='';
+      this.el.style.width=''; this.el.style.objectPosition='bottom';
       this.el.style.objectFit='contain';
       this.el.style.background='transparent';
-      this.el.style.maxWidth='58%';
-      this.el.style.height='58%';
+      // sizing owned by .char-wrap CSS when present
+      if(!this.el.closest || !this.el.closest('.char-wrap')){
+        this.el.style.maxWidth='58%';
+        this.el.style.height='58%';
+      } else {
+        this.el.style.maxWidth=''; this.el.style.height='';
+      }
       this.el.style.imageRendering='pixelated';
     }
     this.play('idle');
