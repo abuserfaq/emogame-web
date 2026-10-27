@@ -1,5 +1,15 @@
 [
   {
+    "id": "ramen",
+    "name": "Рамен",
+    "hunger": 32,
+    "mood": 9,
+    "cost": 140,
+    "img": "img/food/ramen.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
+  },
+  {
     "id": "burger",
     "name": "Бургер",
     "hunger": 28,
@@ -30,6 +40,26 @@
     "minLevel": 2
   },
   {
+    "id": "cake",
+    "name": "Торт",
+    "hunger": 16,
+    "mood": 14,
+    "cost": 130,
+    "img": "img/food/cake.webp",
+    "unlockLevel": 3,
+    "minLevel": 3
+  },
+  {
+    "id": "onigiri",
+    "name": "Онигири",
+    "hunger": 18,
+    "mood": 5,
+    "cost": 70,
+    "img": "img/food/onigiri.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
+  },
+  {
     "id": "pizza",
     "name": "Пицца",
     "hunger": 30,
@@ -50,16 +80,6 @@
     "minLevel": 3
   },
   {
-    "id": "onigiri",
-    "name": "Онигири",
-    "hunger": 18,
-    "mood": 5,
-    "cost": 70,
-    "img": "img/food/onigiri.webp",
-    "unlockLevel": 1,
-    "minLevel": 1
-  },
-  {
     "id": "mochi",
     "name": "Моти",
     "hunger": 12,
@@ -68,16 +88,6 @@
     "img": "img/food/mochi.webp",
     "unlockLevel": 2,
     "minLevel": 2
-  },
-  {
-    "id": "cake",
-    "name": "Торт",
-    "hunger": 16,
-    "mood": 14,
-    "cost": 130,
-    "img": "img/food/cake.webp",
-    "unlockLevel": 3,
-    "minLevel": 3
   },
   {
     "id": "fries",
@@ -159,16 +169,6 @@
     "img": "img/food/cupcake.webp",
     "unlockLevel": 5,
     "minLevel": 5
-  },
-  {
-    "id": "ramen",
-    "name": "Рамен",
-    "hunger": 32,
-    "mood": 9,
-    "cost": 140,
-    "img": "img/food/ramen.webp",
-    "unlockLevel": 1,
-    "minLevel": 1
   },
   {
     "id": "snack",

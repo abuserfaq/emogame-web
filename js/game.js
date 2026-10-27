@@ -310,8 +310,8 @@ SCR.feed=()=>{
       <span class="sub">${locked?('🔒 ур.'+need):('+'+ (kind==='food'?f.hunger:(f.thirst||0))+' '+(kind==='food'?'голод':'жажда')+' · ')} <img class="coin" src="img/ui/icons/coins.png" alt=""> ${f.cost}</span>
     </button>`;
   };
-  app.innerHTML=`<div class="screen">
-    <div class="feed-head"><h1>♡ Еда ♡</h1></div>
+  app.innerHTML=`<div class="screen feed-screen">
+    <div class="feed-head"><img class="feed-title-art" src="img/ui/chrome/feed_title.webp" alt="Еда"><h1>Еда</h1></div>
     <div class="feed-currency">
       <div class="hud-chip">${ico('coins')} ${S.coins} <b style="color:#ff4d9a">+</b></div>
       <div class="hud-chip">${ico('gems')} ${S.gems} <b style="color:#ff4d9a">+</b></div>
@@ -366,7 +366,7 @@ SCR.map=()=>{
     <div class="map-pins">${pins.map(p=>{
       const loc=(EG.LOCS||[]).find(l=>l.id===p.id)||{id:p.id,minLevel:1};
       const ok=unlockOk(loc)&&(!loc.phases||loc.phases.includes(ph));
-      return `<button class="map-pin" style="left:${p.x};top:${p.y}" data-l="${p.id}" ${ok?'':'disabled'}><span class="pin-ico">▼</span>${p.lab}</button>`;
+      return `<button class="map-pin" style="left:${p.x};top:${p.y}" data-l="${p.id}" ${ok?'':'disabled'}><img class="pin-art" src="img/ui/pins/${p.id}.webp" alt=""><span class="pin-lab">${p.lab}</span></button>`;
     }).join('')}</div>
     <div class="map-head">
       <img class="map-av" src="${av}" alt="">
@@ -414,17 +414,21 @@ SCR.loc=(id)=>{
       <div class="ms">${isMetro?'ЛИНИЯ 1 · МОСКВА':(wtxt||'')}</div></div>
       <button class="btn ghost" id="back" style="margin-left:auto;width:auto;padding:6px 10px;font-size:11px">← Карта</button></div>
     <div class="loc-panel">
-      <div class="lp-title">${isMetro?'МЕТРО · СЕВЕРНАЯ':(loc.name||'')}</div>
-      <div class="lp-sub">${wtxt||'Подземная станция'}</div>
-      <div style="color:#ff4d9a;font-size:11px;margin-bottom:6px">СТАТУС</div>
+      <div class="lp-top">
+        <img class="lp-pin" src="img/ui/pins/${isMetro?'metro':(loc.id||'metro')}.webp" alt="" onerror="this.src='img/ui/chrome/map_pin_generic.webp'">
+        <div><div class="lp-title">${isMetro?'МЕТРО · СЕВЕРНАЯ':(loc.name||'')}</div>
+        <div class="lp-sub">${isMetro?'Подземная станция':(wtxt||'')}</div></div>
+      </div>
+      <div class="lp-weather">${isMetro?'❄ Снег · Зима · −6°C':(wtxt||'—')}</div>
+      <div class="lp-status-h"><span>СТАТУС</span><span>♡ ${Math.round(S.mood||0)}/100</span></div>
       <div class="lp-bars">
         ${[['Голод',S.hunger],['Жажда',S.thirst],['Энергия',S.energy],['Настрой',S.mood]].map(([n,v])=>`
           <div class="lp-row"><span class="nm">${n}</span><div class="bar"><i style="width:${clamp(v,0,100)}%"></i></div><span class="val">${Math.round(v)}/100</span></div>`).join('')}
       </div>
-      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <button class="btn" id="chat" style="flex:1">Чат</button>
-        ${['concert','karaoke','arcade','skate','garage','idol_stage','nightclub','records'].includes(loc.id)?`<button class="btn" id="mini" style="flex:1">Мини-игра</button>`:''}
-        ${loc.id==='garage'||loc.id==='nightclub'||loc.id==='festival'?`<button class="btn" id="gig" style="flex:1">Гиги</button>`:''}
+      <div class="lp-actions">
+        <button class="btn" id="chat">Чат</button>
+        ${['concert','karaoke','arcade','skate','garage','idol_stage','nightclub','records'].includes(loc.id)?`<button class="btn" id="mini">Мини-игра</button>`:''}
+        ${loc.id==='garage'||loc.id==='nightclub'||loc.id==='festival'?`<button class="btn" id="gig">Гиги</button>`:''}
       </div>
     </div>
     ${nav('map')}
@@ -562,7 +566,7 @@ SCR.chat=()=>{
     {name:'Кошмарик', t:'Кто со мной в заброшку сегодня?'},
     {name:'raven', t:'Я с вами! Берите фонарики'}
   ];
-  const quick=['Привет','Как дела','Идём гулять'];
+  const quick=[['Привет','qr_heart'],['Как дела','qr_broken'],['Идём гулять','qr_bat']];
   const av=EG.charImg(S.style,S.gender);
   const hist=(S.chat&&S.chat.length)?S.chat.slice(-8):null;
   const paint=()=>{
@@ -575,9 +579,10 @@ SCR.chat=()=>{
       return `<div class="msg"><img class="av" src="${src}" alt=""><div class="bubble"><div><span class="nm">${p.name}</span><span class="tm">сейчас</span></div><div class="tx">${p.t}</div></div></div>`;
     }).join('');
     app.innerHTML=`<div class="screen chat-v2">
-      <div class="chat-title"><span class="hrt">♡</span>Чат<span class="hrt">♡</span></div>
+      <div class="chat-title"><img src="img/ui/chrome/chat_title.webp" alt="Чат"><span class="hrt">♡</span></div>
       <div class="chat-list eg-scroll" id="bub">${list}</div>
-      <div class="quick">${quick.map(q=>`<button data-p="${q}">${q}</button>`).join('')}</div>
+      <div class="chat-div"><img src="img/ui/chrome/drip_heart.webp" alt=""></div>
+      <div class="quick">${quick.map(([q,ic])=>`<button data-p="${q}"><img src="img/ui/chrome/${ic}.webp" alt="">${q}</button>`).join('')}</div>
       ${nav('chat')}
     </div>`;
     bindNav();
