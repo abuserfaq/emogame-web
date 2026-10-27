@@ -224,3 +224,19 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .stage .char{height:58%!important;max-width:58%!important;bottom:8%;image-rendering:pixelated!important}
 .stage.floor-metro .char,.stage.floor-station .char{bottom:20%!important}
 .stage.floor-concert .char,.stage.floor-idol_stage .char{bottom:24%!important}
+
+/* === dark-ru 0.6.3 mockup match === */
+.food-grid{grid-template-columns:1fr 1fr;gap:12px}
+.food-card{padding:12px 10px 14px;border:2px solid #ff4d9a55;border-radius:14px;background:#161018;min-height:168px}
+.food-card .food-art{width:82%!important;aspect-ratio:1;margin:2px auto 10px;filter:drop-shadow(0 4px 8px #000a)}
+.food-card b{font-size:14px;color:#ff8ec8}
+.food-card .sub{font-size:11px;color:#b8a0b0}
+.ward-preview{height:220px!important;border:2px solid #ff4d9a88;border-radius:14px;margin-bottom:14px}
+.ward-preview img{height:95%!important;max-width:60%!important}
+.ward-card .food-art{width:70%!important}
+.ward-card.locked{opacity:.55;position:relative}
+.ward-card.locked::after{content:"🔒";position:absolute;top:8px;right:10px;font-size:18px}
+.stage .char{height:52%!important;max-width:52%!important;z-index:5;bottom:10%!important}
+.stage.floor-metro .char,.stage.floor-station .char{bottom:22%!important;height:48%!important}
+.loc-title,.weather-line{color:#ff9ac8;font-size:13px}
+.feed-panel h3{color:#ff4d9a;font-size:18px;letter-spacing:.04em}

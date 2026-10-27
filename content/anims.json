@@ -1,261 +1,235 @@
 {
-  "useFrames": true,
-  "frameSize": {
-    "w": 180,
-    "h": 280
-  },
-  "frames": [
-    "idle",
-    "idle2",
-    "walk",
-    "walk2",
-    "eat",
-    "drink",
-    "sleep",
-    "dance"
-  ],
-  "emotions": [
-    "happy",
-    "sad",
-    "sick",
-    "hungry",
-    "blink"
-  ],
-  "sheets": {
-    "emo_guy": "img/chars/sheets/emo_guy_anims.jpg",
-    "emo_girl": "img/chars/sheets/emo_girl_anims.jpg",
-    "alt_guy": "img/chars/sheets/alt_guy_anims.jpg",
-    "alt_girl": "img/chars/sheets/alt_girl_anims.jpg",
-    "idol_guy": "img/chars/sheets/idol_guy_anims.jpg",
-    "idol_girl": "img/chars/sheets/idol_girl_anims.jpg",
-    "goth_girl": "img/chars/sheets/goth_girl_anims.jpg",
-    "punk_guy": "img/chars/sheets/punk_guy_anims.jpg",
-    "skater_girl": "img/chars/sheets/skater_girl_anims.jpg",
-    "punk_girl": "img/chars/sheets/punk_girl_anims.jpg",
-    "skater_guy": "img/chars/sheets/skater_guy_anims.jpg"
-  },
   "frameSets": {
     "emo_guy": {
-      "idle": "img/chars/frames/emo_guy/idle.png",
-      "idle2": "img/chars/frames/emo_guy/idle2.png",
+      "idle": "img/chars/frames/emo_guy/idle.webp",
+      "idle2": "img/chars/frames/emo_guy/idle2.webp",
+      "blink": "img/chars/frames/emo_guy/blink.webp",
+      "eat": "img/chars/frames/emo_guy/eat.webp",
+      "drink": "img/chars/frames/emo_guy/drink.webp",
+      "happy": "img/chars/frames/emo_guy/happy.webp",
+      "sad": "img/chars/frames/emo_guy/sad.webp",
       "walk": "img/chars/frames/emo_guy/walk.png",
       "walk2": "img/chars/frames/emo_guy/walk2.png",
-      "eat": "img/chars/frames/emo_guy/eat.png",
-      "drink": "img/chars/frames/emo_guy/drink.png",
       "sleep": "img/chars/frames/emo_guy/sleep.png",
-      "dance": "img/chars/frames/emo_guy/dance.png",
-      "happy": "img/chars/frames/emo_guy/happy.png",
-      "sad": "img/chars/frames/emo_guy/sad.png",
-      "sick": "img/chars/frames/emo_guy/sick.png",
       "hungry": "img/chars/frames/emo_guy/hungry.png",
-      "blink": "img/chars/frames/emo_guy/blink.png"
+      "sick": "img/chars/frames/emo_guy/sick.png",
+      "dance": "img/chars/frames/emo_guy/dance.png"
     },
     "emo_girl": {
-      "idle": "img/chars/frames/emo_girl/idle.png",
-      "idle2": "img/chars/frames/emo_girl/idle2.png",
+      "idle": "img/chars/frames/emo_girl/idle.webp",
+      "idle2": "img/chars/frames/emo_girl/idle2.webp",
+      "blink": "img/chars/frames/emo_girl/blink.webp",
+      "eat": "img/chars/frames/emo_girl/eat.webp",
+      "drink": "img/chars/frames/emo_girl/drink.webp",
+      "happy": "img/chars/frames/emo_girl/happy.webp",
+      "sad": "img/chars/frames/emo_girl/sad.webp",
       "walk": "img/chars/frames/emo_girl/walk.png",
       "walk2": "img/chars/frames/emo_girl/walk2.png",
-      "eat": "img/chars/frames/emo_girl/eat.png",
-      "drink": "img/chars/frames/emo_girl/drink.png",
       "sleep": "img/chars/frames/emo_girl/sleep.png",
-      "dance": "img/chars/frames/emo_girl/dance.png",
-      "happy": "img/chars/frames/emo_girl/happy.png",
-      "sad": "img/chars/frames/emo_girl/sad.png",
-      "sick": "img/chars/frames/emo_girl/sick.png",
       "hungry": "img/chars/frames/emo_girl/hungry.png",
-      "blink": "img/chars/frames/emo_girl/blink.png"
+      "sick": "img/chars/frames/emo_girl/sick.png",
+      "dance": "img/chars/frames/emo_girl/dance.png"
     },
     "alt_guy": {
-      "idle": "img/chars/frames/alt_guy/idle.png",
-      "idle2": "img/chars/frames/alt_guy/idle2.png",
+      "idle": "img/chars/frames/alt_guy/idle.webp",
+      "idle2": "img/chars/frames/alt_guy/idle2.webp",
+      "blink": "img/chars/frames/alt_guy/blink.webp",
+      "eat": "img/chars/frames/alt_guy/eat.webp",
+      "drink": "img/chars/frames/alt_guy/drink.webp",
+      "happy": "img/chars/frames/alt_guy/happy.webp",
+      "sad": "img/chars/frames/alt_guy/sad.webp",
       "walk": "img/chars/frames/alt_guy/walk.png",
       "walk2": "img/chars/frames/alt_guy/walk2.png",
-      "eat": "img/chars/frames/alt_guy/eat.png",
-      "drink": "img/chars/frames/alt_guy/drink.png",
       "sleep": "img/chars/frames/alt_guy/sleep.png",
-      "dance": "img/chars/frames/alt_guy/dance.png",
-      "happy": "img/chars/frames/alt_guy/happy.png",
-      "sad": "img/chars/frames/alt_guy/sad.png",
-      "sick": "img/chars/frames/alt_guy/sick.png",
       "hungry": "img/chars/frames/alt_guy/hungry.png",
-      "blink": "img/chars/frames/alt_guy/blink.png"
+      "sick": "img/chars/frames/alt_guy/sick.png",
+      "dance": "img/chars/frames/alt_guy/dance.png"
     },
     "alt_girl": {
-      "idle": "img/chars/frames/alt_girl/idle.png",
-      "idle2": "img/chars/frames/alt_girl/idle2.png",
+      "idle": "img/chars/frames/alt_girl/idle.webp",
+      "idle2": "img/chars/frames/alt_girl/idle2.webp",
+      "blink": "img/chars/frames/alt_girl/blink.webp",
+      "eat": "img/chars/frames/alt_girl/eat.webp",
+      "drink": "img/chars/frames/alt_girl/drink.webp",
+      "happy": "img/chars/frames/alt_girl/happy.webp",
+      "sad": "img/chars/frames/alt_girl/sad.webp",
       "walk": "img/chars/frames/alt_girl/walk.png",
       "walk2": "img/chars/frames/alt_girl/walk2.png",
-      "eat": "img/chars/frames/alt_girl/eat.png",
-      "drink": "img/chars/frames/alt_girl/drink.png",
       "sleep": "img/chars/frames/alt_girl/sleep.png",
-      "dance": "img/chars/frames/alt_girl/dance.png",
-      "happy": "img/chars/frames/alt_girl/happy.png",
-      "sad": "img/chars/frames/alt_girl/sad.png",
-      "sick": "img/chars/frames/alt_girl/sick.png",
       "hungry": "img/chars/frames/alt_girl/hungry.png",
-      "blink": "img/chars/frames/alt_girl/blink.png"
+      "sick": "img/chars/frames/alt_girl/sick.png",
+      "dance": "img/chars/frames/alt_girl/dance.png"
     },
     "idol_guy": {
-      "idle": "img/chars/frames/idol_guy/idle.png",
-      "idle2": "img/chars/frames/idol_guy/idle2.png",
+      "idle": "img/chars/frames/idol_guy/idle.webp",
+      "idle2": "img/chars/frames/idol_guy/idle2.webp",
+      "blink": "img/chars/frames/idol_guy/blink.webp",
+      "eat": "img/chars/frames/idol_guy/eat.webp",
+      "drink": "img/chars/frames/idol_guy/drink.webp",
+      "happy": "img/chars/frames/idol_guy/happy.webp",
+      "sad": "img/chars/frames/idol_guy/sad.webp",
       "walk": "img/chars/frames/idol_guy/walk.png",
       "walk2": "img/chars/frames/idol_guy/walk2.png",
-      "eat": "img/chars/frames/idol_guy/eat.png",
-      "drink": "img/chars/frames/idol_guy/drink.png",
       "sleep": "img/chars/frames/idol_guy/sleep.png",
-      "dance": "img/chars/frames/idol_guy/dance.png",
-      "happy": "img/chars/frames/idol_guy/happy.png",
-      "sad": "img/chars/frames/idol_guy/sad.png",
-      "sick": "img/chars/frames/idol_guy/sick.png",
       "hungry": "img/chars/frames/idol_guy/hungry.png",
-      "blink": "img/chars/frames/idol_guy/blink.png"
+      "sick": "img/chars/frames/idol_guy/sick.png",
+      "dance": "img/chars/frames/idol_guy/dance.png"
     },
     "idol_girl": {
       "idle": "img/chars/frames/idol_girl/idle.png",
       "idle2": "img/chars/frames/idol_girl/idle2.png",
-      "walk": "img/chars/frames/idol_girl/walk.png",
-      "walk2": "img/chars/frames/idol_girl/walk2.png",
+      "blink": "img/chars/frames/idol_girl/blink.png",
       "eat": "img/chars/frames/idol_girl/eat.png",
       "drink": "img/chars/frames/idol_girl/drink.png",
-      "sleep": "img/chars/frames/idol_girl/sleep.png",
-      "dance": "img/chars/frames/idol_girl/dance.png",
       "happy": "img/chars/frames/idol_girl/happy.png",
       "sad": "img/chars/frames/idol_girl/sad.png",
-      "sick": "img/chars/frames/idol_girl/sick.png",
+      "walk": "img/chars/frames/idol_girl/walk.png",
+      "walk2": "img/chars/frames/idol_girl/walk2.png",
+      "sleep": "img/chars/frames/idol_girl/sleep.png",
       "hungry": "img/chars/frames/idol_girl/hungry.png",
-      "blink": "img/chars/frames/idol_girl/blink.png"
+      "sick": "img/chars/frames/idol_girl/sick.png",
+      "dance": "img/chars/frames/idol_girl/dance.png"
     },
     "goth_girl": {
-      "idle": "img/chars/frames/goth_girl/idle.png",
-      "idle2": "img/chars/frames/goth_girl/idle2.png",
+      "idle": "img/chars/frames/goth_girl/idle.webp",
+      "idle2": "img/chars/frames/goth_girl/idle2.webp",
+      "blink": "img/chars/frames/goth_girl/blink.webp",
+      "eat": "img/chars/frames/goth_girl/eat.webp",
+      "drink": "img/chars/frames/goth_girl/drink.webp",
+      "happy": "img/chars/frames/goth_girl/happy.webp",
+      "sad": "img/chars/frames/goth_girl/sad.webp",
       "walk": "img/chars/frames/goth_girl/walk.png",
       "walk2": "img/chars/frames/goth_girl/walk2.png",
-      "eat": "img/chars/frames/goth_girl/eat.png",
-      "drink": "img/chars/frames/goth_girl/drink.png",
       "sleep": "img/chars/frames/goth_girl/sleep.png",
-      "dance": "img/chars/frames/goth_girl/dance.png",
-      "happy": "img/chars/frames/goth_girl/happy.png",
-      "sad": "img/chars/frames/goth_girl/sad.png",
-      "sick": "img/chars/frames/goth_girl/sick.png",
       "hungry": "img/chars/frames/goth_girl/hungry.png",
-      "blink": "img/chars/frames/goth_girl/blink.png"
+      "sick": "img/chars/frames/goth_girl/sick.png",
+      "dance": "img/chars/frames/goth_girl/dance.png"
     },
     "punk_guy": {
-      "idle": "img/chars/frames/punk_guy/idle.png",
-      "idle2": "img/chars/frames/punk_guy/idle2.png",
+      "idle": "img/chars/frames/punk_guy/idle.webp",
+      "idle2": "img/chars/frames/punk_guy/idle2.webp",
+      "blink": "img/chars/frames/punk_guy/blink.webp",
+      "eat": "img/chars/frames/punk_guy/eat.webp",
+      "drink": "img/chars/frames/punk_guy/drink.webp",
+      "happy": "img/chars/frames/punk_guy/happy.webp",
+      "sad": "img/chars/frames/punk_guy/sad.webp",
       "walk": "img/chars/frames/punk_guy/walk.png",
       "walk2": "img/chars/frames/punk_guy/walk2.png",
-      "eat": "img/chars/frames/punk_guy/eat.png",
-      "drink": "img/chars/frames/punk_guy/drink.png",
       "sleep": "img/chars/frames/punk_guy/sleep.png",
-      "dance": "img/chars/frames/punk_guy/dance.png",
-      "happy": "img/chars/frames/punk_guy/happy.png",
-      "sad": "img/chars/frames/punk_guy/sad.png",
-      "sick": "img/chars/frames/punk_guy/sick.png",
       "hungry": "img/chars/frames/punk_guy/hungry.png",
-      "blink": "img/chars/frames/punk_guy/blink.png"
+      "sick": "img/chars/frames/punk_guy/sick.png",
+      "dance": "img/chars/frames/punk_guy/dance.png"
     },
     "skater_girl": {
-      "idle": "img/chars/frames/skater_girl/idle.png",
-      "idle2": "img/chars/frames/skater_girl/idle2.png",
+      "idle": "img/chars/frames/skater_girl/idle.webp",
+      "idle2": "img/chars/frames/skater_girl/idle2.webp",
+      "blink": "img/chars/frames/skater_girl/blink.webp",
+      "eat": "img/chars/frames/skater_girl/eat.webp",
+      "drink": "img/chars/frames/skater_girl/drink.webp",
+      "happy": "img/chars/frames/skater_girl/happy.webp",
+      "sad": "img/chars/frames/skater_girl/sad.webp",
       "walk": "img/chars/frames/skater_girl/walk.png",
       "walk2": "img/chars/frames/skater_girl/walk2.png",
-      "eat": "img/chars/frames/skater_girl/eat.png",
-      "drink": "img/chars/frames/skater_girl/drink.png",
       "sleep": "img/chars/frames/skater_girl/sleep.png",
-      "dance": "img/chars/frames/skater_girl/dance.png",
-      "happy": "img/chars/frames/skater_girl/happy.png",
-      "sad": "img/chars/frames/skater_girl/sad.png",
-      "sick": "img/chars/frames/skater_girl/sick.png",
       "hungry": "img/chars/frames/skater_girl/hungry.png",
-      "blink": "img/chars/frames/skater_girl/blink.png"
+      "sick": "img/chars/frames/skater_girl/sick.png",
+      "dance": "img/chars/frames/skater_girl/dance.png"
     },
     "punk_girl": {
-      "idle": "img/chars/frames/punk_girl/idle.png",
-      "idle2": "img/chars/frames/punk_girl/idle2.png",
+      "idle": "img/chars/frames/punk_girl/idle.webp",
+      "idle2": "img/chars/frames/punk_girl/idle2.webp",
+      "blink": "img/chars/frames/punk_girl/blink.webp",
+      "eat": "img/chars/frames/punk_girl/eat.webp",
+      "drink": "img/chars/frames/punk_girl/drink.webp",
+      "happy": "img/chars/frames/punk_girl/happy.webp",
+      "sad": "img/chars/frames/punk_girl/sad.webp",
       "walk": "img/chars/frames/punk_girl/walk.png",
       "walk2": "img/chars/frames/punk_girl/walk2.png",
-      "eat": "img/chars/frames/punk_girl/eat.png",
-      "drink": "img/chars/frames/punk_girl/drink.png",
       "sleep": "img/chars/frames/punk_girl/sleep.png",
-      "dance": "img/chars/frames/punk_girl/dance.png",
-      "happy": "img/chars/frames/punk_girl/happy.png",
-      "sad": "img/chars/frames/punk_girl/sad.png",
-      "sick": "img/chars/frames/punk_girl/sick.png",
       "hungry": "img/chars/frames/punk_girl/hungry.png",
-      "blink": "img/chars/frames/punk_girl/blink.png"
+      "sick": "img/chars/frames/punk_girl/sick.png",
+      "dance": "img/chars/frames/punk_girl/dance.png"
     },
     "skater_guy": {
-      "idle": "img/chars/frames/skater_guy/idle.png",
-      "idle2": "img/chars/frames/skater_guy/idle2.png",
+      "idle": "img/chars/frames/skater_guy/idle.webp",
+      "idle2": "img/chars/frames/skater_guy/idle2.webp",
+      "blink": "img/chars/frames/skater_guy/blink.webp",
+      "eat": "img/chars/frames/skater_guy/eat.webp",
+      "drink": "img/chars/frames/skater_guy/drink.webp",
+      "happy": "img/chars/frames/skater_guy/happy.webp",
+      "sad": "img/chars/frames/skater_guy/sad.webp",
       "walk": "img/chars/frames/skater_guy/walk.png",
       "walk2": "img/chars/frames/skater_guy/walk2.png",
-      "eat": "img/chars/frames/skater_guy/eat.png",
-      "drink": "img/chars/frames/skater_guy/drink.png",
       "sleep": "img/chars/frames/skater_guy/sleep.png",
-      "dance": "img/chars/frames/skater_guy/dance.png",
-      "happy": "img/chars/frames/skater_guy/happy.png",
-      "sad": "img/chars/frames/skater_guy/sad.png",
-      "sick": "img/chars/frames/skater_guy/sick.png",
       "hungry": "img/chars/frames/skater_guy/hungry.png",
-      "blink": "img/chars/frames/skater_guy/blink.png"
+      "sick": "img/chars/frames/skater_guy/sick.png",
+      "dance": "img/chars/frames/skater_guy/dance.png"
     }
   },
   "sequences": {
     "idle": [
       "idle",
-      "idle2",
       "idle",
       "blink",
-      "idle",
       "idle2"
     ],
-    "walk": [
-      "walk",
-      "walk2"
+    "idle2": [
+      "idle2",
+      "blink",
+      "idle"
+    ],
+    "blink": [
+      "blink",
+      "idle"
     ],
     "eat": [
+      "eat",
       "eat",
       "idle"
     ],
     "drink": [
       "drink",
+      "drink",
       "idle"
     ],
-    "sleep": [
-      "sleep"
-    ],
-    "dance": [
-      "dance",
-      "idle2",
-      "dance"
-    ],
     "happy": [
-      "dance",
-      "idle2"
+      "happy",
+      "happy",
+      "idle"
     ],
     "sad": [
       "sad",
       "idle"
     ],
-    "sick": [
-      "sick"
-    ],
     "hungry": [
-      "hungry",
+      "sad",
       "idle"
+    ],
+    "sick": [
+      "sad",
+      "idle"
+    ],
+    "sleep": [
+      "sad",
+      "idle"
+    ],
+    "dance": [
+      "happy",
+      "idle2",
+      "happy"
+    ],
+    "walk": [
+      "idle",
+      "idle2"
     ]
   },
   "fps": {
-    "idle": 3,
-    "walk": 8,
+    "idle": 2,
     "eat": 3,
     "drink": 3,
-    "sleep": 1,
-    "dance": 6,
     "happy": 4,
     "sad": 2,
-    "sick": 2,
-    "hungry": 2
+    "blink": 4,
+    "dance": 5
   }
 }

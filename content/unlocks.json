@@ -25,26 +25,38 @@
     "beach": 7
   },
   "foods": {
+    "burger": 1,
+    "sushi": 1,
+    "bento": 2,
+    "pizza": 2,
+    "taco": 3,
+    "onigiri": 1,
+    "mochi": 2,
+    "cake": 3,
+    "fries": 1,
+    "sandwich": 2,
+    "salad": 4,
+    "dumplings": 3,
+    "hotdog": 2,
+    "waffle": 4,
+    "donut": 3,
+    "cupcake": 5,
     "ramen": 1,
-    "energy_bar": 1,
-    "candy": 2,
-    "sushi": 4,
-    "burger": 3,
-    "cake": 5,
-    "chips": 1,
-    "salad": 2,
-    "pizza": 4,
-    "bento": 6
+    "snack": 1
   },
   "drinks": {
-    "water": 1,
+    "boba": 1,
     "soda": 1,
-    "coffee": 2,
-    "tea": 2,
-    "smoothie": 3,
-    "energy": 4,
-    "bubble_tea": 5,
-    "mocktail": 6
+    "latte": 2,
+    "energy": 3,
+    "smoothie": 2,
+    "water": 1,
+    "milkshake": 3,
+    "iced_coffee": 4,
+    "juice": 1,
+    "lemonade": 2,
+    "cola": 1,
+    "matcha": 5
   },
   "clothes": {
     "hoodie_basic": 1,
@@ -212,5 +224,19 @@
       "coins": 800,
       "gems": 1
     }
+  },
+  "wardrobe": {
+    "hoodie": 1,
+    "heart_jacket": 3,
+    "fishnet": 2,
+    "boots": 1,
+    "choker": 1,
+    "beanie": 2,
+    "skirt": 2,
+    "leather_jacket": 4,
+    "crop_top": 3,
+    "sneakers": 2,
+    "backpack": 4,
+    "paint_jacket": 5
   }
 }

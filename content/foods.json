@@ -1,78 +1,183 @@
 [
   {
-    "id": "ramen",
-    "name": "Рамэн",
+    "id": "burger",
+    "name": "Бургер",
     "hunger": 28,
-    "mood": 4,
-    "cost": 40,
-    "tier": 1,
-    "img": "img/food/ramen.png"
+    "mood": 6,
+    "cost": 150,
+    "img": "img/food/burger.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
   },
   {
-    "id": "onigiri",
-    "name": "Онигири",
-    "hunger": 18,
-    "mood": 2,
-    "cost": 25,
-    "tier": 1,
-    "img": "img/food/onigiri.png"
-  },
-  {
-    "id": "cake",
-    "name": "Чизкейк",
-    "hunger": 14,
+    "id": "sushi",
+    "name": "Суши",
+    "hunger": 22,
     "mood": 10,
-    "cost": 35,
-    "tier": 1,
-    "img": "img/food/cake.png"
-  },
-  {
-    "id": "snack",
-    "name": "Снеки",
-    "hunger": 10,
-    "mood": 3,
-    "cost": 15,
-    "tier": 1,
-    "img": "img/food/snack.png"
+    "cost": 100,
+    "img": "img/food/sushi.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
   },
   {
     "id": "bento",
     "name": "Бенто",
     "hunger": 35,
     "mood": 8,
-    "cost": 60,
-    "tier": 2,
-    "minLevel": 3,
-    "img": "img/food/bento.png"
+    "cost": 180,
+    "img": "img/food/bento.webp",
+    "unlockLevel": 2,
+    "minLevel": 2
+  },
+  {
+    "id": "pizza",
+    "name": "Пицца",
+    "hunger": 30,
+    "mood": 7,
+    "cost": 160,
+    "img": "img/food/pizza.webp",
+    "unlockLevel": 2,
+    "minLevel": 2
+  },
+  {
+    "id": "taco",
+    "name": "Тако",
+    "hunger": 24,
+    "mood": 6,
+    "cost": 110,
+    "img": "img/food/taco.webp",
+    "unlockLevel": 3,
+    "minLevel": 3
+  },
+  {
+    "id": "onigiri",
+    "name": "Онигири",
+    "hunger": 18,
+    "mood": 5,
+    "cost": 70,
+    "img": "img/food/onigiri.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
   },
   {
     "id": "mochi",
     "name": "Моти",
     "hunger": 12,
     "mood": 12,
-    "cost": 45,
-    "tier": 2,
-    "minLevel": 4,
-    "img": "img/food/mochi.png"
-  },
-  {
-    "id": "burger",
-    "name": "Веган-бургер",
-    "hunger": 30,
-    "mood": 6,
-    "cost": 55,
-    "tier": 2,
-    "minLevel": 5,
-    "img": "img/food/burger.png"
-  },
-  {
-    "id": "sushi",
-    "name": "Суши-сет",
-    "hunger": 40,
-    "mood": 14,
     "cost": 90,
-    "tier": 3,
-    "minLevel": 8,
-    "img": "img/food/sushi.png"
+    "img": "img/food/mochi.webp",
+    "unlockLevel": 2,
+    "minLevel": 2
+  },
+  {
+    "id": "cake",
+    "name": "Торт",
+    "hunger": 16,
+    "mood": 14,
+    "cost": 130,
+    "img": "img/food/cake.webp",
+    "unlockLevel": 3,
+    "minLevel": 3
+  },
+  {
+    "id": "fries",
+    "name": "Картофель фри",
+    "hunger": 20,
+    "mood": 5,
+    "cost": 80,
+    "img": "img/food/fries.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
+  },
+  {
+    "id": "sandwich",
+    "name": "Сэндвич",
+    "hunger": 26,
+    "mood": 6,
+    "cost": 120,
+    "img": "img/food/sandwich.webp",
+    "unlockLevel": 2,
+    "minLevel": 2
+  },
+  {
+    "id": "salad",
+    "name": "Салат",
+    "hunger": 15,
+    "mood": 8,
+    "energy": 5,
+    "cost": 95,
+    "img": "img/food/salad.webp",
+    "unlockLevel": 4,
+    "minLevel": 4
+  },
+  {
+    "id": "dumplings",
+    "name": "Гёдза",
+    "hunger": 22,
+    "mood": 7,
+    "cost": 115,
+    "img": "img/food/dumplings.webp",
+    "unlockLevel": 3,
+    "minLevel": 3
+  },
+  {
+    "id": "hotdog",
+    "name": "Хот-дог",
+    "hunger": 24,
+    "mood": 5,
+    "cost": 100,
+    "img": "img/food/hotdog.webp",
+    "unlockLevel": 2,
+    "minLevel": 2
+  },
+  {
+    "id": "waffle",
+    "name": "Вафля",
+    "hunger": 18,
+    "mood": 11,
+    "cost": 105,
+    "img": "img/food/waffle.webp",
+    "unlockLevel": 4,
+    "minLevel": 4
+  },
+  {
+    "id": "donut",
+    "name": "Пончик",
+    "hunger": 14,
+    "mood": 12,
+    "cost": 85,
+    "img": "img/food/donut.webp",
+    "unlockLevel": 3,
+    "minLevel": 3
+  },
+  {
+    "id": "cupcake",
+    "name": "Капкейк",
+    "hunger": 12,
+    "mood": 13,
+    "cost": 95,
+    "img": "img/food/cupcake.webp",
+    "unlockLevel": 5,
+    "minLevel": 5
+  },
+  {
+    "id": "ramen",
+    "name": "Рамен",
+    "hunger": 32,
+    "mood": 9,
+    "cost": 140,
+    "img": "img/food/ramen.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
+  },
+  {
+    "id": "snack",
+    "name": "Снэк",
+    "hunger": 10,
+    "mood": 4,
+    "cost": 40,
+    "img": "img/food/snack.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
   }
 ]

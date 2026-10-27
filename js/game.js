@@ -220,10 +220,11 @@ function openWardrobe(){
     if(!items.length) return '';
     return `<div class="ward-slot"><div class="ward-slot-h">${slotRu[sl]||sl}</div><div class="grid ward-grid">${items.map(it=>{
       const owned=!!S.wardrobe[it.id]; const eq=S.equip[sl]===it.id;
-      return `<button class="card food-card ward-card ${eq?'on':''}" data-w="${it.id}" data-slot="${sl}">
+      const need=it.unlockLevel||it.minLevel||1; const locked=(S.level|0)<need && !owned;
+      return `<button class="card food-card ward-card ${eq?'on':''} ${locked?'locked':''}" data-w="${it.id}" data-slot="${sl}" ${locked?'disabled':''}>
         <img class="food-art" src="${EG.shopImg(it)}" alt="">
         <b>${it.name}</b>
-        <span class="sub">${owned?(eq?'надет':'есть'):''} +${it.style} стиль · <img class="coin" src="img/ui/icons/coins.png" alt=""> ${it.cost}</span>
+        <span class="sub">${locked?('🔒 ур.'+need):((owned?(eq?'надет':'есть'):'купить')+' +'+(it.style||it.mood||0)+' стиль')} · <img class="coin" src="img/ui/icons/coins.png" alt=""> ${it.cost}</span>
       </button>`;
     }).join('')}</div></div>`;
   }).join('');
@@ -275,15 +276,18 @@ function openShop(){
 }
 
 SCR.feed=()=>{
-  const foodCard=(f,kind)=>`<button class="card food-card" data-${kind==='food'?'f':'d'}="${f.id}">
+  const foodCard=(f,kind)=>{
+    const need=f.unlockLevel||f.minLevel||1; const locked=(S.level|0)<need;
+    return `<button class="card food-card ${locked?'locked':''}" data-${kind==='food'?'f':'d'}="${f.id}" ${locked?'disabled':''}>
       <img class="food-art" src="${kind==='food'?EG.foodImg(f):EG.drinkImg(f)}" alt="">
       <b>${f.name}</b>
-      <span class="sub">+${kind==='food'?f.hunger:(f.thirst||0)} ${kind==='food'?'голод':'жажда'} · <img class="coin" src="img/ui/icons/coins.png" alt=""> ${f.cost}</span>
+      <span class="sub">${locked?('🔒 ур.'+need):('+'+ (kind==='food'?f.hunger:(f.thirst||0))+' '+(kind==='food'?'голод':'жажда')+' · ')} ${locked?'':''}<img class="coin" src="img/ui/icons/coins.png" alt=""> ${f.cost}</span>
     </button>`;
+  };
   app.innerHTML=`<div class="screen">${statRow()}${careBanner()}
     <div class="panel feed-panel" style="position:relative;inset:auto;margin:10px;max-height:none">
-      <h3>Еда</h3><div class="grid food-grid">${(EG.FOOD||[]).filter(f=>!window.EGUnlocks||EGUnlocks.foodOk(S,f.id||f)).filter(f=>S.level>=(f.minLevel||1)).map(f=>foodCard(f,'food')).join('')}</div>
-      <h3 style="margin-top:14px">Напитки</h3><div class="grid food-grid">${(EG.DRINKS||[]).filter(f=>S.level>=(f.minLevel||1)).map(f=>foodCard(f,'drink')).join('')}</div>
+      <h3>Еда</h3><div class="grid food-grid">${(EG.FOOD||[]).map(f=>foodCard(f,'food')).join('')}</div>
+      <h3 style="margin-top:14px">Напитки</h3><div class="grid food-grid">${(EG.DRINKS||[]).map(f=>foodCard(f,'drink')).join('')}</div>
     </div>${nav('feed')}</div>`;
   bindNav();
   app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{

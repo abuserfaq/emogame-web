@@ -1,61 +1,125 @@
 [
   {
-    "id": "water",
-    "name": "Вода",
-    "thirst": 22,
-    "mood": 1,
-    "cost": 5,
-    "tier": 1,
-    "img": "img/drinks/water.png"
+    "id": "boba",
+    "name": "Бабл-ти",
+    "thirst": 30,
+    "mood": 8,
+    "cost": 120,
+    "img": "img/drinks/boba.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
   },
   {
     "id": "soda",
     "name": "Газировка",
-    "thirst": 18,
+    "thirst": 22,
     "mood": 4,
-    "cost": 20,
-    "tier": 1,
-    "img": "img/drinks/soda.png"
+    "cost": 60,
+    "img": "img/drinks/soda.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
   },
   {
-    "id": "boba",
-    "name": "Bubble tea",
+    "id": "latte",
+    "name": "Латте",
     "thirst": 20,
-    "mood": 12,
-    "cost": 45,
-    "tier": 1,
-    "img": "img/drinks/boba.png"
+    "energy": 10,
+    "mood": 6,
+    "cost": 100,
+    "img": "img/drinks/latte.webp",
+    "unlockLevel": 2,
+    "minLevel": 2
   },
   {
     "id": "energy",
     "name": "Энергетик",
-    "thirst": 12,
-    "energy": 20,
-    "mood": 2,
-    "cost": 50,
-    "tier": 2,
-    "minLevel": 3,
-    "img": "img/drinks/energy.png"
-  },
-  {
-    "id": "latte",
-    "name": "Розовая латте",
-    "thirst": 16,
-    "mood": 10,
-    "cost": 40,
-    "tier": 2,
-    "minLevel": 4,
-    "img": "img/drinks/latte.png"
+    "thirst": 15,
+    "energy": 25,
+    "mood": 3,
+    "cost": 140,
+    "img": "img/drinks/energy.webp",
+    "unlockLevel": 3,
+    "minLevel": 3
   },
   {
     "id": "smoothie",
     "name": "Смузи",
+    "thirst": 28,
+    "mood": 9,
+    "cost": 110,
+    "img": "img/drinks/smoothie.webp",
+    "unlockLevel": 2,
+    "minLevel": 2
+  },
+  {
+    "id": "water",
+    "name": "Вода",
+    "thirst": 35,
+    "mood": 2,
+    "cost": 30,
+    "img": "img/drinks/water.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
+  },
+  {
+    "id": "milkshake",
+    "name": "Милкшейк",
+    "thirst": 25,
+    "mood": 12,
+    "cost": 130,
+    "img": "img/drinks/milkshake.webp",
+    "unlockLevel": 3,
+    "minLevel": 3
+  },
+  {
+    "id": "iced_coffee",
+    "name": "Айс-кофе",
+    "thirst": 22,
+    "energy": 12,
+    "cost": 115,
+    "img": "img/drinks/iced_coffee.webp",
+    "unlockLevel": 4,
+    "minLevel": 4
+  },
+  {
+    "id": "juice",
+    "name": "Сок",
+    "thirst": 26,
+    "mood": 5,
+    "cost": 70,
+    "img": "img/drinks/juice.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
+  },
+  {
+    "id": "lemonade",
+    "name": "Лимонад",
+    "thirst": 28,
+    "mood": 7,
+    "cost": 90,
+    "img": "img/drinks/lemonade.webp",
+    "unlockLevel": 2,
+    "minLevel": 2
+  },
+  {
+    "id": "cola",
+    "name": "Кола",
     "thirst": 24,
-    "hunger": 8,
-    "mood": 8,
-    "cost": 55,
-    "tier": 3,
-    "minLevel": 6,
-    "img": "img/drinks/smoothie.png"
+    "mood": 5,
+    "cost": 65,
+    "img": "img/drinks/cola.webp",
+    "unlockLevel": 1,
+    "minLevel": 1
+  },
+  {
+    "id": "matcha",
+    "name": "Матча",
+    "thirst": 22,
+    "mood": 10,
+    "energy": 8,
+    "cost": 125,
+    "img": "img/drinks/matcha.webp",
+    "unlockLevel": 5,
+    "minLevel": 5
   }
 ]

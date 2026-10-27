@@ -1,59 +1,134 @@
 [
   {
     "id": "hoodie",
-    "name": "Худи с сердцем",
+    "name": "Худи",
     "slot": "top",
+    "cost": 250,
+    "img": "img/wardrobe/hoodie.webp",
+    "unlockLevel": 1,
+    "mood": 5,
+    "style": 5,
+    "minLevel": 1
+  },
+  {
+    "id": "heart_jacket",
+    "name": "Розовая куртка",
+    "slot": "top",
+    "cost": 400,
+    "img": "img/wardrobe/heart_jacket.webp",
+    "unlockLevel": 3,
+    "mood": 8,
     "style": 8,
-    "cost": 120,
-    "tier": 1,
-    "img": "img/wardrobe/hoodie.png"
-  },
-  {
-    "id": "boots",
-    "name": "Массивные ботинки",
-    "slot": "shoes",
-    "style": 10,
-    "cost": 150,
-    "tier": 1,
-    "img": "img/wardrobe/boots.png"
-  },
-  {
-    "id": "choker_shop",
-    "name": "Чокер",
-    "slot": "acc",
-    "style": 6,
-    "cost": 60,
-    "tier": 1,
-    "img": "img/wardrobe/choker_shop.png"
-  },
-  {
-    "id": "paint",
-    "name": "Розовая прядь",
-    "slot": "hair",
-    "style": 12,
-    "cost": 200,
-    "tier": 2,
-    "minLevel": 4,
-    "img": "img/wardrobe/paint.png"
+    "minLevel": 3
   },
   {
     "id": "fishnet",
-    "name": "Сеточка",
-    "slot": "acc",
-    "style": 9,
-    "cost": 110,
-    "tier": 2,
-    "minLevel": 5,
-    "img": "img/wardrobe/fishnet.png"
+    "name": "Сетка",
+    "slot": "bottom",
+    "cost": 180,
+    "img": "img/wardrobe/fishnet.webp",
+    "unlockLevel": 2,
+    "mood": 6,
+    "style": 6,
+    "minLevel": 2
   },
   {
-    "id": "idol_jacket",
-    "name": "Айдол-пиджак",
+    "id": "boots",
+    "name": "Ботинки",
+    "slot": "shoes",
+    "cost": 300,
+    "img": "img/wardrobe/boots.webp",
+    "unlockLevel": 1,
+    "mood": 5,
+    "style": 5,
+    "minLevel": 1
+  },
+  {
+    "id": "choker",
+    "name": "Чокер",
+    "slot": "acc",
+    "cost": 150,
+    "img": "img/wardrobe/choker.webp",
+    "unlockLevel": 1,
+    "mood": 4,
+    "style": 4,
+    "minLevel": 1
+  },
+  {
+    "id": "beanie",
+    "name": "Шапка",
+    "slot": "hair",
+    "cost": 200,
+    "img": "img/wardrobe/beanie.webp",
+    "unlockLevel": 2,
+    "mood": 5,
+    "style": 5,
+    "minLevel": 2
+  },
+  {
+    "id": "skirt",
+    "name": "Юбка",
+    "slot": "bottom",
+    "cost": 220,
+    "img": "img/wardrobe/skirt.webp",
+    "unlockLevel": 2,
+    "mood": 6,
+    "style": 6,
+    "minLevel": 2
+  },
+  {
+    "id": "leather_jacket",
+    "name": "Косуха",
     "slot": "top",
-    "style": 16,
+    "cost": 450,
+    "img": "img/wardrobe/leather_jacket.webp",
+    "unlockLevel": 4,
+    "mood": 9,
+    "style": 9,
+    "minLevel": 4
+  },
+  {
+    "id": "crop_top",
+    "name": "Кроп-топ",
+    "slot": "top",
+    "cost": 190,
+    "img": "img/wardrobe/crop_top.webp",
+    "unlockLevel": 3,
+    "mood": 6,
+    "style": 6,
+    "minLevel": 3
+  },
+  {
+    "id": "sneakers",
+    "name": "Кеды",
+    "slot": "shoes",
     "cost": 280,
-    "tier": 3,
-    "minLevel": 8,
-    "img": "img/wardrobe/idol_jacket.png"
+    "img": "img/wardrobe/sneakers.webp",
+    "unlockLevel": 2,
+    "mood": 5,
+    "style": 5,
+    "minLevel": 2
+  },
+  {
+    "id": "backpack",
+    "name": "Рюкзак",
+    "slot": "acc",
+    "cost": 320,
+    "img": "img/wardrobe/backpack.webp",
+    "unlockLevel": 4,
+    "mood": 7,
+    "style": 7,
+    "minLevel": 4
+  },
+  {
+    "id": "paint_jacket",
+    "name": "Куртка с краской",
+    "slot": "top",
+    "cost": 500,
+    "img": "img/wardrobe/paint_jacket.webp",
+    "unlockLevel": 5,
+    "mood": 10,
+    "style": 10,
+    "minLevel": 5
   }
 ]

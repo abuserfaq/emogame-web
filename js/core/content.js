@@ -48,7 +48,7 @@ const Content={
     EG.charImg=(s,g)=>{
       const prefer={goth:'girl',punk:'guy',skater:'girl'};
       let gg=g; if(prefer[s] && !(window.__EG_CHAR_JPG&&window.__EG_CHAR_JPG[s+'_'+g])) gg=prefer[s]||g;
-      const jpg=`img/chars/${s}_${gg}.jpg`;
+      const jpg=`img/chars/${s}_${gg}.webp`;
       const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[s+'_'+gg];
       if(fs&&fs.idle) return fs.idle;
       return jpg;
@@ -60,16 +60,16 @@ const Content={
     EG.locBg=(id,phase)=>{
       const known=window.__EG_LOC_KNOWN||{};
       const key=id+'_'+phase;
-      if(known[key]) return `img/loc/${id}_${phase}.jpg`;
+      if(known[key]) return `img/loc/${id}_${phase}.webp`;
       for(const p of [phase,'day','evening','night','morning']){
-        if(known[id+'_'+p]) return `img/loc/${id}_${p}.jpg`;
+        if(known[id+'_'+p]) return `img/loc/${id}_${p}.webp`;
       }
-      return 'img/loc/room_morning.jpg';
+      return 'img/loc/room_morning.webp';
     };
     EG.giftImg=g=> (g&&g.img)||(`img/gifts/${g&&g.id||'heart_plush'}.png`);
-    EG.foodImg=f=> (f&&f.img)||(`img/food/${f&&f.id||'ramen'}.png`);
-    EG.drinkImg=d=> (d&&d.img)||(`img/drinks/${d&&d.id||'water'}.png`);
-    EG.shopImg=it=> (it&&it.img)||(`img/wardrobe/${it&&it.id||'hoodie'}.png`);
+    EG.foodImg=f=> (f&&f.img)||(`img/food/${f&&f.id||'ramen'}.webp`);
+    EG.drinkImg=d=> (d&&d.img)||(`img/drinks/${d&&d.id||'water'}.webp`);
+    EG.shopImg=it=> (it&&it.img)||(`img/wardrobe/${it&&it.id||'hoodie'}.webp`);
     EG.wxLabel={clear:'ясно',rain:'дождь',snow:'снег',fog:'туман',storm:'гроза',heat:'жара'};
     EG.seasonLabel={spring:'весна',summer:'лето',autumn:'осень',winter:'зима'};
     EG.weatherText=(S)=>{
