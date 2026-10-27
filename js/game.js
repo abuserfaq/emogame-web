@@ -407,21 +407,50 @@ SCR.gifts=()=>{
 };
 
 SCR.coop=()=>{
-  const code=(Math.random().toString(36).slice(2,8)||'emo123').toUpperCase();
-  app.innerHTML=`<div class="screen">${statRow()}
-    <div class="panel" style="position:relative;inset:auto;margin:10px">
-      <h3>Кооп-лобби</h3>
-      <p style="color:#aaa;font-size:13px">Создай код и поделись другом. Чат только пресетами.</p>
-      <div class="card">Твой код: <b id="code">${(S.coopCode||code)}</b></div>
-      <input id="join" placeholder="Код друга" maxlength="8" style="width:100%;padding:12px;border-radius:12px;border:1px solid #2a1a24;background:#161018;color:#fff;margin:10px 0">
-      <button class="btn" id="mk">Создать лобби</button>
-      <button class="btn ghost" id="jn" style="margin-top:8px">Войти</button>
-      <button class="btn ghost" id="back" style="margin-top:8px">Назад</button>
-    </div>${nav('map')}</div>`;
-  bindNav();
-  $('#mk').onclick=()=>{ S.coopCode=code; save(); toast('Лобби '+code); try{ Net.post&&Net.post('lobby_create',{code}); }catch(e){} };
-  $('#jn').onclick=()=>{ const c=($('#join').value||'').trim().toUpperCase(); if(c.length<4)return toast('Код?'); toast('Вход в '+c+' (синк при онлайне)'); };
-  $('#back').onclick=()=>go('map');
+  let code=(S.coopCode||(Math.random().toString(36).slice(2,8)||'emo123').toUpperCase());
+  const paint=(extra)=>{
+    app.innerHTML=`<div class="screen">${statRow()}
+      <div class="panel" style="position:relative;inset:auto;margin:10px">
+        <h3>Кооп-лобби</h3>
+        <p style="color:#aaa;font-size:13px">Создай код и поделись другом. Чат только пресетами. Заходи каждый день — друзья тоже ждут ухода.</p>
+        <div class="card">Твой код: <b id="code">${code}</b></div>
+        <div id="st" style="color:#c8a0b8;font-size:12px;margin:6px 0">${extra||''}</div>
+        <input id="join" placeholder="Код друга" maxlength="8" style="width:100%;padding:12px;border-radius:12px;border:1px solid #2a1a24;background:#161018;color:#fff;margin:10px 0">
+        <button class="btn" id="mk">Создать лобби</button>
+        <button class="btn ghost" id="jn" style="margin-top:8px">Войти</button>
+        <button class="btn ghost" id="rf" style="margin-top:8px">Обновить</button>
+        <button class="btn ghost" id="back" style="margin-top:8px">Назад</button>
+      </div>${nav('map')}</div>`;
+    bindNav();
+    $('#mk').onclick=async()=>{
+      try{
+        const r=await Net.lobbyCreate('park');
+        const c=(r&&r.j&&(r.j.code||r.j.lobby))||code;
+        code=String(c).toUpperCase(); S.coopCode=code; save();
+        toast('Лобби '+code); paint('Онлайн · ждём друга');
+      }catch(e){ S.coopCode=code; save(); toast('Оффлайн-код '+code); paint('Оффлайн — синк позже'); }
+    };
+    $('#jn').onclick=async()=>{
+      const c=($('#join').value||'').trim().toUpperCase();
+      if(c.length<4) return toast('Код?');
+      try{
+        const r=await Net.lobbyJoin(c);
+        if(r&&r.ok===false) return toast('Не вышло войти');
+        S.coopCode=c; code=c; save(); toast('В лобби '+c);
+        paint('В лобби '+c);
+      }catch(e){ toast('Сеть недоступна'); }
+    };
+    $('#rf').onclick=async()=>{
+      if(!S.coopCode) return toast('Сначала создай/войди');
+      try{
+        const r=await Net.lobbyState(S.coopCode);
+        const n=(r&&r.j&&(r.j.players||r.j.n))||'?';
+        paint('Игроков: '+n);
+      }catch(e){ paint('Нет ответа сервера'); }
+    };
+    $('#back').onclick=()=>go('map');
+  };
+  paint();
 };
 
 SCR.chat=()=>{
