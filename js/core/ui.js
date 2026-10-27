@@ -1,5 +1,5 @@
 (function(){
-const I=k=>`img/ui/icons/${k}.png`;
+const I=k=>`img/ui/icons/${k}.webp`;
 const UI={
   icon(k,cls){ return `<img class="pxico ${cls||''}" src="${I(k)}" alt="" width="28" height="28" decoding="async" onerror="this.style.opacity=0">`; },
   iconSrc:I,

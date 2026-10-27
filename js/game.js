@@ -88,12 +88,20 @@ function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListe
 function go(n,a){ tickNeeds(); clear(); setPhaseClass(); cur=n;
   const bannerOn=S.consent!=null && n!=='consent' && n!=='consentSet' && n!=='onboardCare' && n!=='create' && !SHOT;
   PL.ads.banner(bannerOn);
-  const bs=document.getElementById('bannerStrip');
-  if(bs){ if(bannerOn){ bs.classList.add('on'); bs.setAttribute('aria-hidden','false'); } else { bs.classList.remove('on'); bs.setAttribute('aria-hidden','true'); } }
   if(window.EGModules) EGModules.onScreen(n,S);
   SCR[n](a); bindNav();
-  const navEl=app.querySelector('.nav');
-  if(bs&&navEl&&bs.classList.contains('on')&&navEl.parentElement){ navEl.parentElement.insertBefore(bs, navEl.nextSibling); }
+  // Recreate banner after innerHTML (lives inside #app so screen swaps wipe it)
+  let bs=document.getElementById('bannerStrip');
+  if(!bs){
+    bs=document.createElement('div'); bs.id='bannerStrip';
+    bs.innerHTML='<span class="ad-label">реклама</span>';
+  }
+  if(bannerOn){ bs.classList.add('on'); bs.setAttribute('aria-hidden','false'); }
+  else { bs.classList.remove('on'); bs.setAttribute('aria-hidden','true'); }
+  const navEl=app.querySelector('.nav-dock')||app.querySelector('.nav');
+  const host=(navEl&&navEl.parentElement&&navEl.parentElement.classList.contains('screen')&&!navEl.parentElement.classList.contains('immersive'))
+    ? navEl.parentElement : app;
+  host.appendChild(bs);
   try{ PL.event('screen',{n}); }catch(e){}
 }
 
@@ -275,19 +283,36 @@ SCR.wardrobe=()=>{
 };
 function openWardrobe(){ go('wardrobe'); }
 
-function openQuests(){
+window.openQuests=function openQuests(){
   ensureQuests();
-  const body=(EG.QUESTS||[]).map(q=>{
-    const st=S.quest[q.id]||{p:0}; return `<div class="card">${q.title}<span class="sub">${Math.min(st.p,q.goal)}/${q.goal}${st.done?' ✓':''} · +${q.reward.coins}</span></div>`;
-  }).join('')||'<p style="color:#888">Нет квестов</p>';
+  const body=`<div class="sheet-grid">${(EG.QUESTS||[]).map(q=>{
+    const st=S.quest[q.id]||{p:0};
+    const art=`img/ui/sheets/quest_${q.id}.webp`;
+    return `<div class="sheet-card ${st.done?'done':''}">
+      <img class="sheet-art" src="${art}" alt="" onerror="this.onerror=null;this.src='img/ui/icons/quests.webp'">
+      <b>${q.title}</b>
+      <span class="sub">${Math.min(st.p|0,q.goal)}/${q.goal}${st.done?' ✓':''} · +${q.reward.coins} <img class="coin" src="img/ui/icons/coins.webp" alt=""></span>
+    </div>`;
+  }).join('')||'<p style="color:#888">Нет квестов</p>'}</div>`;
   EGUI.openSheet({title:'Квесты дня', icon:EGUI.iconSrc('quests'), bodyHtml:body});
 }
-function openShop(){
+window.openShop=function openShop(){
   const items=(PL.pay&&PL.pay.items?PL.pay.items():(PL.social&&PL.social.items)||[]);
-  const body=`<button class="card" id="rw">${ico('energy')} Реклама: +40 энергии<span class="sub">вознаграждение</span></button>
-    ${items.length?items.map(it=>`<button class="card" data-pay="${it[0]}">${it[1]}<span class="sub">${it[2]}</span></button>`).join(''):
+  const packArt=id=>{
+    const s=String(id||'').toLowerCase();
+    if(s.includes('gems_80')||s==='gems_80') return 'shop_gems80';
+    if(s.includes('gems_250')) return 'shop_gems250';
+    if(s.includes('coin')) return 'shop_coins';
+    if(s.includes('freechat')||s.includes('sub')) return 'shop_chat';
+    if(s.includes('energy')) return 'shop_energy';
+    return 'shop_gems80';
+  };
+  const body=`<div class="sheet-grid">
+    <button class="sheet-card" id="rw" type="button"><img class="sheet-art" src="img/ui/sheets/shop_energy.webp" alt="" onerror="this.onerror=null;this.src='img/ui/icons/energy.webp'"><b>Реклама: +40 энергии</b><span class="sub">вознаграждение</span></button>
+    ${items.length?items.map(it=>`<button class="sheet-card" data-pay="${it[0]}" type="button"><img class="sheet-art" src="img/ui/sheets/${packArt(it[0])}.webp" alt="" onerror="this.onerror=null;this.src='img/ui/icons/shop.webp'"><b>${it[1]}</b><span class="sub">${it[2]}</span></button>`).join(''):
       '<p style="color:#888;font-size:13px;margin:8px 0">Платные пакеты — VK/OK/ФС или RuStore / ЮKassa.</p>'}
-    <button class="card" id="auth">${ico('home')} Аккаунт / привязка</button>`;
+    <button class="sheet-card" id="auth" type="button"><img class="sheet-art" src="img/ui/sheets/shop_account.webp" alt="" onerror="this.onerror=null;this.src='img/ui/icons/settings.webp'"><b>Аккаунт / привязка</b><span class="sub">войти</span></button>
+  </div>`;
   const root=EGUI.openSheet({title:'Магазин', icon:EGUI.iconSrc('shop'), bodyHtml:body});
   root.querySelector('#rw').onclick=()=>{
     if(!PL.ads.rewardedAvail()){ S.energy=clamp(S.energy+40,0,100); save(); toast('+40 энергии'); root._close(); return; }
@@ -353,11 +378,11 @@ SCR.sleep=()=>{
 SCR.map=()=>{
   const ph=phase();
   const pins=[
-    {id:'metro',lab:'Метро',x:'20%',y:'40%'},
-    {id:'cafe',lab:'Кафе',x:'52%',y:'34%'},
-    {id:'skate',lab:'Скейтпарк',x:'78%',y:'46%'},
-    {id:'concert',lab:'Концерт',x:'62%',y:'66%'},
-    {id:'mall',lab:'Магазин',x:'28%',y:'70%'}
+    {id:'metro',lab:'Метро',x:'22%',y:'36%'},
+    {id:'cafe',lab:'Кафе',x:'58%',y:'30%'},
+    {id:'skate',lab:'Скейтпарк',x:'74%',y:'48%'},
+    {id:'concert',lab:'Концерт',x:'38%',y:'68%'},
+    {id:'mall',lab:'Магазин',x:'72%',y:'72%'}
   ];
   const av=EG.charImg(S.style,S.gender);
   const need=xpNeed(S.level); const xp=Math.round(clamp(S.xp,0,need));
@@ -568,7 +593,18 @@ SCR.chat=()=>{
   ];
   const quick=[['Привет','qr_heart'],['Как дела','qr_broken'],['Идём гулять','qr_bat']];
   const av=EG.charImg(S.style,S.gender);
-  const hist=(S.chat&&S.chat.length)?S.chat.slice(-8):null;
+  const scrubChat=t=>{
+    if(Array.isArray(t)) t=t[0];
+    t=String(t==null?'':t);
+    t=t.replace(/[*_`]*qr_[a-z0-9_]+[*_`]*/gi,'').replace(/,\s*$/,'').replace(/^\s*,\s*/,'').trim();
+    return t||'…';
+  };
+  const hist=(function(){
+    if(!(S.chat&&S.chat.length)) return null;
+    S.chat=S.chat.map(m=>Object.assign({},m,{t:scrubChat(m&&m.t)}));
+    try{save();}catch(e){}
+    return S.chat.slice(-8);
+  })();
   const paint=()=>{
     const list=hist?hist.map((m,i)=>{
       const name=m.me?'Ты':(peers[i%peers.length].name);
@@ -587,8 +623,10 @@ SCR.chat=()=>{
     </div>`;
     bindNav();
     app.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{
-      S.chat=(S.chat||[]).concat([{me:true,t:b.dataset.p}]);
-      const reply=quick[Math.floor(Math.random()*quick.length)];
+      const txt=b.dataset.p;
+      S.chat=(S.chat||[]).concat([{me:true,t:txt}]);
+      const pick=quick[Math.floor(Math.random()*quick.length)];
+      const reply=scrubChat(Array.isArray(pick)?pick[0]:pick);
       S.chat.push({me:false,t:reply}); if(S.chat.length>40) S.chat=S.chat.slice(-40);
       S.chats++; S.social=clamp(S.social+2,0,100); qAdd('chats',1); addXp(2); save(); SCR.chat();
     });
