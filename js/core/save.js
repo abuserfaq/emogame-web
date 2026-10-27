@@ -7,7 +7,7 @@ const DEF=()=>({
   style:'emo', gender:'guy', name:'',
   hunger:70, thirst:70, energy:80, mood:65, social:40, styleStat:20, fame:0, music:0,
   coins:200, gems:5, xp:0, level:1,
-  loc:'room', wardrobe:{}, decor:{}, questDay:'', quest:{},
+  loc:'room', wardrobe:{}, equip:{}, decor:{}, questDay:'', quest:{},
   chat:[], lastTick:Date.now(), lastLoginDay:'',
   sleeps:0, feeds:0, drinks:0, chats:0, park:0, concerts:0, cleans:0, outings:0,
   dirt:{trash:0,dishes:0,laundry:0},

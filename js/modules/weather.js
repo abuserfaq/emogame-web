@@ -10,6 +10,8 @@ const Weather={
     const seed=(now.toISOString().slice(0,10)+'eg').split('').reduce((a,c)=>a+c.charCodeAt(0),0);
     const wlist=m.weathers||['clear']; const weather=wlist[seed%wlist.length];
     S.season=season; S.weather=weather;
+    const wxL=(window.EG&&EG.wxLabel)||{}; const seL=(window.EG&&EG.seasonLabel)||{};
+    S.weatherText=(wxL[weather]||weather)+' · '+(seL[season]||season);
     S.seasonsSeen=S.seasonsSeen||{}; S.seasonsSeen[season]=1;
     S.seasonsSeenCount=Object.keys(S.seasonsSeen).length;
     return {season,weather,fx:(m.effects||{})[weather]||{}};

@@ -5,7 +5,8 @@
     "thirst": 22,
     "mood": 1,
     "cost": 5,
-    "tier": 1
+    "tier": 1,
+    "img": "img/drinks/water.png"
   },
   {
     "id": "soda",
@@ -13,7 +14,8 @@
     "thirst": 18,
     "mood": 4,
     "cost": 20,
-    "tier": 1
+    "tier": 1,
+    "img": "img/drinks/soda.png"
   },
   {
     "id": "boba",
@@ -21,7 +23,8 @@
     "thirst": 20,
     "mood": 12,
     "cost": 45,
-    "tier": 1
+    "tier": 1,
+    "img": "img/drinks/boba.png"
   },
   {
     "id": "energy",
@@ -31,7 +34,8 @@
     "mood": 2,
     "cost": 50,
     "tier": 2,
-    "minLevel": 3
+    "minLevel": 3,
+    "img": "img/drinks/energy.png"
   },
   {
     "id": "latte",
@@ -40,7 +44,8 @@
     "mood": 10,
     "cost": 40,
     "tier": 2,
-    "minLevel": 4
+    "minLevel": 4,
+    "img": "img/drinks/latte.png"
   },
   {
     "id": "smoothie",
@@ -50,6 +55,7 @@
     "mood": 8,
     "cost": 55,
     "tier": 3,
-    "minLevel": 6
+    "minLevel": 6,
+    "img": "img/drinks/smoothie.png"
   }
 ]

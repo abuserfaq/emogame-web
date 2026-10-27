@@ -5,7 +5,8 @@
     "slot": "top",
     "style": 8,
     "cost": 120,
-    "tier": 1
+    "tier": 1,
+    "img": "img/wardrobe/hoodie.png"
   },
   {
     "id": "boots",
@@ -13,7 +14,8 @@
     "slot": "shoes",
     "style": 10,
     "cost": 150,
-    "tier": 1
+    "tier": 1,
+    "img": "img/wardrobe/boots.png"
   },
   {
     "id": "choker_shop",
@@ -21,7 +23,8 @@
     "slot": "acc",
     "style": 6,
     "cost": 60,
-    "tier": 1
+    "tier": 1,
+    "img": "img/wardrobe/choker_shop.png"
   },
   {
     "id": "paint",
@@ -30,7 +33,8 @@
     "style": 12,
     "cost": 200,
     "tier": 2,
-    "minLevel": 4
+    "minLevel": 4,
+    "img": "img/wardrobe/paint.png"
   },
   {
     "id": "fishnet",
@@ -39,7 +43,8 @@
     "style": 9,
     "cost": 110,
     "tier": 2,
-    "minLevel": 5
+    "minLevel": 5,
+    "img": "img/wardrobe/fishnet.png"
   },
   {
     "id": "idol_jacket",
@@ -48,6 +53,7 @@
     "style": 16,
     "cost": 280,
     "tier": 3,
-    "minLevel": 8
+    "minLevel": 8,
+    "img": "img/wardrobe/idol_jacket.png"
   }
 ]

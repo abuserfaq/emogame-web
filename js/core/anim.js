@@ -9,8 +9,8 @@ const Anim={
       this.el.style.width=''; this.el.style.objectPosition='';
       this.el.style.objectFit='contain';
       this.el.style.background='transparent';
-      this.el.style.maxWidth='42%';
-      this.el.style.height='52%';
+      this.el.style.maxWidth='58%';
+      this.el.style.height='58%';
       this.el.style.imageRendering='pixelated';
     }
     this.play('idle');

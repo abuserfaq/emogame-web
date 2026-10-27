@@ -164,7 +164,8 @@ function decorHTML(){
 function stageHTML(locId){
   const ph=phase(); const bg=EG.locBg(locId,ph);
   const loc=(EG.LOCS||[]).find(l=>l.id===locId)||{name:locId};
-  return `<div class="stage"><img class="bg" src="${bg}" alt="" onerror="this.src='img/loc/room_morning.jpg'">
+  const floorCls='floor-'+(locId||'room');
+  return `<div class="stage ${floorCls}" data-loc="${locId||'room'}"><img class="bg" src="${bg}" alt="" onerror="this.src='img/loc/room_morning.jpg'">
     <div class="loc-title">${loc.name||locId}</div>
     ${decorHTML()}
     <img class="char" id="charSpr" src="${(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})()}" alt=""></div>`;
@@ -210,18 +211,38 @@ function qAdd(stat,n){
 
 function openWardrobe(){
   const giftWear=(EG.GIFTS&&EG.GIFTS.items||[]).filter(g=>g.kind==='wear'&&(S.gifts&&S.gifts.inv[g.id]>0));
-  const body=`<div class="grid">${(EG.SHOP||[]).map(it=>{
-    const owned=!!S.wardrobe[it.id];
-    return `<button class="card" data-w="${it.id}">${it.name}<span class="sub">${owned?'есть · ':''}+${it.style} стиль · ${it.cost}</span></button>`;
-  }).join('')}</div>
+  const slots=['top','bottom','shoes','acc','hair'];
+  const slotRu={top:'Верх',bottom:'Низ',shoes:'Обувь',acc:'Аксессуар',hair:'Волосы'};
+  S.equip=S.equip||{};
+  const previewSrc=(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})();
+  const bySlot=slots.map(sl=>{
+    const items=(EG.SHOP||[]).filter(it=>it.slot===sl);
+    if(!items.length) return '';
+    return `<div class="ward-slot"><div class="ward-slot-h">${slotRu[sl]||sl}</div><div class="grid ward-grid">${items.map(it=>{
+      const owned=!!S.wardrobe[it.id]; const eq=S.equip[sl]===it.id;
+      return `<button class="card food-card ward-card ${eq?'on':''}" data-w="${it.id}" data-slot="${sl}">
+        <img class="food-art" src="${EG.shopImg(it)}" alt="">
+        <b>${it.name}</b>
+        <span class="sub">${owned?(eq?'надет':'есть'):''} +${it.style} стиль · <img class="coin" src="img/ui/icons/coins.png" alt=""> ${it.cost}</span>
+      </button>`;
+    }).join('')}</div></div>`;
+  }).join('');
+  const body=`<div class="ward-preview"><img id="wardPrev" src="${previewSrc}" alt=""></div>
+  ${bySlot}
   <h3 style="margin-top:10px;color:#ff4d9a;font-size:14px">Подарки — надеть</h3>
-  <div class="grid">${giftWear.map(g=>`<button class="card" data-gw="${g.id}"><img src="${EG.giftImg(g)}" class="pxico lg" alt=""> ${g.name}</button>`).join('')||'<p style="color:#888;font-size:12px">Пока нет носимых подарков</p>'}</div>`;
+  <div class="grid">${giftWear.map(g=>`<button class="card food-card" data-gw="${g.id}"><img class="food-art" src="${EG.giftImg(g)}" alt=""><b>${g.name}</b></button>`).join('')||'<p style="color:#888;font-size:12px">Пока нет носимых подарков</p>'}</div>`;
   const root=EGUI.openSheet({title:'Гардероб', icon:EGUI.wardrobeIcon(S.gender), bodyHtml:body});
   root.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{
     const it=EG.SHOP.find(x=>x.id===b.dataset.w); if(!it)return;
-    if(S.wardrobe[it.id]){ toast('Уже есть'); return; }
-    if(S.coins<it.cost){ toast('Мало монет'); return; }
-    S.coins-=it.cost; S.wardrobe[it.id]=1; S.styleStat=clamp(S.styleStat+it.style,0,100); save(); toast('Куплено: '+it.name); root._close(); go('home');
+    if(!S.wardrobe[it.id]){
+      if(S.coins<it.cost){ toast('Мало монет'); return; }
+      S.coins-=it.cost; S.wardrobe[it.id]=1; S.styleStat=clamp(S.styleStat+it.style,0,100);
+      toast('Куплено: '+it.name);
+    }
+    S.equip=S.equip||{}; S.equip[it.slot]=it.id; save();
+    const prev=root.querySelector('#wardPrev'); if(prev) prev.src=EG.shopImg(it);
+    root.querySelectorAll('.ward-card').forEach(x=>x.classList.toggle('on', S.equip[x.dataset.slot]===x.dataset.w));
+    toast('Надето: '+it.name);
   });
   root.querySelectorAll('[data-gw]').forEach(b=>b.onclick=()=>{
     const r=EGGifts.wear(S,b.dataset.gw); if(r.ok){ save(); toast('Надето'); root._close(); go('home'); EGAnim&&EGAnim.play('happy'); }
@@ -254,10 +275,15 @@ function openShop(){
 }
 
 SCR.feed=()=>{
-  app.innerHTML=`<div class="screen">${statRow()}
-    <div class="panel eg-scroll" style="position:relative;inset:auto;margin:10px;max-height:none;flex:1;overflow:auto;border:3px solid #ff4d9a;border-radius:12px">
-      <h3>${ico('food')} Еда</h3><div class="grid">${(EG.FOOD||[]).filter(f=>!window.EGUnlocks||EGUnlocks.foodOk(S,f.id||f)).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-f="${f.id}">${ico('hunger')} ${f.name}<span class="sub">+${f.hunger} голод · ${f.cost}</span></button>`).join('')}</div>
-      <h3 style="margin-top:14px">${ico('thirst')} Напитки</h3><div class="grid">${(EG.DRINKS||[]).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-d="${f.id}">${ico('thirst')} ${f.name}<span class="sub">+${f.thirst||0} жажда · ${f.cost}</span></button>`).join('')}</div>
+  const foodCard=(f,kind)=>`<button class="card food-card" data-${kind==='food'?'f':'d'}="${f.id}">
+      <img class="food-art" src="${kind==='food'?EG.foodImg(f):EG.drinkImg(f)}" alt="">
+      <b>${f.name}</b>
+      <span class="sub">+${kind==='food'?f.hunger:(f.thirst||0)} ${kind==='food'?'голод':'жажда'} · <img class="coin" src="img/ui/icons/coins.png" alt=""> ${f.cost}</span>
+    </button>`;
+  app.innerHTML=`<div class="screen">${statRow()}${careBanner()}
+    <div class="panel feed-panel" style="position:relative;inset:auto;margin:10px;max-height:none">
+      <h3>Еда</h3><div class="grid food-grid">${(EG.FOOD||[]).filter(f=>!window.EGUnlocks||EGUnlocks.foodOk(S,f.id||f)).filter(f=>S.level>=(f.minLevel||1)).map(f=>foodCard(f,'food')).join('')}</div>
+      <h3 style="margin-top:14px">Напитки</h3><div class="grid food-grid">${(EG.DRINKS||[]).filter(f=>S.level>=(f.minLevel||1)).map(f=>foodCard(f,'drink')).join('')}</div>
     </div>${nav('feed')}</div>`;
   bindNav();
   app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
@@ -290,7 +316,7 @@ SCR.map=()=>{
   const ph=phase();
   app.innerHTML=`<div class="screen">${statRow()}
     <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:none">
-      <h3>Куда идём? · ${EG.phaseLabel[ph]}</h3><p style="color:#aaa;font-size:12px">${ico('mood')} ${(EGWeather&&EGWeather.sync(S),S.weather)||'?'} · сезон ${S.season||'?'} · подп. ${S.followers|0}</p>
+      <h3>Куда идём? · ${EG.phaseLabel[ph]}</h3><p style="color:#aaa;font-size:12px">${ico('mood')} ${(EGWeather&&EGWeather.sync(S), (EG.weatherText&&EG.weatherText(S))||S.weatherText||'')} · подп. ${S.followers|0}</p>
       <div class="grid">${(EG.LOCS||[]).filter(l=>l.id!=='room').map(l=>{
         const phaseOk=!l.phases||l.phases.includes(ph);
         const lvOk=unlockOk(l);
@@ -334,7 +360,7 @@ SCR.loc=(id)=>{
       ${['concert','karaoke','arcade','skate','garage','idol_stage','nightclub','records'].includes(loc.id)?`<button class="btn" id="mini" style="flex:1">Мини-игра</button>`:''}
       ${loc.id==='garage'||loc.id==='nightclub'||loc.id==='festival'?`<button class="btn" id="gig" style="flex:1">Гиги</button>`:''}
     </div>
-    <div style="padding:0 10px 10px;color:#c8a0b8;font-size:12px">${(S.weather||'')} · ${(S.season||'')}</div>
+    <div style="padding:0 10px 10px;color:#c8a0b8;font-size:12px">${(EG.weatherText&&EG.weatherText(S))||S.weatherText||((S.weather||'')+' · '+(S.season||''))}</div>
     ${nav('map')}</div>`;
   bindNav(); mountAnim(); if(EGAnim) EGAnim.play('walk');
   $('#back').onclick=()=>go('map');
@@ -467,50 +493,24 @@ SCR.chat=()=>{
   const peer=(window.EGAuth&&EGAuth.uiName())||(S.name)||'xShadow_666';
   const st=(S.style==='goth'||S.style==='skater'||S.style==='punk')?'alt':S.style;
   const av=EG.charImg(st,S.gender);
-  const cats=(EG.CHAT_CATS&&EG.CHAT_CATS.length)?EG.CHAT_CATS:[
-    {id:'greet',name:'Привет',icon:'cat_heart'},{id:'mood',name:'Настроение',icon:'cat_smile'},
-    {id:'loc',name:'Локации',icon:'cat_pin'},{id:'support',name:'Поддержка',icon:'cat_support'},
-    {id:'concert',name:'Концерт',icon:'cat_note'}
-  ];
-  const PICO={
-    'Привет':'hand','Йо':'hand','Рад(а) видеть':'hand','Как дела?':'sparkle','Давно не виделись':'hand','Чем занят?':'sparkle',
-    'Норм, вайбую':'flame','Вайб огонь':'flame','Мне грустно':'heart','Сегодня ок':'cat_smile','Нужен сон':'sparkle','Ищу, куда пойти':'cat_pin',
-    'Идём в парк':'tree','На концерт':'ticket','Метро через 5':'cat_pin','Кладбище вечером?':'sparkle','Домой':'cat_pin','На крышу':'cat_pin',
-    'Держись':'heart','Держись там':'heart','Ты крут(а)':'heart','Обнимаю':'cat_support','Музыка поможет':'cat_note','Отдыхай':'heart',
-    'Этот трек!':'cat_note','Танцуем':'cat_note','Фото?':'sparkle','Ещё раз!':'flame','Было круто':'flame',
-    'Пока':'bye','Спокойной ночи':'bye','До завтра':'bye','Удачи':'hand','До связи':'bye','Бай':'bye'
-  };
-  const pico=k=>'<img class="pxico chat-ico" src="img/ui/chat/'+(PICO[k]||'sparkle')+'.png" alt="">';
-  const cico=c=>'<img class="pxico chat-cat-ico" src="img/ui/chat/'+(c.icon||'cat_heart')+'.png" alt="">';
+  const cats=[{id:'greet',name:'Привет',ic:'mood'},{id:'mood',name:'Настроение',ic:'mood'},{id:'food',name:'Еда',ic:'food'},{id:'locs',name:'Локации',ic:'map'},{id:'support',name:'Поддержка',ic:'gifts'},{id:'concert',name:'Концерт',ic:'fame'}];
   const paint=()=>{
-    const phrases=Array.isArray(EG.CHAT&&EG.CHAT[cat])?EG.CHAT[cat]:(EG.CHAT&&EG.CHAT.greet)||['Привет','Йо'];
+    const phrases=Array.isArray(EG.CHAT&&EG.CHAT[cat])?(EG.CHAT[cat]):(Array.isArray(EG.CHAT&&EG.CHAT.greet)?EG.CHAT.greet:['Привет','Йо','Как дела?']);
     const free=!!(window.EGAuth&&EGAuth.canFreeChat());
-    let hist=(S.chat||[]).slice(-10);
-    if(!hist.length){
-      hist=[
-        {me:false,t:'Йо'},{me:true,t:'Норм, вайбую'},
-        {me:false,t:'Как дела?'},{me:true,t:'Ищу, куда пойти'},
-        {me:false,t:'Чем занят?'},{me:true,t:'Держись там'}
-      ];
-    }
+    let hist=(S.chat||[]).slice(-12); if(!hist.length){ hist=[{me:false,t:'Выбери фразу ниже'},{me:true,t:'Привет'}]; }
     const bubbles=hist.map(m=>{
-      const side=m.me?'me':'them';
-      const ico=m.me?'':'<span class="bub-ico">'+pico(m.t)+'</span>';
-      return '<div class="bub-row '+side+'">'+ico+'<div class="bub '+side+'">'+m.t+(m.t==='Держись там'?' <img class="inline-sk" src="img/ui/chat/sparkle.png" alt="">':'')+'</div></div>';
-    }).join('');
-    const upsell=free?'':'<div class="chat-upsell slim">Свободный чат — подписка + телефон (VK/Яндекс/Telegram). Пресеты бесплатны. <button class="btn" id="upsell">Открыть</button></div>';
-    app.innerHTML=
-      '<div class="screen chat-screen mock-chat">'+
-        '<div class="chat-head"><button class="chat-back" id="back">◀</button>'+
-          '<div class="chat-titles"><div class="t1">Emogame <img class="sk" src="img/ui/chat/sparkle.png" alt=""></div><div class="t2">PRESET CHAT</div></div>'+
-          '<button class="chat-menu" id="acc">☰</button></div>'+
-        '<div class="chat-peer"><img class="av" src="'+av+'" alt=""><div><div class="nm">'+peer+'</div><div class="on">онлайн ●</div></div></div>'+
-        '<div class="chat-bubbles eg-scroll" id="bub">'+bubbles+'</div>'+upsell+
-        '<div class="chat-cats">'+cats.map(c=>'<button data-c="'+c.id+'" class="'+(cat===c.id?'on':'')+'">'+cico(c)+'<span>'+c.name+'</span></button>').join('')+'</div>'+
-        '<div class="phrases eg-scroll">'+phrases.slice(0,6).map((p,i)=>'<button data-p="'+p+'" class="'+(i===phrases.slice(0,6).length-1?'alt':'')+'">'+pico(p)+'<span>'+p+'</span></button>').join('')+'</div>'+
-        '<div class="chat-mod"><button class="btn ghost" id="rep">Жалоба</button><button class="btn ghost" id="blk">Блок</button></div>'+
-        nav('chat')+
-      '</div>';
+      const avHtml=m.me?'':'<img class="av-inline" src="'+av+'" alt="">';
+      return '<div class="bub '+(m.me?'me':'them')+'">'+avHtml+m.t+'</div>';
+    }).join('')||'<div class="bub them">Выбери фразу ниже</div>';
+    const upsell=free?'':'<div class="chat-upsell">Свободный чат — подписка + верификация телефона (VK ID / Яндекс / Telegram). Пресеты бесплатны.<button class="btn" id="upsell">Открыть свободный чат</button></div>';
+    app.innerHTML='<div class="screen chat-screen">'+statRow()+
+      '<div class="chat-peer"><img class="av" src="'+av+'" alt=""><div><div class="nm">'+peer+'</div><div class="on">онлайн</div></div>'+
+      '<button class="btn ghost" id="acc" style="margin-left:auto;width:auto;padding:8px 10px;font-size:11px">Аккаунт</button></div>'+
+      '<div class="chat-bubbles eg-scroll" id="bub">'+bubbles+'</div>'+upsell+
+      '<div class="chat-cats">'+cats.map(c=>'<button data-c="'+c.id+'" class="'+(cat===c.id?'on':'')+'">'+ico(c.ic)+'<span>'+c.name+'</span></button>').join('')+'</div>'+
+      '<div class="phrases eg-scroll">'+phrases.map(p=>'<button data-p="'+p+'">'+ico('chat')+p+'</button>').join('')+'</div>'+
+      '<div class="chat-mod"><button class="btn ghost" id="rep">Жалоба</button><button class="btn ghost" id="blk">Блок</button></div>'+
+      nav('chat')+'</div>';
     bindNav();
     const bub=$('#bub'); if(bub) bub.scrollTop=bub.scrollHeight;
     app.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{cat=b.dataset.c;paint();});
@@ -519,17 +519,13 @@ SCR.chat=()=>{
       const allowed=[].concat(...Object.values(EG.CHAT||{}).map(v=>Array.isArray(v)?v:[]));
       if(allowed.length && !allowed.includes(raw)) return;
       const f=window.EGChatMod?EGChatMod.filter(raw):{text:raw};
-      if(!(S.chat&&S.chat.length)) S.chat=[];
-      // if was showing demo, start fresh transcript
-      if(!S.chat.length){ /* keep */ }
-      S.chat=S.chat.concat([{me:true,t:f.text}]);
+      S.chat=(S.chat||[]).concat([{me:true,t:f.text}]);
       const pool=phrases; const reply=pool[Math.floor(Math.random()*pool.length)];
       S.chat.push({me:false,t:reply}); if(S.chat.length>40) S.chat=S.chat.slice(-40);
       S.chats++; S.social=clamp(S.social+2,0,100); qAdd('chats',1); addXp(2); save(); paint();
     });
     const up=$('#upsell'); if(up) up.onclick=()=>go('account');
     const acc=$('#acc'); if(acc) acc.onclick=()=>go('account');
-    const back=$('#back'); if(back) back.onclick=()=>go('home');
     const rep=$('#rep'); if(rep) rep.onclick=()=>{ EGChatMod&&EGChatMod.report(S,'peer','spam'); save(); toast('Жалоба отправлена'); };
     const blk=$('#blk'); if(blk) blk.onclick=()=>{ EGChatMod&&EGChatMod.block(S,'peer'); save(); toast('Заблокировано'); };
   };
@@ -810,7 +806,9 @@ async function boot(){
     S.level=Math.max(S.level,5); S.streak=S.streak||{n:3,last:'',freeze:0}; S.streak.n=Math.max(S.streak.n,3);
     S.dirt=S.dirt||{trash:18,dishes:12,laundry:8};
     localStorage.setItem('eg_created','1'); localStorage.setItem('eg_care_onboard','1');
-    save(); go(shotGo, q.get('a')||undefined); return;
+    save();
+    if(shotGo==='wardrobe'){ go('home'); try{ openWardrobe(); }catch(e){}; return; }
+    go(shotGo, q.get('a')||undefined); return;
   }
   if(S.consent==null) go('consent');
   else if(!localStorage.getItem('eg_care_onboard')) go('onboardCare');

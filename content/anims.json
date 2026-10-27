@@ -30,7 +30,9 @@
     "idol_girl": "img/chars/sheets/idol_girl_anims.jpg",
     "goth_girl": "img/chars/sheets/goth_girl_anims.jpg",
     "punk_guy": "img/chars/sheets/punk_guy_anims.jpg",
-    "skater_girl": "img/chars/sheets/skater_girl_anims.jpg"
+    "skater_girl": "img/chars/sheets/skater_girl_anims.jpg",
+    "punk_girl": "img/chars/sheets/punk_girl_anims.jpg",
+    "skater_guy": "img/chars/sheets/skater_guy_anims.jpg"
   },
   "frameSets": {
     "emo_guy": {
@@ -167,6 +169,36 @@
       "sick": "img/chars/frames/skater_girl/sick.png",
       "hungry": "img/chars/frames/skater_girl/hungry.png",
       "blink": "img/chars/frames/skater_girl/blink.png"
+    },
+    "punk_girl": {
+      "idle": "img/chars/frames/punk_girl/idle.png",
+      "idle2": "img/chars/frames/punk_girl/idle2.png",
+      "walk": "img/chars/frames/punk_girl/walk.png",
+      "walk2": "img/chars/frames/punk_girl/walk2.png",
+      "eat": "img/chars/frames/punk_girl/eat.png",
+      "drink": "img/chars/frames/punk_girl/drink.png",
+      "sleep": "img/chars/frames/punk_girl/sleep.png",
+      "dance": "img/chars/frames/punk_girl/dance.png",
+      "happy": "img/chars/frames/punk_girl/happy.png",
+      "sad": "img/chars/frames/punk_girl/sad.png",
+      "sick": "img/chars/frames/punk_girl/sick.png",
+      "hungry": "img/chars/frames/punk_girl/hungry.png",
+      "blink": "img/chars/frames/punk_girl/blink.png"
+    },
+    "skater_guy": {
+      "idle": "img/chars/frames/skater_guy/idle.png",
+      "idle2": "img/chars/frames/skater_guy/idle2.png",
+      "walk": "img/chars/frames/skater_guy/walk.png",
+      "walk2": "img/chars/frames/skater_guy/walk2.png",
+      "eat": "img/chars/frames/skater_guy/eat.png",
+      "drink": "img/chars/frames/skater_guy/drink.png",
+      "sleep": "img/chars/frames/skater_guy/sleep.png",
+      "dance": "img/chars/frames/skater_guy/dance.png",
+      "happy": "img/chars/frames/skater_guy/happy.png",
+      "sad": "img/chars/frames/skater_guy/sad.png",
+      "sick": "img/chars/frames/skater_guy/sick.png",
+      "hungry": "img/chars/frames/skater_guy/hungry.png",
+      "blink": "img/chars/frames/skater_guy/blink.png"
     }
   },
   "sequences": {

@@ -18,7 +18,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .stage{flex:1;position:relative;min-height:0;margin:0 10px;border-radius:16px;overflow:hidden;border:1px solid #2a1a24;
   background:#100c12 center/cover no-repeat}
 .stage img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
-.stage .char{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);height:48%;width:auto;max-width:55%;object-fit:contain;
+.stage .char{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);height:58%;width:auto;max-width:58%;object-fit:contain;
   filter:drop-shadow(0 8px 16px rgba(0,0,0,.55));pointer-events:none;z-index:2}
 .stage .loc-title{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:3;font-size:13px;letter-spacing:.08em;
   background:rgba(10,8,12,.72);border:1px solid var(--accent,#ff4d9a);color:#fff;padding:4px 12px;border-radius:999px}
@@ -99,7 +99,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .nav button .ic .pxico{width:32px;height:32px}
 .resbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .resbar .pxico{width:20px;height:20px}
-.stage .char{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);height:52%;width:auto;max-width:42%;object-fit:contain;
+.stage .char{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);height:58%;width:auto;max-width:58%;object-fit:contain;
   background:transparent!important;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5));pointer-events:none;z-index:2;image-rendering:pixelated}
 .stage .char.char-sheet{display:none} /* never show full sheet */
 .btn .pxico,.card .pxico{width:24px;height:24px}
@@ -165,39 +165,62 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .home-actions{padding:8px 12px;display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0}
 
 
-
 /* Chat 1:1 mockup polish */
-.chat-screen.mock-chat{background:#000;border:0;padding:0;display:flex;flex-direction:column;min-height:0}
-.chat-screen.mock-chat .topbar,.chat-screen.mock-chat .resbar{display:none!important}
-.chat-head{display:flex;align-items:center;gap:8px;padding:10px 12px 4px;border-bottom:3px solid #ff4d9a}
-.chat-back,.chat-menu{width:36px;height:36px;border:3px solid #ff4d9a;background:#120c14;color:#ff4d9a;font-size:16px;border-radius:6px;cursor:pointer}
-.chat-titles{flex:1;text-align:center}
-.chat-titles .t1{color:#ff4d9a;font-size:16px;font-weight:800;letter-spacing:.06em;display:flex;align-items:center;justify-content:center;gap:6px}
-.chat-titles .t1 .sk{width:18px;height:18px;image-rendering:pixelated}
-.chat-titles .t2{color:#fff;font-size:11px;letter-spacing:.14em;margin-top:2px}
-.chat-peer{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:3px solid #ff4d9a;margin:0;border-radius:0;background:#000}
-.chat-peer img.av{width:44px;height:44px;border:3px solid #ff4d9a;border-radius:4px;object-fit:cover;object-position:top;image-rendering:pixelated}
-.chat-peer .nm{color:#ff4d9a;font-size:15px;font-weight:800}
-.chat-peer .on{color:#3f3;font-size:12px}
-.chat-bubbles{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:160px;border:0;margin:0;background:#000;border-radius:0}
-.bub-row{display:flex;align-items:flex-end;gap:6px;max-width:92%}
-.bub-row.me{align-self:flex-end;flex-direction:row-reverse}
-.bub-row.them{align-self:flex-start}
-.bub-ico .pxico,.bub-ico .chat-ico{width:22px;height:22px}
-.bub{border:3px solid #ff4d9a;font-size:13px;padding:10px 12px;position:relative;max-width:100%}
-.bub.them{background:#141014;color:#fff;border-radius:4px 14px 14px 14px}
-.bub.me{background:#ff4d9a;color:#111;border-radius:14px 4px 14px 14px;font-weight:700}
-.bub .inline-sk{width:16px;height:16px;vertical-align:middle;image-rendering:pixelated}
-.chat-cats{display:flex;gap:0;overflow-x:auto;border-top:3px solid #ff4d9a;border-bottom:3px solid #ff4d9a;background:#0a0a0c;margin:0;border-radius:0}
-.chat-cats button{flex:1;min-width:64px;padding:10px 6px;background:transparent;border:0;border-right:2px solid #2a1a24;color:#ff8fb8;font-size:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
-.chat-cats button.on{background:#ff4d9a33;color:#fff;box-shadow:inset 0 -4px 0 #ff4d9a}
-.chat-cat-ico{width:40px!important;height:40px!important;image-rendering:pixelated}
-.chat-screen .phrases{margin:10px;padding:0;gap:10px;max-height:36vh;display:grid;grid-template-columns:1fr 1fr;background:transparent}
-.chat-screen .phrases button{border:3px solid #ff4d9a;border-radius:8px;padding:12px 10px;font-size:13px;background:#120c14;color:#fff;min-height:56px;display:flex;align-items:center;gap:8px;font-weight:600}
-.chat-screen .phrases button.alt{border-color:#fff}
-.chat-screen .phrases button .chat-ico{width:32px;height:32px;image-rendering:pixelated;flex-shrink:0}
-.chat-upsell.slim{margin:6px 10px;padding:6px 8px;border:2px dashed #ff4d9a88;border-radius:6px;font-size:10px;color:#aaa;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.chat-upsell.slim .btn{width:auto;margin:0;padding:6px 10px;font-size:11px}
-.chat-mod{display:flex;gap:8px;padding:0 10px 6px}
-.chat-mod .btn{flex:1;border:2px solid #ff4d9a66;font-size:11px;padding:8px}
-.chat-ico{image-rendering:pixelated}
+.chat-screen .topbar,.chat-screen .resbar{display:none}
+.chat-screen{border:3px solid #ff4d9a;border-radius:0;background:#0a0a0c}
+.chat-peer{border:2px solid #ff4d9a;margin:8px;border-radius:8px;background:#120c14}
+.chat-peer img.av{width:48px;height:48px;border:2px solid #ff4d9a;border-radius:6px;image-rendering:pixelated;object-fit:cover;object-position:top}
+.chat-bubbles{border:2px solid #ff4d9a55;margin:0 8px;border-radius:8px;background:#0e0a10;min-height:140px;flex:1}
+.bub{border:2px solid #ff4d9a;font-size:13px;padding:10px 12px;max-width:82%}
+.bub.them{border-radius:4px 12px 12px 12px;background:#161018}
+.bub.me{border-radius:12px 4px 12px 12px;background:#ff4d9a;color:#111}
+.chat-cats{border:2px solid #ff4d9a;margin:8px 8px 0;border-radius:8px;background:#120c14}
+.chat-cats button{min-width:72px;padding:12px 10px;color:#ff8fb8}
+.chat-cats button .pxico{width:36px;height:36px;filter:none}
+.chat-cats button.on{background:#ff4d9a22;color:#fff;box-shadow:inset 0 -3px 0 #ff4d9a}
+.chat-cats button span{font-size:10px;letter-spacing:.02em}
+.chat-screen .phrases{margin:8px;padding:0;gap:8px;max-height:34vh;display:grid;grid-template-columns:1fr 1fr}
+.chat-screen .phrases button{border:2px solid #ff4d9a;border-radius:8px;padding:14px 10px;font-size:13px;background:#161018;min-height:52px}
+.chat-screen .phrases button .pxico{width:28px;height:28px}
+.chat-upsell{margin:6px 8px;padding:8px 10px;border:2px dashed #ff4d9a99;border-radius:8px;font-size:11px;color:#caa;background:#120c14}
+.chat-upsell .btn{margin-top:6px;width:100%;padding:10px;font-size:12px}
+.chat-screen .chat-mod{display:flex;gap:6px;padding:0 8px 6px}
+.chat-screen .chat-mod .btn{flex:1;border:2px solid #ff4d9a66;font-size:11px;padding:8px}
+
+/* Food / drink / wardrobe product cards — large AI art ~60% of card */
+.food-grid{grid-template-columns:1fr 1fr;gap:10px}
+.food-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:10px 8px 12px;min-height:0}
+.food-card .food-art{width:72%;aspect-ratio:1;object-fit:contain;image-rendering:pixelated;margin:4px auto 8px;display:block}
+.food-card b{font-size:13px;color:#fff;margin-bottom:4px}
+.food-card .sub{font-size:11px;color:#b9a;display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}
+.food-card .coin{width:14px;height:14px;image-rendering:pixelated;vertical-align:middle;display:inline-block}
+.feed-panel{overflow:auto;max-height:70vh}
+
+/* Wardrobe live preview + hanger slots */
+.ward-preview{display:flex;justify-content:center;align-items:flex-end;height:180px;margin:0 0 12px;background:linear-gradient(180deg,#1a1018,#0e0a10);border:2px solid #ff4d9a66;border-radius:12px;overflow:hidden}
+.ward-preview img{height:92%;width:auto;max-width:55%;object-fit:contain;image-rendering:pixelated;object-position:bottom}
+.ward-slot{margin-bottom:12px}
+.ward-slot-h{font-size:12px;color:#ff4d9a;letter-spacing:.06em;margin:0 0 6px;text-transform:uppercase}
+.ward-grid{grid-template-columns:1fr 1fr;gap:8px}
+.ward-card.on{border-color:#ff4d9a;box-shadow:0 0 12px #ff4d9a55}
+.ward-card .food-art{width:58%}
+
+/* Bold pixel icons */
+.pxico{width:28px;height:28px;image-rendering:pixelated;object-fit:contain}
+.pxico.lg{width:40px;height:40px}
+.nav button .pxico,.nav button img.pxico{width:26px;height:26px}
+
+/* Character size + per-location floor offsets (feet on rug/floor, not tracks) */
+.stage .char{height:58%;max-width:58%;bottom:7%;image-rendering:pixelated}
+.stage.floor-room .char{bottom:8%}
+.stage.floor-metro .char,.stage.floor-station .char{bottom:18%}
+.stage.floor-park .char,.stage.floor-cemetery .char,.stage.floor-beach .char,.stage.floor-embankment .char{bottom:12%}
+.stage.floor-concert .char,.stage.floor-idol_stage .char,.stage.floor-karaoke .char,.stage.floor-nightclub .char{bottom:22%}
+.stage.floor-cafe .char,.stage.floor-bookcafe .char,.stage.floor-mall .char,.stage.floor-arcade .char{bottom:10%}
+.stage.floor-rooftop .char,.stage.floor-skate .char,.stage.floor-factory .char,.stage.floor-garage .char{bottom:14%}
+.stage.floor-records .char,.stage.floor-tattoo .char,.stage.floor-school .char,.stage.floor-festival .char{bottom:11%}
+
+/* CHAR SIZE FINAL */
+.stage .char{height:58%!important;max-width:58%!important;bottom:8%;image-rendering:pixelated!important}
+.stage.floor-metro .char,.stage.floor-station .char{bottom:20%!important}
+.stage.floor-concert .char,.stage.floor-idol_stage .char{bottom:24%!important}

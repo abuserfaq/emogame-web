@@ -5,7 +5,8 @@
     "hunger": 28,
     "mood": 4,
     "cost": 40,
-    "tier": 1
+    "tier": 1,
+    "img": "img/food/ramen.png"
   },
   {
     "id": "onigiri",
@@ -13,7 +14,8 @@
     "hunger": 18,
     "mood": 2,
     "cost": 25,
-    "tier": 1
+    "tier": 1,
+    "img": "img/food/onigiri.png"
   },
   {
     "id": "cake",
@@ -21,7 +23,8 @@
     "hunger": 14,
     "mood": 10,
     "cost": 35,
-    "tier": 1
+    "tier": 1,
+    "img": "img/food/cake.png"
   },
   {
     "id": "snack",
@@ -29,7 +32,8 @@
     "hunger": 10,
     "mood": 3,
     "cost": 15,
-    "tier": 1
+    "tier": 1,
+    "img": "img/food/snack.png"
   },
   {
     "id": "bento",
@@ -38,7 +42,8 @@
     "mood": 8,
     "cost": 60,
     "tier": 2,
-    "minLevel": 3
+    "minLevel": 3,
+    "img": "img/food/bento.png"
   },
   {
     "id": "mochi",
@@ -47,7 +52,8 @@
     "mood": 12,
     "cost": 45,
     "tier": 2,
-    "minLevel": 4
+    "minLevel": 4,
+    "img": "img/food/mochi.png"
   },
   {
     "id": "burger",
@@ -56,7 +62,8 @@
     "mood": 6,
     "cost": 55,
     "tier": 2,
-    "minLevel": 5
+    "minLevel": 5,
+    "img": "img/food/burger.png"
   },
   {
     "id": "sushi",
@@ -65,6 +72,7 @@
     "mood": 14,
     "cost": 90,
     "tier": 3,
-    "minLevel": 8
+    "minLevel": 8,
+    "img": "img/food/sushi.png"
   }
 ]

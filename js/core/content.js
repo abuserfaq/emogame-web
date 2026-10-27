@@ -67,6 +67,16 @@ const Content={
       return 'img/loc/room_morning.jpg';
     };
     EG.giftImg=g=> (g&&g.img)||(`img/gifts/${g&&g.id||'heart_plush'}.png`);
+    EG.foodImg=f=> (f&&f.img)||(`img/food/${f&&f.id||'ramen'}.png`);
+    EG.drinkImg=d=> (d&&d.img)||(`img/drinks/${d&&d.id||'water'}.png`);
+    EG.shopImg=it=> (it&&it.img)||(`img/wardrobe/${it&&it.id||'hoodie'}.png`);
+    EG.wxLabel={clear:'ясно',rain:'дождь',snow:'снег',fog:'туман',storm:'гроза',heat:'жара'};
+    EG.seasonLabel={spring:'весна',summer:'лето',autumn:'осень',winter:'зима'};
+    EG.weatherText=(S)=>{
+      const w=EG.wxLabel[S.weather]||S.weather||'';
+      const s=EG.seasonLabel[S.season]||S.season||'';
+      return (w&&s)?(w+' · '+s):(w||s||'');
+    };
   }
 };
 window.EGContent=Content;
