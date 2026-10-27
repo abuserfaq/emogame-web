@@ -248,8 +248,8 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .stage-bleed{position:absolute;inset:0;z-index:0;overflow:hidden;background:#100c12 center/cover no-repeat;border:0;margin:0;border-radius:0}
 .stage-bleed img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .stage-bleed .char{
-  position:absolute;left:50%;bottom:26%;transform:translateX(-50%);
-  height:44%!important;max-width:52%!important;width:auto;object-fit:contain;
+  position:absolute;left:50%;bottom:28%;transform:translateX(-50%);
+  height:48%!important;max-width:56%!important;width:auto;object-fit:contain;
   filter:drop-shadow(0 10px 18px rgba(0,0,0,.65));pointer-events:none;z-index:2;
   image-rendering:pixelated!important;background:transparent!important
 }
@@ -261,8 +261,8 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .hud *{pointer-events:auto}
 .hud-stats{display:flex;gap:6px;margin-bottom:8px}
 .hud-stat{
-  flex:1;min-width:0;background:#121016;border:3px solid #5a5a66;border-radius:8px;
-  box-shadow:inset 0 0 0 2px #1a1a22,0 0 0 1px #0a0a0c,0 3px 0 #000;padding:7px 6px 8px
+  flex:1;min-width:0;background:#121016;border:4px solid #6a6a74;border-radius:6px;
+  box-shadow:inset 0 0 0 2px #222228,0 0 0 1px #0a0a0c,0 4px 0 #000;padding:8px 6px 9px
 }
 .hud-stat .lab{display:flex;align-items:center;gap:4px;font-size:10px;color:#eee;letter-spacing:.02em;white-space:nowrap;overflow:hidden}
 .hud-stat .lab .pxico{width:18px;height:18px}
@@ -288,10 +288,10 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 
 /* Scene overlays */
 .scene-fab{
-  position:absolute;right:3%;bottom:30%;z-index:8;width:88px;height:88px;padding:0;border:0;background:transparent;cursor:pointer
+  position:absolute;right:3%;bottom:30%;z-index:8;width:104px;height:104px;padding:0;border:0;background:transparent;cursor:pointer
 }
 .scene-fab img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 10px #000a);image-rendering:pixelated}
-.scene-overlays{position:absolute;right:8px;top:28%;z-index:8;display:flex;flex-direction:column;gap:6px}
+.scene-overlays{position:absolute;right:6px;top:26%;z-index:8;display:flex;flex-direction:column;gap:5px;opacity:.85;transform:scale(.85);transform-origin:top right}
 .scene-ov{
   width:40px;height:40px;border-radius:10px;background:rgba(12,8,14,.72);border:2px solid #ff4d9aaa;
   display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0
@@ -316,7 +316,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 /* Framed bottom nav — 5 items */
 .nav-dock{
   position:absolute;left:4px;right:4px;bottom:54px;z-index:14;
-  display:flex;gap:0;padding:10px 6px 14px;height:78px;
+  display:flex;gap:0;padding:12px 4px 16px;height:96px;
   background:#0e0a10;border:3px solid #4a4a55;background-image:linear-gradient(#141018,#0a080c);
   border:0;border-radius:14px;box-shadow:0 -4px 16px #000a;
   padding-bottom:max(10px,env(safe-area-inset-bottom))
@@ -333,7 +333,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 }
 .nav-dock button:last-child{border-right:0}
 .nav-dock button .ic{display:flex;justify-content:center}
-.nav-dock button .pxico{width:42px!important;height:42px!important}
+.nav-dock button .pxico{width:48px!important;height:48px!important}
 .nav-dock button.on{color:#ff8fb8}
 .nav-dock button.on .pxico{filter:drop-shadow(0 0 6px #ff4d9a)}
 .nav-dock button .lab{letter-spacing:.02em}
@@ -347,7 +347,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 #bannerStrip.on{display:flex}
 .shot-mode #bannerStrip,.shot-hide-ads #bannerStrip{display:none!important}
 .nav-dock{bottom:54px}
-.shot-mode .nav-dock,.shot-hide-ads .nav-dock{bottom:8px!important}
+.shot-mode .nav-dock,.shot-hide-ads .nav-dock{bottom:6px!important;height:96px}
 
 /* Non-immersive screens still use dock */
 .screen:not(.immersive) > .nav-dock{position:relative;left:auto;right:auto;bottom:auto;margin:8px;flex-shrink:0}
