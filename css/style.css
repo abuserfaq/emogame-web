@@ -270,11 +270,18 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .hud *{pointer-events:auto}
 .hud-stats{display:flex;gap:6px;margin-bottom:8px}
 .hud-stat{
-  flex:1;min-width:0;background:#121016;border:4px solid #6a6a74;border-radius:6px;
-  box-shadow:inset 0 0 0 2px #222228,0 0 0 1px #0a0a0c,0 4px 0 #000;padding:8px 6px 9px
+  flex:1;min-width:0;background:#121016;border:3px solid #6a6a74;border-radius:6px;
+  box-shadow:inset 0 0 0 2px #222228,0 0 0 1px #0a0a0c,0 4px 0 #000;padding:6px 4px 7px
 }
-.hud-stat .lab{display:flex;align-items:center;gap:4px;font-size:10px;color:#eee;letter-spacing:.02em;white-space:nowrap;overflow:hidden}
-.hud-stat .lab .pxico{width:18px;height:18px}
+.hud-stat .lab{display:flex;align-items:center;gap:3px;font-size:9px;color:#eee;letter-spacing:0;white-space:nowrap;overflow:visible;line-height:1.1}
+.hud-stat .lab .pxico{width:14px;height:14px;flex-shrink:0}
+.hud-stat .lab .lab-t{overflow:visible;text-overflow:clip;min-width:0}
+@media (max-width:380px){
+  .hud-stats{gap:4px}
+  .hud-stat{padding:5px 3px 6px;border-width:2px}
+  .hud-stat .lab{font-size:8px;gap:2px}
+  .hud-stat .lab .pxico{width:12px;height:12px}
+}
 .hud-stat .bar{height:8px;margin-top:5px;background:#1c141c;border:1px solid #2a1a24;border-radius:3px;overflow:hidden}
 .hud-stat .bar>i{display:block;height:100%;background:linear-gradient(90deg,#ff2d8a,#ff8fb8);border-radius:2px}
 
@@ -441,12 +448,15 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
   color:#eee;padding:0;font-size:10px;cursor:pointer;text-align:center;min-width:0;
   pointer-events:auto;filter:drop-shadow(0 2px 4px #000a);box-shadow:none!important
 }
-.map-pin img.pin-art{width:40px;height:auto;display:block;margin:0 auto 2px;image-rendering:pixelated;background:transparent}
+.map-pin img.pin-art{width:64px;height:auto;display:block;margin:0 auto 5px;image-rendering:pixelated;background:transparent;filter:drop-shadow(0 2px 6px #000c)}
 .map-pin .pin-lab{
-  display:inline-block;background:rgba(8,6,10,.92);border:1px solid #ff4d9a;
-  border-radius:4px;padding:2px 7px;color:#fff;font-size:10px;white-space:nowrap;max-width:90px;
-  overflow:hidden;text-overflow:ellipsis
+  display:inline-block;background:rgba(6,4,10,.97);border:2px solid #ff4d9a;
+  border-radius:7px;padding:6px 12px;color:#fff;font-size:15px;font-weight:800;letter-spacing:.03em;
+  white-space:nowrap;max-width:160px;line-height:1.15;
+  box-shadow:0 0 0 1px #2a1018, 0 3px 10px #000c, inset 0 0 0 1px #ff4d9a44;
+  overflow:visible;text-overflow:clip
 }
+
 .map-pin:disabled{opacity:.4}
 .map-pin .pin-ico{display:none}
 
@@ -498,9 +508,9 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .chat-v2 .chat-title{text-align:center;padding:8px 8px 4px;padding-top:max(10px,env(safe-area-inset-top))}
 .chat-v2 .chat-title img{width:78%;max-width:320px;height:auto;display:block;margin:0 auto;image-rendering:pixelated;filter:drop-shadow(0 2px 10px #ff4d9a44)}
 .chat-v2 .chat-title .hrt{display:none}
-.chat-v2 .chat-list{flex:1;overflow:auto;padding:8px 12px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.chat-v2 .chat-list{flex:1;overflow:auto;padding:6px 12px 8px;display:flex;flex-direction:column;gap:8px;min-height:0;justify-content:flex-start}
 .chat-v2 .msg{display:flex;gap:8px;align-items:flex-start}
-.chat-v2 .msg .av{width:52px;height:52px;border-radius:50%;border:2px solid #ff4d9a;object-fit:cover;object-position:top center;flex-shrink:0;image-rendering:pixelated;background:#1a1018}
+.chat-v2 .msg .av{width:56px;height:56px;border-radius:50%;border:2px solid #ff4d9a;object-fit:cover;object-position:center 18%;flex-shrink:0;image-rendering:auto;background:#1a1018;box-shadow:0 0 0 1px #000,0 2px 8px #000a}
 .chat-v2 .msg .bubble{flex:1;background:#121016;border:1px solid #ff4d9a66;border-radius:10px;padding:8px 10px;box-shadow:0 0 8px #ff4d9a22;position:relative}
 .chat-v2 .msg .bubble::after{content:"♡";position:absolute;right:8px;bottom:4px;color:#ff4d9a88;font-size:10px}
 .chat-v2 .msg .nm{color:#ff4d9a;font-size:12px;font-weight:700}
@@ -521,7 +531,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 
 .map-head{position:absolute;left:8px;right:8px;top:max(8px,env(safe-area-inset-top));z-index:12;
   display:flex;gap:8px;align-items:flex-start;background:rgba(10,8,12,.88);border:2px solid #ff4d9a88;border-radius:10px;padding:8px}
-.map-av{width:52px;height:52px;border-radius:50%;border:2px solid #ff4d9a;object-fit:cover;object-position:top;image-rendering:pixelated}
+.map-av{width:56px;height:56px;border-radius:50%;border:2px solid #ff4d9a;object-fit:cover;object-position:center 18%;image-rendering:auto;background:#1a1018}
 .map-meta{flex:1;min-width:0}
 .map-name{color:#fff;font-weight:700;font-size:14px}
 .map-lv{color:#ff8fb8;font-size:11px;margin-top:2px}
@@ -534,7 +544,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 
 .chat-v2 .quick button{display:inline-flex;align-items:center;gap:6px}
 .chat-v2 .quick button img{width:18px;height:18px;image-rendering:pixelated}
-.map-pin .pin-lab{font-size:9px;padding:1px 5px}
+.map-pin .pin-lab{font-size:15px;padding:6px 12px;font-weight:800}
 
 /* Sheets: fit viewport, internal scroll, uniform art grid */
 .eg-sheet-root{position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:auto}

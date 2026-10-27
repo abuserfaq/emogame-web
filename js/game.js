@@ -53,11 +53,27 @@ function bindClean(){
     toast('Чисто!'); go(cur==='home'?'home':cur);
   });
 }
+
+function avatarSrc(style,gender){
+  const s=(style||S.style||'emo'), g=(gender||S.gender||'guy');
+  return `img/ui/avatars/${s}_${g}.webp`;
+}
+function peerAvatar(name){
+  const map={
+    'Лила':'lila','Lila':'lila',
+    'ДемонX':'demonx','ДемонХ':'demonx','DemonX':'demonx',
+    'Кошмарик':'koshmarik',
+    'raven':'raven','Raven':'raven'
+  };
+  const k=map[name]||'lila';
+  return `img/ui/avatars/${k}.webp`;
+}
+
 function hudHTML(){
   const rows=[['Голод',S.hunger,'hunger'],['Жажда',S.thirst,'thirst'],['Энергия',S.energy,'energy'],['Настрой',S.mood,'mood']];
   const need=xpNeed(S.level); const pct=Math.round(clamp((S.xp/need)*100,0,100));
   return `<div class="hud">
-    <div class="hud-stats">${rows.map(([l,v,i])=>`<div class="hud-stat"><div class="lab">${ico(i)} ${l}</div><div class="bar"><i style="width:${clamp(v,0,100)}%"></i></div></div>`).join('')}</div>
+    <div class="hud-stats">${rows.map(([l,v,i])=>`<div class="hud-stat"><div class="lab">${ico(i)}<span class="lab-t">${l}</span></div><div class="bar"><i style="width:${clamp(v,0,100)}%"></i></div></div>`).join('')}</div>
     <div class="hud-res">
       <div class="hud-chip">${ico('coins')} ${S.coins}</div>
       <div class="hud-chip">${ico('gems')} ${S.gems}</div>
@@ -384,7 +400,7 @@ SCR.map=()=>{
     {id:'concert',lab:'Концерт',x:'38%',y:'68%'},
     {id:'mall',lab:'Магазин',x:'72%',y:'72%'}
   ];
-  const av=EG.charImg(S.style,S.gender);
+  const av=avatarSrc(S.style,S.gender);
   const need=xpNeed(S.level); const xp=Math.round(clamp(S.xp,0,need));
   app.innerHTML=`<div class="screen immersive">
     <div class="map-bleed"><img class="mapbg" src="img/loc/city_map.webp" alt=""></div>
@@ -586,33 +602,36 @@ SCR.coop=()=>{
 
 SCR.chat=()=>{
   const peers=[
-    {name:'Лила', t:'Наконец-то пятница... Мир такой скучный без вас'},
-    {name:'ДемонX', t:'Согласен... Спасает только музыка'},
-    {name:'Кошмарик', t:'Кто со мной в заброшку сегодня?'},
-    {name:'raven', t:'Я с вами! Берите фонарики'}
+    {name:'Лила', t:'Наконец-то пятница... Мир такой скучный без вас', av:'lila'},
+    {name:'ДемонX', t:'Согласен... Спасает только музыка', av:'demonx'},
+    {name:'Кошмарик', t:'Кто со мной в заброшку сегодня?', av:'koshmarik'},
+    {name:'raven', t:'Я с вами! Берите фонарики', av:'raven'}
   ];
   const quick=[['Привет','qr_heart'],['Как дела','qr_broken'],['Идём гулять','qr_bat']];
-  const av=EG.charImg(S.style,S.gender);
+  const myAv=avatarSrc(S.style,S.gender);
   const scrubChat=t=>{
     if(Array.isArray(t)) t=t[0];
     t=String(t==null?'':t);
     t=t.replace(/[*_`]*qr_[a-z0-9_]+[*_`]*/gi,'').replace(/,\s*$/,'').replace(/^\s*,\s*/,'').trim();
     return t||'…';
   };
-  const hist=(function(){
-    if(!(S.chat&&S.chat.length)) return null;
+  // Always seed demo thread so the middle isn't empty; append user history after
+  const demo=peers.map(p=>({me:false,t:p.t,name:p.name,av:p.av,demo:true}));
+  let hist=[];
+  if(S.chat&&S.chat.length){
     S.chat=S.chat.map(m=>Object.assign({},m,{t:scrubChat(m&&m.t)}));
     try{save();}catch(e){}
-    return S.chat.slice(-8);
-  })();
+    hist=S.chat.filter(m=>!m.demo).slice(-6).map(m=>{
+      if(m.me) return {me:true,t:m.t,name:'Ты',av:myAv};
+      const p=peers[Math.abs((m.t||'').length)%peers.length];
+      return {me:false,t:m.t,name:m.name||p.name,av:m.av||p.av};
+    });
+  }
+  const msgs=demo.concat(hist);
   const paint=()=>{
-    const list=hist?hist.map((m,i)=>{
-      const name=m.me?'Ты':(peers[i%peers.length].name);
-      const src=m.me?av:EG.charImg((['emo','goth','punk','alt'][i%4]), i%2?'girl':'guy');
-      return `<div class="msg"><img class="av" src="${src}" alt=""><div class="bubble"><div><span class="nm">${name}</span><span class="tm">сейчас</span></div><div class="tx">${m.t}</div></div></div>`;
-    }).join(''):peers.map((p,i)=>{
-      const src=EG.charImg((['emo','goth','punk','alt'][i%4]), i%2?'girl':'guy');
-      return `<div class="msg"><img class="av" src="${src}" alt=""><div class="bubble"><div><span class="nm">${p.name}</span><span class="tm">сейчас</span></div><div class="tx">${p.t}</div></div></div>`;
+    const list=msgs.map(m=>{
+      const src=m.me?myAv:(`img/ui/avatars/${m.av||'lila'}.webp`);
+      return `<div class="msg"><img class="av" src="${src}" alt="" width="56" height="56" decoding="async"><div class="bubble"><div><span class="nm">${m.name}</span><span class="tm">сейчас</span></div><div class="tx">${m.t}</div></div></div>`;
     }).join('');
     app.innerHTML=`<div class="screen chat-v2">
       <div class="chat-title"><img src="img/ui/chrome/chat_title.webp" alt="Чат"><span class="hrt">♡</span></div>
@@ -622,17 +641,20 @@ SCR.chat=()=>{
       ${nav('chat')}
     </div>`;
     bindNav();
+    const bub=app.querySelector('#bub'); if(bub) bub.scrollTop=bub.scrollHeight;
     app.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{
       const txt=b.dataset.p;
-      S.chat=(S.chat||[]).concat([{me:true,t:txt}]);
-      const pick=quick[Math.floor(Math.random()*quick.length)];
-      const reply=scrubChat(Array.isArray(pick)?pick[0]:pick);
-      S.chat.push({me:false,t:reply}); if(S.chat.length>40) S.chat=S.chat.slice(-40);
+      const peer=peers[Math.floor(Math.random()*peers.length)];
+      S.chat=(S.chat||[]).concat([{me:true,t:txt,name:'Ты'}]);
+      const replyTxt=peer.t.split('...')[0]||peer.t;
+      S.chat.push({me:false,t:scrubChat(replyTxt),name:peer.name,av:peer.av});
+      if(S.chat.length>40) S.chat=S.chat.slice(-40);
       S.chats++; S.social=clamp(S.social+2,0,100); qAdd('chats',1); addXp(2); save(); SCR.chat();
     });
   };
   paint();
 };
+
 
 SCR.account=()=>{
   const a=(window.EGAuth&&EGAuth.state())||{provider:'guest'};
