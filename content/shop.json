@@ -1,0 +1,53 @@
+[
+  {
+    "id": "hoodie",
+    "name": "Худи с сердцем",
+    "slot": "top",
+    "style": 8,
+    "cost": 120,
+    "tier": 1
+  },
+  {
+    "id": "boots",
+    "name": "Массивные ботинки",
+    "slot": "shoes",
+    "style": 10,
+    "cost": 150,
+    "tier": 1
+  },
+  {
+    "id": "choker_shop",
+    "name": "Чокер",
+    "slot": "acc",
+    "style": 6,
+    "cost": 60,
+    "tier": 1
+  },
+  {
+    "id": "paint",
+    "name": "Розовая прядь",
+    "slot": "hair",
+    "style": 12,
+    "cost": 200,
+    "tier": 2,
+    "minLevel": 4
+  },
+  {
+    "id": "fishnet",
+    "name": "Сеточка",
+    "slot": "acc",
+    "style": 9,
+    "cost": 110,
+    "tier": 2,
+    "minLevel": 5
+  },
+  {
+    "id": "idol_jacket",
+    "name": "Айдол-пиджак",
+    "slot": "top",
+    "style": 16,
+    "cost": 280,
+    "tier": 3,
+    "minLevel": 8
+  }
+]

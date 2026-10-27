@@ -1,0 +1,27 @@
+[
+  {
+    "id": "weekend_fest",
+    "title": "Уикенд-фест",
+    "dow": [
+      5,
+      6
+    ],
+    "loc": "festival",
+    "bonusMood": 10
+  },
+  {
+    "id": "rainy_day",
+    "title": "Дождь в городе",
+    "weather": "rain",
+    "moodMod": -3,
+    "homeBonus": 5
+  },
+  {
+    "id": "pink_friday",
+    "title": "Pink Friday",
+    "dow": [
+      4
+    ],
+    "shopDiscount": 0.15
+  }
+]

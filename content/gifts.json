@@ -1,0 +1,356 @@
+{
+  "intervalRcKey": "free_gift_interval_days",
+  "intervalDefaultDays": 7,
+  "items": [
+    {
+      "id": "heart_plush",
+      "name": "Плюшевое сердце",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/heart_plush.png",
+      "sources": [
+        "free"
+      ],
+      "cost": 0,
+      "mood": 12,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "vinyl",
+      "name": "Винил «Pink Noise»",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/vinyl.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 80,
+      "mood": 10,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "poster",
+      "name": "Постер концерта",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/poster.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 60,
+      "mood": 8,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "choker",
+      "name": "Чокер с сердцем",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/choker.png",
+      "sources": [
+        "rewarded"
+      ],
+      "cost": 0,
+      "mood": 14,
+      "style": 8,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "bracelet",
+      "name": "Браслет бусины",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/bracelet.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 40,
+      "mood": 6,
+      "style": 8,
+      "rarity": "common"
+    },
+    {
+      "id": "hoodie",
+      "name": "Худи в подарок",
+      "kind": "wear",
+      "slot": "top",
+      "img": "img/gifts/hoodie.png",
+      "sources": [
+        "paid"
+      ],
+      "cost": 0,
+      "mood": 18,
+      "style": 8,
+      "rarity": "rare"
+    },
+    {
+      "id": "lamp",
+      "name": "Лампа pink-glow",
+      "kind": "decor",
+      "slot": "desk",
+      "img": "img/gifts/lamp.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 120,
+      "mood": 10,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "candle",
+      "name": "Свеча",
+      "kind": "decor",
+      "slot": "desk",
+      "img": "img/gifts/candle.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 35,
+      "mood": 5,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "flowers",
+      "name": "Букет",
+      "kind": "decor",
+      "slot": "desk",
+      "img": "img/gifts/flowers.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 50,
+      "mood": 8,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "star_badge",
+      "name": "Значок-звезда",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/star_badge.png",
+      "sources": [
+        "rewarded"
+      ],
+      "cost": 0,
+      "mood": 7,
+      "style": 8,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "skull_pillow",
+      "name": "Подушка-череп",
+      "kind": "decor",
+      "slot": "bed",
+      "img": "img/gifts/skull_pillow.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 90,
+      "mood": 9,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "cassette",
+      "name": "Кассета",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/cassette.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 45,
+      "mood": 6,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "sneakers",
+      "name": "Кеды pink",
+      "kind": "wear",
+      "slot": "shoes",
+      "img": "img/gifts/sneakers.png",
+      "sources": [
+        "paid"
+      ],
+      "cost": 0,
+      "mood": 16,
+      "style": 8,
+      "rarity": "rare"
+    },
+    {
+      "id": "heart_mirror",
+      "name": "Зеркало-сердце",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/heart_mirror.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 150,
+      "mood": 12,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "stickers",
+      "name": "Стикеры",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/stickers.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 25,
+      "mood": 4,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "cat_plush",
+      "name": "Котёнок-плюш",
+      "kind": "decor",
+      "slot": "floor",
+      "img": "img/gifts/cat_plush.png",
+      "sources": [
+        "free"
+      ],
+      "cost": 0,
+      "mood": 15,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "spiked_bracelet",
+      "name": "Шипы браслет",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/spiked_bracelet.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 70,
+      "mood": 8,
+      "style": 8,
+      "rarity": "common"
+    },
+    {
+      "id": "cross_neck",
+      "name": "Крест-кулон",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/cross_neck.png",
+      "sources": [
+        "rewarded"
+      ],
+      "cost": 0,
+      "mood": 10,
+      "style": 8,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "beanie",
+      "name": "Шапка beanie",
+      "kind": "wear",
+      "slot": "hair",
+      "img": "img/gifts/beanie.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 95,
+      "mood": 9,
+      "style": 8,
+      "rarity": "common"
+    },
+    {
+      "id": "fairy_lights",
+      "name": "Гирлянда",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/fairy_lights.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 110,
+      "mood": 11,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "beanbag",
+      "name": "Кресло-мешок",
+      "kind": "decor",
+      "slot": "floor",
+      "img": "img/gifts/beanbag.png",
+      "sources": [
+        "paid"
+      ],
+      "cost": 0,
+      "mood": 14,
+      "style": 0,
+      "rarity": "rare"
+    },
+    {
+      "id": "diary",
+      "name": "Дневник",
+      "kind": "decor",
+      "slot": "desk",
+      "img": "img/gifts/diary.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 55,
+      "mood": 7,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "polaroid",
+      "name": "Полароид",
+      "kind": "decor",
+      "slot": "desk",
+      "img": "img/gifts/polaroid.png",
+      "sources": [
+        "paid"
+      ],
+      "cost": 0,
+      "mood": 20,
+      "style": 0,
+      "rarity": "rare"
+    },
+    {
+      "id": "mic_mini",
+      "name": "Микрофон mini",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/mic_mini.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 130,
+      "mood": 10,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "trophy_heart",
+      "name": "Кубок-сердце",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/trophy_heart.png",
+      "sources": [
+        "rewarded"
+      ],
+      "cost": 0,
+      "mood": 12,
+      "style": 0,
+      "rarity": "uncommon"
+    }
+  ]
+}

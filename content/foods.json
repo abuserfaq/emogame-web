@@ -1,0 +1,70 @@
+[
+  {
+    "id": "ramen",
+    "name": "Рамэн",
+    "hunger": 28,
+    "mood": 4,
+    "cost": 40,
+    "tier": 1
+  },
+  {
+    "id": "onigiri",
+    "name": "Онигири",
+    "hunger": 18,
+    "mood": 2,
+    "cost": 25,
+    "tier": 1
+  },
+  {
+    "id": "cake",
+    "name": "Чизкейк",
+    "hunger": 14,
+    "mood": 10,
+    "cost": 35,
+    "tier": 1
+  },
+  {
+    "id": "snack",
+    "name": "Снеки",
+    "hunger": 10,
+    "mood": 3,
+    "cost": 15,
+    "tier": 1
+  },
+  {
+    "id": "bento",
+    "name": "Бенто",
+    "hunger": 35,
+    "mood": 8,
+    "cost": 60,
+    "tier": 2,
+    "minLevel": 3
+  },
+  {
+    "id": "mochi",
+    "name": "Моти",
+    "hunger": 12,
+    "mood": 12,
+    "cost": 45,
+    "tier": 2,
+    "minLevel": 4
+  },
+  {
+    "id": "burger",
+    "name": "Веган-бургер",
+    "hunger": 30,
+    "mood": 6,
+    "cost": 55,
+    "tier": 2,
+    "minLevel": 5
+  },
+  {
+    "id": "sushi",
+    "name": "Суши-сет",
+    "hunger": 40,
+    "mood": 14,
+    "cost": 90,
+    "tier": 3,
+    "minLevel": 8
+  }
+]

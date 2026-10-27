@@ -1,0 +1,39 @@
+{
+  "frames": [
+    "idle",
+    "idle2",
+    "walk",
+    "walk2",
+    "eat",
+    "drink",
+    "sleep",
+    "dance"
+  ],
+  "emotions": [
+    "happy",
+    "sad",
+    "sick",
+    "hungry"
+  ],
+  "sheetCols": 8,
+  "sheets": {
+    "emo_guy": "img/chars/sheets/emo_guy_anims.jpg",
+    "emo_girl": "img/chars/sheets/emo_girl_anims.jpg",
+    "alt_guy": "img/chars/sheets/alt_guy_anims.jpg",
+    "alt_girl": "img/chars/sheets/alt_girl_anims.jpg",
+    "idol_guy": "img/chars/sheets/idol_guy_anims.jpg",
+    "idol_girl": "img/chars/sheets/idol_girl_anims.jpg"
+  },
+  "fps": {
+    "idle": 2,
+    "walk": 6,
+    "eat": 3,
+    "drink": 3,
+    "sleep": 1,
+    "dance": 6,
+    "happy": 4,
+    "sad": 2,
+    "sick": 2,
+    "hungry": 2
+  }
+}

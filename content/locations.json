@@ -1,0 +1,295 @@
+[
+  {
+    "id": "room",
+    "name": "Комната",
+    "phases": [
+      "morning",
+      "day",
+      "evening",
+      "night"
+    ],
+    "need": "home",
+    "minLevel": 1
+  },
+  {
+    "id": "park",
+    "name": "Парк",
+    "phases": [
+      "morning",
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 8,
+    "mood": 12,
+    "social": 6,
+    "minLevel": 1
+  },
+  {
+    "id": "cemetery",
+    "name": "Кладбище",
+    "phases": [
+      "evening",
+      "night"
+    ],
+    "energy": 10,
+    "mood": 10,
+    "social": 4,
+    "minLevel": 2
+  },
+  {
+    "id": "metro",
+    "name": "Метро",
+    "phases": [
+      "morning",
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 6,
+    "mood": 2,
+    "social": 2,
+    "minLevel": 1
+  },
+  {
+    "id": "cafe",
+    "name": "Кафе",
+    "phases": [
+      "morning",
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 5,
+    "mood": 8,
+    "social": 8,
+    "hunger": 15,
+    "thirst": 15,
+    "minLevel": 2
+  },
+  {
+    "id": "concert",
+    "name": "Концерт",
+    "phases": [
+      "evening",
+      "night"
+    ],
+    "energy": 18,
+    "mood": 25,
+    "social": 15,
+    "minLevel": 4
+  },
+  {
+    "id": "rooftop",
+    "name": "Крыша",
+    "phases": [
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 8,
+    "mood": 14,
+    "social": 6,
+    "minLevel": 3,
+    "fame": 5
+  },
+  {
+    "id": "records",
+    "name": "Пластинки",
+    "phases": [
+      "day",
+      "evening"
+    ],
+    "energy": 5,
+    "mood": 10,
+    "minLevel": 5,
+    "collect": "vinyl"
+  },
+  {
+    "id": "skate",
+    "name": "Скейтпарк",
+    "phases": [
+      "day",
+      "evening"
+    ],
+    "energy": 14,
+    "mood": 12,
+    "minLevel": 6,
+    "minigame": "skate"
+  },
+  {
+    "id": "arcade",
+    "name": "Аркада",
+    "phases": [
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 10,
+    "mood": 15,
+    "minLevel": 5,
+    "minigame": "arcade"
+  },
+  {
+    "id": "karaoke",
+    "name": "Караоке",
+    "phases": [
+      "evening",
+      "night"
+    ],
+    "energy": 12,
+    "mood": 18,
+    "social": 10,
+    "minLevel": 7,
+    "minigame": "karaoke"
+  },
+  {
+    "id": "tattoo",
+    "name": "Тату-студия",
+    "phases": [
+      "day",
+      "evening"
+    ],
+    "energy": 6,
+    "mood": 8,
+    "style": 10,
+    "minLevel": 8
+  },
+  {
+    "id": "mall",
+    "name": "ТЦ",
+    "phases": [
+      "day",
+      "evening"
+    ],
+    "energy": 8,
+    "mood": 6,
+    "social": 8,
+    "minLevel": 3
+  },
+  {
+    "id": "school",
+    "name": "Колледж",
+    "phases": [
+      "morning",
+      "day"
+    ],
+    "energy": 10,
+    "mood": 4,
+    "social": 10,
+    "minLevel": 2
+  },
+  {
+    "id": "garage",
+    "name": "Гараж",
+    "phases": [
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 12,
+    "mood": 10,
+    "music": 15,
+    "minLevel": 9
+  },
+  {
+    "id": "factory",
+    "name": "Заброшка",
+    "phases": [
+      "evening",
+      "night"
+    ],
+    "energy": 14,
+    "mood": 8,
+    "minLevel": 10
+  },
+  {
+    "id": "embankment",
+    "name": "Набережная",
+    "phases": [
+      "morning",
+      "day",
+      "evening"
+    ],
+    "energy": 8,
+    "mood": 12,
+    "minLevel": 4
+  },
+  {
+    "id": "station",
+    "name": "Вокзал",
+    "phases": [
+      "morning",
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 8,
+    "mood": 4,
+    "social": 8,
+    "minLevel": 6
+  },
+  {
+    "id": "festival",
+    "name": "Фестиваль",
+    "phases": [
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 20,
+    "mood": 30,
+    "social": 20,
+    "fame": 15,
+    "minLevel": 12
+  },
+  {
+    "id": "idol_stage",
+    "name": "Сцена айдолов",
+    "phases": [
+      "day",
+      "evening",
+      "night"
+    ],
+    "energy": 16,
+    "mood": 22,
+    "fame": 20,
+    "minLevel": 11
+  },
+  {
+    "id": "nightclub",
+    "name": "Клуб",
+    "phases": [
+      "evening",
+      "night"
+    ],
+    "energy": 16,
+    "mood": 20,
+    "social": 15,
+    "minLevel": 10
+  },
+  {
+    "id": "bookcafe",
+    "name": "Книжное кафе",
+    "phases": [
+      "morning",
+      "day",
+      "evening"
+    ],
+    "energy": 5,
+    "mood": 14,
+    "minLevel": 5
+  },
+  {
+    "id": "beach",
+    "name": "Пляж",
+    "phases": [
+      "morning",
+      "day",
+      "evening"
+    ],
+    "energy": 10,
+    "mood": 16,
+    "minLevel": 8
+  }
+]

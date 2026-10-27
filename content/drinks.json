@@ -1,0 +1,55 @@
+[
+  {
+    "id": "water",
+    "name": "Вода",
+    "thirst": 22,
+    "mood": 1,
+    "cost": 5,
+    "tier": 1
+  },
+  {
+    "id": "soda",
+    "name": "Газировка",
+    "thirst": 18,
+    "mood": 4,
+    "cost": 20,
+    "tier": 1
+  },
+  {
+    "id": "boba",
+    "name": "Bubble tea",
+    "thirst": 20,
+    "mood": 12,
+    "cost": 45,
+    "tier": 1
+  },
+  {
+    "id": "energy",
+    "name": "Энергетик",
+    "thirst": 12,
+    "energy": 20,
+    "mood": 2,
+    "cost": 50,
+    "tier": 2,
+    "minLevel": 3
+  },
+  {
+    "id": "latte",
+    "name": "Розовая латте",
+    "thirst": 16,
+    "mood": 10,
+    "cost": 40,
+    "tier": 2,
+    "minLevel": 4
+  },
+  {
+    "id": "smoothie",
+    "name": "Смузи",
+    "thirst": 24,
+    "hunger": 8,
+    "mood": 8,
+    "cost": 55,
+    "tier": 3,
+    "minLevel": 6
+  }
+]
