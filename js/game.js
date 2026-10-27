@@ -21,12 +21,13 @@ function tickNeeds(){
 }
 function phase(){ return EG.phaseOf(new Date().getHours()); }
 function xpNeed(lv){ return 80+lv*40; }
-function addXp(n){ S.xp+=n; while(S.xp>=xpNeed(S.level)){ S.xp-=xpNeed(S.level); S.level++;
-  toast('Уровень '+S.level+'!'); const u=(EG.UNLOCKS&&EG.UNLOCKS.levels||{})[String(S.level)]; if(u&&u.coins) S.coins+=u.coins; } }
+function addXp(n){ S.xp+=n; const prev=S.level;
+  while(S.xp>=xpNeed(S.level)){ S.xp-=xpNeed(S.level); S.level++; toast('Уровень '+S.level+'!'); }
+  if(S.level>prev){ if(window.EGUnlocks) EGUnlocks.onLevel(S,prev); if(window.EGAch){ const u=EGAch.check(S); u.forEach(a=>toast('🏆 '+a.name)); } } }
 
 function clear(){ app.innerHTML=''; }
 function setPhaseClass(){ app.className='phase-'+phase(); }
-function unlockOk(loc){ return S.level>=(loc.minLevel||1); }
+function unlockOk(loc){ if(window.EGUnlocks) return EGUnlocks.locOk(S,loc.id); return S.level>=(loc.minLevel||1); }
 
 function careBanner(){
   const line=EGCare?EGCare.statusLine(S):'';
@@ -61,7 +62,7 @@ function statRow(){
 }
 function nav(active){
   const inbox=(S.gifts&&S.gifts.inbox||[]).some(m=>!m.seen);
-  const items=[['home','🏠','Дом'],['feed','🍜','Еда'],['sleep','🌙','Сон'],['map','🗺️','Карта'],['gifts','🎁','Подарки'+(inbox?'<i class="inbox-dot"></i>':'')],['chat','💬','Чат']];
+  const items=[['home','🏠','Дом'],['feed','🍜','Еда'],['map','🗺️','Карта'],['gifts','🎁','Подарки'+(inbox?' ·':'')],['hub','✨','Ещё'],['chat','💬','Чат']];
   return `<div class="nav">${items.map(([id,ic,lab])=>`<button data-go="${id}" class="${active===id?'on':''}"><span class="ic">${ic}</span>${lab}</button>`).join('')}</div>`;
 }
 function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go))); }
@@ -99,7 +100,7 @@ SCR.consentSet=()=>{
 function afterConsent(){
   if(!localStorage.getItem('eg_care_onboard')) go('onboardCare');
   else if(!localStorage.getItem('eg_created')) go('create');
-  else { EGCare&&EGCare.onLogin(S); save(); go('home'); Net.register().then(()=>Net.sync().then(applyServer)).catch(()=>{}); }
+  else { EGCare&&EGCare.onLogin(S); EGWeather&&EGWeather.sync(S); EGAch&&EGAch.check(S); save(); go('home'); Net.register().then(()=>Net.sync().then(applyServer)).catch(()=>{}); }
 }
 function applyServer(res){
   if(res&&res.j&&res.j.config&&res.j.config.remote) EGRC.apply(res.j.config.remote);
@@ -254,7 +255,7 @@ function openShop(){
 SCR.feed=()=>{
   app.innerHTML=`<div class="screen">${statRow()}${careBanner()}
     <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:none">
-      <h3>Еда</h3><div class="grid">${(EG.FOOD||[]).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-f="${f.id}">${f.name}<span class="sub">+${f.hunger} голод · ${f.cost}💰</span></button>`).join('')}</div>
+      <h3>Еда</h3><div class="grid">${(EG.FOOD||[]).filter(f=>!window.EGUnlocks||EGUnlocks.foodOk(S,f.id||f)).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-f="${f.id}">${f.name}<span class="sub">+${f.hunger} голод · ${f.cost}💰</span></button>`).join('')}</div>
       <h3 style="margin-top:14px">Напитки</h3><div class="grid">${(EG.DRINKS||[]).filter(f=>S.level>=(f.minLevel||1)).map(f=>`<button class="card" data-d="${f.id}">${f.name}<span class="sub">+${f.thirst||0} жажда · ${f.cost}💰</span></button>`).join('')}</div>
     </div>${nav('feed')}</div>`;
   bindNav();
@@ -288,7 +289,7 @@ SCR.map=()=>{
   const ph=phase();
   app.innerHTML=`<div class="screen">${statRow()}
     <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:none">
-      <h3>Куда идём? · ${EG.phaseLabel[ph]}</h3>
+      <h3>Куда идём? · ${EG.phaseLabel[ph]}</h3><p style="color:#aaa;font-size:12px">🌤 ${(EGWeather&&EGWeather.sync(S),S.weather)||'?'} · сезон ${S.season||'?'} · подп. ${S.followers|0}</p>
       <div class="grid">${(EG.LOCS||[]).filter(l=>l.id!=='room').map(l=>{
         const phaseOk=!l.phases||l.phases.includes(ph);
         const lvOk=unlockOk(l);
@@ -320,18 +321,25 @@ SCR.loc=(id)=>{
     S.loc=loc.id; S.outings++; qAdd('outings',1);
     if(loc.id==='park'){ S.park++; qAdd('park',1); }
     if(loc.id==='concert'){ S.concerts++; qAdd('concerts',1); }
-    addXp(10); save();
+    if(window.EGWeather) EGWeather.applyVisit(S,loc.id);
+    const npcHere=(window.EGNpc?EGNpc.list():[]).find(n=>n.loc===loc.id);
+    if(npcHere){ EGNpc.meet(S,npcHere.id); toast(npcHere.name+' здесь'); }
+    addXp(10); if(window.EGAch) EGAch.check(S); save();
   } else { S.loc='room'; save(); return go('home'); }
   app.innerHTML=`<div class="screen">${statRow()}${stageHTML(loc.id)}
-    <div style="padding:10px;display:flex;gap:8px">
+    <div style="padding:10px;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn ghost" id="back" style="flex:1">← Карта</button>
       <button class="btn" id="chat" style="flex:1">Чат</button>
-      ${loc.id==='concert'||loc.minigame?`<button class="btn" id="mini" style="flex:1">Мини-игра</button>`:''}
-    </div>${nav('map')}</div>`;
+      ${['concert','karaoke','arcade','skate','garage','idol_stage','nightclub','records'].includes(loc.id)?`<button class="btn" id="mini" style="flex:1">Мини-игра</button>`:''}
+      ${loc.id==='garage'||loc.id==='nightclub'||loc.id==='festival'?`<button class="btn" id="gig" style="flex:1">Гиги</button>`:''}
+    </div>
+    <div style="padding:0 10px 10px;color:#c8a0b8;font-size:12px">${(S.weather||'')} · ${(S.season||'')}</div>
+    ${nav('map')}</div>`;
   bindNav(); mountAnim(); if(EGAnim) EGAnim.play('walk');
   $('#back').onclick=()=>go('map');
   $('#chat').onclick=()=>go('chat');
-  const m=$('#mini'); if(m) m.onclick=()=>go('minigame');
+  const m=$('#mini'); if(m) m.onclick=()=>go(loc.id==='skate'?'mg_skate':loc.id==='arcade'?'mg_arcade':loc.id==='karaoke'?'mg_karaoke':loc.id==='records'?'mg_music':'minigame');
+  const g=$('#gig'); if(g) g.onclick=()=>go('band');
 };
 
 SCR.gifts=()=>{
@@ -496,6 +504,226 @@ SCR.minigame=()=>{
 };
 
 // boot
+
+
+SCR.hub=()=>{
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
+      <h3>Ещё · каждый день!</h3>
+      <div class="grid">
+        <button class="card" data-g="sleep">🌙 Сон</button>
+        <button class="card" data-g="band">🎸 Группа / гиги</button>
+        <button class="card" data-g="mg_music">🎹 Музыка</button>
+        <button class="card" data-g="selfie">📸 Селфи</button>
+        <button class="card" data-g="npc">👥 Знакомые</button>
+        <button class="card" data-g="diary">📓 Дневник</button>
+        <button class="card" data-g="collections">🗂️ Коллекции</button>
+        <button class="card" data-g="decor">🖼️ Декор</button>
+        <button class="card" data-g="pet">🐈 Чёрный кот</button>
+        <button class="card" data-g="jobs">💼 Работа</button>
+        <button class="card" data-g="ach">🏆 Ачивки</button>
+        <button class="card" data-g="minigame">💃 Танцы</button>
+        <button class="card" data-g="mg_skate">🛹 Скейт</button>
+        <button class="card" data-g="mg_arcade">👾 Аркада</button>
+        <button class="card" data-g="mg_karaoke">🎤 Караоке</button>
+        <button class="card" data-g="coop">🤝 Кооп</button>
+      </div>
+    </div>${nav('hub')}</div>`;
+  bindNav();
+  app.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>go(b.dataset.g));
+};
+
+SCR.band=()=>{
+  const gigs=(EGBand.catalog().gigs||[]);
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
+      <h3>Группа · гиги: ${S.gigs|0}</h3>
+      <p style="color:#aaa;font-size:12px">Музыка ${(S.music|0)} · слава ${(S.fame|0)}</p>
+      <div class="grid">${gigs.map(g=>`<button class="card" data-g="${g.id}" ${EGBand.canPlay(S,g)?'':'disabled'} style="${EGBand.canPlay(S,g)?'':'opacity:.4'}">
+        <b>${g.name}</b><span class="sub">ур.${g.minLevel} · 💰${g.pay} · ⭐${g.fame} · ⚡${g.energy}</span></button>`).join('')}</div>
+      <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
+    </div>${nav('hub')}</div>`;
+  bindNav();
+  app.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{
+    const r=EGBand.playGig(S,b.dataset.g); if(!r.ok) return toast('Нельзя сейчас');
+    addXp(12); EGAch&&EGAch.check(S); save(); toast('Гиг! +'+r.g.pay+'💰'); go('band');
+  });
+  $('#back').onclick=()=>go('hub');
+};
+
+SCR.mg_music=()=>{
+  let hits=0,total=10,left=10;
+  app.innerHTML=`<div class="screen" style="align-items:center;justify-content:center;padding:20px">
+    <h2 style="color:var(--accent)">Ритм</h2>
+    <p style="color:#aaa">Жми в такт · осталось <b id="n">${left}</b></p>
+    <button class="btn" id="tap" style="width:140px;height:140px;border-radius:50%;font-size:26px">♪</button>
+    <p>Попадания: <b id="h">0</b></p>
+    <button class="btn ghost" id="done" style="margin-top:16px;max-width:200px">Готово</button>
+  </div>`;
+  let last=0;
+  $('#tap').onclick=()=>{ const now=Date.now(); if(left<=0)return; left--; $('#n').textContent=left;
+    if(now-last>350&&now-last<900) hits++; last=now; $('#h').textContent=hits; };
+  $('#done').onclick=()=>{ const r=EGMusic.play(S,hits,total); addXp(r.xp); EGAch&&EGAch.check(S); save(); toast('Счёт '+r.score); go('hub'); };
+};
+
+SCR.selfie=()=>{
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px">
+      <h3>Селфи · 👥 ${S.followers|0}</h3>
+      <p style="color:#aaa;font-size:12px">Фильтр влияет на охваты. Заглядывай каждый день — лента любит активность.</p>
+      <div class="grid">
+        <button class="card" data-f="emo">🖤 Эмо</button>
+        <button class="card" data-f="alt">✨ Альт</button>
+        <button class="card" data-f="idol">💖 Айдол</button>
+      </div>
+      <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
+    </div>${nav('hub')}</div>`;
+  bindNav();
+  app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
+    const r=EGSelfie.shoot(S,b.dataset.f); if(!r.ok) return toast('Мало энергии');
+    addXp(5); EGAch&&EGAch.check(S); save(); toast('+'+r.gain+' подписчиков'); go('selfie');
+  });
+  $('#back').onclick=()=>go('hub');
+};
+
+SCR.npc=()=>{
+  const list=EGNpc.list();
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
+      <h3>Знакомые</h3>
+      <div class="grid">${list.map(n=>{ const r=EGNpc.rel(S,n.id);
+        return `<button class="card" data-n="${n.id}"><b>${n.name}</b><span class="sub">${n.loc} · связь ${r.bond|0}${r.met?'':' · не встречен'}</span></button>`; }).join('')}</div>
+      <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
+    </div>${nav('hub')}</div>`;
+  bindNav();
+  app.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{ EGNpc.meet(S,b.dataset.n); EGAch&&EGAch.check(S); save(); toast('Поговорили'); go('npc'); });
+  $('#back').onclick=()=>go('hub');
+};
+
+SCR.diary=()=>{
+  const d=EGDiary.prompts(); const moods=d.moods||['🖤'];
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px">
+      <h3>Дневник настроения</h3>
+      <p style="color:#aaa;font-size:12px">${(d.prompts||['Как день?'])[Math.floor(Math.random()*(d.prompts||['?']).length)]}</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">${moods.map(m=>`<button class="chip" data-m="${m}">${m}</button>`).join('')}</div>
+      <input id="tx" placeholder="Пара слов…" maxlength="140" style="width:100%;padding:12px;border-radius:12px;border:1px solid #2a1a24;background:#161018;color:#fff">
+      <button class="btn" id="ok" style="margin-top:10px">Записать</button>
+      <button class="btn ghost" id="back" style="margin-top:8px">Назад</button>
+      <div style="margin-top:12px;font-size:12px;color:#aaa">${(S.diary||[]).slice(-5).reverse().map(e=>`<div>${e.mood} ${e.day}: ${e.text||'—'}</div>`).join('')}</div>
+    </div>${nav('hub')}</div>`;
+  bindNav(); let mood=moods[0];
+  app.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{ mood=b.dataset.m; toast(mood); });
+  $('#ok').onclick=()=>{ EGDiary.write(S,mood,$('#tx').value); EGAch&&EGAch.check(S); save(); toast('Записано — заходи завтра'); go('diary'); };
+  $('#back').onclick=()=>go('hub');
+};
+
+SCR.collections=()=>{
+  const sets=EGCollections.sets();
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
+      <h3>Коллекции</h3>
+      <div class="grid">${sets.map(s=>{ const p=EGCollections.progress(S,s); const claimed=S.colClaimed&&S.colClaimed[s.id];
+        return `<button class="card" data-c="${s.id}" ${p.done&&!claimed?'':'disabled'} style="${p.done?'':'opacity:.5'}"><b>${s.name}</b>
+          <span class="sub">${p.have}/${p.need}${claimed?' · ✓':''}</span></button>`; }).join('')}</div>
+      <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
+    </div>${nav('hub')}</div>`;
+  bindNav();
+  app.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{ const r=EGCollections.claim(S,b.dataset.c); if(!r.ok)return toast('Ещё рано'); EGAch&&EGAch.check(S); save(); toast('Коллекция!'); go('collections'); });
+  $('#back').onclick=()=>go('hub');
+};
+
+SCR.decor=()=>{
+  const items=(EGDecor.catalog().items||[]);
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
+      <h3>Декор комнаты</h3>
+      <p style="color:#aaa;font-size:12px">Слоты: ${Object.entries(S.decor||{}).map(([k,v])=>k+':'+v).join(', ')||'пусто'}</p>
+      <div class="grid">${items.map(it=>`<button class="card" data-d="${it.id}"><b>${it.name}</b><span class="sub">${it.slot} · ${it.cost}💰 · +${it.mood} настрой</span></button>`).join('')}</div>
+      <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
+    </div>${nav('hub')}</div>`;
+  bindNav();
+  app.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{ const r=EGDecor.place(S,b.dataset.d); if(!r.ok)return toast('Мало монет'); EGAch&&EGAch.check(S); save(); toast('Поставлено'); go('decor'); });
+  $('#back').onclick=()=>go('hub');
+};
+
+SCR.pet=()=>{
+  const p=EGPet.ensure(S); const acts=EGPet.meta().actions||[];
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px">
+      <h3>🐈 ${p.name||'Тень'}</h3>
+      <img src="img/pet/black_cat_idle.png" alt="cat" style="width:96px;height:96px;image-rendering:pixelated;display:block;margin:8px auto" onerror="this.src='img/pet/black_cat.png'">
+      <p style="text-align:center;color:#aaa;font-size:12px">Голод ${Math.round(p.hunger)} · связь ${Math.round(p.bond)}</p>
+      <p style="color:#c8a0b8;font-size:12px;text-align:center">Корми кота каждый день — иначе связь падает</p>
+      <div class="grid">${acts.map(a=>`<button class="card" data-a="${a.id}"><b>${a.name}</b><span class="sub">${a.cost?a.cost+'💰':'бесплатно'}</span></button>`).join('')}</div>
+      <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
+    </div>${nav('hub')}</div>`;
+  bindNav();
+  app.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{ const r=EGPet.act(S,b.dataset.a); if(!r.ok)return toast('Нельзя'); EGAch&&EGAch.check(S); save(); toast('Мяу'); go('pet'); });
+  $('#back').onclick=()=>go('hub');
+};
+
+SCR.jobs=()=>{
+  const list=EGJobs.list();
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
+      <h3>Работа · смен: ${S.jobs|0}</h3>
+      <div class="grid">${list.map(j=>`<button class="card" data-j="${j.id}" ${(S.level>=(j.minLevel||1)&&S.energy>=(j.energy||10))?'':'disabled'} style="${(S.level>=(j.minLevel||1))?'':'opacity:.4'}">
+        <b>${j.name}</b><span class="sub">${j.loc} · ур.${j.minLevel} · 💰${j.pay} · ⚡${j.energy}</span></button>`).join('')}</div>
+      <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
+    </div>${nav('hub')}</div>`;
+  bindNav();
+  app.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>{ const r=EGJobs.work(S,b.dataset.j); if(!r.ok)return toast(r.err==='energy'?'Мало энергии':'Уровень'); addXp(8); EGAch&&EGAch.check(S); save(); toast('+'+r.j.pay+'💰'); go('jobs'); });
+  $('#back').onclick=()=>go('hub');
+};
+
+SCR.ach=()=>{
+  const list=EGAch.list();
+  app.innerHTML=`<div class="screen">${statRow()}
+    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
+      <h3>Ачивки · ${Object.keys(S.ach||{}).length}/${list.length}</h3>
+      <div class="grid">${list.map(a=>{ const on=S.ach&&S.ach[a.id];
+        return `<div class="card" style="${on?'':'opacity:.45'}"><img src="${a.icon||''}" width="32" height="32" style="image-rendering:pixelated" onerror="this.style.display='none'"><b>${a.name}</b>
+          <span class="sub">${a.desc||''}${on?' · ✓':''}</span></div>`; }).join('')}</div>
+      <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
+    </div>${nav('hub')}</div>`;
+  bindNav(); $('#back').onclick=()=>go('hub');
+};
+
+SCR.mg_skate=()=>{
+  let tricks=0,left=6;
+  app.innerHTML=`<div class="screen" style="align-items:center;justify-content:center;padding:20px">
+    <h2 style="color:var(--accent)">Скейт</h2>
+    <p style="color:#aaa">Трюки · осталось <b id="n">${left}</b></p>
+    <button class="btn" id="tap" style="width:140px;height:140px;border-radius:50%">🛹</button>
+    <p>Трюки: <b id="h">0</b></p>
+    <button class="btn ghost" id="done" style="margin-top:16px;max-width:200px">Готово</button></div>`;
+  $('#tap').onclick=()=>{ if(left<=0)return; left--; if(Math.random()>0.35)tricks++; $('#n').textContent=left; $('#h').textContent=tricks; };
+  $('#done').onclick=()=>{ const sc=EGMinigames.skate(S,tricks); addXp(6); save(); toast('+'+sc+'💰'); go('hub'); };
+};
+
+SCR.mg_arcade=()=>{
+  app.innerHTML=`<div class="screen" style="align-items:center;justify-content:center;padding:20px">
+    <h2 style="color:var(--accent)">Аркада</h2>
+    <p style="color:#aaa">Угадай сторону</p>
+    <div style="display:flex;gap:12px"><button class="btn" id="l">◀</button><button class="btn" id="r">▶</button></div>
+    <button class="btn ghost" id="back" style="margin-top:16px;max-width:200px">Назад</button></div>`;
+  const play=side=>{ const win=Math.random()>0.45; EGMinigames.arcade(S,win); addXp(win?5:1); save(); toast(win?'Победа!': 'Мимо'); go('hub'); };
+  $('#l').onclick=()=>play(0); $('#r').onclick=()=>play(1); $('#back').onclick=()=>go('hub');
+};
+
+SCR.mg_karaoke=()=>{
+  let score=0,left=8;
+  app.innerHTML=`<div class="screen" style="align-items:center;justify-content:center;padding:20px">
+    <h2 style="color:var(--accent)">Караоке</h2>
+    <p style="color:#aaa">Пой · <b id="n">${left}</b></p>
+    <button class="btn" id="tap" style="width:140px;height:140px;border-radius:50%">🎤</button>
+    <p>Очки: <b id="sc">0</b></p>
+    <button class="btn ghost" id="done" style="margin-top:16px;max-width:200px">Готово</button></div>`;
+  $('#tap').onclick=()=>{ if(left<=0)return; left--; score+=10+Math.floor(Math.random()*15); $('#n').textContent=left; $('#sc').textContent=score; };
+  $('#done').onclick=()=>{ EGMinigames.karaoke(S,score); addXp(8); save(); toast('Браво '+score); go('hub'); };
+};
+
 async function boot(){
   if(window.EGRC) EGRC.apply({});
   EG=await EGContent.load();

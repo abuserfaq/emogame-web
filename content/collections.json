@@ -1,0 +1,71 @@
+{
+  "sets": [
+    {
+      "id": "vinyl_set",
+      "name": "Коллекция винила",
+      "need": [
+        "vinyl",
+        "vinyl_gold",
+        "cassette"
+      ],
+      "reward": {
+        "coins": 100,
+        "style": 10
+      }
+    },
+    {
+      "id": "cat_set",
+      "name": "Всё для кота",
+      "need": [
+        "cat_plush",
+        "cat_collar",
+        "cat_bowl",
+        "cat_bed"
+      ],
+      "reward": {
+        "coins": 80,
+        "mood": 15
+      }
+    },
+    {
+      "id": "stage_set",
+      "name": "Сцена",
+      "need": [
+        "mic_mini",
+        "mic_stand",
+        "guitar_mini",
+        "amp_box"
+      ],
+      "reward": {
+        "fame": 20,
+        "coins": 150
+      }
+    },
+    {
+      "id": "diary_set",
+      "name": "Дневник души",
+      "need": [
+        "diary",
+        "diary_lock",
+        "mood_lamp"
+      ],
+      "reward": {
+        "mood": 20,
+        "gems": 1
+      }
+    },
+    {
+      "id": "festival_set",
+      "name": "Фестиваль",
+      "need": [
+        "festival_band",
+        "ticket_stub",
+        "idol_lightstick"
+      ],
+      "reward": {
+        "fame": 15,
+        "coins": 120
+      }
+    }
+  ]
+}

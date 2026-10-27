@@ -1,151 +1,216 @@
 {
+  "locations": {
+    "room": 1,
+    "park": 1,
+    "metro": 1,
+    "cafe": 2,
+    "cemetery": 2,
+    "rooftop": 3,
+    "concert": 4,
+    "records": 3,
+    "skate": 4,
+    "arcade": 5,
+    "karaoke": 5,
+    "tattoo": 6,
+    "mall": 4,
+    "school": 3,
+    "garage": 6,
+    "factory": 8,
+    "embankment": 5,
+    "station": 4,
+    "festival": 10,
+    "idol_stage": 12,
+    "nightclub": 9,
+    "bookcafe": 3,
+    "beach": 7
+  },
+  "foods": {
+    "ramen": 1,
+    "energy_bar": 1,
+    "candy": 2,
+    "sushi": 4,
+    "burger": 3,
+    "cake": 5,
+    "chips": 1,
+    "salad": 2,
+    "pizza": 4,
+    "bento": 6
+  },
+  "drinks": {
+    "water": 1,
+    "soda": 1,
+    "coffee": 2,
+    "tea": 2,
+    "smoothie": 3,
+    "energy": 4,
+    "bubble_tea": 5,
+    "mocktail": 6
+  },
+  "clothes": {
+    "hoodie_basic": 1,
+    "tee_band": 2,
+    "skirt_plaid": 3,
+    "pants_ripped": 3,
+    "boots_combat": 4,
+    "dress_idol": 8,
+    "jacket_leather": 6
+  },
   "levels": {
     "2": {
-      "coins": 20
+      "coins": 40,
+      "gems": 0
     },
     "3": {
-      "coins": 30
+      "coins": 60,
+      "gems": 0
     },
     "4": {
-      "coins": 40
+      "coins": 80,
+      "gems": 0
     },
     "5": {
-      "coins": 50
+      "coins": 100,
+      "gems": 1
     },
     "6": {
-      "coins": 60
+      "coins": 120,
+      "gems": 0
     },
     "7": {
-      "coins": 70
+      "coins": 140,
+      "gems": 0
     },
     "8": {
-      "coins": 80
+      "coins": 160,
+      "gems": 0
     },
     "9": {
-      "coins": 90
+      "coins": 180,
+      "gems": 0
     },
     "10": {
-      "coins": 100
+      "coins": 200,
+      "gems": 1
     },
     "11": {
-      "coins": 110
+      "coins": 220,
+      "gems": 0
     },
     "12": {
-      "coins": 120
+      "coins": 240,
+      "gems": 0
     },
     "13": {
-      "coins": 130
+      "coins": 260,
+      "gems": 0
     },
     "14": {
-      "coins": 140
+      "coins": 280,
+      "gems": 0
     },
     "15": {
-      "coins": 150
+      "coins": 300,
+      "gems": 1
     },
     "16": {
-      "coins": 160
+      "coins": 320,
+      "gems": 0
     },
     "17": {
-      "coins": 170
+      "coins": 340,
+      "gems": 0
     },
     "18": {
-      "coins": 180
+      "coins": 360,
+      "gems": 0
     },
     "19": {
-      "coins": 190
+      "coins": 380,
+      "gems": 0
     },
     "20": {
-      "coins": 200
+      "coins": 400,
+      "gems": 1
     },
     "21": {
-      "coins": 210
+      "coins": 420,
+      "gems": 0
     },
     "22": {
-      "coins": 220
+      "coins": 440,
+      "gems": 0
     },
     "23": {
-      "coins": 230
+      "coins": 460,
+      "gems": 0
     },
     "24": {
-      "coins": 240
+      "coins": 480,
+      "gems": 0
     },
     "25": {
-      "coins": 250
+      "coins": 500,
+      "gems": 1
     },
     "26": {
-      "coins": 260
+      "coins": 520,
+      "gems": 0
     },
     "27": {
-      "coins": 270
+      "coins": 540,
+      "gems": 0
     },
     "28": {
-      "coins": 280
+      "coins": 560,
+      "gems": 0
     },
     "29": {
-      "coins": 290
+      "coins": 580,
+      "gems": 0
     },
     "30": {
-      "coins": 300
+      "coins": 600,
+      "gems": 1
     },
     "31": {
-      "coins": 310
+      "coins": 620,
+      "gems": 0
     },
     "32": {
-      "coins": 320
+      "coins": 640,
+      "gems": 0
     },
     "33": {
-      "coins": 330
+      "coins": 660,
+      "gems": 0
     },
     "34": {
-      "coins": 340
+      "coins": 680,
+      "gems": 0
     },
     "35": {
-      "coins": 350
+      "coins": 700,
+      "gems": 1
     },
     "36": {
-      "coins": 360
+      "coins": 720,
+      "gems": 0
     },
     "37": {
-      "coins": 370
+      "coins": 740,
+      "gems": 0
     },
     "38": {
-      "coins": 380
+      "coins": 760,
+      "gems": 0
     },
     "39": {
-      "coins": 390
+      "coins": 780,
+      "gems": 0
     },
     "40": {
-      "coins": 400
-    },
-    "41": {
-      "coins": 410
-    },
-    "42": {
-      "coins": 420
-    },
-    "43": {
-      "coins": 430
-    },
-    "44": {
-      "coins": 440
-    },
-    "45": {
-      "coins": 450
-    },
-    "46": {
-      "coins": 460
-    },
-    "47": {
-      "coins": 470
-    },
-    "48": {
-      "coins": 480
-    },
-    "49": {
-      "coins": 490
-    },
-    "50": {
-      "coins": 500
+      "coins": 800,
+      "gems": 1
     }
   }
 }

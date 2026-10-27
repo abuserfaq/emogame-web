@@ -351,6 +351,566 @@
       "mood": 12,
       "style": 0,
       "rarity": "uncommon"
+    },
+    {
+      "id": "bat_wings",
+      "name": "Крылья летучей мыши",
+      "kind": "wear",
+      "slot": "back",
+      "img": "img/gifts/bat_wings.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 120,
+      "mood": 16,
+      "style": 12,
+      "rarity": "rare"
+    },
+    {
+      "id": "pink_boots",
+      "name": "Розовые ботинки",
+      "kind": "wear",
+      "slot": "feet",
+      "img": "img/gifts/pink_boots.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 100,
+      "mood": 10,
+      "style": 10,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "choker_spike",
+      "name": "Шипастый чокер",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/choker_spike.png",
+      "sources": [
+        "rewarded"
+      ],
+      "cost": 0,
+      "mood": 12,
+      "style": 8,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "emo_glasses",
+      "name": "Очки-сердечки",
+      "kind": "wear",
+      "slot": "face",
+      "img": "img/gifts/emo_glasses.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 70,
+      "mood": 8,
+      "style": 6,
+      "rarity": "common"
+    },
+    {
+      "id": "fishnets",
+      "name": "Колготки-сетка",
+      "kind": "wear",
+      "slot": "legs",
+      "img": "img/gifts/fishnets.png",
+      "sources": [
+        "gems"
+      ],
+      "cost": 3,
+      "mood": 10,
+      "style": 10,
+      "rarity": "rare"
+    },
+    {
+      "id": "band_tee",
+      "name": "Футболка группы",
+      "kind": "wear",
+      "slot": "torso",
+      "img": "img/gifts/band_tee.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 90,
+      "mood": 8,
+      "style": 8,
+      "rarity": "common"
+    },
+    {
+      "id": "leather_cuff",
+      "name": "Кожаный браслет",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/leather_cuff.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 55,
+      "mood": 6,
+      "style": 5,
+      "rarity": "common"
+    },
+    {
+      "id": "chain_belt",
+      "name": "Цепь-ремень",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/chain_belt.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 75,
+      "mood": 7,
+      "style": 7,
+      "rarity": "common"
+    },
+    {
+      "id": "star_clips",
+      "name": "Звёздные клипсы",
+      "kind": "wear",
+      "slot": "hair",
+      "img": "img/gifts/star_clips.png",
+      "sources": [
+        "rewarded"
+      ],
+      "cost": 0,
+      "mood": 9,
+      "style": 6,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "wig_black",
+      "name": "Чёрный парик",
+      "kind": "wear",
+      "slot": "hair",
+      "img": "img/gifts/wig_black.png",
+      "sources": [
+        "gems"
+      ],
+      "cost": 5,
+      "mood": 14,
+      "style": 14,
+      "rarity": "epic"
+    },
+    {
+      "id": "wig_pink",
+      "name": "Розовый парик",
+      "kind": "wear",
+      "slot": "hair",
+      "img": "img/gifts/wig_pink.png",
+      "sources": [
+        "gems"
+      ],
+      "cost": 5,
+      "mood": 14,
+      "style": 14,
+      "rarity": "epic"
+    },
+    {
+      "id": "nail_black",
+      "name": "Чёрный маникюр",
+      "kind": "wear",
+      "slot": "hands",
+      "img": "img/gifts/nail_black.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 40,
+      "mood": 5,
+      "style": 4,
+      "rarity": "common"
+    },
+    {
+      "id": "lip_gloss",
+      "name": "Блеск для губ",
+      "kind": "wear",
+      "slot": "face",
+      "img": "img/gifts/lip_gloss.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 35,
+      "mood": 6,
+      "style": 3,
+      "rarity": "common"
+    },
+    {
+      "id": "backpack_pins",
+      "name": "Рюкзак с пинами",
+      "kind": "wear",
+      "slot": "back",
+      "img": "img/gifts/backpack_pins.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 110,
+      "mood": 8,
+      "style": 9,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "skate_deck",
+      "name": "Дека скейт",
+      "kind": "decor",
+      "slot": "floor",
+      "img": "img/gifts/skate_deck.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 150,
+      "mood": 10,
+      "style": 0,
+      "rarity": "rare"
+    },
+    {
+      "id": "neon_sign",
+      "name": "Неон «EMO»",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/neon_sign.png",
+      "sources": [
+        "gems"
+      ],
+      "cost": 4,
+      "mood": 18,
+      "style": 0,
+      "rarity": "rare"
+    },
+    {
+      "id": "plant_bat",
+      "name": "Растение-летучая мышь",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/plant_bat.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 65,
+      "mood": 8,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "rug_checker",
+      "name": "Ковёр в клетку",
+      "kind": "decor",
+      "slot": "floor",
+      "img": "img/gifts/rug_checker.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 80,
+      "mood": 6,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "mirror_gothic",
+      "name": "Готическое зеркало",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/mirror_gothic.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 130,
+      "mood": 12,
+      "style": 0,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "drumsticks",
+      "name": "Барабанные палочки",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/drumsticks.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 50,
+      "mood": 7,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "guitar_mini",
+      "name": "Мини-гитара",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/guitar_mini.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 140,
+      "mood": 12,
+      "style": 0,
+      "rarity": "rare"
+    },
+    {
+      "id": "amp_box",
+      "name": "Комбик",
+      "kind": "decor",
+      "slot": "floor",
+      "img": "img/gifts/amp_box.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 160,
+      "mood": 10,
+      "style": 0,
+      "rarity": "rare"
+    },
+    {
+      "id": "ticket_stub",
+      "name": "Билет на гиг",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/ticket_stub.png",
+      "sources": [
+        "free"
+      ],
+      "cost": 0,
+      "mood": 10,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "polaroid_duo",
+      "name": "Полароид вдвоём",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/polaroid_duo.png",
+      "sources": [
+        "rewarded"
+      ],
+      "cost": 0,
+      "mood": 14,
+      "style": 0,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "cat_collar",
+      "name": "Ошейник для кота",
+      "kind": "wear",
+      "slot": "pet",
+      "img": "img/gifts/cat_collar.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 45,
+      "mood": 8,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "cat_bowl",
+      "name": "Миска кота",
+      "kind": "decor",
+      "slot": "floor",
+      "img": "img/gifts/cat_bowl.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 30,
+      "mood": 5,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "cat_bed",
+      "name": "Лежанка",
+      "kind": "decor",
+      "slot": "floor",
+      "img": "img/gifts/cat_bed.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 90,
+      "mood": 8,
+      "style": 0,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "diary_lock",
+      "name": "Дневник с замком",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/diary_lock.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 70,
+      "mood": 10,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "mood_lamp",
+      "name": "Лампа настроения",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/mood_lamp.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 95,
+      "mood": 12,
+      "style": 0,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "season_scarf",
+      "name": "Сезонный шарф",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/season_scarf.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 60,
+      "mood": 8,
+      "style": 5,
+      "rarity": "common"
+    },
+    {
+      "id": "festival_band",
+      "name": "Браслет фестиваля",
+      "kind": "wear",
+      "slot": "acc",
+      "img": "img/gifts/festival_band.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 55,
+      "mood": 9,
+      "style": 4,
+      "rarity": "common"
+    },
+    {
+      "id": "idol_lightstick",
+      "name": "Лайтстик айдола",
+      "kind": "wear",
+      "slot": "hands",
+      "img": "img/gifts/idol_lightstick.png",
+      "sources": [
+        "gems"
+      ],
+      "cost": 3,
+      "mood": 16,
+      "style": 10,
+      "rarity": "rare"
+    },
+    {
+      "id": "mic_stand",
+      "name": "Стойка микрофона",
+      "kind": "decor",
+      "slot": "floor",
+      "img": "img/gifts/mic_stand.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 170,
+      "mood": 12,
+      "style": 0,
+      "rarity": "rare"
+    },
+    {
+      "id": "vinyl_gold",
+      "name": "Золотой винил",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/vinyl_gold.png",
+      "sources": [
+        "gems"
+      ],
+      "cost": 6,
+      "mood": 20,
+      "style": 0,
+      "rarity": "epic"
+    },
+    {
+      "id": "plush_bat",
+      "name": "Плюш летучей мыши",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/plush_bat.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 85,
+      "mood": 11,
+      "style": 0,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "tea_set",
+      "name": "Чайный набор",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/tea_set.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 75,
+      "mood": 8,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "books_stack",
+      "name": "Стопка книг",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/books_stack.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 40,
+      "mood": 6,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "surf_board",
+      "name": "Доска сёрф",
+      "kind": "decor",
+      "slot": "wall",
+      "img": "img/gifts/surf_board.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 180,
+      "mood": 10,
+      "style": 0,
+      "rarity": "rare"
+    },
+    {
+      "id": "arcade_token",
+      "name": "Жетон аркады",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/arcade_token.png",
+      "sources": [
+        "free"
+      ],
+      "cost": 0,
+      "mood": 6,
+      "style": 0,
+      "rarity": "common"
+    },
+    {
+      "id": "karaoke_mic",
+      "name": "Караоке-мик",
+      "kind": "decor",
+      "slot": "shelf",
+      "img": "img/gifts/karaoke_mic.png",
+      "sources": [
+        "coins"
+      ],
+      "cost": 100,
+      "mood": 10,
+      "style": 0,
+      "rarity": "uncommon"
     }
   ]
 }

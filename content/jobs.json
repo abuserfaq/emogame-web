@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "id": "barista",
+      "name": "Бариста",
+      "loc": "cafe",
+      "pay": 35,
+      "energy": 12,
+      "minLevel": 2
+    },
+    {
+      "id": "clerk",
+      "name": "Продавец винила",
+      "loc": "records",
+      "pay": 40,
+      "energy": 10,
+      "minLevel": 3
+    },
+    {
+      "id": "promo",
+      "name": "Промоутер",
+      "loc": "mall",
+      "pay": 45,
+      "energy": 14,
+      "minLevel": 4
+    },
+    {
+      "id": "tutor",
+      "name": "Репетитор",
+      "loc": "school",
+      "pay": 50,
+      "energy": 12,
+      "minLevel": 5
+    },
+    {
+      "id": "tech",
+      "name": "Техник сцены",
+      "loc": "concert",
+      "pay": 70,
+      "energy": 18,
+      "minLevel": 6
+    },
+    {
+      "id": "streamer",
+      "name": "Стример",
+      "loc": "room",
+      "pay": 60,
+      "energy": 10,
+      "minLevel": 7,
+      "fame": 5
+    }
+  ]
+}

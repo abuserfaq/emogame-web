@@ -1,0 +1,56 @@
+{
+  "gigs": [
+    {
+      "id": "garage_jam",
+      "name": "Джем в гараже",
+      "minLevel": 6,
+      "pay": 40,
+      "fame": 5,
+      "energy": 15,
+      "loc": "garage"
+    },
+    {
+      "id": "cafe_acoustic",
+      "name": "Акустика в кафе",
+      "minLevel": 4,
+      "pay": 55,
+      "fame": 8,
+      "energy": 12,
+      "loc": "cafe"
+    },
+    {
+      "id": "club_night",
+      "name": "Ночь в клубе",
+      "minLevel": 9,
+      "pay": 120,
+      "fame": 20,
+      "energy": 25,
+      "loc": "nightclub"
+    },
+    {
+      "id": "festival_slot",
+      "name": "Слот на фестивале",
+      "minLevel": 10,
+      "pay": 200,
+      "fame": 40,
+      "energy": 30,
+      "loc": "festival"
+    },
+    {
+      "id": "idol_collab",
+      "name": "Коллаб с айдолом",
+      "minLevel": 12,
+      "pay": 250,
+      "fame": 50,
+      "energy": 28,
+      "loc": "idol_stage"
+    }
+  ],
+  "songs": [
+    "Розовый шум",
+    "Чёрный кот",
+    "Метро в полночь",
+    "Сердце-пиксель",
+    "Дождь на крыше"
+  ]
+}

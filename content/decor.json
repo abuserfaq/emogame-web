@@ -1,0 +1,67 @@
+{
+  "slots": [
+    "wall",
+    "shelf",
+    "floor",
+    "pet",
+    "light"
+  ],
+  "items": [
+    {
+      "id": "poster_band",
+      "name": "Постер группы",
+      "slot": "wall",
+      "cost": 60,
+      "mood": 6
+    },
+    {
+      "id": "fairy",
+      "name": "Гирлянда",
+      "slot": "light",
+      "cost": 80,
+      "mood": 10
+    },
+    {
+      "id": "beanbag",
+      "name": "Кресло-мешок",
+      "slot": "floor",
+      "cost": 100,
+      "mood": 8
+    },
+    {
+      "id": "shelf_fig",
+      "name": "Полка с фигурками",
+      "slot": "shelf",
+      "cost": 90,
+      "mood": 7
+    },
+    {
+      "id": "neon_heart",
+      "name": "Неон-сердце",
+      "slot": "wall",
+      "cost": 150,
+      "mood": 14
+    },
+    {
+      "id": "cat_tree",
+      "name": "Когтеточка",
+      "slot": "pet",
+      "cost": 120,
+      "mood": 8
+    },
+    {
+      "id": "carpet_pink",
+      "name": "Розовый ковёр",
+      "slot": "floor",
+      "cost": 70,
+      "mood": 5
+    },
+    {
+      "id": "desk_lamp",
+      "name": "Настольная лампа",
+      "slot": "light",
+      "cost": 55,
+      "mood": 4
+    }
+  ]
+}

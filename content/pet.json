@@ -1,0 +1,37 @@
+{
+  "id": "black_cat",
+  "name": "Чёрный кот",
+  "hungerDecay": 3,
+  "bondDecay": 1,
+  "actions": [
+    {
+      "id": "feed",
+      "name": "Покормить",
+      "cost": 10,
+      "bond": 8,
+      "hunger": 40
+    },
+    {
+      "id": "pet",
+      "name": "Погладить",
+      "cost": 0,
+      "bond": 5,
+      "mood": 6
+    },
+    {
+      "id": "play",
+      "name": "Играть",
+      "cost": 0,
+      "bond": 10,
+      "energy": -5,
+      "mood": 10
+    },
+    {
+      "id": "sleep_with",
+      "name": "Спать вместе",
+      "cost": 0,
+      "bond": 6,
+      "energy": 10
+    }
+  ]
+}

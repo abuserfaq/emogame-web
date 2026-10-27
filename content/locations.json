@@ -29,6 +29,8 @@
     "id": "cemetery",
     "name": "Кладбище",
     "phases": [
+      "morning",
+      "day",
       "evening",
       "night"
     ],
@@ -71,6 +73,8 @@
     "id": "concert",
     "name": "Концерт",
     "phases": [
+      "morning",
+      "day",
       "evening",
       "night"
     ],
@@ -83,6 +87,7 @@
     "id": "rooftop",
     "name": "Крыша",
     "phases": [
+      "morning",
       "day",
       "evening",
       "night"
@@ -97,30 +102,35 @@
     "id": "records",
     "name": "Пластинки",
     "phases": [
+      "morning",
       "day",
-      "evening"
+      "evening",
+      "night"
     ],
     "energy": 5,
     "mood": 10,
-    "minLevel": 5,
+    "minLevel": 3,
     "collect": "vinyl"
   },
   {
     "id": "skate",
     "name": "Скейтпарк",
     "phases": [
+      "morning",
       "day",
-      "evening"
+      "evening",
+      "night"
     ],
     "energy": 14,
     "mood": 12,
-    "minLevel": 6,
+    "minLevel": 4,
     "minigame": "skate"
   },
   {
     "id": "arcade",
     "name": "Аркада",
     "phases": [
+      "morning",
       "day",
       "evening",
       "night"
@@ -134,55 +144,64 @@
     "id": "karaoke",
     "name": "Караоке",
     "phases": [
+      "morning",
+      "day",
       "evening",
       "night"
     ],
     "energy": 12,
     "mood": 18,
     "social": 10,
-    "minLevel": 7,
+    "minLevel": 5,
     "minigame": "karaoke"
   },
   {
     "id": "tattoo",
     "name": "Тату-студия",
     "phases": [
+      "morning",
       "day",
-      "evening"
+      "evening",
+      "night"
     ],
     "energy": 6,
     "mood": 8,
     "style": 10,
-    "minLevel": 8
+    "minLevel": 6
   },
   {
     "id": "mall",
     "name": "ТЦ",
     "phases": [
+      "morning",
       "day",
-      "evening"
+      "evening",
+      "night"
     ],
     "energy": 8,
     "mood": 6,
     "social": 8,
-    "minLevel": 3
+    "minLevel": 4
   },
   {
     "id": "school",
     "name": "Колледж",
     "phases": [
       "morning",
-      "day"
+      "day",
+      "evening",
+      "night"
     ],
     "energy": 10,
     "mood": 4,
     "social": 10,
-    "minLevel": 2
+    "minLevel": 3
   },
   {
     "id": "garage",
     "name": "Гараж",
     "phases": [
+      "morning",
       "day",
       "evening",
       "night"
@@ -190,18 +209,20 @@
     "energy": 12,
     "mood": 10,
     "music": 15,
-    "minLevel": 9
+    "minLevel": 6
   },
   {
     "id": "factory",
     "name": "Заброшка",
     "phases": [
+      "morning",
+      "day",
       "evening",
       "night"
     ],
     "energy": 14,
     "mood": 8,
-    "minLevel": 10
+    "minLevel": 8
   },
   {
     "id": "embankment",
@@ -209,11 +230,12 @@
     "phases": [
       "morning",
       "day",
-      "evening"
+      "evening",
+      "night"
     ],
     "energy": 8,
     "mood": 12,
-    "minLevel": 4
+    "minLevel": 5
   },
   {
     "id": "station",
@@ -227,12 +249,13 @@
     "energy": 8,
     "mood": 4,
     "social": 8,
-    "minLevel": 6
+    "minLevel": 4
   },
   {
     "id": "festival",
     "name": "Фестиваль",
     "phases": [
+      "morning",
       "day",
       "evening",
       "night"
@@ -241,12 +264,13 @@
     "mood": 30,
     "social": 20,
     "fame": 15,
-    "minLevel": 12
+    "minLevel": 10
   },
   {
     "id": "idol_stage",
     "name": "Сцена айдолов",
     "phases": [
+      "morning",
       "day",
       "evening",
       "night"
@@ -254,19 +278,21 @@
     "energy": 16,
     "mood": 22,
     "fame": 20,
-    "minLevel": 11
+    "minLevel": 12
   },
   {
     "id": "nightclub",
     "name": "Клуб",
     "phases": [
+      "morning",
+      "day",
       "evening",
       "night"
     ],
     "energy": 16,
     "mood": 20,
     "social": 15,
-    "minLevel": 10
+    "minLevel": 9
   },
   {
     "id": "bookcafe",
@@ -274,11 +300,12 @@
     "phases": [
       "morning",
       "day",
-      "evening"
+      "evening",
+      "night"
     ],
     "energy": 5,
     "mood": 14,
-    "minLevel": 5
+    "minLevel": 3
   },
   {
     "id": "beach",
@@ -286,10 +313,11 @@
     "phases": [
       "morning",
       "day",
-      "evening"
+      "evening",
+      "night"
     ],
     "energy": 10,
     "mood": 16,
-    "minLevel": 8
+    "minLevel": 7
   }
 ]

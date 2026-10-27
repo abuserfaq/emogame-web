@@ -1,0 +1,57 @@
+{
+  "seasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+  ],
+  "weathers": [
+    "clear",
+    "rain",
+    "snow",
+    "fog",
+    "storm",
+    "heat"
+  ],
+  "effects": {
+    "rain": {
+      "mood": -2,
+      "energy": -1,
+      "locs_bonus": {
+        "embankment": 5,
+        "rooftop": 3
+      }
+    },
+    "snow": {
+      "mood": 4,
+      "energy": -2,
+      "locs_bonus": {
+        "park": 5,
+        "cemetery": 4
+      }
+    },
+    "clear": {
+      "mood": 3,
+      "energy": 1
+    },
+    "fog": {
+      "mood": -1,
+      "locs_bonus": {
+        "metro": 3,
+        "factory": 4
+      }
+    },
+    "storm": {
+      "mood": -5,
+      "energy": -3,
+      "home_bonus": 8
+    },
+    "heat": {
+      "thirst": -5,
+      "mood": -2,
+      "locs_bonus": {
+        "beach": 10
+      }
+    }
+  }
+}

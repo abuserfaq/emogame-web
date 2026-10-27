@@ -1,6 +1,8 @@
 (function(){
+const store={};
 const Content={
   pack:null, ready:false,
+  get(name){ return store[name]; },
   async load(){
     const base='content/';
     let pack; try{ pack=await (await fetch(base+'pack.json')).json(); }catch(e){ pack={files:[]}; }
@@ -10,6 +12,7 @@ const Content={
     const files=pack.files||[];
     for(const f of files){
       const data=await loadOne(f); if(data==null) continue;
+      store[f]=data;
       if(f==='locations') EG.LOCS=data;
       else if(f==='foods') EG.FOOD=data;
       else if(f==='drinks') EG.DRINKS=data;
@@ -22,13 +25,10 @@ const Content={
       else if(f==='unlocks') EG.UNLOCKS=data;
       else if(f==='anims') EG.ANIMS=data;
     }
-    // remote overlay
     try{
       if(window.EGRC&&EGRC.bool('content_remote',true)&&pack.remoteUrl){
         const remote=await fetch(pack.remoteUrl+'pack.json').then(r=>r.ok?r.json():null).catch(()=>null);
-        if(remote&&remote.semver&&remote.semver!==pack.semver){
-          // optional: pull newer files later; for now keep bundled as source of truth until hash check
-        }
+        if(remote&&remote.semver&&remote.semver!==pack.semver){ /* bundled wins until hash */ }
       }
     }catch(e){}
     this._compat(EG);
@@ -46,8 +46,7 @@ const Content={
     EG.locBg=(id,phase)=>{
       const known=window.__EG_LOC_KNOWN||{};
       const key=id+'_'+phase;
-      if(known[key]!==0) return `img/loc/${id}_${phase}.jpg`;
-      // fallback phases
+      if(known[key]) return `img/loc/${id}_${phase}.jpg`;
       for(const p of [phase,'day','evening','night','morning']){
         if(known[id+'_'+p]) return `img/loc/${id}_${p}.jpg`;
       }
