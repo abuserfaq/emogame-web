@@ -448,11 +448,11 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
   color:#eee;padding:0;font-size:10px;cursor:pointer;text-align:center;min-width:0;
   pointer-events:auto;filter:drop-shadow(0 2px 4px #000a);box-shadow:none!important
 }
-.map-pin img.pin-art{width:64px;height:auto;display:block;margin:0 auto 5px;image-rendering:pixelated;background:transparent;filter:drop-shadow(0 2px 6px #000c)}
+.map-pin img.pin-art{width:68px;height:auto;display:block;margin:0 auto -2px;image-rendering:pixelated;background:transparent;filter:drop-shadow(0 2px 6px #000c);position:relative;z-index:1}
 .map-pin .pin-lab{
   display:inline-block;background:rgba(6,4,10,.97);border:2px solid #ff4d9a;
-  border-radius:7px;padding:6px 12px;color:#fff;font-size:15px;font-weight:800;letter-spacing:.03em;
-  white-space:nowrap;max-width:160px;line-height:1.15;
+  border-radius:8px;padding:7px 14px;color:#fff;font-size:16px;font-weight:800;letter-spacing:.03em;
+  white-space:nowrap;max-width:170px;line-height:1.15;position:relative;z-index:2;margin-top:-4px;
   box-shadow:0 0 0 1px #2a1018, 0 3px 10px #000c, inset 0 0 0 1px #ff4d9a44;
   overflow:visible;text-overflow:clip
 }
@@ -508,10 +508,11 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .chat-v2 .chat-title{text-align:center;padding:8px 8px 4px;padding-top:max(10px,env(safe-area-inset-top))}
 .chat-v2 .chat-title img{width:78%;max-width:320px;height:auto;display:block;margin:0 auto;image-rendering:pixelated;filter:drop-shadow(0 2px 10px #ff4d9a44)}
 .chat-v2 .chat-title .hrt{display:none}
-.chat-v2 .chat-list{flex:1;overflow:auto;padding:6px 12px 8px;display:flex;flex-direction:column;gap:8px;min-height:0;justify-content:flex-start}
+.chat-v2 .chat-list{flex:1;overflow:auto;padding:4px 10px 6px;display:flex;flex-direction:column;gap:6px;min-height:0;justify-content:flex-start}
 .chat-v2 .msg{display:flex;gap:8px;align-items:flex-start}
-.chat-v2 .msg .av{width:56px;height:56px;border-radius:50%;border:2px solid #ff4d9a;object-fit:cover;object-position:center 18%;flex-shrink:0;image-rendering:auto;background:#1a1018;box-shadow:0 0 0 1px #000,0 2px 8px #000a}
-.chat-v2 .msg .bubble{flex:1;background:#121016;border:1px solid #ff4d9a66;border-radius:10px;padding:8px 10px;box-shadow:0 0 8px #ff4d9a22;position:relative}
+.chat-v2 .msg .av-wrap{width:58px;height:58px;border-radius:50%;border:2px solid #ff4d9a;overflow:hidden;flex-shrink:0;background:#0a0810;box-shadow:0 0 0 1px #000,0 2px 8px #000a}
+.chat-v2 .msg .av{width:100%;height:100%;object-fit:cover;object-position:center 12%;transform:scale(1.45);transform-origin:center 30%;image-rendering:auto;display:block;border:0;border-radius:0}
+.chat-v2 .msg .bubble{flex:1;background:#121016;border:1px solid #ff4d9a66;border-radius:10px;padding:7px 10px;box-shadow:0 0 8px #ff4d9a22;position:relative}
 .chat-v2 .msg .bubble::after{content:"♡";position:absolute;right:8px;bottom:4px;color:#ff4d9a88;font-size:10px}
 .chat-v2 .msg .nm{color:#ff4d9a;font-size:12px;font-weight:700}
 .chat-v2 .msg .tm{color:#776;font-size:10px;margin-left:6px}
@@ -531,7 +532,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 
 .map-head{position:absolute;left:8px;right:8px;top:max(8px,env(safe-area-inset-top));z-index:12;
   display:flex;gap:8px;align-items:flex-start;background:rgba(10,8,12,.88);border:2px solid #ff4d9a88;border-radius:10px;padding:8px}
-.map-av{width:56px;height:56px;border-radius:50%;border:2px solid #ff4d9a;object-fit:cover;object-position:center 18%;image-rendering:auto;background:#1a1018}
+.map-av{width:56px;height:56px;border-radius:50%;border:2px solid #ff4d9a;object-fit:cover;object-position:center 12%;transform:scale(1.35);transform-origin:center 25%;image-rendering:auto;background:#1a1018;overflow:hidden}
 .map-meta{flex:1;min-width:0}
 .map-name{color:#fff;font-weight:700;font-size:14px}
 .map-lv{color:#ff8fb8;font-size:11px;margin-top:2px}
@@ -544,16 +545,30 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 
 .chat-v2 .quick button{display:inline-flex;align-items:center;gap:6px}
 .chat-v2 .quick button img{width:18px;height:18px;image-rendering:pixelated}
-.map-pin .pin-lab{font-size:15px;padding:6px 12px;font-weight:800}
+.map-pin .pin-lab{font-size:16px;padding:7px 14px;font-weight:800}
 
-/* Sheets: fit viewport, internal scroll, uniform art grid */
-.eg-sheet-root{position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:auto}
+/* Sheets: fit viewport, internal scroll, uniform art grid — clear nav dock */
+.eg-sheet-root{
+  position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;justify-content:flex-end;pointer-events:auto;
+  padding-bottom:calc(148px + env(safe-area-inset-bottom,0px)); /* nav 92 + bottom 48 + gap */
+}
+.shot-mode .eg-sheet-root,.shot-hide-ads .eg-sheet-root{
+  padding-bottom:calc(104px + env(safe-area-inset-bottom,0px)); /* nav at bottom:6 + 92 + gap */
+}
+.eg-sheet-root .eg-sheet-bg{bottom:inherit; /* follow padding via inset override below */}
+.eg-sheet-root > .eg-sheet-bg{inset:0; bottom:calc(148px + env(safe-area-inset-bottom,0px))}
+.shot-mode .eg-sheet-root > .eg-sheet-bg,.shot-hide-ads .eg-sheet-root > .eg-sheet-bg{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
 .eg-sheet{
-  max-height:min(68%, calc(100% - 110px))!important;
+  max-height:min(70%, calc(100% - 8px))!important;
   min-height:0;
   display:flex;flex-direction:column;
-  padding-bottom:max(10px,env(safe-area-inset-bottom))!important
+  border-bottom:2px solid #ff4d9a!important;
+  border-radius:18px 18px 14px 14px!important;
+  padding-bottom:12px!important;
+  margin:0 0 0
 }
+.nav-dock{z-index:50!important} /* always above sheet */
+#bannerStrip{z-index:49!important}
 .eg-sheet-body{flex:1;overflow:auto!important;min-height:0;-webkit-overflow-scrolling:touch;padding:12px 12px 16px!important}
 .sheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start;grid-auto-rows:1fr}
 .sheet-card{
@@ -577,3 +592,11 @@ button.sheet-card{font:inherit}
 .screen.feed-screen{min-height:0}
 .screen.feed-screen .feed-body{flex:1;min-height:0}
 .screen.feed-screen > .nav-dock{flex-shrink:0}
+
+.map-head{overflow:visible}
+.map-head .map-av{clip-path:circle(50% at 50% 50%)}
+
+@media (min-width:500px){
+  .map-pin img.pin-art{width:78px}
+  .map-pin .pin-lab{font-size:18px!important;padding:8px 16px!important}
+}

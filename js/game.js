@@ -605,7 +605,11 @@ SCR.chat=()=>{
     {name:'Лила', t:'Наконец-то пятница... Мир такой скучный без вас', av:'lila'},
     {name:'ДемонX', t:'Согласен... Спасает только музыка', av:'demonx'},
     {name:'Кошмарик', t:'Кто со мной в заброшку сегодня?', av:'koshmarik'},
-    {name:'raven', t:'Я с вами! Берите фонарики', av:'raven'}
+    {name:'raven', t:'Я с вами! Берите фонарики', av:'raven'},
+    {name:'Лила', t:'Кто что слушает сегодня? Киньте трек 💔', av:'lila'},
+    {name:'ДемонX', t:'Новый дроп на ночь — пишите в лс', av:'demonx'},
+    {name:'Кошмарик', t:'Я уже у выхода из метро 👀', av:'koshmarik'},
+    {name:'raven', t:'Не опаздывайте, там темно 🖤', av:'raven'}
   ];
   const quick=[['Привет','qr_heart'],['Как дела','qr_broken'],['Идём гулять','qr_bat']];
   const myAv=avatarSrc(S.style,S.gender);
@@ -631,7 +635,7 @@ SCR.chat=()=>{
   const paint=()=>{
     const list=msgs.map(m=>{
       const src=m.me?myAv:(`img/ui/avatars/${m.av||'lila'}.webp`);
-      return `<div class="msg"><img class="av" src="${src}" alt="" width="56" height="56" decoding="async"><div class="bubble"><div><span class="nm">${m.name}</span><span class="tm">сейчас</span></div><div class="tx">${m.t}</div></div></div>`;
+      return `<div class="msg"><span class="av-wrap"><img class="av" src="${src}" alt="" width="58" height="58" decoding="async"></span><div class="bubble"><div><span class="nm">${m.name}</span><span class="tm">сейчас</span></div><div class="tx">${m.t}</div></div></div>`;
     }).join('');
     app.innerHTML=`<div class="screen chat-v2">
       <div class="chat-title"><img src="img/ui/chrome/chat_title.webp" alt="Чат"><span class="hrt">♡</span></div>
@@ -704,6 +708,7 @@ SCR.minigame=()=>{
 // boot
 
 
+SCR.more=()=>SCR.hub();
 SCR.hub=()=>{
   const items=[
     ['sleep','sleep','Сон'],['band','fame','Группа / гиги'],['mg_music','energy','Музыка'],
@@ -932,6 +937,9 @@ async function boot(){
     localStorage.setItem('eg_created','1'); localStorage.setItem('eg_care_onboard','1');
     save();
     if(shotGo==='metro'){ go('loc','metro'); return; }
+    if(shotGo==='more'){ go('hub'); return; }
+    if(shotGo==='quests'){ go('home'); requestAnimationFrame(()=>openQuests()); return; }
+    if(shotGo==='shop'){ go('home'); requestAnimationFrame(()=>openShop()); return; }
     go(shotGo, q.get('a')||undefined); return;
   }
   if(S.consent==null) go('consent');
