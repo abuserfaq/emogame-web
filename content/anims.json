@@ -164,6 +164,21 @@
       "hungry": "img/chars/frames/skater_guy/hungry.png",
       "sick": "img/chars/frames/skater_guy/sick.png",
       "dance": "img/chars/frames/skater_guy/dance.png"
+    },
+    "goth_guy": {
+      "idle": "img/chars/frames/goth_guy/idle.webp",
+      "idle2": "img/chars/frames/goth_guy/idle2.webp",
+      "blink": "img/chars/frames/goth_guy/blink.webp",
+      "eat": "img/chars/frames/goth_guy/eat.webp",
+      "drink": "img/chars/frames/goth_guy/drink.webp",
+      "happy": "img/chars/frames/goth_guy/happy.webp",
+      "sad": "img/chars/frames/goth_guy/sad.webp",
+      "walk": "img/chars/frames/goth_guy/walk.webp",
+      "walk2": "img/chars/frames/goth_guy/walk2.webp",
+      "sleep": "img/chars/frames/goth_guy/sleep.webp",
+      "hungry": "img/chars/frames/goth_guy/hungry.webp",
+      "sick": "img/chars/frames/goth_guy/sick.webp",
+      "dance": "img/chars/frames/goth_guy/dance.webp"
     }
   },
   "sequences": {

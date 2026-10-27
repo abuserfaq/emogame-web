@@ -61,7 +61,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .seg button{flex:1 1 calc(33.33% - 6px);min-width:88px;padding:10px 6px;border-radius:10px;border:1px solid #2a1a24;background:#161018;color:#ccc;cursor:pointer;font-size:12px}
 .seg button.on{border-color:var(--accent,#ff4d9a);color:#fff}
 .create .chars{max-height:none;overflow:visible;grid-template-columns:1fr 1fr;gap:8px}
-.create .chars .pick img{height:96px}
+.create .chars .pick img{height:110px;object-fit:contain;object-position:bottom;background:transparent}
 .create .chars .pick span{font-size:11px}
 .create .chars .pick small{font-size:9px;color:#888}
 .create{padding:12px 12px 8px}

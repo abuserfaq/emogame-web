@@ -183,7 +183,7 @@ SCR.create=()=>{
       <div class="seg">${EG.GENDERS.map(g=>`<button data-g="${g.id}" class="${gender===g.id?'on':''}">${g.name}</button>`).join('')}</div>
       <div class="seg">${EG.STYLES.map(s=>`<button data-s="${s.id}" class="${style===s.id?'on':''}">${s.name}</button>`).join('')}</div>
       <div class="chars">${EG.STYLES.map(s=>`<div class="pick ${style===s.id?'on':''}" data-pick="${s.id}">
-        <img src="${EG.charImg(s.id,gender)}" alt="${s.name}"><span>${s.name}<br><small>${s.blurb}</small></span></div>`).join('')}</div>
+        <img src="img/chars/${s.id}_${gender}.webp" alt="${s.name}" onerror="this.src=\'img/chars/${s.id}_guy.webp\'"><span>${s.name}<br><small>${s.blurb}</small></span></div>`).join('')}</div>
       <input id="nm" placeholder="Имя (необязательно)" maxlength="16" value="${S.name||''}"
         style="width:100%;padding:12px;border-radius:12px;border:1px solid #2a1a24;background:#161018;color:#fff;margin-bottom:12px">
       <button class="btn" id="go">Начать</button>
