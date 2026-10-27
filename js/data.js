@@ -18,10 +18,4 @@ EG.locBg=(id,phase)=>{
   return 'img/loc/room_morning.jpg';
 };
 // known shipped backgrounds (updated as arts land)
-window.__EG_LOC_KNOWN={
-  room_morning:1,room_day:1,room_evening:1,room_night:1,
-  park_morning:1,park_day:1,park_evening:1,park_night:1,
-  cemetery_morning:1,cemetery_day:1,cemetery_evening:1,cemetery_night:1,
-  metro_morning:1,metro_day:1,metro_evening:1,metro_night:1,
-  cafe_day:1,concert_night:1
-};
+window.__EG_LOC_KNOWN={'cafe_day':1,'cafe_evening':1,'cafe_morning':1,'cafe_night':1,'cemetery_day':1,'cemetery_evening':1,'cemetery_morning':1,'cemetery_night':1,'concert_day':1,'concert_evening':1,'concert_morning':1,'concert_night':1,'metro_day':1,'metro_evening':1,'metro_morning':1,'metro_night':1,'park_day':1,'park_evening':1,'park_morning':1,'park_night':1,'room_day':1,'room_evening':1,'room_morning':1,'room_night':1};

@@ -63,7 +63,7 @@ const Care={
     const P=window.Platform; if(!P||!P.push||!P.push.avail||!P.push.avail()) return;
     const msgs=[];
     if(S.hunger<35) msgs.push({id:'hunger',title:'Emogame',body:'я голоден… зайди покормить',when:Date.now()+3600e3});
-    if(this.dirtTotal(S)>80) msgs.push({id:'dirt',title:'Emogame',body:'в комнате бардак Sweep',when:Date.now()+7200e3});
+    if(this.dirtTotal(S)>80) msgs.push({id:'dirt',title:'Emogame',body:'в комнате бардак',when:Date.now()+7200e3});
     if(S.thirst<35) msgs.push({id:'thirst',title:'Emogame',body:'хочу пить 🧋',when:Date.now()+5400e3});
     try{ P.push.setReminders(msgs); }catch(e){}
   },

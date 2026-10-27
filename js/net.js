@@ -60,6 +60,11 @@ const Net={
   async progress(stats){ return post('progress',{stats}); },
   async pushToken(token,on){ return post('push_token',{token,on:!!on}); },
   ev(n){ tryf(()=>PL().event&&PL().event(n,{})); },
+  async lobbyCreate(loc){ return post('lobby_create',{loc:loc||'park'}); },
+  async lobbyJoin(code){ return post('lobby_join',{code}); },
+  async lobbyState(code){ return post('lobby_state',{code}); },
+  async giftSend(to,giftId){ return post('gift_send',{to,giftId}); },
 };
+
 window.Net=Net;
 })();
