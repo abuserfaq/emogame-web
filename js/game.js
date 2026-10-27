@@ -359,6 +359,8 @@ SCR.map=()=>{
     {id:'concert',lab:'Концерт',x:'62%',y:'66%'},
     {id:'mall',lab:'Магазин',x:'28%',y:'70%'}
   ];
+  const av=EG.charImg(S.style,S.gender);
+  const need=xpNeed(S.level); const xp=Math.round(clamp(S.xp,0,need));
   app.innerHTML=`<div class="screen immersive">
     <div class="map-bleed"><img class="mapbg" src="img/loc/city_map.webp" alt=""></div>
     <div class="map-pins">${pins.map(p=>{
@@ -366,7 +368,18 @@ SCR.map=()=>{
       const ok=unlockOk(loc)&&(!loc.phases||loc.phases.includes(ph));
       return `<button class="map-pin" style="left:${p.x};top:${p.y}" data-l="${p.id}" ${ok?'':'disabled'}><span class="pin-ico">▼</span>${p.lab}</button>`;
     }).join('')}</div>
-    ${hudHTML()}
+    <div class="map-head">
+      <img class="map-av" src="${av}" alt="">
+      <div class="map-meta"><div class="map-name">${S.name||'Пустышка'}</div>
+        <div class="map-lv">${ico('hunger')} УРОВЕНЬ ${S.level}</div>
+        <div class="hud-chip xp" style="margin-top:4px;width:100%"><div class="xpbar"><i style="width:${Math.round(xp/need*100)}%"></i><span>${xp} / ${need}</span></div></div>
+      </div>
+      <div class="map-cur">
+        <div class="hud-chip">${ico('coins')} ${S.coins}</div>
+        <div class="hud-chip">${ico('gems')} ${S.gems}</div>
+        <button class="hud-gear" id="hudGear" type="button">${ico('settings')}</button>
+      </div>
+    </div>
     ${nav('map')}
   </div>`;
   bindNav();

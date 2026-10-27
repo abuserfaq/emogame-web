@@ -421,3 +421,11 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 /* Hide legacy chrome when immersive helpers present */
 .screen.immersive .topbar,.screen.immersive .resbar,.screen.immersive .care-banner,
 .screen.immersive .dirt-row,.screen.immersive .home-actions{display:none!important}
+
+.map-head{position:absolute;left:8px;right:8px;top:max(8px,env(safe-area-inset-top));z-index:12;
+  display:flex;gap:8px;align-items:flex-start;background:rgba(10,8,12,.88);border:2px solid #ff4d9a88;border-radius:12px;padding:8px}
+.map-av{width:52px;height:52px;border-radius:50%;border:2px solid #ff4d9a;object-fit:cover;object-position:top;image-rendering:pixelated}
+.map-meta{flex:1;min-width:0}
+.map-name{color:#fff;font-weight:700;font-size:14px}
+.map-lv{color:#ff8fb8;font-size:11px;margin-top:2px}
+.map-cur{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
