@@ -22,7 +22,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
   filter:drop-shadow(0 8px 16px rgba(0,0,0,.55));pointer-events:none;z-index:2}
 .stage .loc-title{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:3;font-size:13px;letter-spacing:.08em;
   background:rgba(10,8,12,.72);border:1px solid var(--accent,#ff4d9a);color:#fff;padding:4px 12px;border-radius:999px}
-.nav{display:flex;gap:4px;padding:8px 10px;padding-bottom:max(8px,env(safe-area-inset-bottom));background:#0e0a10;border-top:1px solid #241820;z-index:5}
+.nav{flex-shrink:0;display:flex;gap:4px;padding:8px 10px;padding-bottom:max(8px,env(safe-area-inset-bottom));background:#0e0a10;border-top:1px solid #241820;z-index:5}
 .nav button{flex:1;background:#161018;border:1px solid #2a1a24;color:#ddd;border-radius:12px;padding:10px 4px;font-size:11px;cursor:pointer}
 .nav button.on,.nav button:active{border-color:var(--accent,#ff4d9a);color:#fff;box-shadow:0 0 0 1px var(--glow)}
 .nav button .ic{display:block;font-size:16px;margin-bottom:2px}
@@ -65,14 +65,14 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .resbar b{color:#fff}
 .modalbg{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:30;display:flex;align-items:flex-end;justify-content:center}
 .modal{width:100%;background:#120c14;border-top:1px solid #3a2030;border-radius:18px 18px 0 0;padding:16px;padding-bottom:max(16px,env(safe-area-inset-bottom))}
-.shot-mode .nav,.shot-mode .topbar .ad-mark,.shot-hide-ads #bannerStrip{display:none!important}
+.shot-mode .topbar .ad-mark,.shot-hide-ads #bannerStrip{display:none!important}
 
 /* --- M2 architecture: anim / care / gifts --- */
 .char.anim-bob{animation:egBob 2.4s ease-in-out infinite}
 .char.anim-sad{filter:grayscale(.35) brightness(.9); animation:egSad 3s ease-in-out infinite}
 .char.anim-dance{animation:egDance .6s ease-in-out infinite}
 .char.anim-sleep{opacity:.85; animation:egSleep 3s ease-in-out infinite}
-.char.char-sheet{height:48%; width:auto; max-width:70%; overflow:hidden}
+.char.char-sheet{display:none!important}
 @keyframes egBob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
 @keyframes egSad{0%,100%{transform:translateX(-50%) translateY(4px)}50%{transform:translateX(-50%) translateY(0)}}
 @keyframes egDance{0%,100%{transform:translateX(-50%) rotate(-3deg)}50%{transform:translateX(-50%) rotate(3deg) translateY(-4px)}}
@@ -90,3 +90,99 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:"Segoe UI",syste
 .onboard-care h3{color:#ff4d9a;margin:0 0 8px}
 .decor-layer{position:absolute;pointer-events:none}
 .decor-layer img{width:48px;height:48px;object-fit:contain}
+
+/* === Production UI: pixel icons, sheets, chat mockup, banner === */
+.pxico{width:28px;height:28px;image-rendering:pixelated;image-rendering:crisp-edges;object-fit:contain;flex-shrink:0;display:inline-block;vertical-align:middle;background:transparent}
+.pxico.lg{width:36px;height:36px}
+.stat .lab .pxico{width:22px;height:22px}
+.nav button .ic{display:flex;justify-content:center;margin-bottom:2px}
+.nav button .ic .pxico{width:32px;height:32px}
+.resbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.resbar .pxico{width:20px;height:20px}
+.stage .char{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);height:52%;width:auto;max-width:42%;object-fit:contain;
+  background:transparent!important;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5));pointer-events:none;z-index:2;image-rendering:pixelated}
+.stage .char.char-sheet{display:none} /* never show full sheet */
+.btn .pxico,.card .pxico{width:24px;height:24px}
+.dirt-row .chip .pxico{width:18px;height:18px;margin-right:2px}
+
+/* hide native scrollbars; thin pink custom */
+.eg-scroll{scrollbar-width:thin;scrollbar-color:#ff4d9a #1a1018}
+.eg-scroll::-webkit-scrollbar{width:4px;height:4px}
+.eg-scroll::-webkit-scrollbar-thumb{background:#ff4d9a;border-radius:4px}
+.eg-scroll::-webkit-scrollbar-track{background:transparent}
+.panel,.phrases,.chat-bubbles,textarea,body{-ms-overflow-style:none}
+.phrases::-webkit-scrollbar,.chat-bubbles::-webkit-scrollbar,.panel::-webkit-scrollbar{width:4px}
+.phrases::-webkit-scrollbar-thumb,.chat-bubbles::-webkit-scrollbar-thumb{background:#ff4d9a88}
+
+/* Banner ad slot — above nav, never covers controls */
+#bannerStrip{display:none;flex:0 0 auto;height:50px;margin:0 10px 4px;border-radius:10px;border:1px solid #2a1a24;background:#120c14;
+  align-items:center;justify-content:center;overflow:hidden;position:relative;z-index:4}
+#bannerStrip.on{display:flex}
+#bannerStrip .ad-label{font-size:9px;color:#665;position:absolute;left:6px;top:2px}
+.shot-mode #bannerStrip,.shot-hide-ads #bannerStrip{display:none!important}
+#app{padding-bottom:0}
+.screen{padding-bottom:0}
+
+/* Modal / bottom sheet */
+.eg-sheet-root{position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;justify-content:flex-end}
+.eg-sheet-root.out .eg-sheet{transform:translateY(110%)}
+.eg-sheet-root.out .eg-sheet-bg{opacity:0}
+.eg-sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.62);transition:opacity .18s}
+.eg-sheet{position:relative;z-index:1;background:#120c14;border:2px solid #ff4d9a;border-bottom:0;border-radius:18px 18px 0 0;
+  max-height:78%;display:flex;flex-direction:column;padding:0 0 max(12px,env(safe-area-inset-bottom));
+  box-shadow:0 -8px 32px rgba(255,77,154,.2);transition:transform .18s;transform:translateY(0)}
+.eg-sheet-handle{width:44px;height:5px;border-radius:3px;background:#ff4d9a88;margin:10px auto 4px}
+.eg-sheet-head{display:flex;align-items:center;gap:8px;padding:6px 14px 10px;border-bottom:1px solid #2a1a24}
+.eg-sheet-head h3{flex:1;margin:0;font-size:16px;color:#ff4d9a;letter-spacing:.04em}
+.eg-sheet-x{width:36px;height:36px;border-radius:10px;border:1px solid #ff4d9a;background:#1a1018;color:#ff8fb8;font-size:18px;cursor:pointer}
+.eg-sheet-body{padding:12px 14px;overflow:auto;min-height:0}
+
+/* Chat 1:1 mockup-ish */
+.chat-screen{flex:1;display:flex;flex-direction:column;min-height:0;background:#0a0a0c}
+.chat-peer{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #2a1a24}
+.chat-peer img.av{width:40px;height:40px;border-radius:8px;border:1px solid #ff4d9a;object-fit:cover;image-rendering:pixelated}
+.chat-peer .nm{color:#ff4d9a;font-size:14px;font-weight:700}
+.chat-peer .on{color:#6f6;font-size:11px}
+.chat-bubbles{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:120px}
+.bub{max-width:78%;padding:10px 12px;font-size:13px;line-height:1.35;position:relative;border:1px solid #3a2030}
+.bub.them{align-self:flex-start;background:#161018;color:#fff;border-radius:4px 14px 14px 14px;border-color:#ff4d9a66}
+.bub.me{align-self:flex-end;background:#ff4d9a;color:#111;border-radius:14px 4px 14px 14px;border-color:#ff8fb8;font-weight:600}
+.bub .av-inline{width:22px;height:22px;border-radius:4px;vertical-align:middle;margin-right:6px}
+.chat-cats{display:flex;gap:0;overflow-x:auto;border-top:1px solid #2a1a24;border-bottom:1px solid #2a1a24;background:#100c12}
+.chat-cats button{flex:0 0 auto;padding:10px 12px;background:transparent;border:0;border-right:1px solid #2a1a24;color:#bbb;font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.chat-cats button.on{color:#ff4d9a}
+.phrases{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;max-height:38%;overflow:auto;background:#0c0a0e}
+.phrases button{display:flex;align-items:center;gap:8px;background:#161018;border:1px solid #ff4d9a88;border-radius:10px;padding:12px;color:#fff;font-size:13px;text-align:left;cursor:pointer}
+.phrases button:active{border-color:#ff4d9a;background:#1c1018}
+.chat-upsell{margin:8px 10px;padding:10px;border:1px dashed #ff4d9a;border-radius:12px;background:#1a1018;font-size:12px;color:#ffc0d8}
+.chat-upsell button{margin-top:6px}
+
+.px-frame{border:2px solid #ff4d9a;border-radius:12px;background:#161018}
+.care-banner{border:1px solid #ff4d9a88}
+
+.chat-screen .phrases{max-height:28vh;overflow:auto;padding:8px 10px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chat-screen .nav,.screen>.nav{margin-top:auto}
+.home-actions{padding:8px 12px;display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0}
+
+
+/* Chat 1:1 mockup polish */
+.chat-screen .topbar,.chat-screen .resbar{display:none}
+.chat-screen{border:3px solid #ff4d9a;border-radius:0;background:#0a0a0c}
+.chat-peer{border:2px solid #ff4d9a;margin:8px;border-radius:8px;background:#120c14}
+.chat-peer img.av{width:48px;height:48px;border:2px solid #ff4d9a;border-radius:6px;image-rendering:pixelated;object-fit:cover;object-position:top}
+.chat-bubbles{border:2px solid #ff4d9a55;margin:0 8px;border-radius:8px;background:#0e0a10;min-height:140px;flex:1}
+.bub{border:2px solid #ff4d9a;font-size:13px;padding:10px 12px;max-width:82%}
+.bub.them{border-radius:4px 12px 12px 12px;background:#161018}
+.bub.me{border-radius:12px 4px 12px 12px;background:#ff4d9a;color:#111}
+.chat-cats{border:2px solid #ff4d9a;margin:8px 8px 0;border-radius:8px;background:#120c14}
+.chat-cats button{min-width:72px;padding:12px 10px;color:#ff8fb8}
+.chat-cats button .pxico{width:36px;height:36px;filter:none}
+.chat-cats button.on{background:#ff4d9a22;color:#fff;box-shadow:inset 0 -3px 0 #ff4d9a}
+.chat-cats button span{font-size:10px;letter-spacing:.02em}
+.chat-screen .phrases{margin:8px;padding:0;gap:8px;max-height:34vh;display:grid;grid-template-columns:1fr 1fr}
+.chat-screen .phrases button{border:2px solid #ff4d9a;border-radius:8px;padding:14px 10px;font-size:13px;background:#161018;min-height:52px}
+.chat-screen .phrases button .pxico{width:28px;height:28px}
+.chat-upsell{margin:6px 8px;padding:8px 10px;border:2px dashed #ff4d9a99;border-radius:8px;font-size:11px;color:#caa;background:#120c14}
+.chat-upsell .btn{margin-top:6px;width:100%;padding:10px;font-size:12px}
+.chat-screen .chat-mod{display:flex;gap:6px;padding:0 8px 6px}
+.chat-screen .chat-mod .btn{flex:1;border:2px solid #ff4d9a66;font-size:11px;padding:8px}

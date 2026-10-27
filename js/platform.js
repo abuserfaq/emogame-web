@@ -34,7 +34,20 @@ const android={
     vkAvail:()=>tryf(()=>!!(B&&B.vkAvail&&B.vkAvail()),false), vkLogin:()=>tryf(()=>B.vkLogin('ru')),
     yaAvail:()=>tryf(()=>!!(B&&B.yaAvail&&B.yaAvail()),false), yaLogin:()=>tryf(()=>B.yaLogin('ru')),
   },
-  social:null,
+  social:{
+    name:'RuStore', cur:'₽',
+    items:[
+      ['gems_80','80 кристаллов','99 ₽','gem'],
+      ['gems_250','250 кристаллов','249 ₽','gem'],
+      ['coins_5000','5 000 монет','149 ₽','coin'],
+      ['sub_freechat','Свободный чат (30 дн)','199 ₽','sub']
+    ],
+    pay:async id=>{
+      if(W.RuStore&&W.RuStore.purchase){ try{ return !!(await W.RuStore.purchase(id)); }catch(e){ return false; } }
+      if(B&&B.purchase){ try{ return !!(await B.purchase(id)); }catch(e){ return false; } }
+      return false;
+    }
+  },
   levelEnd:()=>tryf(()=>W.RuStore&&W.RuStore.levelEnd&&W.RuStore.levelEnd()),
   setShop:()=>{},
 };
@@ -168,10 +181,29 @@ W.__adResult=W.__adResult||null;
     set:(k,v)=>{try{localStorage.setItem('eg_'+k,v)}catch(e){}},
     del:k=>{try{localStorage.removeItem('eg_'+k)}catch(e){}},
   };
+  const AND_ITEMS=[['gems_80','80 кристаллов','99 ₽','gem'],['gems_250','250 кристаллов','249 ₽','gem'],['coins_5000','5 000 монет','149 ₽','coin'],['sub_freechat','Свободный чат (30 дн)','199 ₽','sub']];
   P.pay=P.pay||{
-    items:()=>((P.social&&P.social.items)||[]),
-    purchase:async id=>{ if(P.social&&P.social.pay) return !!(await P.social.pay(id)); return false; }
+    items:()=>{
+      if(P.social&&P.social.items&&P.social.items.length) return P.social.items;
+      if(P.id==='android') return AND_ITEMS;
+      if(P.id==='web') return AND_ITEMS.map(x=>[x[0],x[1],x[2]+' (ЮKassa)',x[3]]);
+      return [];
+    },
+    purchase:async id=>{
+      if(P.social&&P.social.pay){ const ok=await P.social.pay(id); if(ok) return true; }
+      if(W.YooKassa&&W.YooKassa.checkout){ try{ return !!(await W.YooKassa.checkout(id)); }catch(e){} }
+      if(B&&B.yookassa){ try{ return !!(await B.yookassa(id)); }catch(e){} }
+      if(P.id==='web'){ console.info('[pay] YooKassa stub',id); return true; }
+      return false;
+    }
   };
+  P.auth=P.auth||{};
+  P.auth.tgAvail=P.auth.tgAvail||(()=>tryf(()=>!!(B&&B.tgAvail&&B.tgAvail()),false));
+  P.auth.tgLogin=P.auth.tgLogin||(()=>tryf(()=>B.tgLogin&&B.tgLogin()));
+  P.auth.ttAvail=P.auth.ttAvail||(()=>tryf(()=>!!(B&&B.ttAvail&&B.ttAvail()),false));
+  P.auth.ttLogin=P.auth.ttLogin||(()=>tryf(()=>B.ttLogin&&B.ttLogin()));
+  P.auth.okAvail=P.auth.okAvail||(()=>P.id==='ok'||tryf(()=>!!(B&&B.okAvail&&B.okAvail()),false));
+
   P.share=P.share||{
     invite:()=>{ if(P.social&&P.social.invite) return P.social.invite(); },
     link:url=>{ if(P.social&&P.social.share) return P.social.share();

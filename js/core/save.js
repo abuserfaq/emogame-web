@@ -1,7 +1,7 @@
 // Versioned save + migrations
 (function(){
 const KEY='eg_save';
-const SAVE_VERSION=3;
+const SAVE_VERSION=4;
 const DEF=()=>({
   v:SAVE_VERSION, consent:null, stats:true, pers:true,
   style:'emo', gender:'guy', name:'',
@@ -25,6 +25,9 @@ const DEF=()=>({
   pet:{hunger:70,bond:20,name:'Тень'}, catBond:20,
   season:'spring', weather:'clear', seasonsSeen:{}, seasonsSeenCount:0,
   dances:0, skates:0, arcades:0, karaokes:0,
+  auth:{provider:'guest',linked:[],verified:false,phoneMasked:'',displayName:''},
+  sub:{freeChat:false, until:0},
+  mod:{reports:[],blocks:[]},
 });
 const MIG={
   1:(s)=>{ s.v=2;
@@ -48,6 +51,7 @@ const MIG={
 function migrate(s){
   if(!s||typeof s!=='object') s=DEF();
   let v=s.v|0; if(!v) v=1;
+  MIG[3]=(s)=>{ s.v=4; s.auth=s.auth||{provider:'guest',linked:[],verified:false,phoneMasked:'',displayName:''}; delete s.auth.email; s.sub=s.sub||{freeChat:false,until:0}; s.mod=s.mod||{reports:[],blocks:[]}; return s; };
   while(v<SAVE_VERSION){ const fn=MIG[v]; if(!fn) break; s=fn(s)||s; v=s.v|0; }
   s.v=SAVE_VERSION;
   const d=DEF(); for(const k of Object.keys(d)){ if(s[k]===undefined) s[k]=d[k]; }

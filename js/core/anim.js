@@ -1,54 +1,64 @@
 (function(){
-// Sprite sheet animator + CSS fallback bob for missing sheets
+/** Frame-based character animator — one transparent PNG at a time, never the whole sheet. */
 const Anim={
-  state:'idle', el:null, timer:null, frame:0,
+  state:'idle', el:null, timer:null, key:'emo_guy', i:0, seq:[],
   mount(imgEl, style, gender){
-    this.el=imgEl; this.key=style+'_'+gender; this.play('idle');
+    this.el=imgEl; this.key=(style||'emo')+'_'+(gender||'guy');
+    if(this.el){
+      this.el.classList.remove('char-sheet');
+      this.el.style.width=''; this.el.style.objectPosition='';
+      this.el.style.objectFit='contain';
+      this.el.style.background='transparent';
+      this.el.style.maxWidth='42%';
+      this.el.style.height='52%';
+      this.el.style.imageRendering='pixelated';
+    }
+    this.play('idle');
   },
-  sheet(){ const A=window.EG&&EG.ANIMS; return A&&A.sheets&&A.sheets[this.key]; },
+  frames(){
+    const A=window.EG&&EG.ANIMS; if(!A) return null;
+    return (A.frameSets&&A.frameSets[this.key]) || null;
+  },
+  seqFor(state){
+    const A=window.EG&&EG.ANIMS;
+    return (A&&A.sequences&&A.sequences[state]) || [state,'idle'];
+  },
+  url(name){
+    const fs=this.frames();
+    if(fs&&fs[name]) return fs[name];
+    // fallback portrait — never sheet
+    const [st,g]=this.key.split('_');
+    return (window.EG&&EG.charImg)?EG.charImg(st,g):'img/chars/emo_guy.jpg';
+  },
   play(state){
     this.state=state||'idle';
     if(!this.el) return;
-    const sheet=this.sheet();
-    this.el.classList.remove('anim-bob','anim-sad','anim-dance','anim-sleep');
-    if(sheet){
-      // use sheet as CSS sprite if columns known
-      const cols=(EG.ANIMS&&EG.ANIMS.sheetCols)||8;
-      this.el.src=sheet;
-      this.el.style.objectFit='cover';
-      this.el.style.objectPosition='0% 50%';
-      this.el.dataset.cols=cols;
-      clearInterval(this.timer);
-      const fps=(EG.ANIMS.fps&&EG.ANIMS.fps[state])||2;
-      const map={idle:0,idle2:1,walk:2,walk2:3,eat:4,drink:5,sleep:6,dance:7,happy:7,sad:0,sick:6,hungry:0};
-      let f0=map[state]|0; let t=0;
-      this.timer=setInterval(()=>{
-        if(!this.el) return;
-        // ping-pong idle between 0 and 1; walk 2-3
-        let f=f0;
-        if(state==='idle') f=(t++%2);
-        else if(state==='walk') f=2+(t++%2);
-        else if(state==='dance'||state==='happy') f=7;
-        const pct=cols<=1?0:(f/(cols-1))*100;
-        this.el.style.objectPosition=pct+'% 50%';
-        this.el.style.width=(cols*48)+'%'; // approximate crop via overflow parent
-      }, Math.max(80, 1000/fps));
-      this.el.classList.add('char-sheet');
-    } else {
-      // portrait fallback + CSS class
-      this.el.src=EG.charImg(this.key.split('_')[0], this.key.split('_')[1]);
-      this.el.style.width=''; this.el.style.objectPosition='';
-      if(state==='sad'||state==='sick'||state==='hungry') this.el.classList.add('anim-sad');
-      else if(state==='dance'||state==='happy') this.el.classList.add('anim-dance');
-      else if(state==='sleep') this.el.classList.add('anim-sleep');
-      else this.el.classList.add('anim-bob');
+    clearInterval(this.timer);
+    this.el.classList.remove('anim-bob','anim-sad','anim-dance','anim-sleep','char-sheet');
+    const fs=this.frames();
+    if(!fs){
+      this.el.src=this.url('idle');
+      this.el.classList.add(state==='dance'||state==='happy'?'anim-dance':state==='sleep'?'anim-sleep':(state==='sad'||state==='sick'||state==='hungry')?'anim-sad':'anim-bob');
+      return;
     }
+    this.seq=this.seqFor(this.state);
+    this.i=0;
+    const show=()=>{
+      if(!this.el) return;
+      const name=this.seq[this.i%this.seq.length];
+      this.el.src=this.url(name);
+      this.el.classList.add('anim-bob');
+      this.i++;
+    };
+    show();
+    const fps=((window.EG&&EG.ANIMS&&EG.ANIMS.fps)||{})[this.state]||3;
+    this.timer=setInterval(show, Math.max(90, 1000/fps));
   },
   fromNeeds(S){
     if(S.hunger<20||S.thirst<20) return this.play('hungry');
     if(S.mood<25) return this.play('sad');
     if(S.energy<15) return this.play('sick');
-    const dirt=(S.dirt.trash+S.dirt.dishes+S.dirt.laundry);
+    const dirt=((S.dirt&&S.dirt.trash)||0)+((S.dirt&&S.dirt.dishes)||0)+((S.dirt&&S.dirt.laundry)||0);
     if(dirt>120) return this.play('sad');
     return this.play('idle');
   }

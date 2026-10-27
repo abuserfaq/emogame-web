@@ -36,9 +36,23 @@ const Content={
     return EG;
   },
   _compat(EG){
-    EG.STYLES=EG.STYLES||[{id:'emo',name:'Эмо',blurb:'Чёрно-розовая классика'},{id:'alt',name:'Альт',blurb:'e-girl / e-boy'},{id:'idol',name:'Айдол',blurb:'K-pop сцена'}];
+    EG.STYLES=EG.STYLES||[
+      {id:'emo',name:'Эмо',blurb:'Чёрно-розовая классика'},
+      {id:'alt',name:'Альт',blurb:'e-girl / e-boy'},
+      {id:'idol',name:'Айдол',blurb:'K-pop сцена'},
+      {id:'goth',name:'Гот',blurb:'Тьма и кружево'},
+      {id:'punk',name:'Панк',blurb:'Ирокез и шипы'},
+      {id:'skater',name:'Скейтер',blurb:'Доска и вайб'}
+    ];
     EG.GENDERS=EG.GENDERS||[{id:'guy',name:'Парень'},{id:'girl',name:'Девушка'}];
-    EG.charImg=(s,g)=>`img/chars/${s}_${g}.jpg`;
+    EG.charImg=(s,g)=>{
+      const prefer={goth:'girl',punk:'guy',skater:'girl'};
+      let gg=g; if(prefer[s] && !(window.__EG_CHAR_JPG&&window.__EG_CHAR_JPG[s+'_'+g])) gg=prefer[s]||g;
+      const jpg=`img/chars/${s}_${gg}.jpg`;
+      const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[s+'_'+gg];
+      if(fs&&fs.idle) return fs.idle;
+      return jpg;
+    };
     EG.PHASES=['morning','day','evening','night'];
     EG.phaseLabel={morning:'Утро',day:'День',evening:'Вечер',night:'Ночь'};
     EG.phaseOf=h=>{const x=((h%24)+24)%24;return x<6||x>=22?'night':x<11?'morning':x<17?'day':'evening'};
