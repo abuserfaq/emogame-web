@@ -10,7 +10,7 @@ function saveCred(){ tryf(()=>localStorage.setItem(LS,JSON.stringify({pid,secret
 function nonce(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
 function appVer(){
   const v=tryf(()=>PL()&&PL().version&&PL().version(),'');
-  return (v&&String(v))||window.__EG_VER||'0.7.9';
+  return (v&&String(v))||window.__EG_VER||'0.8.1';
 }
 /** Player-secret HMAC (Web Crypto). Never use native gsig here — that is game-key only. */
 async function hmacPlayer(key,msg){
@@ -84,8 +84,12 @@ const Net={
   async giftSend(to,giftId){ return post('gift_send',{to,giftId}); },
 };
 
+/* 0.8.1 net timeout */
+Object.keys(Net).forEach(function(k){ var f=Net[k]; if(typeof f!=='function')return;
+  Net[k]=function(){ var r=f.apply(Net,arguments); if(!r||typeof r.then!=='function')return r;
+    return Promise.race([r,new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'))},5000);})]); }; });
 window.Net=Net;
-window.__EG_VER='0.7.9';
+window.__EG_VER='0.8.1';
 /** RuStore Push token refresh → backend push_token */
 window.__pushToken=function(t){
   try{

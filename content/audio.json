@@ -237,7 +237,19 @@
     "records": "cafe",
     "skate": "home_day",
     "arcade": "concert",
-    "karaoke": "concert"
+    "karaoke": "concert",
+    "nightclub": "concert",
+    "rooftop": "map",
+    "tattoo": "dark",
+    "mall": "cafe",
+    "school": "home_day",
+    "garage": "dark",
+    "factory": "dark",
+    "embankment": "map",
+    "station": "dark",
+    "festival": "concert",
+    "idol_stage": "concert",
+    "beach": "home_day"
   },
   "phaseMusicOverride": {
     "night": {
@@ -257,6 +269,15 @@
     "bookcafe": "cafe",
     "park": "park",
     "concert": "concert",
-    "club": "concert"
+    "club": "concert",
+    "nightclub": "concert",
+    "festival": "concert",
+    "idol_stage": "concert",
+    "station": "metro",
+    "factory": "cemetery",
+    "mall": "cafe",
+    "embankment": "park",
+    "beach": "park",
+    "skate": "park"
   }
 }

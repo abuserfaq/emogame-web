@@ -7,7 +7,7 @@
       "name": "Плюшевое сердце",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/heart_plush.png",
+      "img": "img/gifts/heart_plush.webp",
       "sources": [
         "free"
       ],
@@ -18,10 +18,10 @@
     },
     {
       "id": "vinyl",
-      "name": "Винил «Pink Noise»",
+      "name": "Винил «Розовый шум»",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/vinyl.png",
+      "img": "img/gifts/vinyl.webp",
       "sources": [
         "coins"
       ],
@@ -35,7 +35,7 @@
       "name": "Постер концерта",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/poster.png",
+      "img": "img/gifts/poster.webp",
       "sources": [
         "coins"
       ],
@@ -49,7 +49,7 @@
       "name": "Чокер с сердцем",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/choker.png",
+      "img": "img/gifts/choker.webp",
       "sources": [
         "rewarded"
       ],
@@ -63,7 +63,7 @@
       "name": "Браслет бусины",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/bracelet.png",
+      "img": "img/gifts/bracelet.webp",
       "sources": [
         "coins"
       ],
@@ -77,7 +77,7 @@
       "name": "Худи в подарок",
       "kind": "wear",
       "slot": "top",
-      "img": "img/gifts/hoodie.png",
+      "img": "img/gifts/hoodie.webp",
       "sources": [
         "paid"
       ],
@@ -88,10 +88,10 @@
     },
     {
       "id": "lamp",
-      "name": "Лампа pink-glow",
+      "name": "Розовая лампа",
       "kind": "decor",
       "slot": "desk",
-      "img": "img/gifts/lamp.png",
+      "img": "img/gifts/lamp.webp",
       "sources": [
         "coins"
       ],
@@ -105,7 +105,7 @@
       "name": "Свеча",
       "kind": "decor",
       "slot": "desk",
-      "img": "img/gifts/candle.png",
+      "img": "img/gifts/candle.webp",
       "sources": [
         "coins"
       ],
@@ -119,7 +119,7 @@
       "name": "Букет",
       "kind": "decor",
       "slot": "desk",
-      "img": "img/gifts/flowers.png",
+      "img": "img/gifts/flowers.webp",
       "sources": [
         "coins"
       ],
@@ -133,7 +133,7 @@
       "name": "Значок-звезда",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/star_badge.png",
+      "img": "img/gifts/star_badge.webp",
       "sources": [
         "rewarded"
       ],
@@ -147,7 +147,7 @@
       "name": "Подушка-череп",
       "kind": "decor",
       "slot": "bed",
-      "img": "img/gifts/skull_pillow.png",
+      "img": "img/gifts/skull_pillow.webp",
       "sources": [
         "coins"
       ],
@@ -161,7 +161,7 @@
       "name": "Кассета",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/cassette.png",
+      "img": "img/gifts/cassette.webp",
       "sources": [
         "coins"
       ],
@@ -172,10 +172,10 @@
     },
     {
       "id": "sneakers",
-      "name": "Кеды pink",
+      "name": "Розовые кеды",
       "kind": "wear",
       "slot": "shoes",
-      "img": "img/gifts/sneakers.png",
+      "img": "img/gifts/sneakers.webp",
       "sources": [
         "paid"
       ],
@@ -189,7 +189,7 @@
       "name": "Зеркало-сердце",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/heart_mirror.png",
+      "img": "img/gifts/heart_mirror.webp",
       "sources": [
         "coins"
       ],
@@ -203,7 +203,7 @@
       "name": "Стикеры",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/stickers.png",
+      "img": "img/gifts/stickers.webp",
       "sources": [
         "coins"
       ],
@@ -217,7 +217,7 @@
       "name": "Котёнок-плюш",
       "kind": "decor",
       "slot": "floor",
-      "img": "img/gifts/cat_plush.png",
+      "img": "img/gifts/cat_plush.webp",
       "sources": [
         "free"
       ],
@@ -231,7 +231,7 @@
       "name": "Шипы браслет",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/spiked_bracelet.png",
+      "img": "img/gifts/spiked_bracelet.webp",
       "sources": [
         "coins"
       ],
@@ -245,7 +245,7 @@
       "name": "Крест-кулон",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/cross_neck.png",
+      "img": "img/gifts/cross_neck.webp",
       "sources": [
         "rewarded"
       ],
@@ -256,10 +256,10 @@
     },
     {
       "id": "beanie",
-      "name": "Шапка beanie",
+      "name": "Шапка-бини",
       "kind": "wear",
       "slot": "hair",
-      "img": "img/gifts/beanie.png",
+      "img": "img/gifts/beanie.webp",
       "sources": [
         "coins"
       ],
@@ -273,7 +273,7 @@
       "name": "Гирлянда",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/fairy_lights.png",
+      "img": "img/gifts/fairy_lights.webp",
       "sources": [
         "coins"
       ],
@@ -287,7 +287,7 @@
       "name": "Кресло-мешок",
       "kind": "decor",
       "slot": "floor",
-      "img": "img/gifts/beanbag.png",
+      "img": "img/gifts/beanbag.webp",
       "sources": [
         "paid"
       ],
@@ -301,7 +301,7 @@
       "name": "Дневник",
       "kind": "decor",
       "slot": "desk",
-      "img": "img/gifts/diary.png",
+      "img": "img/gifts/diary.webp",
       "sources": [
         "coins"
       ],
@@ -315,7 +315,7 @@
       "name": "Полароид",
       "kind": "decor",
       "slot": "desk",
-      "img": "img/gifts/polaroid.png",
+      "img": "img/gifts/polaroid.webp",
       "sources": [
         "paid"
       ],
@@ -326,10 +326,10 @@
     },
     {
       "id": "mic_mini",
-      "name": "Микрофон mini",
+      "name": "Мини-микрофон",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/mic_mini.png",
+      "img": "img/gifts/mic_mini.webp",
       "sources": [
         "coins"
       ],
@@ -343,7 +343,7 @@
       "name": "Кубок-сердце",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/trophy_heart.png",
+      "img": "img/gifts/trophy_heart.webp",
       "sources": [
         "rewarded"
       ],
@@ -385,7 +385,7 @@
       "name": "Шипастый чокер",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/choker_spike.png",
+      "img": "img/gifts/choker_spike.webp",
       "sources": [
         "rewarded"
       ],
@@ -413,7 +413,7 @@
       "name": "Колготки-сетка",
       "kind": "wear",
       "slot": "legs",
-      "img": "img/gifts/fishnets.png",
+      "img": "img/gifts/fishnets.webp",
       "sources": [
         "gems"
       ],
@@ -427,7 +427,7 @@
       "name": "Футболка группы",
       "kind": "wear",
       "slot": "torso",
-      "img": "img/gifts/band_tee.png",
+      "img": "img/gifts/band_tee.webp",
       "sources": [
         "coins"
       ],
@@ -441,7 +441,7 @@
       "name": "Кожаный браслет",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/leather_cuff.png",
+      "img": "img/gifts/leather_cuff.webp",
       "sources": [
         "coins"
       ],
@@ -455,7 +455,7 @@
       "name": "Цепь-ремень",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/chain_belt.png",
+      "img": "img/gifts/chain_belt.webp",
       "sources": [
         "coins"
       ],
@@ -469,7 +469,7 @@
       "name": "Звёздные клипсы",
       "kind": "wear",
       "slot": "hair",
-      "img": "img/gifts/star_clips.png",
+      "img": "img/gifts/star_clips.webp",
       "sources": [
         "rewarded"
       ],
@@ -497,7 +497,7 @@
       "name": "Розовый парик",
       "kind": "wear",
       "slot": "hair",
-      "img": "img/gifts/wig_pink.png",
+      "img": "img/gifts/wig_pink.webp",
       "sources": [
         "gems"
       ],
@@ -511,7 +511,7 @@
       "name": "Чёрный маникюр",
       "kind": "wear",
       "slot": "hands",
-      "img": "img/gifts/nail_black.png",
+      "img": "img/gifts/nail_black.webp",
       "sources": [
         "coins"
       ],
@@ -525,7 +525,7 @@
       "name": "Блеск для губ",
       "kind": "wear",
       "slot": "face",
-      "img": "img/gifts/lip_gloss.png",
+      "img": "img/gifts/lip_gloss.webp",
       "sources": [
         "coins"
       ],
@@ -539,7 +539,7 @@
       "name": "Рюкзак с пинами",
       "kind": "wear",
       "slot": "back",
-      "img": "img/gifts/backpack_pins.png",
+      "img": "img/gifts/backpack_pins.webp",
       "sources": [
         "coins"
       ],
@@ -553,7 +553,7 @@
       "name": "Дека скейт",
       "kind": "decor",
       "slot": "floor",
-      "img": "img/gifts/skate_deck.png",
+      "img": "img/gifts/skate_deck.webp",
       "sources": [
         "coins"
       ],
@@ -564,10 +564,10 @@
     },
     {
       "id": "neon_sign",
-      "name": "Неон «EMO»",
+      "name": "Неон «ЭМО»",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/neon_sign.png",
+      "img": "img/gifts/neon_sign.webp",
       "sources": [
         "gems"
       ],
@@ -581,7 +581,7 @@
       "name": "Растение-летучая мышь",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/plant_bat.png",
+      "img": "img/gifts/plant_bat.webp",
       "sources": [
         "coins"
       ],
@@ -595,7 +595,7 @@
       "name": "Ковёр в клетку",
       "kind": "decor",
       "slot": "floor",
-      "img": "img/gifts/rug_checker.png",
+      "img": "img/gifts/rug_checker.webp",
       "sources": [
         "coins"
       ],
@@ -609,7 +609,7 @@
       "name": "Готическое зеркало",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/mirror_gothic.png",
+      "img": "img/gifts/mirror_gothic.webp",
       "sources": [
         "coins"
       ],
@@ -623,7 +623,7 @@
       "name": "Барабанные палочки",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/drumsticks.png",
+      "img": "img/gifts/drumsticks.webp",
       "sources": [
         "coins"
       ],
@@ -637,7 +637,7 @@
       "name": "Мини-гитара",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/guitar_mini.png",
+      "img": "img/gifts/guitar_mini.webp",
       "sources": [
         "coins"
       ],
@@ -651,7 +651,7 @@
       "name": "Комбик",
       "kind": "decor",
       "slot": "floor",
-      "img": "img/gifts/amp_box.png",
+      "img": "img/gifts/amp_box.webp",
       "sources": [
         "coins"
       ],
@@ -665,7 +665,7 @@
       "name": "Билет на гиг",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/ticket_stub.png",
+      "img": "img/gifts/ticket_stub.webp",
       "sources": [
         "free"
       ],
@@ -679,7 +679,7 @@
       "name": "Полароид вдвоём",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/polaroid_duo.png",
+      "img": "img/gifts/polaroid_duo.webp",
       "sources": [
         "rewarded"
       ],
@@ -693,7 +693,7 @@
       "name": "Ошейник для кота",
       "kind": "wear",
       "slot": "pet",
-      "img": "img/gifts/cat_collar.png",
+      "img": "img/gifts/cat_collar.webp",
       "sources": [
         "coins"
       ],
@@ -707,7 +707,7 @@
       "name": "Миска кота",
       "kind": "decor",
       "slot": "floor",
-      "img": "img/gifts/cat_bowl.png",
+      "img": "img/gifts/cat_bowl.webp",
       "sources": [
         "coins"
       ],
@@ -721,7 +721,7 @@
       "name": "Лежанка",
       "kind": "decor",
       "slot": "floor",
-      "img": "img/gifts/cat_bed.png",
+      "img": "img/gifts/cat_bed.webp",
       "sources": [
         "coins"
       ],
@@ -735,7 +735,7 @@
       "name": "Дневник с замком",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/diary_lock.png",
+      "img": "img/gifts/diary_lock.webp",
       "sources": [
         "coins"
       ],
@@ -749,7 +749,7 @@
       "name": "Лампа настроения",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/mood_lamp.png",
+      "img": "img/gifts/mood_lamp.webp",
       "sources": [
         "coins"
       ],
@@ -763,7 +763,7 @@
       "name": "Сезонный шарф",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/season_scarf.png",
+      "img": "img/gifts/season_scarf.webp",
       "sources": [
         "coins"
       ],
@@ -777,7 +777,7 @@
       "name": "Браслет фестиваля",
       "kind": "wear",
       "slot": "acc",
-      "img": "img/gifts/festival_band.png",
+      "img": "img/gifts/festival_band.webp",
       "sources": [
         "coins"
       ],
@@ -791,7 +791,7 @@
       "name": "Лайтстик айдола",
       "kind": "wear",
       "slot": "hands",
-      "img": "img/gifts/idol_lightstick.png",
+      "img": "img/gifts/idol_lightstick.webp",
       "sources": [
         "gems"
       ],
@@ -805,7 +805,7 @@
       "name": "Стойка микрофона",
       "kind": "decor",
       "slot": "floor",
-      "img": "img/gifts/mic_stand.png",
+      "img": "img/gifts/mic_stand.webp",
       "sources": [
         "coins"
       ],
@@ -819,7 +819,7 @@
       "name": "Золотой винил",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/vinyl_gold.png",
+      "img": "img/gifts/vinyl_gold.webp",
       "sources": [
         "gems"
       ],
@@ -833,7 +833,7 @@
       "name": "Плюш летучей мыши",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/plush_bat.png",
+      "img": "img/gifts/plush_bat.webp",
       "sources": [
         "coins"
       ],
@@ -847,7 +847,7 @@
       "name": "Чайный набор",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/tea_set.png",
+      "img": "img/gifts/tea_set.webp",
       "sources": [
         "coins"
       ],
@@ -861,7 +861,7 @@
       "name": "Стопка книг",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/books_stack.png",
+      "img": "img/gifts/books_stack.webp",
       "sources": [
         "coins"
       ],
@@ -875,7 +875,7 @@
       "name": "Доска сёрф",
       "kind": "decor",
       "slot": "wall",
-      "img": "img/gifts/surf_board.png",
+      "img": "img/gifts/surf_board.webp",
       "sources": [
         "coins"
       ],
@@ -889,7 +889,7 @@
       "name": "Жетон аркады",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/arcade_token.png",
+      "img": "img/gifts/arcade_token.webp",
       "sources": [
         "free"
       ],
@@ -903,7 +903,7 @@
       "name": "Караоке-мик",
       "kind": "decor",
       "slot": "shelf",
-      "img": "img/gifts/karaoke_mic.png",
+      "img": "img/gifts/karaoke_mic.webp",
       "sources": [
         "coins"
       ],

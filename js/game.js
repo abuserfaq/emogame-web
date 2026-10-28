@@ -10,7 +10,7 @@ const save=()=>EGSave.persist(S);
 const clamp=(v,a,b)=>EG.clamp(v,a,b);
 const egA=(ev,p)=>{ try{ if(window.EGAudio) EGAudio.emit(ev,p||{}); }catch(e){} };
 const ico=(k,c)=>window.EGUI?EGUI.icon(k,c):'';
-window.toast=function(t){ const e=document.createElement('div'); e.className='toast'; e.textContent=t; app.appendChild(e);
+window.toast=function(t){ const e=document.createElement('div'); e.className='toast'; e.textContent=t; e.style.position='fixed'; e.style.zIndex='9999'; e.style.bottom='calc(var(--nav-h,90px) + 24px)'; [...document.querySelectorAll('body>.toast')].forEach(x=>x.remove()); document.body.appendChild(e);
   setTimeout(()=>e.style.opacity=0,1600); setTimeout(()=>e.remove(),2100); };
 
 function tickNeeds(){
@@ -53,12 +53,14 @@ function bindClean(){
     const kind=b.dataset.clean;
     walkCharTo('.'+({trash:'hot-trash',dishes:'hot-dishes',laundry:'hot-laundry'}[kind]||'hot-trash'), 'clean');
     setTimeout(()=>{
-      EGCare.clean(S,kind); S.cleans++; qAdd('cleans',1); addXp(6); save();
+      EGCare.clean(S,kind); qAdd('cleans',1); addXp(6); save();
       egA(kind==='trash'?'trash':kind==='dishes'?'dishes':kind==='laundry'?'laundry':'clean'); toast('Чисто!'); go(cur==='home'?'home':cur);
     }, 800);
   });
 }
 
+const LOC_RU={park:'Парк',cemetery:'Кладбище',metro:'Метро',cafe:'Кафе',concert:'Концерт',rooftop:'Крыша',records:'Пластинки',skate:'Скейт-парк',arcade:'Аркада',karaoke:'Караоке',tattoo:'Тату-салон',mall:'ТЦ',school:'Колледж',garage:'Гараж',factory:'Завод',embankment:'Набережная',station:'Вокзал',festival:'Фестиваль',idol_stage:'Айдол-сцена',nightclub:'Ночной клуб',bookcafe:'Книжное кафе',beach:'Пляж',room:'Комната'};
+function locName(id){ return LOC_RU[id]||''; }
 function avatarSrc(style,gender){
   const s=(style||S.style||'emo'), g=(gender||S.gender||'guy');
   return `img/ui/avatars/${s}_${g}.webp`;
@@ -139,7 +141,7 @@ function bindRoomInteract(){
     const [sel,anim]=map[kind]||['.hot-bed','idle'];
     walkCharTo(sel, anim);
     setTimeout(()=>{
-      if(kind==='bed'){ S.energy=Math.min(100,(S.energy||0)+12); egA('sleep'); toast('Сладких снов'); }
+      if(kind==='bed'){ S.energy=Math.min(100,(S.energy||0)+12); egA('sleep'); setTimeout(()=>egA('snore'),900); setTimeout(()=>egA('wake'),2600); toast('Сладких снов'); }
       else if(kind==='fridge'||kind==='table'){ S.hunger=Math.min(100,(S.hunger||0)+8); S.thirst=Math.min(100,(S.thirst||0)+6); egA(kind==='fridge'?'eat':'drink'); toast(kind==='fridge'?'Перекус':'Глоток'); }
       else { S.mood=Math.min(100,(S.mood||0)+5); egA('happy'); toast('У окна…'); }
       save();
@@ -148,7 +150,7 @@ function bindRoomInteract(){
 }
 function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{ egA('tab'); go(b.dataset.go); })); }
 
-function go(n,a){ tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap'); cur=n; try{ const ph=phase(); const loc=(n==='loc'&&a)?a:(n==='home'?'room':(S&&S.loc)); egA('scene',{screen:n,loc:loc,phase:ph,weather:S&&S.weather}); }catch(e){} 
+function go(n,a){ tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap'); cur=n; try{ const ph=phase(); const sm=(W.EGAudio&&EGAudio.map&&EGAudio.map.screenMusic)||{}; const loc=(n==='loc'&&a)?a:(n==='home'?'room':(sm[n]?null:(S&&S.loc))); egA('scene',{screen:n,loc:loc,phase:ph,weather:S&&S.weather}); }catch(e){} 
   const bannerOn=S.consent!=null && n!=='consent' && n!=='consentSet' && n!=='onboardCare' && n!=='create' && !SHOT;
   const nativeAds=!!(window.AdBridge); // Android Yandex banner lives outside WebView
   if(nativeAds) document.documentElement.classList.add('eg-native-ads');
@@ -166,16 +168,21 @@ function go(n,a){ tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap');
     }
     if(bannerOn){ bs.classList.add('on'); bs.setAttribute('aria-hidden','false'); bs.style.display=''; }
     else { bs.classList.remove('on'); bs.setAttribute('aria-hidden','true'); }
-    const navEl=app.querySelector('.nav-dock')||app.querySelector('.nav');
-    const host=(navEl&&navEl.parentElement&&navEl.parentElement.classList.contains('screen')&&!navEl.parentElement.classList.contains('immersive'))
-      ? navEl.parentElement : app;
-    host.appendChild(bs);
+    document.body.appendChild(bs);
   }
+  // 0.8.0: banner lives in its own slot BELOW #app; #app shrinks so nav never covers / sits over it
+  try{
+    const shot=document.documentElement.classList.contains('shot-mode')||document.documentElement.classList.contains('shot-hide-ads')||/[?&]scr=1/.test(location.search);
+    let h=0; if(bannerOn&&!shot){ h=nativeAds?((window.AdBridge.slotDp&&+window.AdBridge.slotDp())||56):50; }
+    document.documentElement.style.setProperty('--ad-h',h+'px');
+    document.documentElement.classList.toggle('ad-on',h>0);
+  }catch(e){}
   try{ PL.event('screen',{n}); }catch(e){}
 }
 
 const SCR={};
 
+if(!window.__hudGearDelegate){ window.__hudGearDelegate=1; document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('#hudGear'); if(b&&!b.onclick) go('consentSet'); }); }
 SCR.consent=()=>{
   app.innerHTML=`<div class="screen consent">
     <h1>Emogame</h1>
@@ -258,12 +265,13 @@ SCR.create=()=>{
   paint();
 };
 
-function decorHTML(){
+function decorHTML(locId){
+  if(locId&&locId!=='room') return '';
   const d=S.decor||{}; const slots=Object.keys(d);
   if(!slots.length) return '';
   return slots.map((slot,i)=>{
     const id=d[slot]; const g=EGGifts.byId(id); if(!g) return '';
-    const left=20+(i*18)%60; const bottom=12+(i%3)*10;
+    const left=14+(i*19)%64; const bottom=26+(i%3)*7;
     return `<img class="decor-layer" src="${EG.giftImg(g)}" alt="" style="left:${left}%;bottom:${bottom}%;position:absolute;width:42px;height:42px">`;
   }).join('');
 }
@@ -276,7 +284,7 @@ function stageHTML(locId, bleed){
   const ambient=ambientHTML(locId||'room');
   return `<div class="${cls} ${floorCls}" data-loc="${locId||'room'}"><img class="bg" src="${bg}" alt="" onerror="this.src='img/loc/room_morning.webp'">
     ${bleed?'':`<div class="loc-title">${loc.name||locId}</div>`}
-    ${decorHTML()}
+    ${decorHTML(locId)}
     ${ambient}
     <div class="char-wrap" id="charWrap"><img class="char-shadow" src="img/chars/shadow.webp" alt=""><img class="char" id="charSpr" src="${(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];const sit=(locId==='cafe'||locId==='bookcafe')?(`img/chars/frames/${k}/sit.webp`):''; if(sit) return sit; return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})()}" alt=""></div></div>`;
 }
@@ -292,6 +300,11 @@ function ambientHTML(locId){
   if(locId==='room'){ bits.push('<div class="fx-cat" title="cat"></div>'); bits.push('<div class="fx-candle"></div>'); bits.push('<div class="fx-candle c2"></div>'); }
   if(locId==='park'||locId==='cemetery'||locId==='rooftop') bits.push('<div class="fx-leaves"></div>');
   if(locId==='metro'||locId==='station') bits.push('<div class="fx-train"></div>');
+  const AMB={beach:['waves','clouds'],embankment:['waves','clouds'],concert:['lights'],festival:['lights','leaves'],idol_stage:['lights'],nightclub:['lights'],karaoke:['lights','neon'],
+    factory:['dust'],garage:['dust'],records:['dust','neon'],tattoo:['dust','neon'],mall:['dust','neon'],school:['dust','neon'],skate:['leaves','clouds'],rooftop:['clouds','dust'],
+    bookcafe:['dust'],arcade:['dust'],cemetery:['fog','dust'],park:['clouds']};
+  if(locId!=='room') bits.push('<div class="fx-motes"></div>');
+  (AMB[locId]||[]).forEach(k=>{ if(k==='neon'&&bits.some(x=>x.includes('fx-neon"'))) return; if(k==='leaves'&&bits.some(x=>x.includes('fx-leaves'))) return; bits.push('<div class="fx-'+k+'"></div>'); });
   return bits.length?`<div class="ambient">${bits.join('')}</div>`:'';
 }
 function walkCharTo(sel, thenPlay){
@@ -300,10 +313,10 @@ function walkCharTo(sel, thenPlay){
   const sr=wrap.getBoundingClientRect(); const tr=t.getBoundingClientRect(); const ar=app.getBoundingClientRect();
   const nx=((tr.left+tr.width/2)-ar.left)/ar.width*100;
   const nb=100-((tr.top+tr.height)-ar.top)/ar.height*100;
-  wrap.classList.add('walking');
+  wrap.classList.add('walking'); wrap.classList.toggle('face-left', (tr.left+tr.width/2) < (sr.left+sr.width/2));
   wrap.style.left=nx+'%'; wrap.style.bottom=Math.max(12, Math.min(40, nb-2))+'%';
   if(EGAnim) EGAnim.play('walk'); egA('footsteps');
-  setTimeout(()=>{ wrap.classList.remove('walking'); if(EGAnim) EGAnim.play(thenPlay||'happy'); }, 750);
+  setTimeout(()=>{ wrap.classList.remove('walking','face-left'); if(EGAnim) EGAnim.play(thenPlay||'happy'); }, 750);
 }
 
 function mountAnim(opts){
@@ -319,6 +332,7 @@ function mountAnim(opts){
 
 SCR.home=()=>{
   S.loc='room'; save();
+  { const low=Math.min(S.hunger||0,S.thirst||0,S.mood||0); if(low<20&&!W.__sadPlayed){ W.__sadPlayed=1; setTimeout(()=>egA('sad'),600); } else if(low>=30) W.__sadPlayed=0; }
   const stN=(S.streak&&S.streak.n)||0;
   app.innerHTML=`<div class="screen immersive home-mode">
     ${stageHTML('room', true)}
@@ -366,7 +380,7 @@ SCR.wardrobe=()=>{
   }).map(it=>{
     const owned=!!S.wardrobe[it.id]; const eq=S.equip[it.slot]===it.id;
     const need=it.unlockLevel||it.minLevel||1; const locked=(S.level|0)<need && !owned;
-    const badge=locked?'<span class="ward-badge lock" aria-hidden="true">🔒</span>':(eq?'<span class="ward-badge check" aria-hidden="true">✓</span>':'');
+    const badge=locked?'<span class="ward-badge lock" aria-hidden="true"><img src="img/ui/icons/level.webp" alt="" style="width:14px;height:14px"></span>':(eq?'<span class="ward-badge check" aria-hidden="true">✓</span>':'');
     return `<button class="card food-card ward-card ${eq?'on':''} ${locked?'locked':''}" data-w="${it.id}" data-slot="${it.slot}" ${locked?'disabled':''}>
       ${badge}
       <img class="food-art" src="${EG.shopImg(it)}" alt="">
@@ -426,7 +440,7 @@ window.openShop=function openShop(){ egA('sheet_open');
   const body=`<div class="sheet-grid">
     <button class="sheet-card" id="rw" type="button"><img class="sheet-art" src="img/ui/sheets/shop_energy.webp" alt="" onerror="this.onerror=null;this.src='img/ui/icons/energy.webp'"><b>Реклама: +40 энергии</b><span class="sub">вознаграждение</span></button>
     ${items.length?items.map(it=>`<button class="sheet-card" data-pay="${it[0]}" type="button"><img class="sheet-art" src="img/ui/sheets/${packArt(it[0])}.webp" alt="" onerror="this.onerror=null;this.src='img/ui/icons/shop.webp'"><b>${it[1]}</b><span class="sub">${it[2]}</span></button>`).join(''):
-      '<p style="color:#888;font-size:13px;margin:8px 0">Платные пакеты — VK/OK/ФС или RuStore / ЮKassa.</p>'}
+      '<p style="color:#888;font-size:13px;margin:8px 0">Платные пакеты — через VK, OK или RuStore.</p>'}
     <button class="sheet-card" id="auth" type="button"><img class="sheet-art" src="img/ui/sheets/shop_account.webp" alt="" onerror="this.onerror=null;this.src='img/ui/icons/settings.webp'"><b>Аккаунт / привязка</b><span class="sub">войти</span></button>
   </div>`;
   const root=EGUI.openSheet({title:'Магазин', icon:EGUI.iconSrc('shop'), bodyHtml:body});
@@ -449,7 +463,7 @@ SCR.feed=()=>{
     return `<button class="card food-card ${locked?'locked':''}" data-${kind==='food'?'f':'d'}="${f.id}" ${locked?'disabled':''}>
       <img class="food-art" src="${kind==='food'?EG.foodImg(f):EG.drinkImg(f)}" alt="">
       <b>${f.name}</b>
-      <span class="sub">${locked?('🔒 ур.'+need):`<img class="coin" src="img/ui/icons/coins.webp" alt=""> ${f.cost}`}</span>
+      <span class="sub">${locked?('с ур.'+need):`<img class="coin" src="img/ui/icons/coins.webp" alt=""> ${f.cost}`}</span>
     </button>`;
   };
   const foods=(EG.FOOD||[]).slice(0,6);
@@ -465,8 +479,8 @@ SCR.feed=()=>{
         <div class="hud-chip">${ico('skull')} ${fmtNum(S.gems)} <b class="plus">+</b></div>
       </div>
       <div class="feed-tabs" role="tablist">
-        <button type="button" class="feed-tab ${tab==='food'?'on':''}" data-tab="food" role="tab">🍽 Еда</button>
-        <button type="button" class="feed-tab ${tab==='drinks'?'on':''}" data-tab="drinks" role="tab">☕ Напитки</button>
+        <button type="button" class="feed-tab ${tab==='food'?'on':''}" data-tab="food" role="tab"><img class="ft-ico" src="img/ui/icons/food.webp" alt="">Еда</button>
+        <button type="button" class="feed-tab ${tab==='drinks'?'on':''}" data-tab="drinks" role="tab"><img class="ft-ico" src="img/ui/icons/thirst.webp" alt="">Напитки</button>
       </div>
       <div class="feed-body eg-scroll">
         <div class="grid food-grid">${grid}</div>
@@ -535,10 +549,20 @@ SCR.map=()=>{
         <button class="hud-gear" id="hudGear" type="button">${ico('settings')}</button>
       </div>
     </div>
+    <button class="map-all" id="mapAll" type="button"><img src="img/ui/icons/map.webp" alt="" onerror="this.style.opacity=0"><b>Все места</b><span>${(EG.LOCS||[]).filter(l=>l.id!=='room'&&unlockOk(l)).length}/${(EG.LOCS||[]).filter(l=>l.id!=='room').length}</span></button>
     ${nav('map')}
   </div>`;
   bindNav();
   const g=$('#hudGear'); if(g) g.onclick=()=>go('consentSet');
+  $('#mapAll').onclick=()=>{
+    const L=(EG.LOCS||[]).filter(l=>l.id!=='room').slice().sort((a,b)=>(a.minLevel||1)-(b.minLevel||1));
+    const body=`<div class="sheet-grid loc-grid">${L.map(l=>{ const ok=unlockOk(l);
+      return `<button class="sheet-card ${ok?'':'locked'}" data-all="${l.id}" type="button"><img class="sheet-art" src="img/ui/pins/${l.id}.webp" alt=""><b>${l.name}</b><span class="sub">${ok?('−'+(l.energy||5)+' энергии'):('🔒 ур. '+(l.minLevel||1))}</span></button>`; }).join('')}</div>`;
+    const root=EGUI.openSheet({title:'Все места', icon:'img/ui/icons/map.webp', bodyHtml:body});
+    root.querySelectorAll('[data-all]').forEach(b=>b.onclick=()=>{ const l=L.find(x=>x.id===b.dataset.all);
+      if(!unlockOk(l)){ egA('error'); toast('Нужен уровень '+l.minLevel); return; }
+      root.remove(); go('loc',l.id); });
+  };
   app.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>go('loc',b.dataset.l));
 };
 
@@ -570,7 +594,7 @@ SCR.loc=(id)=>{
   const headSub=isMetro?'ЛИНИЯ 1 · МОСКВА':(wtxt||'');
   const locTitle=isMetro?'МЕТРО · СЕВЕРНАЯ':(loc.name||'');
   const locSub=isMetro?'Подземная станция':(wtxt||'');
-    const weatherLine=isMetro?'❄ Снег · Зима · −6°C · Ощущается как −9°C':(isPark?'🌧 ВЕЧЕР · 14°C':(isCafe?'☕ УТРО · кафе':(wtxt||'—')));
+    const weatherLine=isMetro?'Снег · Зима · −6°C · Ощущается как −9°C':(isPark?'ВЕЧЕР · 14°C':(isCafe?'УТРО · кафе':(wtxt||'—')));
   const locCls='loc-mode loc-'+(loc.id||'x');
   const showHud=isCafe||isPark;
   const seg=(v)=>{ const n=Math.max(0,Math.min(4, Math.round((v||0)/25))); return `<span class="seg">${[0,1,2,3].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`; };
@@ -579,7 +603,7 @@ SCR.loc=(id)=>{
     const hearts=Math.round(clamp((S.mood||0)/10,0,10));
     const heartRow=[...Array(10)].map((_,i)=>`<i class="hrt ${i<hearts?'on':''}">♥</i>`).join('');
     const phaseLab=isCafe?'УТРО':'ВЕЧЕР';
-    const phaseIc=isCafe?'☀':'🌧';
+    const phaseIc='';
     return `<div class="loc-hud-mock ${isCafe?'cafe-hud':'park-hud'}">
       <div class="lh-top">
         <div class="lh-user">${ico('skull')}<div><b class="lh-name">${nm}</b><div class="lh-hearts">${heartRow}</div></div></div>
@@ -590,10 +614,10 @@ SCR.loc=(id)=>{
           <div class="lh-stat">${ico(i)}<span>${n}</span>${seg(v)}</div>`).join('')}
       </div>
     </div>
-    <div class="loc-badge">${isCafe?'☕ КАФЕ':'🌳 ПАРК'}</div>`;
+    <div class="loc-badge">${isCafe?'КАФЕ':'ПАРК'}</div>`;
   };
   const statusCard=`<div class="lp-card">
-        <div class="lp-status-h"><span>СТАТУС</span><span>♡ ${Math.round(S.mood||0)}/100</span></div>
+        <div class="lp-status-h"><span>СТАТУС</span><span><img class="coin" src="img/ui/icons/heart.webp" alt=""> ${Math.round(S.mood||0)}/100</span></div>
         <div class="lp-bars">
           ${[['Голод',S.hunger,'#e53935'],['Жажда',S.thirst,'#1e88e5'],['Энергия',S.energy,'#8e24aa'],['Настрой',S.mood,'#ff2d78']].map(([n,v,c])=>`
             <div class="lp-row"><span class="nm">${n}</span><div class="bar"><i style="width:${clamp(v,0,100)}%;background:${c}"></i></div><span class="val">${Math.round(v)}/100</span></div>`).join('')}
@@ -612,8 +636,8 @@ SCR.loc=(id)=>{
           <img class="lp-pin" src="img/ui/pins/${isMetro?'metro':(loc.id||'metro')}.webp" alt="" onerror="this.src='img/ui/chrome/map_pin_generic.webp'">
           <div><div class="lp-title">${locTitle|| (isCafe?'КАФЕ':isPark?'ПАРК':(loc.name||''))}</div><div class="lp-sub">${locSub}</div></div>
         </div>
-        <div class="lp-weather">${weatherLine}</div>
-        ${isMetro?`<div class="lp-status-h"><span>СТАТУС</span><span>♡ ${Math.round(S.mood||0)}/100</span></div>
+        ${weatherLine&&weatherLine!==locSub?`<div class="lp-weather">${weatherLine}</div>`:""}
+        ${isMetro?`<div class="lp-status-h"><span>СТАТУС</span><span><img class="coin" src="img/ui/icons/heart.webp" alt=""> ${Math.round(S.mood||0)}/100</span></div>
         <div class="lp-bars">
           ${[['Голод',S.hunger,'#e53935'],['Жажда',S.thirst,'#1e88e5'],['Энергия',S.energy,'#8e24aa'],['Настрой',S.mood,'#ff2d78']].map(([n,v,c])=>`
             <div class="lp-row"><span class="nm">${n}</span><div class="bar"><i style="width:${clamp(v,0,100)}%;background:${c}"></i></div><span class="val">${Math.round(v)}/100</span></div>`).join('')}
@@ -642,31 +666,30 @@ SCR.gifts=()=>{
   const freeLeft=G.canFree(S)?0:G.freeLeftDays(S);
   const inv=G.ensure(S).inv;
   const inbox=G.ensure(S).inbox||[];
-  app.innerHTML=`<div class="screen">${statRow()}
-    <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:70vh;overflow:auto">
-      <h3>Подарки</h3>
-      <p style="color:#aaa;font-size:12px;margin:0 0 8px">Бесплатный подарок раз в <b>${EGRC.freeGiftIntervalDays()}</b> дн. (RC). Сейчас: ${freeLeft?('через '+freeLeft+' дн.'):'доступен!'}</p>
-      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-        <button class="btn" id="free" ${freeLeft?'disabled':''}>${ico('gifts')} Бесплатный</button>
-        <button class="btn ghost" id="rad">▶ За рекламу</button>
+  const chip=g=>{ const so=g.sources||[];
+    if(so.includes('coins')) return `<span class="gp-chip"><img src="img/ui/icons/coins.webp" alt="">${g.cost||0} монет</span>`;
+    if(so.includes('rewarded')) return `<span class="gp-chip ad"><img src="img/ui/icons/price_ad.webp" alt="">за рекламу</span>`;
+    if(so.includes('paid')) return `<span class="gp-chip vote"><img src="img/ui/icons/price_vote.webp" alt="">${g.cost||1} за голоса</span>`;
+    return `<span class="gp-chip free"><img src="img/ui/icons/gifts.webp" alt="">бесплатно</span>`; };
+  const tag=g=>`<span class="gp-tag">${g.kind==='decor'?'В комнату':'Надеть'}</span>`;
+  const unseen=inbox.filter(m=>!m.seen).length;
+  app.innerHTML=`<div class="screen gifts-v2">${statRow()}
+    <div class="gifts-scroll eg-scroll">
+      <div class="gifts-title"><img src="img/ui/chrome/gifts_title.webp" alt="Подарки"></div>
+      <div class="gift-heroes">
+        <button class="gift-hero" id="free" ${freeLeft?'disabled':''}><img src="img/ui/icons/gifts.webp" alt=""><b>Бесплатный</b><span>${freeLeft?('через '+freeLeft+' дн.'):'доступен сейчас'}</span></button>
+        <button class="gift-hero ad" id="rad"><img src="img/ui/icons/price_ad.webp" alt=""><b>За рекламу</b><span>смотри и получай</span></button>
       </div>
-      <h3>Каталог</h3>
-      <div class="gift-grid">${items.map(g=>{
-        const src=(g.sources||[]).join('/');
-        return `<button class="card" data-buy="${g.id}"><img src="${EG.giftImg(g)}" alt="" onerror="this.style.display='none'"><b>${g.name}</b>
-          <span class="sub">${src}${g.cost?(' · '+g.cost):''} · ${g.kind}</span></button>`;
-      }).join('')}</div>
-      <h3 style="margin-top:12px">Инвентарь</h3>
-      <div class="gift-grid">${Object.keys(inv).map(id=>{ const g=G.byId(id); if(!g)return '';
-        return `<button class="card" data-use="${id}"><img src="${EG.giftImg(g)}"><b>${g.name} ×${inv[id]}</b>
-          <span class="sub">${g.kind==='decor'?'поставить':'надеть'} / подарить</span></button>`; }).join('')||'<p style="color:#888;font-size:12px">Пусто</p>'}
-      </div>
-      <h3 style="margin-top:12px">Входящие ${inbox.some(m=>!m.seen)?'<i class="inbox-dot"></i>':''}</h3>
-      ${(inbox.slice(0,8).map((m,i)=>`<div class="card" data-in="${i}">от <b>${m.from}</b>: ${ (G.byId(m.id)||{}).name||m.id } ${m.seen?'':'· новое'}</div>`).join(''))||'<p style="color:#888;font-size:12px">Нет входящих</p>'}
-      <h3 style="margin-top:12px">Стена подарков</h3>
-      <div class="gift-grid">${(G.ensure(S).wall||[]).slice(0,8).map(m=>{ const g=G.byId(m.id); return `<div class="card"><img src="${EG.giftImg(g||{id:m.id})}"><span class="sub">от ${m.from}</span></div>`; }).join('')||'<p style="color:#888;font-size:12px">Пока пусто</p>'}
-      </div>
-      <button class="btn ghost" id="npc" style="margin-top:10px">Получить демо-подарок от NPC</button>
+      <div class="gift-h">Каталог</div>
+      <div class="gift-grid3">${items.map(g=>`<button class="gcard" data-buy="${g.id}"><img src="${EG.giftImg(g)}" alt=""><b>${g.name}</b>${chip(g)}${tag(g)}</button>`).join('')}</div>
+      <div class="gift-h">Мои подарки</div>
+      <div class="gift-grid3">${Object.keys(inv).map(id=>{ const g=G.byId(id); if(!g)return '';
+        return `<button class="gcard" data-use="${id}"><img src="${EG.giftImg(g)}" alt=""><b>${g.name} ×${inv[id]}</b>${tag(g)}</button>`; }).join('')||'<p class="gift-empty">Пока пусто</p>'}</div>
+      <div class="gift-h">Входящие ${unseen?`<i class="gift-badge">${unseen}</i>`:''}</div>
+      <div class="gift-wall">${(inbox.slice(0,8).map((m,i)=>{ const g=G.byId(m.id)||{id:m.id,name:'Подарок'}; return `<div class="gw-row" data-in="${i}"><img src="${EG.giftImg(g)}" alt=""><div><b>${m.from}</b><span>прислал(а): ${g.name}${m.seen?'':' · новое'}</span></div></div>`; }).join(''))||'<p class="gift-empty">Нет входящих</p>'}</div>
+      <div class="gift-h">Стена подарков</div>
+      <div class="gift-wall">${(G.ensure(S).wall||[]).slice(0,8).map(m=>{ const g=G.byId(m.id)||{id:m.id,name:'Подарок'}; return `<div class="gw-row"><img src="${EG.giftImg(g)}" alt=""><div><b>${m.from}</b><span>${g.name}</span></div></div>`; }).join('')||'<p class="gift-empty">Пока пусто</p>'}</div>
+      <button class="cu-btn gift-npc" id="npc">Получить подарок от друга</button>
     </div>${nav('gifts')}</div>`;
   bindNav();
   $('#free').onclick=()=>{ const r=G.takeFree(S); if(r.ok){ save(); egA('gift_receive'); toast('Бесплатно: '+r.item.name); go('gifts'); } else toast('Через '+r.days+' дн.'); };
@@ -689,13 +712,12 @@ SCR.gifts=()=>{
   });
   app.querySelectorAll('[data-use]').forEach(b=>b.onclick=()=>{
     const id=b.dataset.use; const it=G.byId(id);
-    const el=document.createElement('div'); el.className='panel';
-    el.innerHTML=`<h3>${it.name}</h3>
-      <button class="btn" id="u1" style="margin:6px 0">${it.kind==='decor'?'Поставить в комнате':'Надеть'}</button>
+    const el=EGUI.openSheet({title:it.name, icon:EG.giftImg(it), bodyHtml:`<div class="gift-use-body">
+      <img class="gift-use-art" src="${EG.giftImg(it)}" alt="">
+      <button class="btn" id="u1">${it.kind==='decor'?'Поставить в комнате':'Надеть'}</button>
       <button class="btn ghost" id="u2">Подарить другу (демо)</button>
-      <button class="btn ghost" id="cl">Закрыть</button>`;
-    app.querySelector('.screen').appendChild(el);
-    el.querySelector('#cl').onclick=()=>el.remove();
+      <button class="btn ghost" id="cl" data-close="1">Закрыть</button></div>`});
+    el.querySelector('#cl').onclick=()=>el._close();
     el.querySelector('#u1').onclick=()=>{
       const r=it.kind==='decor'?G.placeDecor(S,id):G.wear(S,id);
       if(r.ok){ save(); toast('Готово'); el.remove(); go(it.kind==='decor'?'home':'gifts'); }
@@ -705,7 +727,7 @@ SCR.gifts=()=>{
   app.querySelectorAll('[data-in]').forEach(b=>b.onclick=()=>{ G.claimInbox(S,+b.dataset.in); save(); toast('На стену'); go('gifts'); });
   $('#npc').onclick=()=>{
     const pool=G.catalog(); const it=pool[Math.floor(Math.random()*pool.length)];
-    G.receive(S,{giftId:it.id,fromName:'Алекс'}); save(); toast('Подарок от Алекс'); go('gifts');
+    G.receive(S,{giftId:it.id,fromName:'Алекс'}); save(); egA('notification'); toast('Подарок от Алекс'); go('gifts');
   };
 };
 
@@ -744,6 +766,7 @@ SCR.coop=()=>{
       }catch(e){ toast('Сеть недоступна'); }
     };
     $('#rf').onclick=async()=>{
+      paint('Проверяем…');
       if(!S.coopCode) return toast('Сначала создай/войди');
       try{
         const r=await Net.lobbyState(S.coopCode);
@@ -761,7 +784,7 @@ SCR.chat=()=>{
     {name:'Лила', t:'Наконец-то пятница... Мир такой скучный без вас 😞', av:'lila', tm:'21:30'},
     {name:'ДемонX', t:'Согласен... Спасает только музыка 💔', av:'demonx', tm:'21:32'},
     {name:'Кошмарик', t:'Кто со мной в заброшку сегодня? 👀', av:'koshmarik', tm:'21:35'},
-    {name:'raven', t:'Я с вами! Берите фонарики 🖤', av:'raven', tm:'21:36'}
+    {name:'Рэйвен', t:'Я с вами! Берите фонарики 🖤', av:'raven', tm:'21:36'}
   ];
   const quick=[['Привет','qr_heart'],['Как дела','qr_broken'],['Идём гулять','qr_bat']];
   const myAv=avatarSrc(S.style,S.gender);
@@ -810,7 +833,16 @@ SCR.chat=()=>{
       txt=scrubChat(txt); if(!txt||txt==='…') return;
       const peer=peers[Math.floor(Math.random()*peers.length)];
       S.chat=(S.chat||[]).concat([{me:true,t:txt,name:'Ты'}]); egA('chat_send');
-      const replyTxt=peer.t.split('...')[0]||peer.t;
+      const POOL={
+        'Привет':{lila:['Привеет 🖤 скучала','О, ты тут! Хай','Хэй, как настрой?'],demonx:['Йо. Здарова','Привет, бро 🤘','Ну привет, полуночник'],koshmarik:['Бу! 👻 Привет','Приветик из темноты','О, живой человек!'],raven:['Хай 🖤','Привет-привет','Наконец кто-то пишет']},
+        'Как дела':{lila:['Грустно, но держусь 😞','Слушаю MCR и норм','Лучше, когда ты пишешь'],demonx:['Как всегда — на грани 💔','Норм, гитару мучаю','Жив. А ты?'],koshmarik:['Ищу приключения 👀','Скучно без заброшек','Отлично, ночь же!'],raven:['Тихо и мрачно — идеально','Пишу стихи 🖤','Нормас, чай пью']},
+        'Идём гулять':{lila:['Давай в парк, там фонари','Только если в кафе потом ☕','Иду! Жди у метро'],demonx:['В скейт-парк? Я в деле','Погнали, только недолго','Давай, возьму наушники'],koshmarik:['На кладбище! 👻','Заброшка ждёт 👀','Я уже обуваюсь'],raven:['Я с вами! Берите фонарики 🖤','Ночная прогулка — моё','Только в тёмные улицы']}
+      };
+      const pk=(peer.av in POOL['Привет'])?peer.av:'raven';
+      const arr=((POOL[txt]||{})[pk])||['Ммм, интересно…','Расскажи ещё 🖤','Хах, понимаю','Согласен(на)','Серьёзно? 😮','Это вайб'];
+      const last=(S.chat||[]).filter(m=>!m.me).map(m=>m.t);
+      const fresh=arr.filter(x=>!last.slice(-6).includes(x));
+      const replyTxt=(fresh.length?fresh:arr)[Math.floor(Math.random()*(fresh.length||arr.length))];
       S.chat.push({me:false,t:scrubChat(replyTxt),name:peer.name,av:peer.av}); egA('chat_receive');
       if(S.chat.length>40) S.chat=S.chat.slice(-40);
       S.chats++; S.social=clamp(S.social+2,0,100); qAdd('chats',1); addXp(2); save(); SCR.chat();
@@ -837,11 +869,11 @@ SCR.account=()=>{
   app.innerHTML=`<div class="screen">${statRow()}
     <div class="panel eg-scroll" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
       <h3>Аккаунт</h3>
-      <p style="color:#aaa;font-size:12px">Гость по умолчанию. Привязка VK / OK / Яндекс / Telegram / TikTok — облачный сейв. Email не показываем.</p>
-      <div class="card">Сейчас: <b>${a.displayName||'Гость'}</b> · ${a.provider}
+      <p style="color:#aaa;font-size:12px">Гость по умолчанию. Привязка ВКонтакте / Одноклассники / Яндекс / Телеграм / ТикТок — облачное сохранение. Почту не показываем.</p>
+      <div class="card">Сейчас: <b>${a.displayName||'Гость'}</b> · ${({guest:'гость',vk:'ВКонтакте',ok:'Одноклассники',yandex:'Яндекс',telegram:'Телеграм',tiktok:'ТикТок'})[a.provider]||'гость'}
         <span class="sub">${a.verified?('телефон '+a.phoneMasked):'телефон не подтверждён'} · свободный чат: ${(S.sub&&S.sub.freeChat)?'да':'нет'}</span></div>
       <div class="grid" style="margin-top:10px">
-        ${['vk','ok','yandex','telegram','tiktok'].map(pr=>`<button class="card" data-p="${pr}">Войти / связать ${pr.toUpperCase()}</button>`).join('')}
+        ${['vk','ok','yandex','telegram','tiktok'].map(pr=>`<button class="card" data-p="${pr}">Войти через ${({vk:'ВКонтакте',ok:'Одноклассники',yandex:'Яндекс',telegram:'Телеграм',tiktok:'ТикТок'})[pr]}</button>`).join('')}
         <button class="card" data-p="guest">Продолжить как гость</button>
         <button class="card" id="ver">Подтвердить телефон</button>
         <button class="card" id="sub">Подписка «Свободный чат»</button>
@@ -958,7 +990,7 @@ SCR.npc=()=>{
     <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
       <h3>Знакомые</h3>
       <div class="grid">${list.map(n=>{ const r=EGNpc.rel(S,n.id);
-        return `<button class="card" data-n="${n.id}"><b>${n.name}</b><span class="sub">${n.loc} · связь ${r.bond|0}${r.met?'':' · не встречен'}</span></button>`; }).join('')}</div>
+        return `<button class="card" data-n="${n.id}"><img src="${n.av||('img/ui/avatars/npc_'+n.id+'.webp')}" alt="" style="width:56px;height:56px;border-radius:50%;border:2px solid #ff3d8b;display:block;margin:0 auto 4px"><b>${n.name}</b><span class="sub">${((EG.LOCS||[]).find(l=>l.id===n.loc)||{}).name||locName(n.loc)} · связь ${r.bond|0}${r.met?'':' · не встречен'}</span></button>`; }).join('')}</div>
       <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
     </div>${nav('hub')}</div>`;
   bindNav();
@@ -966,20 +998,22 @@ SCR.npc=()=>{
   $('#back').onclick=()=>go('hub');
 };
 
+const MOOD_RU={'😊':'радость','😢':'грусть','😤':'злость','😴':'сонно','🖤':'эмо','💖':'любовь','🎸':'музыка','🌧️':'дождь','🌧':'дождь'};
+const moodRu=m=>MOOD_RU[m]||m;
 SCR.diary=()=>{
   const d=EGDiary.prompts(); const moods=d.moods||['грусть'];
   app.innerHTML=`<div class="screen">${statRow()}
-    <div class="panel" style="position:relative;inset:auto;margin:10px">
+    <div class="panel diary-panel" style="position:relative;inset:auto;margin:10px">
       <h3>Дневник настроения</h3>
       <p style="color:#aaa;font-size:12px">${(d.prompts||['Как день?'])[Math.floor(Math.random()*(d.prompts||['?']).length)]}</p>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">${moods.map(m=>`<button class="chip" data-m="${m}">${m}</button>`).join('')}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">${moods.map(m=>`<button class="chip" data-m="${m}">${moodRu(m)}</button>`).join('')}</div>
       <input id="tx" placeholder="Пара слов…" maxlength="140" style="width:100%;padding:12px;border-radius:12px;border:1px solid #2a1a24;background:#161018;color:#fff">
       <button class="btn" id="ok" style="margin-top:10px">Записать</button>
       <button class="btn ghost" id="back" style="margin-top:8px">Назад</button>
-      <div style="margin-top:12px;font-size:12px;color:#aaa">${(S.diary||[]).slice(-5).reverse().map(e=>`<div>${e.mood} ${e.day}: ${e.text||'—'}</div>`).join('')}</div>
+      <div style="margin-top:12px;font-size:12px;color:#aaa">${(S.diary||[]).slice(-5).reverse().map(e=>`<div>${moodRu(e.mood)} ${e.day}: ${e.text||'—'}</div>`).join('')}</div>
     </div>${nav('hub')}</div>`;
   bindNav(); let mood=moods[0];
-  app.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{ mood=b.dataset.m; toast(mood); });
+  app.querySelectorAll('[data-m]').forEach((b,i)=>{ if(!i) b.classList.add('on'); b.onclick=()=>{ mood=b.dataset.m; app.querySelectorAll('[data-m]').forEach(x=>x.classList.toggle('on',x===b)); egA&&egA('tap'); }; });
   $('#ok').onclick=()=>{ EGDiary.write(S,mood,$('#tx').value); EGAch&&EGAch.check(S); save(); toast('Записано — заходи завтра'); go('diary'); };
   $('#back').onclick=()=>go('hub');
 };
@@ -990,7 +1024,7 @@ SCR.collections=()=>{
     <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
       <h3>Коллекции</h3>
       <div class="grid">${sets.map(s=>{ const p=EGCollections.progress(S,s); const claimed=S.colClaimed&&S.colClaimed[s.id];
-        return `<button class="card" data-c="${s.id}" ${p.done&&!claimed?'':'disabled'} style="${p.done?'':'opacity:.5'}"><b>${s.name}</b>
+        return `<button class="card" data-c="${s.id}" ${p.done&&!claimed?'':'disabled'} style="${p.done?'':'opacity:.5'}">${s.img?`<img src="${s.img}" alt="" style="width:64px;height:64px;image-rendering:pixelated">`:''}<b>${s.name}</b>
           <span class="sub">${p.have}/${p.need}${claimed?' · ✓':''}</span></button>`; }).join('')}</div>
       <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
     </div>${nav('hub')}</div>`;
@@ -1004,8 +1038,8 @@ SCR.decor=()=>{
   app.innerHTML=`<div class="screen">${statRow()}
     <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
       <h3>Декор комнаты</h3>
-      <p style="color:#aaa;font-size:12px">Слоты: ${Object.entries(S.decor||{}).map(([k,v])=>k+':'+v).join(', ')||'пусто'}</p>
-      <div class="grid">${items.map(it=>`<button class="card" data-d="${it.id}"><b>${it.name}</b><span class="sub">${it.slot} · ${it.cost} · +${it.mood} настрой</span></button>`).join('')}</div>
+      <p style="color:#aaa;font-size:12px">Слоты: ${Object.entries(S.decor||{}).map(([k,v])=>({wall:'стена',light:'свет',floor:'пол',shelf:'полка',pet:'питомец'})[k]+': '+(((EGDecor.catalog().items||[]).find(i=>i.id===v)||{}).name||'—')).join(', ')||'пусто'}</p>
+      <div class="grid">${items.map(it=>`<button class="card" data-d="${it.id}"><b>${it.name}</b><span class="sub">${({wall:'стена',light:'свет',floor:'пол',shelf:'полка',pet:'питомец'})[it.slot]||''} · ${it.cost} монет · +${it.mood} настрой</span></button>`).join('')}</div>
       <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
     </div>${nav('hub')}</div>`;
   bindNav();
@@ -1018,7 +1052,7 @@ SCR.pet=()=>{
   app.innerHTML=`<div class="screen">${statRow()}
     <div class="panel" style="position:relative;inset:auto;margin:10px">
       <h3>${p.name||'Тень'}</h3>
-      <img src="img/pet/black_cat_idle.png" alt="cat" style="width:96px;height:96px;image-rendering:pixelated;display:block;margin:8px auto" onerror="this.src='img/pet/black_cat.png'">
+      <img src="img/pet/black_cat_idle.png" alt="" style="width:96px;height:96px;image-rendering:pixelated;display:block;margin:8px auto" onerror="this.style.display='none'">
       <p style="text-align:center;color:#aaa;font-size:12px">Голод ${Math.round(p.hunger)} · связь ${Math.round(p.bond)}</p>
       <p style="color:#c8a0b8;font-size:12px;text-align:center">Корми кота каждый день — иначе связь падает</p>
       <div class="grid">${acts.map(a=>`<button class="card" data-a="${a.id}"><b>${a.name}</b><span class="sub">${a.cost?a.cost:'бесплатно'}</span></button>`).join('')}</div>
@@ -1035,7 +1069,7 @@ SCR.jobs=()=>{
     <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
       <h3>Работа · смен: ${S.jobs|0}</h3>
       <div class="grid">${list.map(j=>`<button class="card" data-j="${j.id}" ${(S.level>=(j.minLevel||1)&&S.energy>=(j.energy||10))?'':'disabled'} style="${(S.level>=(j.minLevel||1))?'':'opacity:.4'}">
-        <b>${j.name}</b><span class="sub">${j.loc} · ур.${j.minLevel} · ${j.pay} · ${j.energy}</span></button>`).join('')}</div>
+        <b>${j.name}</b><span class="sub">${LOC_RU[j.loc]||j.loc} · ур.${j.minLevel} · +${j.pay} монет · −${j.energy} энергии</span></button>`).join('')}</div>
       <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
     </div>${nav('hub')}</div>`;
   bindNav();
@@ -1049,8 +1083,8 @@ SCR.ach=()=>{
     <div class="panel" style="position:relative;inset:auto;margin:10px;max-height:75vh;overflow:auto">
       <h3>Ачивки · ${Object.keys(S.ach||{}).length}/${list.length}</h3>
       <div class="grid">${list.map(a=>{ const on=S.ach&&S.ach[a.id];
-        return `<div class="card" style="${on?'':'opacity:.45'}"><img src="${a.icon||''}" width="32" height="32" style="image-rendering:pixelated" onerror="this.style.display='none'"><b>${a.name}</b>
-          <span class="sub">${a.desc||''}${on?' · ✓':''}</span></div>`; }).join('')}</div>
+        return `<div class="card" style="${on?'':'opacity:.45'}"><img src="${a.icon||''}" width="32" height="32" style="image-rendering:pixelated" onerror="this.style.display='none'"><b>${a.name||a.title||''}</b>
+          <span class="sub">${a.desc||(('+'+(a.xp||0)+' опыта · +'+(a.coins||0)+' монет'))}${on?' · ✓':''}</span></div>`; }).join('')}</div>
       <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
     </div>${nav('hub')}</div>`;
   bindNav(); $('#back').onclick=()=>go('hub');
@@ -1061,7 +1095,7 @@ SCR.mg_skate=()=>{
   app.innerHTML=`<div class="screen" style="align-items:center;justify-content:center;padding:20px">
     <h2 style="color:var(--accent)">Скейт</h2>
     <p style="color:#aaa">Трюки · осталось <b id="n">${left}</b></p>
-    <button class="btn" id="tap" style="width:140px;height:140px;border-radius:50%">GO</button>
+    <button class="btn" id="tap" style="width:140px;height:140px;border-radius:50%">Жми</button>
     <p>Трюки: <b id="h">0</b></p>
     <button class="btn ghost" id="done" style="margin-top:16px;max-width:200px">Готово</button></div>`;
   $('#tap').onclick=()=>{ if(left<=0)return; left--; if(Math.random()>0.35)tricks++; $('#n').textContent=left; $('#h').textContent=tricks; };
@@ -1083,7 +1117,7 @@ SCR.mg_karaoke=()=>{
   app.innerHTML=`<div class="screen" style="align-items:center;justify-content:center;padding:20px">
     <h2 style="color:var(--accent)">Караоке</h2>
     <p style="color:#aaa">Пой · <b id="n">${left}</b></p>
-    <button class="btn" id="tap" style="width:140px;height:140px;border-radius:50%">GO</button>
+    <button class="btn" id="tap" style="width:140px;height:140px;border-radius:50%">Жми</button>
     <p>Очки: <b id="sc">0</b></p>
     <button class="btn ghost" id="done" style="margin-top:16px;max-width:200px">Готово</button></div>`;
   $('#tap').onclick=()=>{ if(left<=0)return; left--; score+=10+Math.floor(Math.random()*15); $('#n').textContent=left; $('#sc').textContent=score; };
@@ -1123,13 +1157,14 @@ async function boot(){
     else if(live) window.__EG_PHASE='night';
     localStorage.setItem('eg_created','1'); localStorage.setItem('eg_care_onboard','1');
     save();
-    if(shotGo==='metro'||shotGo==='cafe'||shotGo==='park'||shotGo==='station'){ go('loc', shotGo); return; }
+    if(shotGo!=='room'&&(EG.LOCS||[]).some(l=>l.id===shotGo)||shotGo==='metro'||shotGo==='cafe'||shotGo==='park'||shotGo==='station'){ go('loc', shotGo); return; }
     if(shotGo==='loc'){ go('loc', q.get('loc')||q.get('a')||'metro'); return; }
     if(shotGo==='more'){ go('hub'); return; }
     if(shotGo==='quests'){ go('home'); requestAnimationFrame(()=>openQuests()); return; }
     if(shotGo==='shop'){ go('home'); requestAnimationFrame(()=>openShop()); return; }
     go(shotGo, q.get('a')||undefined); return;
   }
+  if(S.consent!=null){ try{ PL.setConsent(S.stats!==false,S.pers!==false); }catch(e){} } /* 0.8.1 boot consent */
   if(S.consent==null) go('consent');
   else if(!localStorage.getItem('eg_care_onboard')) go('onboardCare');
   else if(!localStorage.getItem('eg_created')) go('create');
@@ -1142,3 +1177,6 @@ async function boot(){
 }
 boot();
 })();
+
+/* 0.8.1 tapfx */
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('#tap,#mk,#rf,#jn,.feed-tab.on'); if(t){ try{ window.EGAudio&&EGAudio.emit('tap',{}); }catch(_){} } },true);

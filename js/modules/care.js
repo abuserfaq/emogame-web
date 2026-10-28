@@ -32,7 +32,7 @@ const Care={
     st.last=d; S.lastLoginDay=d;
     const reward=Math.min(200, 20+st.n*10);
     S.coins+=reward; S.mood=EG.clamp(S.mood+5,0,100);
-    if(window.toast) toast('Серия '+st.n+' дн. · +'+reward+'💰');
+    if(window.toast) toast('Серия '+st.n+' дн. · +'+reward+' монет');
     return {streak:st.n,reward};
   },
   clean(S,what){
@@ -61,10 +61,16 @@ const Care={
   _armPush(S){
     if(!(window.EGRC?EGRC.bool('push_care_enabled',true):true)) return;
     const P=window.Platform; if(!P||!P.push||!P.push.avail||!P.push.avail()) return;
-    const msgs=[];
-    if(S.hunger<35) msgs.push({id:'hunger',title:'Emogame',body:'я голоден… зайди покормить',when:Date.now()+3600e3});
-    if(this.dirtTotal(S)>80) msgs.push({id:'dirt',title:'Emogame',body:'в комнате бардак',when:Date.now()+7200e3});
-    if(S.thirst<35) msgs.push({id:'thirst',title:'Emogame',body:'хочу пить 🧋',when:Date.now()+5400e3});
+    const mult=(window.EGRC?EGRC.int('care_decay_mult',100):100)/100, now=Date.now(), H=3600e3;
+    const eta=(v,thr,rate)=>now+Math.max(1,(v-thr)/(rate*mult))*H;  // when a stat crosses its threshold
+    const d=this.dirtTotal(S);
+    const msgs=[
+      {type:'hunger',title:'Emogame',text:'я голоден… зайди покормить',at:Math.round(eta(S.hunger,25,7))},
+      {type:'thirst',title:'Emogame',text:'хочу пить 🧋',at:Math.round(eta(S.thirst,25,9))},
+      {type:'dirt',title:'Emogame',text:'в комнате бардак — нужна уборка',at:Math.round(now+Math.max(1,(100-d)/10)*H)},
+    ].map(m=>Object.assign(m,{ch:'timers',id:m.type,body:m.text,when:m.at}));
+    const sig=msgs.map(m=>m.type+Math.round(m.at/600e3)).join('|');
+    if(sig===this._pushSig) return; this._pushSig=sig;
     try{ P.push.setReminders(msgs); }catch(e){}
   },
   onScreen(){},

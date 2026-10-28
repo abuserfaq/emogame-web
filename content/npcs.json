@@ -5,56 +5,64 @@
       "name": "Маша",
       "look": "emo_girl",
       "loc": "park",
-      "trait": "kind"
+      "trait": "kind",
+      "av": "img/ui/avatars/npc_masha.webp"
     },
     {
       "id": "kirill",
       "name": "Кирилл",
       "look": "alt_guy",
       "loc": "records",
-      "trait": "music"
+      "trait": "music",
+      "av": "img/ui/avatars/npc_kirill.webp"
     },
     {
       "id": "lina",
       "name": "Лина",
       "look": "idol_girl",
       "loc": "cafe",
-      "trait": "bright"
+      "trait": "bright",
+      "av": "img/ui/avatars/npc_lina.webp"
     },
     {
       "id": "vova",
       "name": "Вова",
       "look": "emo_guy",
       "loc": "cemetery",
-      "trait": "quiet"
+      "trait": "quiet",
+      "av": "img/ui/avatars/npc_vova.webp"
     },
     {
       "id": "nika",
       "name": "Ника",
       "look": "alt_girl",
       "loc": "skate",
-      "trait": "rebel"
+      "trait": "rebel",
+      "av": "img/ui/avatars/npc_nika.webp"
     },
     {
       "id": "sasha",
       "name": "Саша",
       "look": "idol_guy",
       "loc": "karaoke",
-      "trait": "stage"
+      "trait": "stage",
+      "av": "img/ui/avatars/npc_sasha.webp"
     },
     {
       "id": "tima",
       "name": "Тима",
       "look": "alt_guy",
       "loc": "garage",
-      "trait": "band"
+      "trait": "band",
+      "av": "img/ui/avatars/npc_tima.webp"
     },
     {
       "id": "yulia",
       "name": "Юля",
       "look": "emo_girl",
       "loc": "bookcafe",
-      "trait": "diary"
+      "trait": "diary",
+      "av": "img/ui/avatars/npc_yulia.webp"
     }
   ]
 }

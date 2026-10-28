@@ -5,10 +5,10 @@ const Content={
   get(name){ return store[name]; },
   async load(){
     const base='content/';
-    let pack; try{ pack=await (await fetch(base+'pack.json?v=0.7.9',{cache:'no-cache'})).json(); }catch(e){ pack={files:[]}; }
+    let pack; try{ pack=await (await fetch(base+'pack.json?v=0.8.1',{cache:'no-cache'})).json(); }catch(e){ pack={files:[]}; }
     this.pack=pack;
     const EG=window.EG=window.EG||{};
-    const loadOne=async(name)=>{ try{ return await (await fetch(base+name+'.json?v=0.7.9',{cache:'no-cache'})).json(); }catch(e){ return null; } };
+    const loadOne=async(name)=>{ try{ return await (await fetch(base+name+'.json?v=0.8.1',{cache:'no-cache'})).json(); }catch(e){ return null; } };
     const files=pack.files||[];
     for(const f of files){
       const data=await loadOne(f); if(data==null) continue;
@@ -39,8 +39,8 @@ const Content={
   _compat(EG){
     EG.STYLES=[
       {id:'emo',name:'Эмо',blurb:'Чёрно-розовая классика'},
-      {id:'alt',name:'Альт',blurb:'e-girl / e-boy вайб'},
-      {id:'idol',name:'Айдол',blurb:'K-pop сцена и танцы'},
+      {id:'alt',name:'Альт',blurb:'Интернет-вайб'},
+      {id:'idol',name:'Айдол',blurb:'Кей-поп сцена и танцы'},
       {id:'goth',name:'Гот',blurb:'Тьма и кружево'},
       {id:'punk',name:'Панк',blurb:'Ирокез и шипы'},
       {id:'skater',name:'Скейтер',blurb:'Доска и вайб'}

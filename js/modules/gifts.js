@@ -5,9 +5,9 @@ const Gifts={
   catalog(){ return (window.EG&&EG.GIFTS&&EG.GIFTS.items)||[]; },
   byId(id){ return this.catalog().find(g=>g.id===id); },
   intervalMs(){ const d=window.EGRC?EGRC.freeGiftIntervalDays():7; return d*86400e3; },
-  canFree(S){ const last=(S.gifts&&S.gifts.lastFreeAt)|0; return Date.now()-last >= this.intervalMs(); },
+  canFree(S){ const last=+(S.gifts&&S.gifts.lastFreeAt)||0; return Date.now()-last >= this.intervalMs(); },
   freeLeftDays(S){
-    const left=this.intervalMs()- (Date.now()-((S.gifts&&S.gifts.lastFreeAt)|0));
+    const left=this.intervalMs()- (Date.now()-(+(S.gifts&&S.gifts.lastFreeAt)||0));
     return Math.max(0, Math.ceil(left/86400e3));
   },
   ensure(S){ S.gifts=S.gifts||{inv:{},inbox:[],wall:[],lastFreeAt:0,sent:0,recv:0}; return S.gifts; },

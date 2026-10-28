@@ -1,563 +1,563 @@
 [
-  {
-    "id": "a01",
-    "title": "Первый вход",
-    "xp": 10,
-    "coins": 20,
-    "icon": "img/ach/a01.png"
-  },
-  {
-    "id": "a02",
-    "title": "Покормить",
-    "xp": 11,
-    "coins": 30,
-    "icon": "img/ach/a02.png"
-  },
-  {
-    "id": "a03",
-    "title": "Напоить",
-    "xp": 12,
-    "coins": 40,
-    "icon": "img/ach/a03.png"
-  },
-  {
-    "id": "a04",
-    "title": "Выспаться",
-    "xp": 13,
-    "coins": 50,
-    "icon": "img/ach/a04.png"
-  },
-  {
-    "id": "a05",
-    "title": "Убрать комнату",
-    "xp": 14,
-    "coins": 60,
-    "icon": "img/ach/a05.png"
-  },
-  {
-    "id": "a06",
-    "title": "Серия 3 дня",
-    "xp": 15,
-    "coins": 20,
-    "icon": "img/ach/a06.png"
-  },
-  {
-    "id": "a07",
-    "title": "Серия 7 дней",
-    "xp": 16,
-    "coins": 30,
-    "icon": "img/ach/a07.png"
-  },
-  {
-    "id": "a08",
-    "title": "Серия 30 дней",
-    "xp": 17,
-    "coins": 40,
-    "icon": "img/ach/a08.png"
-  },
-  {
-    "id": "a09",
-    "title": "Парк",
-    "xp": 18,
-    "coins": 50,
-    "icon": "img/ach/a09.png"
-  },
-  {
-    "id": "a10",
-    "title": "Кладбище",
-    "xp": 19,
-    "coins": 60,
-    "icon": "img/ach/a10.png"
-  },
-  {
-    "id": "a11",
-    "title": "Кафе",
-    "xp": 20,
-    "coins": 20,
-    "icon": "img/ach/a11.png"
-  },
-  {
-    "id": "a12",
-    "title": "Концерт",
-    "xp": 21,
-    "coins": 30,
-    "icon": "img/ach/a12.png"
-  },
-  {
-    "id": "a13",
-    "title": "Крыша",
-    "xp": 22,
-    "coins": 40,
-    "icon": "img/ach/a13.png"
-  },
-  {
-    "id": "a14",
-    "title": "Скейт",
-    "xp": 23,
-    "coins": 50,
-    "icon": "img/ach/a14.png"
-  },
-  {
-    "id": "a15",
-    "title": "Аркада",
-    "xp": 24,
-    "coins": 60,
-    "icon": "img/ach/a15.png"
-  },
-  {
-    "id": "a16",
-    "title": "Караоке",
-    "xp": 25,
-    "coins": 20,
-    "icon": "img/ach/a16.png"
-  },
-  {
-    "id": "a17",
-    "title": "ТЦ",
-    "xp": 26,
-    "coins": 30,
-    "icon": "img/ach/a17.png"
-  },
-  {
-    "id": "a18",
-    "title": "Колледж",
-    "xp": 27,
-    "coins": 40,
-    "icon": "img/ach/a18.png"
-  },
-  {
-    "id": "a19",
-    "title": "Гараж",
-    "xp": 28,
-    "coins": 50,
-    "icon": "img/ach/a19.png"
-  },
-  {
-    "id": "a20",
-    "title": "Фестиваль",
-    "xp": 29,
-    "coins": 60,
-    "icon": "img/ach/a20.png"
-  },
-  {
-    "id": "a21",
-    "title": "Первый подарок",
-    "xp": 30,
-    "coins": 20,
-    "icon": "img/ach/a21.png"
-  },
-  {
-    "id": "a22",
-    "title": "Отправить подарок",
-    "xp": 31,
-    "coins": 30,
-    "icon": "img/ach/a22.png"
-  },
-  {
-    "id": "a23",
-    "title": "Стена из 5 подарков",
-    "xp": 32,
-    "coins": 40,
-    "icon": "img/ach/a23.png"
-  },
-  {
-    "id": "a24",
-    "title": "Стена из 20",
-    "xp": 33,
-    "coins": 50,
-    "icon": "img/ach/a24.png"
-  },
-  {
-    "id": "a25",
-    "title": "Надеть подарок",
-    "xp": 34,
-    "coins": 60,
-    "icon": "img/ach/a25.png"
-  },
-  {
-    "id": "a26",
-    "title": "Поставить декор",
-    "xp": 35,
-    "coins": 20,
-    "icon": "img/ach/a26.png"
-  },
-  {
-    "id": "a27",
-    "title": "Стиль 50",
-    "xp": 36,
-    "coins": 30,
-    "icon": "img/ach/a27.png"
-  },
-  {
-    "id": "a28",
-    "title": "Стиль 100",
-    "xp": 37,
-    "coins": 40,
-    "icon": "img/ach/a28.png"
-  },
-  {
-    "id": "a29",
-    "title": "Слава 50",
-    "xp": 38,
-    "coins": 50,
-    "icon": "img/ach/a29.png"
-  },
-  {
-    "id": "a30",
-    "title": "Слава 100",
-    "xp": 39,
-    "coins": 60,
-    "icon": "img/ach/a30.png"
-  },
-  {
-    "id": "a31",
-    "title": "Друг NPC",
-    "xp": 40,
-    "coins": 20,
-    "icon": "img/ach/a31.png"
-  },
-  {
-    "id": "a32",
-    "title": "Кооп раз",
-    "xp": 41,
-    "coins": 30,
-    "icon": "img/ach/a32.png"
-  },
-  {
-    "id": "a33",
-    "title": "Кооп 10",
-    "xp": 42,
-    "coins": 40,
-    "icon": "img/ach/a33.png"
-  },
-  {
-    "id": "a34",
-    "title": "Трек создан",
-    "xp": 43,
-    "coins": 50,
-    "icon": "img/ach/a34.png"
-  },
-  {
-    "id": "a35",
-    "title": "Группа собрана",
-    "xp": 44,
-    "coins": 60,
-    "icon": "img/ach/a35.png"
-  },
-  {
-    "id": "a36",
-    "title": "Гига сыграна",
-    "xp": 45,
-    "coins": 20,
-    "icon": "img/ach/a36.png"
-  },
-  {
-    "id": "a37",
-    "title": "Кот поглажен",
-    "xp": 46,
-    "coins": 30,
-    "icon": "img/ach/a37.png"
-  },
-  {
-    "id": "a38",
-    "title": "Работа смена",
-    "xp": 47,
-    "coins": 40,
-    "icon": "img/ach/a38.png"
-  },
-  {
-    "id": "a39",
-    "title": "Винил собран",
-    "xp": 48,
-    "coins": 50,
-    "icon": "img/ach/a39.png"
-  },
-  {
-    "id": "a40",
-    "title": "Постер собран",
-    "xp": 49,
-    "coins": 60,
-    "icon": "img/ach/a40.png"
-  },
-  {
-    "id": "a41",
-    "title": "Значок x10",
-    "xp": 50,
-    "coins": 20,
-    "icon": "img/ach/a41.png"
-  },
-  {
-    "id": "a42",
-    "title": "Фото селфи",
-    "xp": 51,
-    "coins": 30,
-    "icon": "img/ach/a42.png"
-  },
-  {
-    "id": "a43",
-    "title": "Дневник 7",
-    "xp": 52,
-    "coins": 40,
-    "icon": "img/ach/a43.png"
-  },
-  {
-    "id": "a44",
-    "title": "Музыка 10",
-    "xp": 53,
-    "coins": 50,
-    "icon": "img/ach/a44.png"
-  },
-  {
-    "id": "a45",
-    "title": "Без пропуска 14",
-    "xp": 54,
-    "coins": 60,
-    "icon": "img/ach/a45.png"
-  },
-  {
-    "id": "a46",
-    "title": "Заморозка серии",
-    "xp": 55,
-    "coins": 20,
-    "icon": "img/ach/a46.png"
-  },
-  {
-    "id": "a47",
-    "title": "Реклама reward",
-    "xp": 56,
-    "coins": 30,
-    "icon": "img/ach/a47.png"
-  },
-  {
-    "id": "a48",
-    "title": "Покупка paid",
-    "xp": 57,
-    "coins": 40,
-    "icon": "img/ach/a48.png"
-  },
-  {
-    "id": "a49",
-    "title": "Чат 50",
-    "xp": 58,
-    "coins": 50,
-    "icon": "img/ach/a49.png"
-  },
-  {
-    "id": "a50",
-    "title": "Уровень 10",
-    "xp": 59,
-    "coins": 60,
-    "icon": "img/ach/a50.png"
-  },
-  {
-    "id": "a51",
-    "title": "Уровень 25",
-    "xp": 60,
-    "coins": 20,
-    "icon": "img/ach/a51.png"
-  },
-  {
-    "id": "a52",
-    "title": "Уровень 50",
-    "xp": 61,
-    "coins": 30,
-    "icon": "img/ach/a52.png"
-  },
-  {
-    "id": "a53",
-    "title": "Ночной клуб",
-    "xp": 62,
-    "coins": 40,
-    "icon": "img/ach/a53.png"
-  },
-  {
-    "id": "a54",
-    "title": "Пляж закат",
-    "xp": 63,
-    "coins": 50,
-    "icon": "img/ach/a54.png"
-  },
-  {
-    "id": "a55",
-    "title": "Вокзал встреча",
-    "xp": 64,
-    "coins": 60,
-    "icon": "img/ach/a55.png"
-  },
-  {
-    "id": "band_first",
-    "name": "Первый гиг",
-    "desc": "gigs ≥ 1",
-    "stat": "gigs",
-    "need": 1,
-    "reward": {
-      "coins": 30
-    },
-    "icon": "img/ach/band_first.png"
-  },
-  {
-    "id": "band_10",
-    "name": "10 гигов",
-    "desc": "gigs ≥ 10",
-    "stat": "gigs",
-    "need": 10,
-    "reward": {
-      "coins": 35
-    },
-    "icon": "img/ach/band_10.png"
-  },
-  {
-    "id": "followers_100",
-    "name": "100 подписчиков",
-    "desc": "followers ≥ 100",
-    "stat": "followers",
-    "need": 100,
-    "reward": {
-      "coins": 80
-    },
-    "icon": "img/ach/followers_100.png"
-  },
-  {
-    "id": "followers_1k",
-    "name": "1k подписчиков",
-    "desc": "followers ≥ 1000",
-    "stat": "followers",
-    "need": 1000,
-    "reward": {
-      "coins": 530
-    },
-    "icon": "img/ach/followers_1k.png"
-  },
-  {
-    "id": "npc_friend",
-    "name": "Настоящий друг",
-    "desc": "npcMax ≥ 50",
-    "stat": "npcMax",
-    "need": 50,
-    "reward": {
-      "coins": 55
-    },
-    "icon": "img/ach/npc_friend.png"
-  },
-  {
-    "id": "npc_all",
-    "name": "Все знакомы",
-    "desc": "npcMet ≥ 8",
-    "stat": "npcMet",
-    "need": 8,
-    "reward": {
-      "coins": 34
-    },
-    "icon": "img/ach/npc_all.png"
-  },
-  {
-    "id": "diary_7",
-    "name": "Неделя в дневнике",
-    "desc": "diaryDays ≥ 7",
-    "stat": "diaryDays",
-    "need": 7,
-    "reward": {
-      "coins": 33
-    },
-    "icon": "img/ach/diary_7.png"
-  },
-  {
-    "id": "collect_1",
-    "name": "Первая коллекция",
-    "desc": "collections ≥ 1",
-    "stat": "collections",
-    "need": 1,
-    "reward": {
-      "coins": 30
-    },
-    "icon": "img/ach/collect_1.png"
-  },
-  {
-    "id": "decor_5",
-    "name": "Уют×5",
-    "desc": "decorCount ≥ 5",
-    "stat": "decorCount",
-    "need": 5,
-    "reward": {
-      "coins": 32
-    },
-    "icon": "img/ach/decor_5.png"
-  },
-  {
-    "id": "cat_bond",
-    "name": "Кот доверяет",
-    "desc": "catBond ≥ 50",
-    "stat": "catBond",
-    "need": 50,
-    "reward": {
-      "coins": 55
-    },
-    "icon": "img/ach/cat_bond.png"
-  },
-  {
-    "id": "job_10",
-    "name": "10 смен",
-    "desc": "jobs ≥ 10",
-    "stat": "jobs",
-    "need": 10,
-    "reward": {
-      "coins": 35
-    },
-    "icon": "img/ach/job_10.png"
-  },
-  {
-    "id": "season_all",
-    "name": "Все сезоны",
-    "desc": "seasonsSeen ≥ 4",
-    "stat": "seasonsSeen",
-    "need": 4,
-    "reward": {
-      "coins": 32
-    },
-    "icon": "img/ach/season_all.png"
-  },
-  {
-    "id": "music_hi",
-    "name": "Меломан",
-    "desc": "musicScore ≥ 500",
-    "stat": "musicScore",
-    "need": 500,
-    "reward": {
-      "coins": 280
-    },
-    "icon": "img/ach/music_hi.png"
-  },
-  {
-    "id": "selfie_star",
-    "name": "Селфи-звезда",
-    "desc": "selfies ≥ 20",
-    "stat": "selfies",
-    "need": 20,
-    "reward": {
-      "coins": 40
-    },
-    "icon": "img/ach/selfie_star.png"
-  },
-  {
-    "id": "streak_14",
-    "name": "Стрик 14",
-    "desc": "streak ≥ 14",
-    "stat": "streak",
-    "need": 14,
-    "reward": {
-      "coins": 37
-    },
-    "icon": "img/ach/streak_14.png"
-  },
-  {
-    "id": "clean_fan",
-    "name": "Чистюля",
-    "desc": "cleans ≥ 30",
-    "stat": "cleans",
-    "need": 30,
-    "reward": {
-      "coins": 45
-    },
-    "icon": "img/ach/clean_fan.png"
-  }
+ {
+  "id": "a01",
+  "title": "Первый вход",
+  "xp": 10,
+  "coins": 20,
+  "icon": "img/ach/a01.webp"
+ },
+ {
+  "id": "a02",
+  "title": "Покормить",
+  "xp": 11,
+  "coins": 30,
+  "icon": "img/ach/a02.webp"
+ },
+ {
+  "id": "a03",
+  "title": "Напоить",
+  "xp": 12,
+  "coins": 40,
+  "icon": "img/ach/a03.webp"
+ },
+ {
+  "id": "a04",
+  "title": "Выспаться",
+  "xp": 13,
+  "coins": 50,
+  "icon": "img/ach/a04.webp"
+ },
+ {
+  "id": "a05",
+  "title": "Убрать комнату",
+  "xp": 14,
+  "coins": 60,
+  "icon": "img/ach/a05.webp"
+ },
+ {
+  "id": "a06",
+  "title": "Серия 3 дня",
+  "xp": 15,
+  "coins": 20,
+  "icon": "img/ach/a06.webp"
+ },
+ {
+  "id": "a07",
+  "title": "Серия 7 дней",
+  "xp": 16,
+  "coins": 30,
+  "icon": "img/ach/a07.webp"
+ },
+ {
+  "id": "a08",
+  "title": "Серия 30 дней",
+  "xp": 17,
+  "coins": 40,
+  "icon": "img/ach/a08.webp"
+ },
+ {
+  "id": "a09",
+  "title": "Парк",
+  "xp": 18,
+  "coins": 50,
+  "icon": "img/ach/a09.webp"
+ },
+ {
+  "id": "a10",
+  "title": "Кладбище",
+  "xp": 19,
+  "coins": 60,
+  "icon": "img/ach/a10.webp"
+ },
+ {
+  "id": "a11",
+  "title": "Кафе",
+  "xp": 20,
+  "coins": 20,
+  "icon": "img/ach/a11.webp"
+ },
+ {
+  "id": "a12",
+  "title": "Концерт",
+  "xp": 21,
+  "coins": 30,
+  "icon": "img/ach/a12.webp"
+ },
+ {
+  "id": "a13",
+  "title": "Крыша",
+  "xp": 22,
+  "coins": 40,
+  "icon": "img/ach/a13.webp"
+ },
+ {
+  "id": "a14",
+  "title": "Скейт",
+  "xp": 23,
+  "coins": 50,
+  "icon": "img/ach/a14.webp"
+ },
+ {
+  "id": "a15",
+  "title": "Аркада",
+  "xp": 24,
+  "coins": 60,
+  "icon": "img/ach/a15.webp"
+ },
+ {
+  "id": "a16",
+  "title": "Караоке",
+  "xp": 25,
+  "coins": 20,
+  "icon": "img/ach/a16.webp"
+ },
+ {
+  "id": "a17",
+  "title": "ТЦ",
+  "xp": 26,
+  "coins": 30,
+  "icon": "img/ach/a17.webp"
+ },
+ {
+  "id": "a18",
+  "title": "Колледж",
+  "xp": 27,
+  "coins": 40,
+  "icon": "img/ach/a18.webp"
+ },
+ {
+  "id": "a19",
+  "title": "Гараж",
+  "xp": 28,
+  "coins": 50,
+  "icon": "img/ach/a19.webp"
+ },
+ {
+  "id": "a20",
+  "title": "Фестиваль",
+  "xp": 29,
+  "coins": 60,
+  "icon": "img/ach/a20.webp"
+ },
+ {
+  "id": "a21",
+  "title": "Первый подарок",
+  "xp": 30,
+  "coins": 20,
+  "icon": "img/ach/a21.webp"
+ },
+ {
+  "id": "a22",
+  "title": "Отправить подарок",
+  "xp": 31,
+  "coins": 30,
+  "icon": "img/ach/a22.webp"
+ },
+ {
+  "id": "a23",
+  "title": "Стена из 5 подарков",
+  "xp": 32,
+  "coins": 40,
+  "icon": "img/ach/a23.webp"
+ },
+ {
+  "id": "a24",
+  "title": "Стена из 20",
+  "xp": 33,
+  "coins": 50,
+  "icon": "img/ach/a24.webp"
+ },
+ {
+  "id": "a25",
+  "title": "Надеть подарок",
+  "xp": 34,
+  "coins": 60,
+  "icon": "img/ach/a25.webp"
+ },
+ {
+  "id": "a26",
+  "title": "Поставить декор",
+  "xp": 35,
+  "coins": 20,
+  "icon": "img/ach/a26.webp"
+ },
+ {
+  "id": "a27",
+  "title": "Стиль 50",
+  "xp": 36,
+  "coins": 30,
+  "icon": "img/ach/a27.webp"
+ },
+ {
+  "id": "a28",
+  "title": "Стиль 100",
+  "xp": 37,
+  "coins": 40,
+  "icon": "img/ach/a28.webp"
+ },
+ {
+  "id": "a29",
+  "title": "Слава 50",
+  "xp": 38,
+  "coins": 50,
+  "icon": "img/ach/a29.webp"
+ },
+ {
+  "id": "a30",
+  "title": "Слава 100",
+  "xp": 39,
+  "coins": 60,
+  "icon": "img/ach/a30.webp"
+ },
+ {
+  "id": "a31",
+  "title": "Друг для всех",
+  "xp": 40,
+  "coins": 20,
+  "icon": "img/ach/a31.webp"
+ },
+ {
+  "id": "a32",
+  "title": "Кооп раз",
+  "xp": 41,
+  "coins": 30,
+  "icon": "img/ach/a32.webp"
+ },
+ {
+  "id": "a33",
+  "title": "Кооп 10",
+  "xp": 42,
+  "coins": 40,
+  "icon": "img/ach/a33.webp"
+ },
+ {
+  "id": "a34",
+  "title": "Трек создан",
+  "xp": 43,
+  "coins": 50,
+  "icon": "img/ach/a34.webp"
+ },
+ {
+  "id": "a35",
+  "title": "Группа собрана",
+  "xp": 44,
+  "coins": 60,
+  "icon": "img/ach/a35.webp"
+ },
+ {
+  "id": "a36",
+  "title": "Гига сыграна",
+  "xp": 45,
+  "coins": 20,
+  "icon": "img/ach/a36.webp"
+ },
+ {
+  "id": "a37",
+  "title": "Кот поглажен",
+  "xp": 46,
+  "coins": 30,
+  "icon": "img/ach/a37.webp"
+ },
+ {
+  "id": "a38",
+  "title": "Работа смена",
+  "xp": 47,
+  "coins": 40,
+  "icon": "img/ach/a38.webp"
+ },
+ {
+  "id": "a39",
+  "title": "Винил собран",
+  "xp": 48,
+  "coins": 50,
+  "icon": "img/ach/a39.webp"
+ },
+ {
+  "id": "a40",
+  "title": "Постер собран",
+  "xp": 49,
+  "coins": 60,
+  "icon": "img/ach/a40.webp"
+ },
+ {
+  "id": "a41",
+  "title": "Значок x10",
+  "xp": 50,
+  "coins": 20,
+  "icon": "img/ach/a41.webp"
+ },
+ {
+  "id": "a42",
+  "title": "Фото селфи",
+  "xp": 51,
+  "coins": 30,
+  "icon": "img/ach/a42.webp"
+ },
+ {
+  "id": "a43",
+  "title": "Дневник 7",
+  "xp": 52,
+  "coins": 40,
+  "icon": "img/ach/a43.webp"
+ },
+ {
+  "id": "a44",
+  "title": "Музыка 10",
+  "xp": 53,
+  "coins": 50,
+  "icon": "img/ach/a44.webp"
+ },
+ {
+  "id": "a45",
+  "title": "Без пропуска 14",
+  "xp": 54,
+  "coins": 60,
+  "icon": "img/ach/a45.webp"
+ },
+ {
+  "id": "a46",
+  "title": "Заморозка серии",
+  "xp": 55,
+  "coins": 20,
+  "icon": "img/ach/a46.webp"
+ },
+ {
+  "id": "a47",
+  "title": "Награда за рекламу",
+  "xp": 56,
+  "coins": 30,
+  "icon": "img/ach/a47.webp"
+ },
+ {
+  "id": "a48",
+  "title": "Первая покупка",
+  "xp": 57,
+  "coins": 40,
+  "icon": "img/ach/a48.webp"
+ },
+ {
+  "id": "a49",
+  "title": "Чат 50",
+  "xp": 58,
+  "coins": 50,
+  "icon": "img/ach/a49.webp"
+ },
+ {
+  "id": "a50",
+  "title": "Уровень 10",
+  "xp": 59,
+  "coins": 60,
+  "icon": "img/ach/a50.webp"
+ },
+ {
+  "id": "a51",
+  "title": "Уровень 25",
+  "xp": 60,
+  "coins": 20,
+  "icon": "img/ach/a51.webp"
+ },
+ {
+  "id": "a52",
+  "title": "Уровень 50",
+  "xp": 61,
+  "coins": 30,
+  "icon": "img/ach/a52.webp"
+ },
+ {
+  "id": "a53",
+  "title": "Ночной клуб",
+  "xp": 62,
+  "coins": 40,
+  "icon": "img/ach/a53.webp"
+ },
+ {
+  "id": "a54",
+  "title": "Пляж закат",
+  "xp": 63,
+  "coins": 50,
+  "icon": "img/ach/a54.webp"
+ },
+ {
+  "id": "a55",
+  "title": "Вокзал встреча",
+  "xp": 64,
+  "coins": 60,
+  "icon": "img/ach/a55.webp"
+ },
+ {
+  "id": "band_first",
+  "name": "Первый гиг",
+  "desc": "концертов: 1",
+  "stat": "gigs",
+  "need": 1,
+  "reward": {
+   "coins": 30
+  },
+  "icon": "img/ach/band_first.webp"
+ },
+ {
+  "id": "band_10",
+  "name": "10 гигов",
+  "desc": "концертов: 10",
+  "stat": "gigs",
+  "need": 10,
+  "reward": {
+   "coins": 35
+  },
+  "icon": "img/ach/band_10.webp"
+ },
+ {
+  "id": "followers_100",
+  "name": "100 подписчиков",
+  "desc": "подписчиков: 100",
+  "stat": "followers",
+  "need": 100,
+  "reward": {
+   "coins": 80
+  },
+  "icon": "img/ach/followers_100.webp"
+ },
+ {
+  "id": "followers_1k",
+  "name": "1k подписчиков",
+  "desc": "подписчиков: 1000",
+  "stat": "followers",
+  "need": 1000,
+  "reward": {
+   "coins": 530
+  },
+  "icon": "img/ach/followers_1k.webp"
+ },
+ {
+  "id": "npc_friend",
+  "name": "Настоящий друг",
+  "desc": "дружба с кем-то: 50",
+  "stat": "npcMax",
+  "need": 50,
+  "reward": {
+   "coins": 55
+  },
+  "icon": "img/ach/npc_friend.webp"
+ },
+ {
+  "id": "npc_all",
+  "name": "Все знакомы",
+  "desc": "знакомых: 8",
+  "stat": "npcMet",
+  "need": 8,
+  "reward": {
+   "coins": 34
+  },
+  "icon": "img/ach/npc_all.webp"
+ },
+ {
+  "id": "diary_7",
+  "name": "Неделя в дневнике",
+  "desc": "дней в дневнике: 7",
+  "stat": "diaryDays",
+  "need": 7,
+  "reward": {
+   "coins": 33
+  },
+  "icon": "img/ach/diary_7.webp"
+ },
+ {
+  "id": "collect_1",
+  "name": "Первая коллекция",
+  "desc": "коллекций: 1",
+  "stat": "collections",
+  "need": 1,
+  "reward": {
+   "coins": 30
+  },
+  "icon": "img/ach/collect_1.webp"
+ },
+ {
+  "id": "decor_5",
+  "name": "Уют×5",
+  "desc": "предметов декора: 5",
+  "stat": "decorCount",
+  "need": 5,
+  "reward": {
+   "coins": 32
+  },
+  "icon": "img/ach/decor_5.webp"
+ },
+ {
+  "id": "cat_bond",
+  "name": "Кот доверяет",
+  "desc": "связь с котом: 50",
+  "stat": "catBond",
+  "need": 50,
+  "reward": {
+   "coins": 55
+  },
+  "icon": "img/ach/cat_bond.webp"
+ },
+ {
+  "id": "job_10",
+  "name": "10 смен",
+  "desc": "смен: 10",
+  "stat": "jobs",
+  "need": 10,
+  "reward": {
+   "coins": 35
+  },
+  "icon": "img/ach/job_10.webp"
+ },
+ {
+  "id": "season_all",
+  "name": "Все сезоны",
+  "desc": "сезонов: 4",
+  "stat": "seasonsSeen",
+  "need": 4,
+  "reward": {
+   "coins": 32
+  },
+  "icon": "img/ach/season_all.webp"
+ },
+ {
+  "id": "music_hi",
+  "name": "Меломан",
+  "desc": "очков музыки: 500",
+  "stat": "musicScore",
+  "need": 500,
+  "reward": {
+   "coins": 280
+  },
+  "icon": "img/ach/music_hi.webp"
+ },
+ {
+  "id": "selfie_star",
+  "name": "Селфи-звезда",
+  "desc": "селфи: 20",
+  "stat": "selfies",
+  "need": 20,
+  "reward": {
+   "coins": 40
+  },
+  "icon": "img/ach/selfie_star.webp"
+ },
+ {
+  "id": "streak_14",
+  "name": "Стрик 14",
+  "desc": "дней подряд: 14",
+  "stat": "streak",
+  "need": 14,
+  "reward": {
+   "coins": 37
+  },
+  "icon": "img/ach/streak_14.webp"
+ },
+ {
+  "id": "clean_fan",
+  "name": "Чистюля",
+  "desc": "уборок: 30",
+  "stat": "cleans",
+  "need": 30,
+  "reward": {
+   "coins": 45
+  },
+  "icon": "img/ach/clean_fan.webp"
+ }
 ]
