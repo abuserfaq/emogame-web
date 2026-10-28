@@ -10,8 +10,26 @@ const save=()=>EGSave.persist(S);
 const clamp=(v,a,b)=>EG.clamp(v,a,b);
 const egA=(ev,p)=>{ try{ if(window.EGAudio) EGAudio.emit(ev,p||{}); }catch(e){} };
 const ico=(k,c)=>window.EGUI?EGUI.icon(k,c):'';
-window.toast=function(t){ const e=document.createElement('div'); e.className='toast'; e.textContent=t; e.style.position='fixed'; e.style.zIndex='9999'; e.style.bottom='calc(var(--nav-h,90px) + 24px)'; [...document.querySelectorAll('body>.toast')].forEach(x=>x.remove()); document.body.appendChild(e);
-  setTimeout(()=>e.style.opacity=0,1600); setTimeout(()=>e.remove(),2100); };
+window.toast=function(t){ [...document.querySelectorAll('body>.toast')].forEach(x=>x.remove());
+  const e=document.createElement('div'); e.className='toast eg-toast'; e.textContent=t;
+  Object.assign(e.style,{position:'fixed',zIndex:'9999',left:'0',top:'0',bottom:'auto',transform:'none',visibility:'hidden',boxSizing:'border-box'});
+  document.body.appendChild(e); window.EGToastPlace(e);
+  e.style.visibility='visible'; setTimeout(()=>e.style.opacity=0,1600); setTimeout(()=>e.remove(),2100); };
+// 0.8.2: place transient popups only in free scene area (never over HUD/panels/nav/banner/controls)
+window.EGToastBlockers=function(){ const out=[]; const add=el=>{ if(!el||el.classList.contains('toast')) return; const cs=getComputedStyle(el); if(cs.display==='none'||cs.visibility==='hidden'||+cs.opacity===0) return; const r=el.getBoundingClientRect(); if(r.width>2&&r.height>2) out.push(r); };
+  const scr=document.querySelector('#app .screen')||document.querySelector('#app');
+  if(scr) [...scr.children].forEach(c=>{ if(c.matches('.stage-bleed,.act-layer,.ambient,.bg,img.bg')) return; const r=c.getBoundingClientRect(); if(r.width>=innerWidth*0.95&&r.height>=innerHeight*0.9) return; add(c); });
+  document.querySelectorAll('#app button, #app .act-spot, #app input, #app a, #bannerStrip, .eg-sheet-root, #app .nav-dock, #app nav').forEach(el=>{ if(!el.closest('.toast')) add(el); });
+  return out; };
+window.EGToastPlace=function(e){ const W=innerWidth,H=innerHeight,M=8,B=window.EGToastBlockers(); const ban=document.getElementById('bannerStrip'); const lim=ban?Math.min(H,ban.getBoundingClientRect().top||H):H;
+  let best=null;
+  for(let y=M;y<lim-30;y+=4){ // free horizontal intervals for band [y, y+hEst]
+    for(const hEst of [36,56]){ const iv=[[M,W-M]]; B.forEach(r=>{ if(r.bottom<=y-M/2||r.top>=y+hEst+M/2) return; for(let k=iv.length-1;k>=0;k--){ const [a,b]=iv[k]; const L=r.left-M/2,R=r.right+M/2; if(R<=a||L>=b) continue; const n=[]; if(L>a) n.push([a,L]); if(R<b) n.push([R,b]); iv.splice(k,1,...n);} });
+      iv.forEach(([a,b])=>{ const w=Math.min(b-a,320); if(w<150) return; const sc=Math.min(w,260)*2-Math.abs((y+hEst/2)-H*0.42)*0.6; if(!best||sc>best.sc) best={sc,a,b,w,y,hEst}; }); } }
+  if(!best){ e.style.left=M+'px'; e.style.top=M+'px'; e.style.maxWidth=(W-2*M)+'px'; return; }
+  e.style.width=best.w+'px'; e.style.maxWidth=best.w+'px'; e.style.fontSize=''; let h=e.getBoundingClientRect().height;
+  let fs=parseFloat(getComputedStyle(e).fontSize)||14; while(h>best.hEst&&fs>10){ fs-=1; e.style.fontSize=fs+'px'; h=e.getBoundingClientRect().height; }
+  e.style.left=Math.round(best.a+(best.b-best.a-best.w)/2)+'px'; e.style.top=Math.round(best.y+(best.hEst-h)/2)+'px'; };
 
 function tickNeeds(){
   const now=Date.now(), dt=Math.min(12*3600e3, Math.max(0, now-S.lastTick))/3600e3;
@@ -150,7 +168,7 @@ function bindRoomInteract(){
 }
 function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{ egA('tab'); go(b.dataset.go); })); }
 
-function go(n,a){ tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap'); cur=n; try{ const ph=phase(); const sm=(W.EGAudio&&EGAudio.map&&EGAudio.map.screenMusic)||{}; const loc=(n==='loc'&&a)?a:(n==='home'?'room':(sm[n]?null:(S&&S.loc))); egA('scene',{screen:n,loc:loc,phase:ph,weather:S&&S.weather}); }catch(e){} 
+function go(n,a){ if(typeof SCR[n]!=='function'){ if(n==='room') n='home'; else if(EG.LOCS&&EG.LOCS.some(l=>l.id===n)){ a=n; n='loc'; } else n='home'; } tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap'); cur=n; try{ const ph=phase(); const sm=(W.EGAudio&&EGAudio.map&&EGAudio.map.screenMusic)||{}; const loc=(n==='loc'&&a)?a:(n==='home'?'room':(sm[n]?null:(S&&S.loc))); egA('scene',{screen:n,loc:loc,phase:ph,weather:S&&S.weather}); }catch(e){} 
   const bannerOn=S.consent!=null && n!=='consent' && n!=='consentSet' && n!=='onboardCare' && n!=='create' && !SHOT;
   const nativeAds=!!(window.AdBridge); // Android Yandex banner lives outside WebView
   if(nativeAds) document.documentElement.classList.add('eg-native-ads');
