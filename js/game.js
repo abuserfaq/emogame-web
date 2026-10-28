@@ -173,7 +173,7 @@ function go(n,a){ tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap');
   // 0.8.0: banner lives in its own slot BELOW #app; #app shrinks so nav never covers / sits over it
   try{
     const shot=document.documentElement.classList.contains('shot-mode')||document.documentElement.classList.contains('shot-hide-ads')||/[?&]scr=1/.test(location.search);
-    let h=0; if(bannerOn&&!shot){ h=nativeAds?((window.AdBridge.slotDp&&+window.AdBridge.slotDp())||56):50; }
+    let h=0; if(bannerOn&&!shot){ h=nativeAds?0:50; /* 0.8.2: native WebView is already shrunk above the banner slot (setWebBottom) — no second CSS reserve */ }
     document.documentElement.style.setProperty('--ad-h',h+'px');
     document.documentElement.classList.toggle('ad-on',h>0);
   }catch(e){}
@@ -303,7 +303,7 @@ function ambientHTML(locId){
   const AMB={beach:['waves','clouds'],embankment:['waves','clouds'],concert:['lights'],festival:['lights','leaves'],idol_stage:['lights'],nightclub:['lights'],karaoke:['lights','neon'],
     factory:['dust'],garage:['dust'],records:['dust','neon'],tattoo:['dust','neon'],mall:['dust','neon'],school:['dust','neon'],skate:['leaves','clouds'],rooftop:['clouds','dust'],
     bookcafe:['dust'],arcade:['dust'],cemetery:['fog','dust'],park:['clouds']};
-  if(locId!=='room') bits.push('<div class="fx-motes"></div>');
+  if(locId!=='room'||ph==='night') bits.push('<div class="fx-motes"></div>'); /* 0.8.2: room night had no visible motion */
   (AMB[locId]||[]).forEach(k=>{ if(k==='neon'&&bits.some(x=>x.includes('fx-neon"'))) return; if(k==='leaves'&&bits.some(x=>x.includes('fx-leaves'))) return; bits.push('<div class="fx-'+k+'"></div>'); });
   return bits.length?`<div class="ambient">${bits.join('')}</div>`:'';
 }
@@ -626,6 +626,7 @@ SCR.loc=(id)=>{
   app.innerHTML=`<div class="screen immersive ${locCls}">
     ${stageHTML(loc.id, true)}
     ${showHud?cafeParkHud():''}
+    ${window.EGAct?`<div class="act-layer" id="actLayer">${EGAct.spotsHTML(S,loc.id)}</div>${EGAct.panelHTML(S,loc.id)}`:''}
     <div class="loc-head ${isMetro?'metro-head':''} ${isCafe?'cafe-head':''} ${isPark?'park-head':''}">${isMetro?'<div class="metro-m" aria-hidden="true">M</div>':''}<div style="flex:1;min-width:0"><div class="mt">${headTitle}</div>
       <div class="ms">${headSub}</div></div>
       <div class="loc-head-right">${isMetro?`<span class="metro-wx">${ico('snowflake')}<b>${hh}:${mm}</b></span><span class="metro-bat">${ico('battery')}<b>36%</b></span>`:`<b class="loc-clock">${hh}:${mm}</b>`}</div>
@@ -659,7 +660,13 @@ SCR.loc=(id)=>{
   const chatBtn=$('#chat'); if(chatBtn) chatBtn.onclick=()=>go('chat');
   const m=$('#mini'); if(m) m.onclick=()=>go(loc.id==='skate'?'mg_skate':loc.id==='arcade'?'mg_arcade':loc.id==='karaoke'?'mg_karaoke':loc.id==='records'?'mg_music':'minigame');
   const g=$('#gig'); if(g) g.onclick=()=>go('band');
+  bindActs(loc.id);
 };
+function bindActs(locId){
+  if(!window.EGAct) return;
+  const rer=()=>{ const l=$('#actLayer'); if(l) l.innerHTML=EGAct.spotsHTML(S,locId); const p=$('#actPanel'); if(p){ const t=document.createElement('div'); t.innerHTML=EGAct.panelHTML(S,locId); p.replaceWith(t.firstElementChild); } const vals=[S.hunger,S.thirst,S.energy,S.mood]; app.querySelectorAll('.lp-bars .lp-row').forEach((r,i)=>{ const v=Math.round(vals[i]||0); const b=r.querySelector('.bar i'); if(b) b.style.width=clamp(v,0,100)+'%'; const t=r.querySelector('.val'); if(t) t.textContent=v+'/100'; }); bindActs(locId); setTimeout(()=>{ if(EGAnim&&!EGAct.busy) EGAnim.play('idle'); },1600); };
+  app.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ egA('tap'); EGAct.run(S,locId,b.dataset.act,{walk:walkCharTo,egA,toast,addXp,save,clamp,rerender:rer}); });
+}
 
 SCR.gifts=()=>{
   const G=EGGifts; const items=G.catalog();

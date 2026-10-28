@@ -3291,3 +3291,67 @@ html:root body #app .map-screen .map-cur .hud-chip:nth-child(2){width:90px!impor
 #app .chat-v2 .chat-list .msg .bubble{padding-right:24px!important}
 #app .chat-v2 .chat-title img{width:305px!important;height:130px!important;max-width:none!important;margin-top:30px!important;object-fit:fill!important}
 /* ===== /1.1 align ===== */
+/* ===== 0.8.2 fill ===== */
+html:root body #root #app{height:calc(var(--egh,915) * 1px)!important}
+html:root body #root #app .screen.loc-metro .loc-panel{top:calc(452px + var(--egdy,0px))!important}
+html:root body #root #app .screen.loc-park .loc-panel{top:calc(620px + var(--egdy,0px))!important}
+html:root body #root #app .map-screen .map-all{top:calc(684px + var(--egdy,0px))!important}
+html:root body #root #app .chat-v2 .chat-dock{top:calc(648px + var(--egdy,0px))!important}
+html:root body #root #app .chat-v2 > .nav-dock{top:calc(742px + var(--egdy,0px))!important}
+html:root body #root #app .chat-v2 .chat-list{height:calc(484px + var(--egdy,0px))!important}
+/* ===== /0.8.2 fill ===== */
+/* 0.8.2: character sprite is always fully opaque, never blended (web 'transparent character' report) */
+html:root body #app .char-wrap img.char{opacity:1!important;mix-blend-mode:normal!important;visibility:visible!important}
+/* ===== 0.8.2 activities ===== */
+html:root body #app .act-layer{position:absolute;inset:0;pointer-events:none;z-index:9}
+html:root body #app .act-spot{position:absolute;width:68px;height:68px;border-radius:50%;padding:0;pointer-events:auto;cursor:pointer;
+  background:radial-gradient(circle,rgba(40,10,30,.85) 55%,rgba(255,45,120,.15) 100%);border:2px solid #ff2d78;box-shadow:0 0 12px rgba(255,45,120,.75),inset 0 0 10px rgba(255,45,120,.35);
+  animation:egActPulse 2.2s ease-in-out infinite}
+html:root body #app .act-spot img{width:54px;height:54px;margin:5px;object-fit:contain;pointer-events:none}
+html:root body #app .act-spot b{position:absolute;right:-4px;top:-4px;min-width:20px;height:20px;border-radius:10px;background:#ff2d78;color:#fff;font:700 12px/20px var(--egui,sans-serif);text-align:center;box-shadow:0 0 6px #ff2d78}
+html:root body #app .act-spot.done{filter:grayscale(.85) brightness(.6);animation:none;border-color:#6a4a5a;box-shadow:none}
+html:root body #app .act-spot.done b{background:#555}
+html:root body #app .act-spot.pop{animation:egActPop .5s ease-out}
+@keyframes egActPulse{0%,100%{box-shadow:0 0 8px rgba(255,45,120,.55)}50%{box-shadow:0 0 18px rgba(255,45,120,1)}}
+@keyframes egActPop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+html:root body #app .act-panel{position:absolute;left:10px;width:392px;top:96px;z-index:11;box-sizing:border-box;padding:6px 6px 6px;
+  background:rgba(12,6,14,.9);border:2px solid #ff2d78;border-radius:10px;box-shadow:0 0 10px rgba(255,45,120,.55)}
+html:root body #app .act-panel .ap-h{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px 4px;color:#ff5fa0;font:700 13px/1 var(--egui,sans-serif);letter-spacing:1px}
+html:root body #app .act-panel .ap-h small{color:#b88aa0;font-size:10px;letter-spacing:0}
+html:root body #app .act-panel .ap-row{display:flex;gap:5px}
+html:root body #app .act-panel .ap-item{flex:1 1 0;min-width:0;display:grid;grid-template-columns:30px 1fr;grid-template-rows:auto auto auto;column-gap:4px;align-items:center;text-align:left;
+  padding:4px;border-radius:7px;border:1px solid #5a2440;background:#1c0f1a;color:#fff;cursor:pointer}
+html:root body #app .act-panel .ap-item img{grid-row:1/4;width:30px;height:30px;object-fit:contain}
+html:root body #app .act-panel .ap-n{font:700 10.5px/1.1 var(--egui,sans-serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html:root body #app .act-panel .ap-c{font-size:8.5px;line-height:1.15;color:#ff9cc4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html:root body #app .act-panel .ap-c i{font-style:normal;margin-right:3px}
+html:root body #app .act-panel .ap-c i.neg{color:#9aa}
+html:root body #app .act-panel .ap-l{font:700 9px/1 var(--egui,sans-serif);color:#ffd1e3}
+html:root body #app .act-panel .ap-item.done{opacity:.55}
+html:root body #app .screen.loc-park .act-panel{top:136px}
+html:root body #app .screen.loc-cafe .act-panel{top:272px}
+html:root body #app .screen.loc-cafe .act-spot{transform:translateY(70px)}
+html:root body #app .screen.loc-metro .act-spot{transform:translateY(-20px)}
+/* ===== /0.8.2 activities ===== */
+html:root body #app .act-spot img{filter:brightness(1.35) saturate(1.15)}
+html:root body #app .act-panel .ap-row:has(> .ap-item:nth-child(4)){flex-wrap:wrap}
+html:root body #app .act-panel .ap-row:has(> .ap-item:nth-child(4)) > .ap-item{flex:1 1 calc(50% - 5px)}
+html:root body #app .screen.loc-metro .act-panel{top:188px;padding:4px 5px}
+html:root body #app .screen.loc-metro .act-panel .ap-h{padding:0 3px 3px;font-size:11px}
+html:root body #app .screen.loc-metro .act-panel .ap-row{flex-wrap:nowrap!important}
+html:root body #app .screen.loc-metro .act-panel .ap-item{flex:1 1 0!important;grid-template-columns:24px 1fr;padding:3px}
+html:root body #app .screen.loc-metro .act-panel .ap-item img{width:24px;height:24px}
+html:root body #app .screen.loc-metro .act-panel .ap-c{display:none}
+html:root body #app .screen.loc-metro .act-panel .ap-n{font-size:9px;white-space:normal;line-height:1.05;max-height:2.1em}
+html:root body #app .screen.loc-metro .act-spot{transform:translateY(10px)}
+html:root body #app .screen.loc-bookcafe .act-panel{top:272px}
+html:root body #app .screen.loc-bookcafe .act-spot{transform:translateY(70px)}
+
+/* 0.8.2 short screens (H<880): metro character + spots compact so nothing hides behind panels */
+html[data-egshort="1"] body #app .screen.loc-metro .act-panel{top:96px!important}
+html[data-egshort="1"] body #app .screen.loc-metro .stage-bleed .char-wrap{height:140px!important}
+html[data-egshort="1"] body #app .screen.loc-metro .act-spot{width:56px;height:56px;top:270px!important;transform:none}
+html[data-egshort="1"] body #app .screen.loc-metro .act-layer .act-spot:nth-child(1){left:8px!important}
+html[data-egshort="1"] body #app .screen.loc-metro .act-layer .act-spot:nth-child(2){left:348px!important}
+html[data-egshort="1"] body #app .screen.loc-metro .act-layer .act-spot:nth-child(3){left:72px!important}
+html[data-egshort="1"] body #app .screen.loc-metro .act-layer .act-spot:nth-child(4){left:284px!important}

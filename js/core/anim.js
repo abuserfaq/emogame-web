@@ -35,6 +35,11 @@ const Anim={
     const [st,g]=this.key.split('_');
     return (window.EG&&EG.charImg)?EG.charImg(st,g):'img/chars/emo_guy.jpg';
   },
+  _c:{},
+  ready(u){ const c=this._c[u]; return !!(c&&c.ok); },
+  preload(u){ if(!u||this._c[u]) return; const im=new Image(); const c=this._c[u]={im,ok:false};
+    im.onload=()=>{ (im.decode?im.decode():Promise.resolve()).catch(()=>{}).then(()=>{c.ok=true;}); }; im.onerror=()=>{c.ok=false;}; im.src=u; },
+  preloadAll(){ const fs=this.frames(); if(fs) Object.values(fs).forEach(u=>typeof u==='string'&&this.preload(u)); },
   play(state){
     this.state=state||'idle';
     if(!this.el) return;
@@ -46,12 +51,19 @@ const Anim={
       this.el.classList.add(state==='dance'||state==='happy'?'anim-dance':state==='sleep'?'anim-sleep':(state==='sad'||state==='sick'||state==='hungry')?'anim-sad':'anim-bob');
       return;
     }
+    this.preloadAll();
+    if(!this.el.__egGuard){ this.el.__egGuard=1; const el=this.el;
+      el.addEventListener('load',()=>{ if(el.naturalWidth) el.__egGood=el.getAttribute('src'); });
+      el.addEventListener('error',()=>{ const g=el.__egGood; const bad=el.getAttribute('src'); if(this._c[bad]) this._c[bad].ok=false; if(g&&g!==bad) el.src=g; }); }
+    { const cur=this.el.getAttribute('src'); if(cur&&this.el.complete&&this.el.naturalWidth) this._c[cur]=this._c[cur]||{ok:true}; }
     this.seq=this.seqFor(this.state);
     this.i=0;
     const show=()=>{
       if(!this.el) return;
       const name=this.seq[this.i%this.seq.length];
-      this.el.src=this.url(name);
+      const u=this.url(name);
+      /* 0.8.2: never swap to a frame that is not decoded yet (cold cache on web showed an empty/transparent character) */
+      if(this.ready(u)){ if(this.el.getAttribute('src')!==u) this.el.src=u; } else this.preload(u);
       this.el.classList.add('anim-bob');
       this.i++;
     };
