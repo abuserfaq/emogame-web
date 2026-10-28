@@ -1,15 +1,20 @@
 
-/* Bundled pixel fonts (Cyrillic) — no system fonts for UI */
-@font-face{font-family:'EGPixel';src:url('../fonts/PressStart2P.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:'EGPixelUI';src:url('../fonts/PixelifySans.ttf') format('truetype');font-weight:400 700;font-style:normal;font-display:swap}
-@font-face{font-family:'EGGothic';src:url('../fonts/DotGothic16.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
-:root{--eg-font-ui:'EGPixelUI','EGGothic',sans-serif;--eg-font-title:'EGPixel','EGPixelUI',monospace}
+/* Bold condensed Cyrillic sans — match mock (Oswald / Fira Extra Condensed) */
+@font-face{font-family:'EGUI';src:url('../fonts/FiraSansExtraCondensed-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'EGUI';src:url('../fonts/FiraSansExtraCondensed-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'EGUI';src:url('../fonts/FiraSansExtraCondensed-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'EGUI';src:url('../fonts/FiraSansExtraCondensed-Bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'EGTitle';src:url('../fonts/Oswald-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'EGTitle';src:url('../fonts/Oswald-Medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'EGTitle';src:url('../fonts/Oswald-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'EGTitle';src:url('../fonts/Oswald-Bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+:root{--eg-font-ui:'EGUI','Oswald',sans-serif;--eg-font-title:'EGTitle','EGUI',sans-serif;--eg-pink:#e9719c;--eg-card:#0c0a10ee;--eg-border:#ff2d78}
 html,body,#app{font-family:var(--eg-font-ui)!important}
-h1,h2,h3,.loc-head .mt,.lp-title,.chat-v2 .chat-title,.map-name,.create h2{font-family:var(--eg-font-title)!important;letter-spacing:.04em}
-.hud-stat .lab,.nav-dock button .lab,.hud-chip,.pin-lab{font-family:var(--eg-font-ui)!important}
+h1,h2,h3,.loc-head .mt,.lp-title,.chat-v2 .chat-title,.map-name,.create h2,.hud-stat .lab-t,.nav-dock button .lab{font-family:var(--eg-font-title)!important;letter-spacing:.02em;font-weight:700}
+.hud-stat .lab,.nav-dock button .lab,.hud-chip,.pin-lab,.lp-row .nm,.lp-weather,.loc-head .ms{font-family:var(--eg-font-ui)!important}
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:#0a0a0c;color:#fff;font-family:var(--eg-font-ui),"Segoe UI",system-ui,sans-serif;overflow:hidden;user-select:none}
+html,body{height:100%;background:#0a0a0c;color:#fff;font-family:var(--eg-font-ui),sans-serif;overflow:hidden;user-select:none}
 #root{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#050508;overflow:hidden}
 #app{position:relative;width:100%;max-width:390px;height:100%;max-height:100dvh;background:#0a0a0c;overflow:hidden;
   display:flex;flex-direction:column;transform-origin:center center;flex-shrink:0}
@@ -406,7 +411,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:var(--eg-font-ui
   background-size:cover;background-position:center
 }
 .feed-head{text-align:center;padding:10px 12px 4px;padding-top:max(10px,env(safe-area-inset-top))}
-.feed-head h1{display:none}
+.feed-head h1{display:block}
 .feed-head .feed-title-art{width:88%;max-width:340px;height:auto;margin:0 auto;display:block;image-rendering:pixelated;filter:drop-shadow(0 2px 8px #000)}
 .feed-currency{display:flex;justify-content:center;gap:10px;padding:4px 12px 10px}
 .feed-currency .hud-chip{
@@ -422,11 +427,7 @@ html,body{height:100%;background:#0a0a0c;color:#fff;font-family:var(--eg-font-ui
   box-shadow:inset 0 0 0 2px #2a2a32, 0 0 0 1px #1a1a22;
   overflow:hidden
 }
-.food-card::before{
-  content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
-  background:url('../img/ui/chrome/card_frame.webp') center/100% 100% no-repeat;
-  opacity:.95;image-rendering:pixelated;mix-blend-mode:screen
-}
+/* ornate frame removed */
 .food-card .food-art{
   width:78%!important;aspect-ratio:1;object-fit:contain;image-rendering:pixelated;
   margin:6px auto 8px;display:block;position:relative;z-index:1;
@@ -698,3 +699,2305 @@ html:not(.eg-native-ads) .nav-dock{bottom:52px!important}
 @keyframes egCandle{0%,100%{transform:scaleY(1);opacity:.85}50%{transform:scaleY(1.25);opacity:1}}
 @keyframes egLeaves{0%{background-position:0 0}100%{background-position:40% 80%}}
 @keyframes egTrain{0%{left:-50%;opacity:0}10%{opacity:.75}50%{left:110%;opacity:.75}60%{opacity:0}100%{left:110%;opacity:0}}
+
+/* === MOCK-MATCH v072 === */
+/* Character: small full-body like mock, feet on rug/platform */
+.stage .char,.stage-bleed .char{
+  height:32%!important;max-width:34%!important;bottom:14%!important;
+  image-rendering:auto!important;filter:drop-shadow(0 6px 10px rgba(0,0,0,.55));
+}
+.stage.floor-room .char,.stage-bleed.floor-room .char{bottom:16%!important;height:30%!important;max-width:32%!important}
+.stage.floor-metro .char,.stage-bleed.floor-metro .char,
+.stage.floor-station .char,.stage-bleed.floor-station .char{bottom:22%!important;height:28%!important;max-width:28%!important}
+.stage.floor-park .char,.stage-bleed.floor-park .char{bottom:18%!important;height:30%!important}
+.stage.floor-cafe .char,.stage-bleed.floor-cafe .char{bottom:16%!important;height:30%!important}
+.char-wrap{position:absolute;left:50%;bottom:14%;transform:translateX(-50%);width:40%;height:40%;z-index:5;pointer-events:none;transition:left .7s ease,bottom .7s ease}
+.char-wrap .char{position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:100%!important;max-width:100%!important;width:auto}
+.char-wrap .char-shadow{position:absolute;left:50%;bottom:-2%;transform:translateX(-50%);width:55%;opacity:.55;pointer-events:none}
+.char-wrap.walking{transition:left .7s ease,bottom .7s ease}
+
+/* HUD: 4 big stat cards + currency row */
+.hud{padding:max(8px,env(safe-area-inset-top)) 10px 0}
+.hud-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:8px}
+.hud-stat{
+  background:var(--eg-card,#0c0a10ee);border:2px solid var(--eg-border,#ff2d78);border-radius:10px;
+  box-shadow:0 0 0 1px #2a1018,0 3px 8px #0008;padding:8px 6px 9px
+}
+.hud-stat .lab{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:#fff;letter-spacing:.01em}
+.hud-stat .lab .pxico{width:18px;height:18px}
+.hud-stat .lab .lab-t{font-family:var(--eg-font-title)!important;font-size:13px;font-weight:700}
+.hud-stat .bar{height:10px;margin-top:6px;background:#1a1218;border:1px solid #3a2030;border-radius:4px;overflow:hidden}
+.hud-stat .bar>i{background:linear-gradient(90deg,#ff2d78,#ff6aa3)}
+.hud-res{display:flex;align-items:center;gap:7px}
+.hud-chip{
+  background:var(--eg-card);border:2px solid #ff2d78aa;border-radius:10px;padding:7px 10px;
+  font-size:15px;font-weight:700;font-family:var(--eg-font-title)!important;color:#fff
+}
+.hud-chip .pxico{width:20px;height:20px}
+.hud-chip.xp{gap:6px}
+.hud-chip .xpbar{height:12px;border-radius:4px}
+.hud-chip .xpbar span{font-size:11px;font-weight:700;font-family:var(--eg-font-ui)}
+.hud-gear{width:40px;height:40px;border:2px solid #ff2d78;border-radius:10px;background:var(--eg-card)}
+
+/* Nav: tall, big icons + bold labels */
+.nav-dock{
+  left:0;right:0;bottom:0;height:96px;border-radius:0;border-left:0;border-right:0;border-bottom:0;
+  border-top:2px solid #ff2d78;background:#08060c;padding:8px 4px max(10px,env(safe-area-inset-bottom));
+  box-shadow:0 -6px 20px #000a;gap:0
+}
+.nav-dock::before,.nav-dock::after{display:none}
+.nav-dock button{padding:4px 2px 2px;gap:3px}
+.nav-dock button .pxico{width:44px!important;height:44px!important}
+.nav-dock button .lab{
+  font-family:var(--eg-font-title)!important;font-size:13px!important;font-weight:700!important;
+  color:#ddd;letter-spacing:.04em;text-transform:uppercase
+}
+.nav-dock button.on .lab{color:#ff2d78}
+.nav-dock button.on::after{background:#ff2d78;height:3px;bottom:0;left:18%;right:18%}
+.shot-mode .nav-dock,.shot-hide-ads .nav-dock{bottom:0!important;height:96px}
+.nav-dock{bottom:0!important}
+#bannerStrip{display:none!important}
+
+/* Wardrobe round FAB like mock */
+.scene-fab{
+  right:16px!important;bottom:118px!important;width:92px!important;height:92px!important;
+  border-radius:50%!important;background:#0c0a10ee!important;border:3px solid #ff2d78!important;
+  box-shadow:0 0 0 2px #2a1018,0 6px 16px #000a;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;padding:6px!important
+}
+.scene-fab img{width:52%;height:auto;object-fit:contain;filter:none;image-rendering:auto}
+.scene-fab::after{
+  content:"ГАРДЕРОБ";display:block;font-family:var(--eg-font-title);font-weight:700;font-size:11px;
+  color:#ff2d78;letter-spacing:.06em;margin-top:2px;line-height:1
+}
+.scene-overlays{top:22%;opacity:.7;transform:scale(.75)}
+
+/* Dirt sits on floor near rug */
+.hot-trash{left:10%;bottom:20%}
+.hot-dishes{left:70%;bottom:26%}
+.hot-laundry{left:18%;bottom:28%}
+
+/* Loc cards — separate stacked cards like metro mock */
+.loc-mode .loc-head{
+  left:10px;right:10px;top:max(10px,env(safe-area-inset-top));
+  background:#0c0a10f2;border:2px solid #ff2d78;border-radius:12px;padding:10px 12px;
+  display:flex;align-items:center;gap:10px
+}
+.loc-mode .loc-head .mt{font-family:var(--eg-font-title)!important;font-size:18px;font-weight:700;color:#ff2d78;letter-spacing:.02em;line-height:1.1}
+.loc-mode .loc-head .ms{font-size:12px;color:#aaa;font-weight:600;margin-top:2px}
+.loc-mode .loc-head .btn{font-family:var(--eg-font-title);font-weight:700;font-size:12px;border-color:#ff2d78;color:#ff8fb8}
+
+.loc-panel{
+  left:10px;right:10px;bottom:108px;background:transparent;border:0;box-shadow:none;padding:0;
+  display:flex;flex-direction:column;gap:8px;max-height:min(46vh,340px);overflow:auto
+}
+.loc-panel .lp-toggle{display:none}
+.loc-panel .lp-card{
+  background:#0c0a10f2;border:2px solid #ff2d78;border-radius:12px;padding:10px 12px;
+  box-shadow:0 4px 12px #0008
+}
+.loc-panel .lp-top{border:0;padding:0;background:transparent;gap:10px}
+.loc-panel .lp-pin{width:32px;height:40px}
+.loc-panel .lp-title{font-family:var(--eg-font-title)!important;font-size:16px;font-weight:700;color:#ff2d78}
+.loc-panel .lp-sub{font-size:12px;color:#999;font-weight:500}
+.loc-panel .lp-weather{border:0;padding:0;margin-top:8px;font-size:13px;color:#ccc;font-weight:600;gap:8px}
+.loc-panel .lp-status-h{
+  padding:0 0 8px;font-family:var(--eg-font-title);font-size:15px;font-weight:700;color:#ff2d78;letter-spacing:.04em
+}
+.loc-panel .lp-bars{padding:0;gap:6px}
+.loc-panel .lp-row{font-size:13px;gap:8px}
+.loc-panel .lp-row .nm{width:86px;min-width:86px;font-family:var(--eg-font-title);font-size:13px;font-weight:700;color:#ddd}
+.loc-panel .lp-row .bar{height:12px;border-radius:4px;background:#161018;border:1px solid #2a2030}
+.loc-panel .lp-row .bar>i{background:linear-gradient(90deg,#e53935,#ff6b6b)}
+.loc-panel .lp-row:nth-child(2) .bar>i{background:linear-gradient(90deg,#1e88e5,#64b5f6)}
+.loc-panel .lp-row:nth-child(3) .bar>i{background:linear-gradient(90deg,#8e24aa,#ce93d8)}
+.loc-panel .lp-row:nth-child(4) .bar>i{background:linear-gradient(90deg,#ff2d78,#ff8fb8)}
+.loc-panel .lp-row .val{width:48px;font-size:12px;font-weight:700;color:#bbb}
+.loc-panel .lp-actions{padding:8px 0 0}
+.loc-panel .lp-actions .btn{
+  font-family:var(--eg-font-title);font-weight:700;font-size:14px;letter-spacing:.04em;
+  background:#ff2d78;border:0;color:#fff;border-radius:10px;padding:12px
+}
+
+/* Global readable UI */
+.btn,.panel,.card,.ward-head,.feed-currency,.map-pin .pin-lab{
+  font-family:var(--eg-font-ui)!important
+}
+.map-pin .pin-lab{font-family:var(--eg-font-title)!important;font-size:15px;font-weight:700}
+.chat-v2 .msg .nm,.chat-v2 .msg .tx,.chat-v2 .quick button{font-family:var(--eg-font-ui)!important}
+.chat-v2 .msg .nm{font-family:var(--eg-font-title)!important;font-size:14px}
+.chat-v2 .msg .tx{font-size:14px}
+.chat-v2 .quick button{font-family:var(--eg-font-title)!important;font-weight:700;font-size:13px}
+
+/* Char wrap scale — override earlier bleed rules */
+.stage-bleed .char-wrap{width:36%!important;height:34%!important;bottom:16%!important;z-index:5}
+.stage-bleed.floor-room .char-wrap{bottom:15%!important;height:32%!important;width:34%!important}
+.stage-bleed.floor-metro .char-wrap,.stage-bleed.floor-station .char-wrap{bottom:24%!important;height:30%!important;width:30%!important}
+.screen.immersive.loc-mode .stage-bleed .char-wrap{bottom:36%!important;height:28%!important;width:28%!important}
+.stage-bleed .char-wrap .char{image-rendering:auto!important;height:100%!important;max-width:100%!important}
+/* Ensure loc panel sits above nav */
+.loc-panel{bottom:108px!important}
+.loc-mode .stage-bleed{position:absolute;inset:0}
+
+/* mock fidelity pass 2 */
+.scene-overlays{display:none!important}
+.stage-bleed.floor-room .char-wrap{bottom:14%!important;height:42%!important;width:40%!important}
+.screen.immersive.loc-mode .stage-bleed .char-wrap{bottom:34%!important;height:36%!important;width:34%!important}
+.stage-bleed.floor-metro .char-wrap,.stage-bleed.floor-station .char-wrap{bottom:22%!important;height:36%!important;width:34%!important}
+.hud-stat .lab .lab-t{font-size:14px!important}
+.hud-stat .lab .pxico{width:20px!important;height:20px!important}
+.nav-dock button .lab{font-size:14px!important}
+.nav-dock{height:102px!important}
+.loc-panel{bottom:114px!important}
+.scene-fab{bottom:122px!important;width:100px!important;height:100px!important}
+.dirt-hotspots{opacity:.85}
+.loc-head .mt{font-size:20px!important}
+
+.metro-m{width:42px;height:42px;border-radius:50%;background:#ff2d78;color:#fff;font-family:var(--eg-font-title);font-weight:700;font-size:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;box-shadow:0 0 0 2px #2a1018}
+
+/* mock fidelity pass 3 — match mock HUD/FAB/char */
+.scene-fab{
+  right:14px!important;bottom:118px!important;width:96px!important;height:96px!important;
+  border-radius:50%!important;background:#ff2d78!important;border:4px solid #ff6aa3!important;
+  box-shadow:0 0 0 3px #2a1018,0 8px 18px #000a!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  overflow:hidden!important;padding:8px 6px 10px!important
+}
+.scene-fab img.fab-hanger,.scene-fab img{
+  width:48%!important;height:auto!important;object-fit:contain!important;
+  filter:none!important;image-rendering:auto!important;opacity:1
+}
+.scene-fab::after{
+  content:"ГАРДЕРОБ"!important;display:block!important;
+  font-family:var(--eg-font-title)!important;font-weight:700!important;font-size:12px!important;
+  color:#fff!important;letter-spacing:.04em!important;margin-top:2px!important;line-height:1!important;
+  text-shadow:0 1px 2px #0008
+}
+.stage-bleed.floor-room .char-wrap{bottom:16%!important;height:36%!important;width:34%!important;left:50%!important;transform:translateX(-50%)!important}
+.dirt-hotspots{opacity:.55!important}
+.dirt-hotspots .hot{width:56px!important;height:56px!important}
+.hud-stat .lab .lab-t{font-size:15px!important;font-weight:700!important}
+.hud-chip{font-size:16px!important}
+.nav-dock{height:104px!important}
+.nav-dock button .lab{font-size:15px!important}
+.nav-dock button .pxico{width:48px!important;height:48px!important}
+
+/* mock fidelity pass 4 */
+.hud-res{
+  display:flex!important;align-items:center!important;gap:0!important;
+  background:var(--eg-card,#0c0a10ee)!important;border:2px solid #ff2d78!important;border-radius:12px!important;
+  padding:6px 8px!important;box-shadow:0 0 0 1px #2a1018
+}
+.hud-chip{
+  background:transparent!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;padding:4px 8px!important;font-size:16px!important
+}
+.hud-chip + .hud-chip{border-left:1px solid #3a2030!important}
+.hud-gear{border:0!important;background:transparent!important;width:36px!important;height:36px!important;margin-left:4px}
+.hud-stat{border-width:2px!important;border-radius:8px!important}
+/* hide non-mock chrome */
+.room-interact,.eg-extra-fab,#hubFab,.float-tools,[data-fab]:not(#wardrobe){display:none!important}
+.scene-fab{z-index:12!important}
+
+/* mock fidelity pass 5 — force Oswald everywhere UI */
+.hud-stat .lab-t,.hud-chip,.nav-dock button .lab,.scene-fab::after,
+.loc-head .mt,.loc-head .ms,.lp-title,.lp-status-h,.lp-row .nm,.lp-row .val,
+.pin-lab,.food-card b,.ward-head,.chat-v2 .msg .nm,.map-lv,.map-name,
+.btn,.feed-currency .hud-chip{
+  font-family:'EGTitle','Oswald',sans-serif!important;
+  -webkit-font-smoothing:antialiased;font-smooth:always;
+  font-weight:700!important;letter-spacing:.03em!important
+}
+.nav-dock button .lab{font-size:15px!important;text-transform:uppercase}
+.hud-stat .lab-t{font-size:15px!important}
+.stage-bleed .char-wrap .char{image-rendering:auto!important}
+.stage-bleed.floor-room .char-wrap{bottom:18%!important;height:38%!important;width:36%!important}
+/* use mock FAB asset if present */
+.scene-fab{background:#ff2d78!important}
+
+/* mock fidelity pass 6 — food/map/chat/wardrobe */
+/* feed-title-art enabled */
+.feed-head h1,.feed-title-oswald{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:42px!important;color:#ff8fb8!important;text-align:center;letter-spacing:.08em;
+  margin:12px 0 8px;text-transform:none
+}
+.feed-currency{display:flex;justify-content:center;gap:12px;padding:4px 12px 10px}
+.feed-currency .hud-chip{
+  background:#0c0a10ee!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  font-size:18px!important;padding:8px 14px!important
+}
+.feed-currency .plus,.hud-chip .plus{color:#ff2d78;margin-left:6px;font-size:20px}
+.food-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;padding:4px 12px 20px}
+.food-card{
+  background:#0c0a10f2!important;border:2px solid #5a2a48!important;border-radius:14px!important;
+  padding:12px 8px!important
+}
+.food-card b{font-family:'EGTitle','Oswald',sans-serif!important;font-size:18px!important;color:#ff8fb8!important;font-weight:700}
+.food-card .sub{font-family:'EGTitle','Oswald',sans-serif!important;font-size:15px!important;color:#ff2d78!important}
+.food-card .food-art{width:78%!important;image-rendering:auto!important}
+
+.map-head{padding:10px 12px;gap:10px;align-items:flex-start}
+.map-name{font-family:'EGTitle','Oswald',sans-serif!important;font-size:22px!important;font-weight:700!important;color:#e0b0ff}
+.map-lv{font-family:'EGTitle','Oswald',sans-serif!important;font-size:14px!important;font-weight:700}
+.map-pin .pin-lab{font-size:16px!important;color:#e8c4ff!important}
+.map-cur .hud-chip{font-size:15px!important}
+
+.chat-v2 .chat-title{font-family:'EGTitle','Oswald',sans-serif!important}
+.chat-v2 .chat-title img{display:none!important}
+.chat-v2 .chat-title::before{content:"Чат";font-size:36px;font-weight:700;color:#ff8fb8;letter-spacing:.06em;display:block;text-align:center;padding:10px}
+.chat-v2 .msg .nm{font-size:15px!important}
+.chat-v2 .msg .tx{font-size:15px!important;font-family:'EGUI','Oswald',sans-serif!important}
+.chat-v2 .quick button{font-size:14px!important;padding:10px 12px!important}
+
+.ward-head{font-family:'EGTitle','Oswald',sans-serif!important;font-size:28px!important;font-weight:700;color:#ff8fb8;text-align:center;letter-spacing:.06em}
+.ward-card b{font-family:'EGTitle','Oswald',sans-serif!important;font-size:16px!important}
+
+/* mock fidelity pass 7 */
+.stage-bleed.floor-room .char-wrap{bottom:15%!important;height:44%!important;width:40%!important;left:50%!important;transform:translateX(-50%)!important}
+.stage-bleed.floor-metro .char-wrap,.stage-bleed.floor-station .char-wrap{bottom:28%!important;height:40%!important;width:32%!important;left:48%!important;transform:translateX(-50%)!important}
+.hud{padding-top:max(12px,env(safe-area-inset-top))!important}
+.hud-stats{gap:8px!important;margin-bottom:10px!important}
+.hud-stat{padding:10px 6px 10px!important}
+.nav-dock{height:108px!important;padding-top:10px!important}
+.nav-dock button .pxico{width:52px!important;height:52px!important}
+.nav-dock button .lab{font-size:16px!important}
+
+/* mock fidelity pass 8 */
+.scene-fab{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;width:104px!important;height:104px!important;overflow:visible!important}
+.scene-fab img{width:100%!important;height:100%!important;object-fit:contain!important;filter:none!important}
+.scene-fab::after{content:none!important;display:none!important}
+.nav-dock button .pxico{image-rendering:auto!important;width:56px!important;height:56px!important}
+
+/* mock fidelity pass 9 */
+.screen.immersive.loc-mode .loc-panel{max-height:min(42vh,320px)!important}
+.stage-bleed.floor-metro .char-wrap,.stage-bleed.floor-station .char-wrap{bottom:30%!important;height:32%!important;width:28%!important}
+.scene-fab{width:112px!important;height:112px!important;bottom:120px!important;right:10px!important}
+.nav-dock button .lab{font-size:15px!important;line-height:1.1}
+
+/* feed title force */
+.feed-head h1,.feed-title-oswald{display:block!important;visibility:visible!important;opacity:1!important;font-size:44px!important;color:#ff8fb8!important;margin:16px 0 10px!important}
+
+/* ===== mock fidelity pass 10 ===== */
+/* Home char: mock-sized, no ghost */
+.stage-bleed.floor-room .char-wrap{
+  left:50%!important;transform:translateX(-50%)!important;
+  bottom:14%!important;width:42%!important;height:48%!important;z-index:5!important
+}
+.stage-bleed .char-wrap .char-shadow{opacity:.28!important;width:48%!important;bottom:-1%!important}
+.stage-bleed .char-wrap .char{
+  image-rendering:auto!important;filter:none!important;
+  -webkit-filter:none!important;opacity:1!important;
+  background:transparent!important;mix-blend-mode:normal!important
+}
+.ambient .fx-cat{display:none!important} /* baked cats in plate; avoid ghost */
+.stage-bleed.floor-room .ambient{opacity:.35}
+
+/* FAB unclipped */
+.scene-fab{
+  right:8px!important;bottom:116px!important;
+  width:118px!important;height:118px!important;
+  overflow:visible!important;z-index:14!important;
+  background:transparent!important;border:0!important;padding:0!important;box-shadow:none!important
+}
+.scene-fab img{width:100%!important;height:100%!important;object-fit:contain!important}
+.scene-fab::after{display:none!important;content:none!important}
+
+/* Nav geometry per mock: tall dock, big icons, Oswald labels */
+.nav-dock{
+  height:112px!important;bottom:0!important;left:0!important;right:0!important;
+  padding:10px 6px max(12px,env(safe-area-inset-bottom))!important;
+  background:#05040a!important;border-top:2px solid #ff2d78!important;
+  display:flex!important;align-items:flex-start!important;gap:0!important
+}
+.nav-dock button{
+  flex:1!important;display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:flex-start!important;
+  gap:4px!important;padding:4px 2px!important;min-width:0!important;
+  border:0!important;background:transparent!important
+}
+.nav-dock button .pxico{width:54px!important;height:54px!important;image-rendering:auto!important}
+.nav-dock button .lab{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:15px!important;letter-spacing:.05em!important;text-transform:uppercase!important;
+  color:#ddd!important;white-space:nowrap!important;line-height:1.1!important;
+  overflow:visible!important
+}
+.nav-dock button.on .lab{color:#ff2d78!important}
+.nav-dock button.on::after{height:3px!important;bottom:2px!important;background:#ff2d78!important}
+
+/* HUD mock geometry */
+.hud-stats{gap:6px!important}
+.hud-stat{border-radius:8px!important;border-width:2px!important;padding:8px 5px 8px!important}
+.hud-stat .lab-t{font-size:14px!important;font-family:'EGTitle','Oswald',sans-serif!important}
+
+/* Metro: smaller char; loc panel cards */
+.stage-bleed.floor-metro .char-wrap,.stage-bleed.floor-station .char-wrap{
+  left:46%!important;transform:translateX(-50%)!important;
+  bottom:36%!important;width:26%!important;height:30%!important
+}
+.loc-mode .loc-panel{bottom:120px!important;max-height:min(40vh,300px)!important;gap:8px!important}
+.loc-mode .loc-head .mt{font-size:18px!important}
+.loc-panel .lp-title{font-size:18px!important}
+.loc-panel .lp-weather{font-size:14px!important;font-family:'EGTitle','Oswald',sans-serif!important}
+
+/* Cafe/park: HUD + location + STATUS */
+.loc-mode.loc-cafe .loc-head,.loc-mode.loc-park .loc-head{
+  top:auto!important;position:relative!important;margin:8px 10px 0;transform:none;left:10px;right:10px;max-width:none
+}
+.loc-mode.loc-cafe .hud,.loc-mode.loc-park .hud{position:relative!important}
+.loc-mode.loc-cafe .loc-panel,.loc-mode.loc-park .loc-panel{max-height:min(36vh,280px)!important}
+.stage-bleed.floor-cafe .char-wrap,.stage-bleed.floor-park .char-wrap{
+  left:48%!important;transform:translateX(-50%)!important;
+  bottom:28%!important;width:30%!important;height:34%!important
+}
+
+/* Food: simple pink cards, Oswald, big art */
+.feed-head h1,.feed-title-oswald{
+  display:block!important;font-family:'EGTitle','Oswald',sans-serif!important;
+  font-size:48px!important;font-weight:700!important;color:#ff8fb8!important;
+  text-align:center!important;letter-spacing:.1em!important;margin:18px 0 8px!important
+}
+/* feed-title-art enabled */
+.food-card{
+  background:#0c0a10f5!important;border:2px solid #ff2d78!important;border-radius:14px!important;
+  box-shadow:none!important;padding:10px 8px 12px!important;position:relative!important
+}
+.food-card::before{display:none!important;content:none!important;background:none!important}
+.food-card b{font-family:'EGTitle','Oswald',sans-serif!important;font-size:18px!important;color:#ff8fb8!important;font-weight:700!important}
+.food-card .sub{font-family:'EGTitle','Oswald',sans-serif!important;font-size:15px!important;color:#ff2d78!important}
+.food-card .food-art{width:86%!important;image-rendering:auto!important;margin:2px auto 8px!important}
+.food-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}
+
+/* Map */
+.map-name{font-family:'EGTitle','Oswald',sans-serif!important;font-size:24px!important;font-weight:700!important}
+.map-pin .pin-lab{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-size:15px!important;font-weight:700!important;
+  background:#0c0a10ee!important;border:1px solid #ff2d78!important;border-radius:8px!important;padding:2px 8px!important
+}
+.map-pin img.pin-art{width:56px!important;height:auto!important}
+.map-bleed .mapbg{object-fit:cover!important;object-position:center 40%!important;transform:scale(1.05)}
+
+/* Chat drip title + quick replies */
+.chat-v2 .chat-title{position:relative;padding-bottom:8px}
+.chat-v2 .chat-title img{display:none!important}
+.chat-v2 .chat-title::before{
+  content:"Чат";display:block;text-align:center;
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:42px!important;color:#ff8fb8!important;letter-spacing:.08em;
+  text-shadow:0 0 12px #ff2d7866
+}
+.chat-v2 .chat-title .hrt{display:inline-block!important;color:#ff2d78;font-size:28px;margin:0 8px}
+.chat-v2 .quick{display:flex!important;gap:8px!important;padding:10px 12px!important;flex-shrink:0!important}
+.chat-v2 .quick button{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:14px!important;
+  border:2px solid #ff2d78!important;border-radius:12px!important;background:#0c0a10ee!important;
+  color:#ff8fb8!important;padding:10px 12px!important;white-space:nowrap
+}
+.chat-v2 .msg .nm{font-family:'EGTitle','Oswald',sans-serif!important;font-size:14px!important;font-weight:700}
+.chat-v2 .msg .tx{font-size:15px!important}
+
+/* Wardrobe Oswald */
+.ward-head{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-size:32px!important;font-weight:700!important;
+  color:#ff8fb8!important;letter-spacing:.08em!important;text-align:center!important
+}
+.ward-card,.ward-card.food-card{
+  background:#0c0a10f5!important;border:2px solid #ff2d78aa!important;border-radius:12px!important
+}
+.ward-card::before,.ward-card.food-card::before{display:none!important;content:none!important}
+.ward-card b{font-family:'EGTitle','Oswald',sans-serif!important;font-size:16px!important;color:#ff8fb8!important}
+.ward-preview img{height:96%!important;max-width:70%!important;image-rendering:auto!important}
+
+/* pass 11 titles */
+.chat-v2 .chat-title::before{content:none!important;display:none!important}
+.chat-v2 .chat-title img{display:block!important;width:70%!important;max-width:320px!important;margin:8px auto!important;image-rendering:auto!important}
+.ward-head{display:flex;align-items:center;justify-content:center;gap:10px;position:relative}
+.ward-title-art{width:70%;max-width:300px;height:auto;display:block;image-rendering:auto}
+.ward-head .ward-heart{position:absolute;right:12px;top:50%;transform:translateY(-50%)}
+
+/* ===== mock fidelity pass 12 ===== */
+/* Plates carry baked mock characters — hide live overlay to kill ghost/double */
+.screen.immersive.home-mode .char-wrap,
+.screen.immersive.loc-metro .char-wrap,
+.screen.immersive.loc-station .char-wrap,
+.screen.immersive.loc-cafe .char-wrap,
+.screen.immersive.loc-bookcafe .char-wrap,
+.screen.immersive.loc-park .char-wrap,
+.stage-bleed.floor-room .char-wrap,
+.stage-bleed.floor-metro .char-wrap,
+.stage-bleed.floor-station .char-wrap,
+.stage-bleed.floor-cafe .char-wrap,
+.stage-bleed.floor-bookcafe .char-wrap,
+.stage-bleed.floor-park .char-wrap{
+  display:none!important;visibility:hidden!important;opacity:0!important
+}
+.char-shadow{display:none!important}
+.char.anim-bob,.char.anim-sad,.char.anim-dance,.char.anim-sleep{animation:none!important}
+
+/* FAB fully on-screen */
+.scene-fab{
+  right:14px!important;left:auto!important;bottom:124px!important;
+  width:108px!important;height:108px!important;
+  overflow:visible!important;z-index:20!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important
+}
+.scene-fab img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important}
+
+/* Nav: mock geometry — slim dock, icon+label, no clip */
+.nav-dock{
+  height:96px!important;min-height:96px!important;max-height:110px!important;
+  bottom:0!important;left:0!important;right:0!important;
+  padding:8px 4px max(10px,env(safe-area-inset-bottom))!important;
+  background:#07050c!important;border-top:2px solid #ff2d78!important;
+  display:flex!important;align-items:center!important;gap:0!important;
+  overflow:visible!important;z-index:60!important
+}
+.shot-mode .nav-dock,.shot-hide-ads .nav-dock{bottom:0!important;height:96px!important}
+.nav-dock button{
+  flex:1!important;min-width:0!important;height:100%!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  gap:2px!important;padding:4px 1px 6px!important;
+  border:0!important;background:transparent!important;position:relative!important;
+  overflow:visible!important
+}
+.nav-dock button .ic{display:flex!important;justify-content:center!important;line-height:0!important}
+.nav-dock button .pxico{
+  width:40px!important;height:40px!important;object-fit:contain!important;
+  image-rendering:auto!important;flex-shrink:0!important
+}
+.nav-dock button .lab{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:12px!important;letter-spacing:.04em!important;text-transform:none!important;
+  color:#c8c0cc!important;white-space:nowrap!important;line-height:1.15!important;
+  overflow:visible!important;max-width:100%!important
+}
+.nav-dock button.on .lab{color:#ff2d78!important}
+.nav-dock button.on::after{
+  content:""!important;position:absolute!important;left:20%!important;right:20%!important;
+  bottom:2px!important;height:3px!important;background:#ff2d78!important;border-radius:1px!important
+}
+
+/* Metro: one stacked card */
+.loc-mode.loc-metro .loc-panel,
+.loc-mode.loc-station .loc-panel{
+  bottom:108px!important;max-height:min(48vh,380px)!important;gap:0!important;
+  padding:0 12px!important;display:flex!important;flex-direction:column!important
+}
+.loc-mode.loc-metro .loc-panel .lp-card,
+.loc-mode.loc-station .loc-panel .lp-card{
+  border-radius:0!important;margin:0!important;
+  border:2px solid #ff2d78!important;background:#0c0a10f5!important
+}
+.loc-mode.loc-metro .loc-panel .lp-card:first-child,
+.loc-mode.loc-station .loc-panel .lp-card:first-child{
+  border-radius:16px 16px 0 0!important;border-bottom:0!important
+}
+.loc-mode.loc-metro .loc-panel .lp-card:last-child,
+.loc-mode.loc-station .loc-panel .lp-card:last-child{
+  border-radius:0 0 16px 16px!important
+}
+.loc-mode.loc-metro .loc-panel .lp-card + .lp-card,
+.loc-mode.loc-station .loc-panel .lp-card + .lp-card{border-top:1px solid #ff2d7844!important}
+
+/* Cafe/park: thin location card only — no big STATUS (per mocks) */
+.loc-mode.loc-cafe .loc-panel .lp-card:not(:first-child),
+.loc-mode.loc-park .loc-panel .lp-card:not(:first-child),
+.loc-mode.loc-bookcafe .loc-panel .lp-card:not(:first-child){display:none!important}
+.loc-mode.loc-cafe .loc-head, .loc-mode.loc-park .loc-head, .loc-mode.loc-bookcafe .loc-head{
+  display:none!important
+}
+.loc-mode.loc-cafe .hud, .loc-mode.loc-park .hud, .loc-mode.loc-bookcafe .hud{
+  position:absolute!important;top:0;left:0;right:0;z-index:12
+}
+.loc-mode.loc-cafe .loc-panel, .loc-mode.loc-park .loc-panel{
+  bottom:112px!important;max-height:120px!important
+}
+.loc-mode.loc-cafe .lp-card, .loc-mode.loc-park .lp-card{
+  border-radius:14px!important;padding:10px 12px!important
+}
+
+/* Food ornate thin cards */
+.feed-screen .food-card{
+  background:#0a0810f8!important;
+  border:1.5px solid #ff2d78!important;border-radius:10px!important;
+  box-shadow:inset 0 0 0 1px #ff2d7833,0 0 0 1px #2a1020!important;
+  padding:8px 6px 10px!important
+}
+.feed-screen .food-card b{font-size:17px!important;letter-spacing:.03em}
+.feed-screen .food-card .sub{font-size:14px!important}
+.feed-screen .food-card .food-art{width:88%!important;margin:0 auto 6px!important}
+.feed-title-oswald{font-size:46px!important;letter-spacing:.12em!important}
+.feed-currency{gap:16px!important}
+.feed-currency .hud-chip{font-size:16px!important;border-radius:8px!important;padding:6px 12px!important}
+
+/* Map: zoomed-out, small pins, single label */
+.map-bleed .mapbg{object-fit:cover!important;object-position:center 35%!important;transform:scale(1)!important;width:100%!important;height:100%!important}
+.map-pin{transform:translate(-50%,-80%)!important}
+.map-pin img.pin-art{width:42px!important;height:auto!important}
+.map-pin .pin-lab{
+  font-size:13px!important;padding:1px 6px!important;margin-top:0!important;
+  background:#0c0a10cc!important;border:1px solid #c77dff88!important;border-radius:6px!important
+}
+.map-head{
+  position:absolute!important;top:8px!important;left:8px!important;right:8px!important;
+  display:flex!important;gap:8px!important;align-items:center!important;
+  background:#0c0a10ee!important;border:2px solid #ff2d78!important;border-radius:14px!important;
+  padding:8px 10px!important;z-index:12!important;max-height:88px!important
+}
+.map-av{width:56px!important;height:56px!important;border-radius:50%!important;border:2px solid #ff2d78}
+.map-name{font-size:18px!important}
+.map-lv{font-size:12px!important}
+.map-cur{display:flex!important;flex-direction:column!important;gap:4px!important;margin-left:auto}
+
+/* Chat: drip title, ornate bubbles, quick replies, fewer denser msgs */
+.chat-v2 .chat-title{padding:6px 0 4px!important;text-align:center}
+.chat-v2 .chat-title img{display:block!important;width:78%!important;max-width:340px!important;margin:4px auto!important}
+.chat-v2 .chat-title::before{display:none!important;content:none!important}
+.chat-v2 .chat-list{padding:4px 10px!important;gap:10px!important}
+.chat-v2 .msg{gap:8px!important;margin-bottom:8px!important}
+.chat-v2 .msg .av{width:52px!important;height:52px!important}
+.chat-v2 .msg .bubble{
+  border:2px solid #ff2d78!important;border-radius:14px 14px 14px 4px!important;
+  background:#120a14f2!important;padding:8px 12px 10px!important;position:relative!important
+}
+.chat-v2 .msg .nm{font-size:14px!important;color:#ff8fb8!important}
+.chat-v2 .msg .tx{font-size:14px!important;line-height:1.35!important}
+.chat-v2 .quick{
+  display:flex!important;gap:8px!important;padding:8px 10px 6px!important;
+  overflow-x:auto!important;flex-shrink:0!important;z-index:5!important
+}
+.chat-v2 .quick button{
+  display:flex!important;align-items:center!important;gap:6px!important;
+  border:2px solid #ff2d78!important;border-radius:12px!important;
+  background:#0c0a10ee!important;color:#ff8fb8!important;
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:13px!important;
+  padding:8px 10px!important;white-space:nowrap!important
+}
+.chat-v2 .quick button img{width:18px!important;height:18px!important}
+.chat-v2 .chat-div{display:flex!important;justify-content:center!important;padding:2px!important}
+.chat-v2 .chat-div img{width:28px!important;height:auto}
+
+/* Wardrobe Oswald title + square grid */
+.ward-screen .ward-head{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:34px!important;color:#ff8fb8!important;letter-spacing:.08em!important;
+  padding:10px 8px 6px!important;position:relative!important
+}
+.ward-title-art{width:72%!important;max-width:300px!important;height:auto!important}
+.ward-preview{
+  height:28vh!important;max-height:240px!important;margin:4px 24px!important;
+  border:2px solid #ff2d78!important;border-radius:12px!important;
+  display:flex!important;align-items:flex-end!important;justify-content:center!important;
+  background:#0a0810!important;overflow:hidden!important
+}
+.ward-preview img{height:96%!important;width:auto!important;max-width:70%!important;object-fit:contain!important;image-rendering:auto!important}
+.ward-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;padding:8px 12px 16px!important}
+.ward-card{
+  aspect-ratio:1/1.05!important;display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:flex-start!important;
+  border:2px solid #ff2d78aa!important;border-radius:10px!important;
+  background:#0c0a10f5!important;padding:8px 6px!important;position:relative!important
+}
+.ward-card .food-art{width:70%!important;aspect-ratio:1!important;object-fit:contain!important;margin:4px auto!important}
+.ward-card b{font-family:'EGTitle','Oswald',sans-serif!important;font-size:15px!important;color:#ff8fb8!important}
+.ward-card.on::after{
+  content:"✓"!important;position:absolute!important;top:8px!important;right:8px!important;
+  width:22px!important;height:22px!important;border-radius:50%!important;
+  background:#ff2d78!important;color:#fff!important;font-size:14px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important
+}
+.ward-card.locked::after{content:"🔒"!important;font-size:22px!important;top:10px!important;right:10px!important;background:transparent!important;width:auto!important;height:auto!important}
+
+/* pass 12b */
+.feed-title-art{display:block!important;width:70%!important;max-width:300px!important;margin:12px auto 4px!important;image-rendering:auto!important}
+.feed-title-oswald{display:none!important}
+.nav-dock button .lab{text-transform:none!important;font-size:13px!important}
+
+/* ===== mock fidelity pass 13 ===== */
+/* Nav must sit on bottom — beat html:not(.eg-native-ads) specificity */
+html:not(.eg-native-ads) .nav-dock,
+html.eg-native-ads .nav-dock,
+html.shot-mode .nav-dock,
+html.shot-hide-ads .nav-dock,
+.shot-mode .nav-dock,
+.shot-hide-ads .nav-dock,
+.screen.immersive .nav-dock,
+.screen .nav-dock{
+  bottom:0!important;left:0!important;right:0!important;
+  height:96px!important;margin:0!important;
+  position:absolute!important
+}
+.screen:not(.immersive) > .nav-dock{
+  position:relative!important;bottom:auto!important;height:96px!important;margin:0!important;flex-shrink:0!important
+}
+
+/* Cover mock's baked HUD/nav with opaque live chrome */
+.hud{
+  background:linear-gradient(180deg,#0a0810f5 0%,#0a0810e8 70%,#0a081000 100%)!important;
+  padding-bottom:8px!important
+}
+.nav-dock{
+  background:#07050c!important;
+  border-top:2px solid #ff2d78!important;
+  box-shadow:0 -8px 24px #07050cee!important
+}
+
+/* Hide plate's baked FAB area under our FAB — ensure single wardrobe */
+.scene-fab{
+  right:12px!important;bottom:108px!important;
+  width:100px!important;height:100px!important;
+  background:#07050c00!important
+}
+
+/* Metro panel: cover mock card region */
+.loc-mode.loc-metro .loc-panel,
+.loc-mode.loc-station .loc-panel{
+  bottom:100px!important;background:transparent!important
+}
+.loc-mode.loc-metro .lp-card,
+.loc-mode.loc-station .lp-card{
+  background:#0c0a10f8!important;border:2px solid #ff2d78!important;border-radius:16px!important
+}
+
+/* Cafe/park: opaque thin card over mock card */
+.loc-mode.loc-cafe .lp-card,
+.loc-mode.loc-park .lp-card{
+  background:#0c0a10f8!important
+}
+
+/* Stage bg object-fit cover full */
+.stage-bleed .bg,.stage .bg{
+  object-fit:cover!important;object-position:center center!important;
+  width:100%!important;height:100%!important
+}
+
+/* pass 13b food ornate corners */
+.feed-screen{background:#0a0810!important}
+.feed-screen .food-card{
+  position:relative!important;
+  border:1px solid #ff2d78!important;
+  box-shadow:none!important;
+  border-radius:8px!important;
+  background:#0c0a10!important
+}
+.feed-screen .food-card::before,
+.feed-screen .food-card::after{
+  display:block!important;content:""!important;position:absolute!important;
+  width:14px!important;height:14px!important;border:2px solid #ff8fb8!important;pointer-events:none!important
+}
+.feed-screen .food-card::before{top:4px!important;left:4px!important;border-right:0!important;border-bottom:0!important}
+.feed-screen .food-card::after{bottom:4px!important;right:4px!important;border-left:0!important;border-top:0!important}
+.chat-v2{background:#0a0810!important}
+.ward-screen{background:#0a0810!important}
+
+/* ===== mock fidelity pass 14 ===== */
+/* Stretch plates to viewport (same as MAE resize) — kill cover crop drift */
+.stage-bleed .bg, .stage .bg, .map-bleed .mapbg{
+  object-fit:fill!important;object-position:center center!important;
+  width:100%!important;height:100%!important;transform:none!important
+}
+
+/* HUD: separate boxes, mock geometry */
+.hud{
+  position:absolute!important;top:0!important;left:0!important;right:0!important;z-index:20!important;
+  padding:max(10px,env(safe-area-inset-top)) 8px 6px!important;
+  background:transparent!important;pointer-events:none
+}
+.hud > *{pointer-events:auto}
+.hud-stats{
+  display:grid!important;grid-template-columns:repeat(4,1fr)!important;
+  gap:6px!important;margin-bottom:6px!important
+}
+.hud-stat{
+  background:#0c0a10f2!important;border:2px solid #5a5a68!important;border-radius:10px!important;
+  padding:8px 5px 7px!important;display:flex!important;flex-direction:column!important;gap:5px!important
+}
+.hud-stat .lab{display:flex!important;align-items:center!important;gap:3px!important;justify-content:center}
+.hud-stat .lab .pxico{width:16px!important;height:16px!important}
+.hud-stat .lab-t{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:12px!important;color:#eee!important;letter-spacing:.02em
+}
+.hud-stat .bar{height:7px!important;background:#1a1520!important;border-radius:3px!important;overflow:hidden}
+.hud-stat .bar i{background:#ff2d78!important;height:100%!important;display:block}
+.hud-res{
+  display:flex!important;gap:6px!important;align-items:center!important
+}
+.hud-chip{
+  background:#0c0a10f2!important;border:2px solid #5a5a68!important;border-radius:10px!important;
+  padding:6px 8px!important;font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:13px!important;color:#fff!important;display:flex!important;align-items:center!important;gap:4px
+}
+.hud-chip.xp{flex:1!important}
+.hud-gear{
+  width:36px!important;height:36px!important;border:2px solid #5a5a68!important;border-radius:10px!important;
+  background:#0c0a10f2!important;padding:4px!important
+}
+
+/* Nav: mock frame bg + cell dividers */
+.nav-dock, html:not(.eg-native-ads) .nav-dock, .shot-mode .nav-dock, .screen.immersive .nav-dock{
+  bottom:0!important;left:8px!important;right:8px!important;
+  height:104px!important;padding:6px 4px 10px!important;
+  background:#121018 url('../img/ui/chrome/nav_mock_bg.webp') center/100% 100% no-repeat!important;
+  border:2px solid #4a4a58!important;border-bottom:0!important;border-radius:12px 12px 0 0!important;
+  box-shadow:none!important;gap:0!important;
+  position:absolute!important;overflow:visible!important
+}
+.nav-dock button{
+  flex:1!important;border:0!important;border-right:1px solid #3a3a48!important;
+  background:transparent!important;border-radius:0!important;
+  padding:4px 2px!important;gap:2px!important
+}
+.nav-dock button:last-child{border-right:0!important}
+.nav-dock button .pxico{width:36px!important;height:36px!important}
+.nav-dock button .lab{
+  font-size:12px!important;font-weight:700!important;color:#ddd!important;
+  text-transform:none!important;letter-spacing:.02em!important
+}
+.nav-dock button.on .lab{color:#ff8fb8!important}
+.nav-dock button.on::after{display:none!important;content:none!important}
+
+/* FAB — unclipped, above nav */
+.scene-fab{
+  right:16px!important;bottom:118px!important;
+  width:96px!important;height:96px!important;
+  border-radius:50%!important;overflow:hidden!important;
+  background:transparent!important;border:0!important;z-index:25!important
+}
+.scene-fab img{width:100%!important;height:100%!important;object-fit:cover!important}
+
+/* ===== mock fidelity pass 15 ===== */
+.feed-title-art{display:block!important;width:62%!important;max-width:280px!important;margin:14px auto 6px!important}
+.feed-title-oswald{display:none!important}
+.feed-screen .food-card::before,.feed-screen .food-card::after{display:none!important;content:none!important}
+.feed-screen .food-card{
+  border:2px solid #ff2d78!important;border-radius:14px!important;
+  background:#120a16!important;box-shadow:0 0 0 1px #2a1020 inset!important;
+  padding:10px 8px 12px!important
+}
+.feed-screen .food-card b{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:18px!important;color:#ff8fb8!important;display:block!important;text-align:center
+}
+.feed-screen .food-card .sub{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:15px!important;color:#ffc107!important;display:flex!important;justify-content:center;align-items:center;gap:4px
+}
+.feed-screen h3{display:none!important} /* hide drinks section header — mock shows food grid only */
+.feed-screen .food-grid + h3 + .food-grid{display:none!important}
+.nav-dock{
+  background:#0c0a10!important;
+  background-image:none!important;
+  border:2px solid #4a4a58!important;border-bottom:0!important;
+  border-radius:14px 14px 0 0!important;
+  left:6px!important;right:6px!important;height:100px!important
+}
+html:not(.eg-native-ads) .nav-dock, .shot-mode .nav-dock, .screen.immersive .nav-dock{
+  background:#0c0a10!important;background-image:none!important;
+  bottom:0!important;left:6px!important;right:6px!important;height:100px!important
+}
+.nav-dock button .lab{font-size:13px!important;overflow:visible!important}
+.nav-dock button .pxico{width:38px!important;height:38px!important;image-rendering:auto!important}
+
+/* pass 15b metro single card cover */
+.loc-mode.loc-metro .loc-panel .lp-card + .lp-card{display:none!important}
+.loc-mode.loc-metro .loc-panel .lp-card{
+  border-radius:16px!important;border:2px solid #ff2d78!important;
+  background:#0c0a10fa!important;padding:12px!important
+}
+.loc-mode.loc-metro .loc-head{
+  background:#0c0a10f5!important;border:2px solid #ff2d78!important;border-radius:14px!important;
+  margin:8px 10px!important;padding:8px 10px!important;display:flex!important;align-items:center!important;gap:10px
+}
+.metro-m{
+  width:42px!important;height:42px!important;border-radius:50%!important;
+  background:#ff2d78!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:22px!important;flex-shrink:0
+}
+
+/* pass 16 — density + no double chrome */
+.feed-screen .feed-title-art{display:block!important;width:58%!important;max-width:260px!important;margin:10px auto 4px!important;image-rendering:auto!important}
+.feed-screen .feed-title-oswald{display:none!important;height:0!important;overflow:hidden!important;margin:0!important;padding:0!important}
+.feed-screen .feed-body{padding-bottom:8px!important}
+.feed-screen .food-grid{gap:10px!important;padding:4px 10px 8px!important}
+.chat-v2{display:flex!important;flex-direction:column!important;height:100%!important}
+.chat-v2 .chat-list{flex:1!important;min-height:0!important;overflow:auto!important;max-height:none!important}
+.chat-v2 .quick{flex-shrink:0!important;display:flex!important}
+.chat-v2 .nav-dock{flex-shrink:0!important;position:relative!important;bottom:auto!important;left:0!important;right:0!important}
+.feed-screen .nav-dock,.ward-screen .nav-dock{
+  position:relative!important;bottom:auto!important;left:0!important;right:0!important;margin:0!important;
+  flex-shrink:0!important;height:100px!important
+}
+.ward-screen{display:flex!important;flex-direction:column!important;height:100%!important}
+.ward-body{flex:1!important;min-height:0!important;overflow:auto!important}
+
+/* pass 17 — icon-only nav, FAB clear of dock */
+.nav-dock button .pxico{
+  width:40px!important;height:40px!important;object-fit:contain!important;
+  image-rendering:auto!important;background:transparent!important
+}
+.nav-dock button .lab{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:13px!important;line-height:1.1!important;color:#ddd!important;
+  text-shadow:none!important;position:static!important
+}
+.nav-dock button::before,.nav-dock button::after{content:none!important;display:none!important}
+.nav-dock button.on::after{display:none!important}
+.scene-fab{
+  right:14px!important;bottom:130px!important;
+  width:112px!important;height:112px!important;
+  border-radius:50%!important;overflow:visible!important;
+  z-index:30!important;background:transparent!important;border:0!important;padding:0!important
+}
+.scene-fab img{width:100%!important;height:100%!important;object-fit:contain!important}
+.hud-stats{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:5px!important}
+.hud-stat{border:2px solid #6a6a78!important;border-radius:8px!important;background:#0c0a10f5!important}
+.hud-res{gap:5px!important}
+.hud-chip{border:2px solid #6a6a78!important;border-radius:8px!important}
+
+/* ===== mock fidelity pass 18 — structural match ===== */
+/* HUD: 4 SEPARATE stat boxes (no unifying wrapper border) */
+.hud{
+  background:transparent!important;
+  padding:max(10px,env(safe-area-inset-top)) 8px 0!important;
+  border:0!important;box-shadow:none!important
+}
+.hud-stats{
+  display:grid!important;grid-template-columns:repeat(4,1fr)!important;
+  gap:6px!important;margin:0 0 6px!important;
+  background:transparent!important;border:0!important;padding:0!important;box-shadow:none!important
+}
+.hud-stat{
+  background:#0c0a10f8!important;
+  border:2px solid #ff2d78!important;
+  border-radius:10px!important;
+  padding:7px 4px 8px!important;
+  box-shadow:inset 0 0 0 1px #2a1020!important
+}
+.hud-stat .lab{justify-content:center!important;gap:3px!important}
+.hud-stat .lab-t{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:13px!important;color:#eee!important;letter-spacing:.02em!important
+}
+.hud-stat .lab .pxico{width:16px!important;height:16px!important}
+.hud-stat .bar{height:8px!important;margin-top:5px!important;background:#1a1218!important;border-radius:3px!important}
+.hud-stat .bar i{background:linear-gradient(90deg,#ff2d78,#ff6aa3)!important}
+
+/* Currency row: ONE wide box; gear OUTSIDE to the right */
+.hud-res{
+  display:flex!important;align-items:stretch!important;gap:6px!important;
+  background:transparent!important;border:0!important;padding:0!important
+}
+.hud-res .hud-chip{
+  background:#0c0a10f8!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:15px!important;
+  padding:6px 8px!important
+}
+.hud-res .hud-chip.xp{flex:1!important}
+.hud-gear{
+  width:40px!important;height:40px!important;flex-shrink:0!important;
+  background:#0c0a10f8!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  margin-left:0!important
+}
+
+/* Nav: single clean row, full bleed, no mock bg, no double */
+.nav-dock,
+html:not(.eg-native-ads) .nav-dock,
+html.eg-native-ads .nav-dock,
+.shot-mode .nav-dock,
+.shot-hide-ads .nav-dock,
+.screen.immersive .nav-dock,
+.screen .nav-dock,
+.feed-screen .nav-dock,
+.ward-screen .nav-dock,
+.chat-v2 .nav-dock{
+  position:absolute!important;left:0!important;right:0!important;bottom:0!important;
+  height:100px!important;min-height:100px!important;
+  margin:0!important;padding:6px 2px max(8px,env(safe-area-inset-bottom))!important;
+  background:#0a0810!important;background-image:none!important;
+  border:0!important;border-top:2px solid #3a3a48!important;border-radius:0!important;
+  box-shadow:none!important;gap:0!important;overflow:visible!important;z-index:60!important;
+  display:flex!important;align-items:center!important
+}
+.feed-screen .nav-dock,.ward-screen .nav-dock,.chat-v2 .nav-dock{
+  position:relative!important;bottom:auto!important;flex-shrink:0!important
+}
+.nav-dock button{
+  flex:1!important;background:transparent!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;padding:2px 1px!important;gap:1px!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important
+}
+.nav-dock button + button{border-left:1px solid #2a2a34!important}
+.nav-dock button::before,.nav-dock button::after,.nav-dock::before,.nav-dock::after{content:none!important;display:none!important}
+.nav-dock button .pxico{
+  width:44px!important;height:44px!important;object-fit:contain!important;
+  image-rendering:auto!important;background:transparent!important;filter:none!important
+}
+.nav-dock button .lab{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:13px!important;line-height:1.1!important;color:#ccc!important;
+  text-shadow:none!important;position:static!important;margin:0!important
+}
+.nav-dock button.on .lab{color:#ff2d78!important}
+.nav-dock button.on .pxico{filter:drop-shadow(0 0 4px #ff2d7888)!important}
+
+/* FAB — large round, clear of dock */
+.scene-fab{
+  right:16px!important;bottom:118px!important;
+  width:118px!important;height:118px!important;
+  border-radius:50%!important;overflow:visible!important;
+  background:transparent!important;border:0!important;padding:0!important;z-index:30!important
+}
+.scene-fab img{width:100%!important;height:100%!important;object-fit:contain!important;filter:drop-shadow(0 4px 12px #000c)!important}
+
+/* Food: denser 2x3, larger art */
+.feed-screen{background:#0a0810 url('../img/ui/chrome/bg_grunge.webp') center/cover!important}
+.feed-screen .feed-body{padding:0 10px 4px!important;flex:1!important;min-height:0!important;overflow:auto!important}
+.feed-screen .food-grid,.feed-screen .grid.food-grid{
+  display:grid!important;grid-template-columns:1fr 1fr!important;
+  gap:8px!important;padding:4px 0 6px!important
+}
+.feed-screen .food-card{
+  padding:6px 6px 8px!important;margin:0!important;
+  border:2px solid #ff2d78!important;border-radius:12px!important;
+  background:#120a16f2!important;min-height:0!important
+}
+.feed-screen .food-card .food-art{
+  width:88%!important;max-height:110px!important;aspect-ratio:1!important;
+  object-fit:contain!important;margin:2px auto 4px!important;display:block!important
+}
+.feed-screen .food-card b{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:17px!important;color:#ff8fb8!important;text-align:center!important;display:block!important
+}
+.feed-screen .food-card .sub{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:15px!important;color:#ffc107!important;justify-content:center!important
+}
+.feed-screen .feed-title-art{width:58%!important;max-width:250px!important;margin:12px auto 6px!important;display:block!important}
+.feed-screen .feed-currency{display:flex!important;gap:8px!important;padding:0 12px 8px!important;justify-content:center!important}
+.feed-screen .feed-currency .hud-chip{
+  flex:1!important;max-width:48%!important;justify-content:center!important;
+  border:2px solid #ff2d78!important;border-radius:12px!important;font-size:16px!important
+}
+
+/* Chat: drip title + denser bubbles */
+.chat-v2{
+  background:#0a0810 url('../img/ui/chrome/chat_splatter.webp') top center/100% auto no-repeat!important;
+  background-color:#0a0810!important
+}
+.chat-v2 .chat-title{display:flex!important;justify-content:center!important;padding:12px 0 6px!important}
+.chat-v2 .chat-title img{width:55%!important;max-width:240px!important;height:auto!important}
+.chat-v2 .msg{display:flex!important;gap:8px!important;margin:8px 10px!important;align-items:flex-start!important}
+.chat-v2 .msg .av-wrap{
+  width:52px!important;height:52px!important;flex-shrink:0!important;
+  border:2px solid #ff2d78!important;border-radius:8px!important;overflow:hidden!important
+}
+.chat-v2 .msg .bubble{
+  flex:1!important;background:#120a16!important;border:2px solid #ff2d78!important;
+  border-radius:12px!important;padding:6px 10px!important;position:relative!important
+}
+.chat-v2 .msg .nm{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:14px!important;color:#ff8fb8!important
+}
+.chat-v2 .msg .tx{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:600!important;
+  font-size:14px!important;color:#eee!important;line-height:1.25!important
+}
+.chat-v2 .quick{gap:6px!important;padding:6px 8px!important}
+.chat-v2 .quick button{
+  flex:1!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  background:#120a16!important;color:#ff8fb8!important;
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:13px!important;
+  padding:8px 4px!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:2px!important
+}
+.chat-v2 .quick button img{width:28px!important;height:28px!important;object-fit:contain!important}
+
+.hud-res-box{
+  flex:1!important;display:flex!important;align-items:center!important;gap:6px!important;
+  background:#0c0a10f8!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  padding:5px 8px!important;min-width:0!important
+}
+.hud-res-box .hud-chip{
+  background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 4px!important
+}
+.hud-res-box .hud-chip.xp{flex:1!important;min-width:0!important}
+
+/* ===== mock fidelity pass 19 — ornate nav frame + FAB clear ===== */
+.nav-dock,
+html:not(.eg-native-ads) .nav-dock,
+.shot-mode .nav-dock,
+.screen.immersive .nav-dock{
+  background:#0a0810 url('../img/ui/chrome/nav_frame_only.webp') center/100% 100% no-repeat!important;
+  border:2px solid #4a4a58!important;border-bottom:0!important;
+  border-radius:12px 12px 0 0!important;
+  left:4px!important;right:4px!important;bottom:0!important;
+  height:104px!important;padding:8px 2px 12px!important
+}
+.feed-screen .nav-dock,.ward-screen .nav-dock,.chat-v2 .nav-dock{
+  position:relative!important;bottom:auto!important;left:4px!important;right:4px!important;
+  width:auto!important;margin:0 4px!important
+}
+.nav-dock button .pxico{width:48px!important;height:48px!important}
+.nav-dock button .lab{font-size:14px!important;margin-top:2px!important}
+.scene-fab{
+  right:18px!important;bottom:120px!important;
+  width:124px!important;height:124px!important;
+  z-index:40!important;overflow:visible!important
+}
+.scene-fab img{width:100%!important;height:100%!important;object-fit:contain!important;
+  filter:drop-shadow(0 6px 14px #000d)!important}
+/* HUD gaps so 4 boxes read as separate */
+.hud-stats{gap:7px!important;padding:0 2px!important}
+.hud-stat{border-width:2.5px!important}
+
+
+/* ===== LIVE UI pass 31 — NO baked mock screens ===== */
+/* Kill plate-fill / ::before mock screens */
+img.plate-fill{display:none!important;width:0!important;height:0!important;opacity:0!important}
+.feed-screen::before,.chat-v2::before,.ward-screen::before,.map-screen::before,
+.screen.immersive.home-mode::before,
+.screen.immersive.loc-metro::before,
+.screen.immersive.loc-station::before,
+.screen.immersive.loc-cafe::before,
+.screen.immersive.loc-park::before{content:none!important;display:none!important;background:none!important}
+
+.feed-screen,.chat-v2,.ward-screen,.map-screen{
+  background:#0a0810!important;background-image:none!important
+}
+
+/* SHOW live character again */
+.screen.immersive.home-mode .char-wrap,
+.screen.immersive.loc-metro .char-wrap,
+.screen.immersive.loc-station .char-wrap,
+.screen.immersive.loc-cafe .char-wrap,
+.screen.immersive.loc-bookcafe .char-wrap,
+.screen.immersive.loc-park .char-wrap,
+.stage-bleed.floor-room .char-wrap,
+.stage-bleed.floor-metro .char-wrap,
+.stage-bleed.floor-station .char-wrap,
+.stage-bleed.floor-cafe .char-wrap,
+.stage-bleed.floor-bookcafe .char-wrap,
+.stage-bleed.floor-park .char-wrap{
+  display:flex!important;visibility:visible!important;opacity:1!important
+}
+.char-shadow{display:block!important;opacity:.4!important}
+
+/* SHOW live HUD / stage / FAB / panels */
+.screen.immersive.home-mode .stage-bleed,
+.screen.immersive.loc-metro .stage-bleed,
+.screen.immersive.loc-cafe .stage-bleed,
+.screen.immersive.loc-park .stage-bleed,
+.screen.immersive.home-mode .hud,
+.screen.immersive.loc-metro .hud,
+.screen.immersive.loc-cafe .hud,
+.screen.immersive.loc-park .hud,
+.screen.immersive.home-mode .scene-fab,
+.screen.immersive.home-mode .scene-fab img,
+.screen.immersive.loc-metro .loc-panel,
+.screen.immersive.loc-cafe .loc-panel,
+.screen.immersive.loc-park .loc-panel{
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important
+}
+.screen.immersive.home-mode .hud-stats,
+.screen.immersive.home-mode .hud-res,
+.screen.immersive.loc-metro .hud-stats,
+.screen.immersive.loc-metro .hud-res,
+.screen.immersive.loc-cafe .hud-stats,
+.screen.immersive.loc-cafe .hud-res,
+.screen.immersive.loc-park .hud-stats,
+.screen.immersive.loc-park .hud-res{
+  opacity:1!important;height:auto!important;overflow:visible!important;pointer-events:auto!important;
+  position:relative!important
+}
+
+/* Live HUD: separate boxes */
+.hud{
+  background:linear-gradient(180deg,#0a0810f2 0%,#0a0810cc 70%,transparent 100%)!important;
+  padding:max(10px,env(safe-area-inset-top)) 8px 6px!important;border:0!important
+}
+.hud-stats{
+  display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:6px!important;
+  background:transparent!important;border:0!important;padding:0!important;margin:0 0 6px!important
+}
+.hud-stat{
+  background:#0c0a10f8!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  padding:7px 4px 8px!important
+}
+.hud-stat .lab-t{font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:13px!important}
+.hud-res{display:flex!important;gap:6px!important;align-items:stretch!important;background:transparent!important;border:0!important}
+.hud-res-box{
+  flex:1!important;display:flex!important;align-items:center!important;gap:6px!important;
+  background:#0c0a10f8!important;border:2px solid #ff2d78!important;border-radius:10px!important;padding:5px 8px!important
+}
+.hud-res-box .hud-chip{background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 4px!important;
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:15px!important}
+.hud-gear{width:40px!important;height:40px!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  background:#0c0a10f8!important;opacity:1!important}
+
+/* Live nav — real icons + labels, no mock strip bg */
+.nav-dock,
+html:not(.eg-native-ads) .nav-dock,
+.shot-mode .nav-dock,
+.screen.immersive .nav-dock,
+.feed-screen .nav-dock,
+.ward-screen .nav-dock,
+.chat-v2 .nav-dock,
+.map-screen .nav-dock{
+  background:#0a0810!important;background-image:none!important;
+  border-top:2px solid #3a3a48!important;border-left:0!important;border-right:0!important;border-bottom:0!important;
+  border-radius:0!important;box-shadow:none!important;
+  left:0!important;right:0!important;bottom:0!important;
+  height:100px!important;min-height:100px!important;padding:6px 2px 10px!important;
+  position:absolute!important;display:flex!important;align-items:center!important;z-index:60!important;
+  opacity:1!important;visibility:visible!important
+}
+.feed-screen .nav-dock,.ward-screen .nav-dock,.chat-v2 .nav-dock,.map-screen .nav-dock{
+  position:relative!important;bottom:auto!important;flex-shrink:0!important
+}
+.nav-dock button{
+  flex:1!important;background:transparent!important;border:0!important;border-radius:0!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  gap:2px!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  height:100%!important;width:auto!important
+}
+.nav-dock button + button{border-left:1px solid #2a2a34!important}
+.nav-dock button .pxico,
+.nav-dock button .lab,
+.nav-dock button .ic{
+  opacity:1!important;visibility:visible!important;width:auto!important;height:auto!important;
+  overflow:visible!important;font-size:inherit!important;position:static!important
+}
+.nav-dock button .pxico{width:42px!important;height:42px!important;object-fit:contain!important;display:block!important}
+.nav-dock button .lab{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:13px!important;color:#ccc!important;line-height:1.1!important;display:block!important
+}
+.nav-dock button.on .lab{color:#ff2d78!important}
+
+/* FAB live */
+.scene-fab{
+  right:14px!important;bottom:118px!important;width:112px!important;height:112px!important;
+  opacity:1!important;visibility:visible!important;z-index:40!important;
+  background:transparent!important;border:0!important;overflow:visible!important
+}
+.scene-fab img{opacity:1!important;visibility:visible!important;width:100%!important;height:100%!important;object-fit:contain!important}
+
+/* Food/chat live content visible */
+.feed-screen .feed-head,.feed-screen .feed-currency,.feed-screen .feed-body,
+.chat-v2 .chat-title,.chat-v2 .chat-list,.chat-v2 .chat-div,.chat-v2 .quick,
+.ward-screen .ward-head,.ward-screen .ward-body,.ward-screen .ward-preview,
+.map-screen .map-bleed,.map-screen .map-head,.map-screen .map-pins{
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  height:auto!important;overflow:visible!important;position:relative!important;width:auto!important
+}
+.feed-screen .feed-hit{display:none!important} /* use real cards */
+.feed-screen{display:flex!important;flex-direction:column!important;height:100%!important;background:#0a0810!important}
+.feed-screen .feed-body{flex:1!important;min-height:0!important;overflow:auto!important}
+.feed-screen .food-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;padding:4px 10px!important}
+.feed-screen .food-card{
+  border:2px solid #ff2d78!important;border-radius:12px!important;background:#120a16!important;padding:8px!important
+}
+.feed-screen .food-card .food-art{width:85%!important;aspect-ratio:1!important;object-fit:contain!important;margin:0 auto 4px!important;display:block!important}
+.feed-screen .food-card b{font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:16px!important;color:#ff8fb8!important;display:block!important;text-align:center}
+.feed-title-art{display:block!important;width:55%!important;max-width:240px!important;margin:12px auto 6px!important}
+.feed-title-oswald{display:none!important}
+
+.chat-v2{display:flex!important;flex-direction:column!important;height:100%!important;background:#0a0810!important}
+.chat-v2 .chat-list{flex:1!important;min-height:0!important;overflow:auto!important}
+.chat-v2 .msg{display:flex!important;gap:8px!important;margin:8px 10px!important}
+.chat-v2 .quick{display:flex!important;gap:6px!important;padding:6px 8px!important;flex-shrink:0!important}
+.chat-v2 .quick button{opacity:1!important;visibility:visible!important;flex:1!important;border:2px solid #ff2d78!important;border-radius:10px!important;background:#120a16!important;color:#ff8fb8!important;font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;padding:8px 4px!important}
+
+.map-screen .map-bleed{opacity:1!important}
+.map-screen .map-bleed .mapbg{opacity:.95!important}
+.map-screen .map-pin{opacity:1!important}
+.map-screen .map-pin img,.map-screen .map-pin .pin-lab{opacity:1!important}
+
+/* Dirt hotspots visible for proof */
+.dirt-hotspots{z-index:8!important}
+.dirt-hotspots .hot{opacity:1!important;visibility:visible!important}
+
+/* Shot mode: fill viewport for proof shots but keep LIVE UI */
+html.shot-mode #root, html.shot-hide-ads #root{
+  position:fixed!important;inset:0!important;display:block!important
+}
+html.shot-mode #app, html.shot-hide-ads #app{
+  position:fixed!important;inset:0!important;width:100%!important;height:100%!important;
+  max-width:none!important;max-height:none!important;transform:none!important;margin:0!important;border:0!important
+}
+
+/* ===== PASS 32: mock-match live HUD / FAB / nav / char scale ===== */
+.screen.immersive.home-mode .hud,
+.screen.immersive .hud{
+  display:block!important;opacity:1!important;visibility:visible!important;
+  position:absolute!important;left:0!important;right:0!important;top:0!important;z-index:40!important;
+  padding:max(10px,env(safe-area-inset-top)) 8px 0!important;pointer-events:none!important
+}
+.hud *{pointer-events:auto!important}
+.hud-stats{
+  display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:6px!important;
+  margin-bottom:8px!important;opacity:1!important;visibility:visible!important;height:auto!important
+}
+.hud-stat{
+  display:flex!important;flex-direction:column!important;
+  background:#121018!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  padding:6px 5px 7px!important;opacity:1!important;visibility:visible!important;min-width:0!important
+}
+.hud-stat .lab{display:flex!important;align-items:center!important;gap:4px!important;opacity:1!important}
+.hud-stat .lab-t{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:12px!important;color:#fff!important;opacity:1!important
+}
+.hud-stat .lab .pxico{width:16px!important;height:16px!important;opacity:1!important}
+.hud-stat .bar{height:9px!important;margin-top:5px!important;background:#1a1218!important;border:1px solid #3a2030!important;border-radius:4px!important;overflow:hidden!important}
+.hud-stat .bar>i{display:block!important;height:100%!important;background:linear-gradient(90deg,#ff2d78,#ff8fb8)!important}
+.hud-res{display:flex!important;align-items:stretch!important;gap:6px!important;opacity:1!important}
+.hud-res-box{
+  flex:1!important;display:flex!important;align-items:center!important;gap:4px!important;
+  background:#121018!important;border:2px solid #ff2d78!important;border-radius:10px!important;padding:4px 6px!important
+}
+.hud-chip{
+  display:flex!important;align-items:center!important;gap:4px!important;
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;font-size:14px!important;color:#fff!important
+}
+.hud-chip .pxico{width:18px!important;height:18px!important}
+.hud-gear{
+  width:42px!important;height:42px!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  background:#121018!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important
+}
+
+/* Character ~25% screen height, on rug */
+.stage-bleed.floor-room .char-wrap,
+.screen.immersive.home-mode .char-wrap{
+  left:50%!important;transform:translateX(-50%)!important;
+  bottom:14%!important;width:40%!important;height:28%!important;
+  display:flex!important;align-items:flex-end!important;justify-content:center!important;
+  opacity:1!important;visibility:visible!important;z-index:5!important
+}
+.stage-bleed.floor-room .char-wrap .char,
+.screen.immersive.home-mode .char-wrap .char{
+  height:100%!important;width:auto!important;max-width:100%!important;
+  object-fit:contain!important;object-position:bottom center!important;
+  image-rendering:pixelated!important;background:transparent!important;opacity:1!important
+}
+.screen.immersive.loc-mode .stage-bleed .char-wrap{
+  bottom:34%!important;width:32%!important;height:22%!important
+}
+
+/* Live round pink-ring ГАРДЕРОБ FAB */
+.scene-fab{
+  position:absolute!important;right:12px!important;bottom:118px!important;z-index:35!important;
+  width:108px!important;height:108px!important;padding:0!important;margin:0!important;
+  border:0!important;background:transparent!important;box-shadow:none!important;
+  overflow:visible!important;cursor:pointer!important
+}
+.scene-fab .fab-ring{
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  width:100%!important;height:100%!important;border-radius:50%!important;
+  border:3px solid #ff2d78!important;background:#121018e6!important;
+  box-shadow:0 0 0 2px #000, 0 6px 16px #000a!important;gap:2px!important
+}
+.scene-fab .fab-hanger{
+  width:42px!important;height:42px!important;object-fit:contain!important;
+  filter:none!important;opacity:1!important;display:block!important
+}
+.scene-fab .fab-lab{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:11px!important;letter-spacing:.04em!important;color:#fff!important;line-height:1!important
+}
+.scene-fab img.fab-hanger{width:42px!important;height:42px!important;object-fit:contain!important}
+
+/* Nav: larger icons + heart/x/dots sublabels */
+.nav-dock{
+  display:flex!important;align-items:stretch!important;justify-content:space-around!important;
+  height:108px!important;min-height:108px!important;padding:6px 2px 8px!important;
+  background:#121018!important;border-top:2px solid #2a2a34!important;z-index:50!important
+}
+.nav-dock button{
+  flex:1!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  gap:2px!important;background:transparent!important;border:0!important;position:relative!important;padding:2px!important
+}
+.nav-dock button .ic{display:block!important;line-height:0!important}
+.nav-dock button .ic .pxico,
+.nav-dock button .pxico{
+  width:48px!important;height:48px!important;object-fit:contain!important;display:block!important;opacity:1!important
+}
+.nav-dock button .lab{
+  font-family:'EGTitle','Oswald',sans-serif!important;font-weight:700!important;
+  font-size:12px!important;color:#ccc!important;display:block!important;margin-top:1px!important
+}
+.nav-dock button.on .lab{color:#ff2d78!important}
+.nav-dock button .nav-sub{width:14px!important;height:10px!important;display:block!important;margin-top:1px!important}
+.nav-dock button .nav-badge{
+  position:absolute!important;top:4px!important;right:18%!important;
+  min-width:16px!important;height:16px!important;border-radius:8px!important;
+  background:#ff2d78!important;color:#fff!important;font-size:10px!important;font-weight:700!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;padding:0 3px!important
+}
+
+
+/* PASS 32b: currency chips as separate boxes like mock */
+.hud-res{display:flex!important;align-items:stretch!important;gap:6px!important}
+.hud-res-box{
+  flex:1!important;display:flex!important;align-items:stretch!important;gap:6px!important;
+  background:transparent!important;border:0!important;padding:0!important;border-radius:0!important
+}
+.hud-res-box .hud-chip{
+  flex:1!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;
+  background:#121018!important;border:2px solid #ff2d78!important;border-radius:10px!important;
+  padding:6px 4px!important;min-width:0!important
+}
+.hud-res-box .hud-chip.xp{flex:1.4!important}
+.hud-res-box .hud-chip .xpbar{flex:1!important;min-width:36px!important}
+
+
+/* PASS 32c: tighter mock match for HUD/nav/FAB geometry */
+.screen.immersive.home-mode .hud,
+.screen.immersive .hud{
+  padding:6px 6px 0!important;
+}
+.hud-stats{gap:5px!important;margin-bottom:5px!important}
+.hud-stat{
+  border-radius:6px!important;border-width:2px!important;padding:4px 3px 5px!important;
+  background:#0e0c12!important
+}
+.hud-stat .lab-t{font-size:11px!important;letter-spacing:.01em!important}
+.hud-stat .lab .pxico{width:14px!important;height:14px!important}
+.hud-stat .bar{height:7px!important;margin-top:3px!important;border-radius:2px!important}
+.hud-res{gap:5px!important}
+.hud-res-box .hud-chip{
+  border-radius:6px!important;padding:5px 3px!important;font-size:13px!important;background:#0e0c12!important
+}
+.hud-gear{width:38px!important;height:38px!important;border-radius:6px!important}
+.scene-fab{
+  bottom:122px!important;right:10px!important;width:96px!important;height:96px!important
+}
+.scene-fab .fab-ring{border-width:2px!important;background:#0e0c12f0!important}
+.scene-fab .fab-hanger{width:36px!important;height:36px!important}
+.scene-fab .fab-lab{font-size:10px!important}
+.nav-dock{
+  height:100px!important;min-height:100px!important;padding:4px 0 6px!important;
+  background:#0e0c12!important;border-top:1px solid #2a2a34!important
+}
+.nav-dock button .pxico,.nav-dock button .ic .pxico{width:44px!important;height:44px!important}
+.nav-dock button .lab{font-size:11px!important;margin-top:0!important}
+.nav-dock button .nav-sub{width:12px!important;height:9px!important}
+.nav-dock button{border-right:1px solid #2a2a34!important}
+.nav-dock button:last-child{border-right:0!important}
+
+
+/* PASS 32d: softer pink + nav height match mock */
+:root{--eg-pink:#e9719c!important}
+.hud-stat,.hud-res-box .hud-chip,.hud-gear,.scene-fab .fab-ring{
+  border-color:#e9719c!important
+}
+.hud-stat .bar>i,.nav-dock button.on .lab{background:linear-gradient(90deg,#e9719c,#ff8fb8)!important}
+.nav-dock button.on .lab{background:transparent!important;color:#e9719c!important}
+.hud-stat .bar>i{background:linear-gradient(90deg,#e9719c,#ff8fb8)!important}
+.scene-fab .fab-ring{border-color:#e9719c!important}
+.nav-dock{
+  height:112px!important;min-height:112px!important;
+  padding:8px 0 10px!important;
+  border-top:2px solid #3a3a44!important;
+  /* pink corner flourishes */
+  background:
+    linear-gradient(#0e0c12,#0e0c12) padding-box,
+    #0e0c12!important;
+  position:relative!important
+}
+.nav-dock::before,.nav-dock::after{
+  content:''!important;position:absolute!important;bottom:2px!important;width:18px!important;height:14px!important;
+  background:radial-gradient(circle at 30% 70%, #e9719c 0 2px, transparent 3px),
+             radial-gradient(circle at 60% 40%, #e9719c 0 2px, transparent 3px),
+             radial-gradient(circle at 80% 80%, #ff8fb8 0 1.5px, transparent 2.5px)!important;
+  pointer-events:none!important;opacity:.9!important;z-index:2!important
+}
+.nav-dock::before{left:4px!important}
+.nav-dock::after{right:4px!important;transform:scaleX(-1)!important}
+.screen.immersive.home-mode .hud{padding:4px 6px 0!important}
+.scene-fab{bottom:128px!important}
+
+/* ===== PASS 33: loc gap, nav frame, rug feet, currency, map fix ===== */
+
+/* Loc panel must clear nav with gap — all viewports */
+.loc-panel{
+  bottom: calc(112px + 12px + env(safe-area-inset-bottom, 0px)) !important;
+  max-height: calc(100% - 112px - 12px - env(safe-area-inset-bottom, 0px) - 72px) !important;
+  overflow: auto !important;
+  z-index: 20 !important;
+}
+.shot-mode .loc-panel, .shot-hide-ads .loc-panel{
+  bottom: calc(112px + 12px) !important;
+  max-height: calc(100% - 112px - 12px - 64px) !important;
+}
+@media (max-height: 820px){
+  .loc-panel{
+    bottom: calc(104px + 10px + env(safe-area-inset-bottom, 0px)) !important;
+    max-height: calc(100% - 104px - 10px - env(safe-area-inset-bottom, 0px) - 56px) !important;
+  }
+  .shot-mode .loc-panel, .shot-hide-ads .loc-panel{
+    bottom: calc(104px + 10px) !important;
+    max-height: calc(100% - 104px - 10px - 52px) !important;
+  }
+  .nav-dock, .shot-mode .nav-dock, .shot-hide-ads .nav-dock{
+    height: 104px !important; min-height: 104px !important;
+  }
+}
+@media (max-height: 700px){
+  .loc-panel{
+    bottom: calc(96px + 8px) !important;
+    max-height: min(38vh, 220px) !important;
+  }
+  .loc-panel .lp-bars{gap:2px!important;padding:2px 8px 6px!important}
+  .loc-panel .lp-row{font-size:10px!important}
+  .loc-panel .lp-row .bar{height:7px!important}
+}
+
+/* Nav: framed panel + ornate pink corner brackets + ~56px icons */
+.nav-dock,
+html:not(.eg-native-ads) .nav-dock,
+.shot-mode .nav-dock,
+.shot-hide-ads .nav-dock,
+.screen.immersive .nav-dock,
+.feed-screen .nav-dock,
+.ward-screen .nav-dock,
+.chat-v2 .nav-dock,
+.map-screen .nav-dock{
+  height: 112px !important;
+  min-height: 112px !important;
+  padding: 8px 6px 14px !important;
+  background: #121018 !important;
+  border: 2px solid #3a3a48 !important;
+  border-bottom: 0 !important;
+  border-radius: 10px 10px 0 0 !important;
+  box-shadow: inset 0 0 0 1px #1a1a22 !important;
+  left: 4px !important; right: 4px !important; bottom: 0 !important;
+  width: auto !important;
+  position: absolute !important;
+  overflow: visible !important;
+}
+.feed-screen .nav-dock, .ward-screen .nav-dock, .chat-v2 .nav-dock, .map-screen .nav-dock{
+  position: relative !important; bottom: auto !important; flex-shrink: 0 !important;
+  margin: 0 4px !important; left: auto !important; right: auto !important;
+}
+.nav-dock .nav-ornament{
+  position: absolute !important; bottom: 2px !important; width: 36px !important; height: 28px !important;
+  pointer-events: none !important; z-index: 3 !important; object-fit: contain !important;
+  image-rendering: pixelated !important; opacity: 1 !important;
+}
+.nav-dock .nav-ornament.bl{left: 2px !important}
+.nav-dock .nav-ornament.br{right: 2px !important; transform: scaleX(-1) !important}
+.nav-dock::before, .nav-dock::after{display: none !important; content: none !important}
+.nav-dock button .ic .pxico,
+.nav-dock button .pxico{
+  width: 56px !important; height: 56px !important;
+  object-fit: contain !important; image-rendering: pixelated !important;
+}
+.nav-dock button .lab{
+  font-family: 'EGTitle','Oswald',sans-serif !important;
+  font-weight: 700 !important; font-size: 13px !important;
+  letter-spacing: .02em !important; margin-top: 2px !important;
+}
+.nav-dock button .nav-sub{width: 14px !important; height: 10px !important; margin-top: 2px !important}
+.nav-dock button + button{border-left: 1px solid #3a3a48 !important}
+
+/* Home: feet ON rug centre + soft shadow */
+.stage-bleed.floor-room .char-wrap,
+.screen.immersive.home-mode .char-wrap{
+  left: 50% !important; transform: translateX(-50%) !important;
+  bottom: 20% !important; width: 38% !important; height: 26% !important;
+  align-items: flex-end !important; justify-content: center !important;
+}
+.stage-bleed.floor-room .char-wrap .char,
+.screen.immersive.home-mode .char-wrap .char{
+  height: 100% !important; width: auto !important; max-width: 100% !important;
+  object-fit: contain !important; object-position: bottom center !important;
+  filter: drop-shadow(0 10px 8px rgba(0,0,0,.55)) !important;
+}
+.stage-bleed.floor-room .char-wrap .char-shadow,
+.screen.immersive.home-mode .char-wrap .char-shadow{
+  display: block !important; opacity: .65 !important;
+  width: 70% !important; height: 18% !important;
+  bottom: -2% !important; left: 50% !important; transform: translateX(-50%) !important;
+  z-index: 1 !important; filter: blur(1px) !important;
+}
+
+/* Currency chips — mock-sized icons */
+.hud-res-box .hud-chip .pxico,
+.hud-chip .pxico{
+  width: 22px !important; height: 22px !important;
+  object-fit: contain !important; image-rendering: pixelated !important;
+}
+.hud-res-box .hud-chip{
+  gap: 6px !important; padding: 5px 8px !important;
+  font-size: 14px !important; min-height: 36px !important;
+}
+.hud-res-box .hud-chip.xp .pxico{width: 20px !important; height: 20px !important}
+
+/* MAP FIX: bleed must stay absolute full-bleed (pass31 wrongly forced relative) */
+.map-screen{position: relative !important; overflow: hidden !important}
+.map-screen .map-bleed{
+  position: absolute !important; inset: 0 !important;
+  width: 100% !important; height: 100% !important;
+  z-index: 0 !important; opacity: 1 !important; visibility: visible !important;
+  overflow: hidden !important; pointer-events: none !important;
+}
+.map-screen .map-bleed .mapbg{
+  position: absolute !important; inset: 0 !important;
+  width: 100% !important; height: 100% !important;
+  object-fit: cover !important; object-position: center 40% !important;
+  opacity: 1 !important; display: block !important;
+}
+.map-screen .map-pins{
+  position: absolute !important; inset: 0 !important;
+  z-index: 3 !important; height: auto !important; width: auto !important;
+}
+.map-screen .map-head{
+  position: absolute !important; left: 8px !important; right: 8px !important;
+  top: max(8px, env(safe-area-inset-top)) !important;
+  z-index: 12 !important; height: auto !important; width: auto !important;
+}
+
+/* FAB clear of taller nav */
+.scene-fab{bottom: 130px !important}
+@media (max-height: 820px){
+  .scene-fab{bottom: 118px !important; width: 92px !important; height: 92px !important}
+}
+
+/* PASS 33b: beat .loc-mode.loc-metro bottom:100px and cafe/park 112px */
+.loc-mode .loc-panel,
+.loc-mode.loc-metro .loc-panel,
+.loc-mode.loc-station .loc-panel,
+.loc-mode.loc-cafe .loc-panel,
+.loc-mode.loc-park .loc-panel,
+.loc-mode.loc-bookcafe .loc-panel,
+.screen.immersive.loc-mode .loc-panel,
+.screen.immersive.loc-metro .loc-panel,
+.screen.immersive.loc-cafe .loc-panel,
+.screen.immersive.loc-park .loc-panel,
+.shot-mode .loc-mode .loc-panel,
+.shot-hide-ads .loc-mode .loc-panel{
+  bottom: 128px !important;
+  max-height: calc(100dvh - 128px - 80px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+.loc-mode.loc-cafe .loc-panel,
+.loc-mode.loc-park .loc-panel,
+.loc-mode.loc-bookcafe .loc-panel,
+.screen.immersive.loc-cafe .loc-panel,
+.screen.immersive.loc-park .loc-panel{
+  max-height: 140px !important;
+}
+@media (max-height: 820px){
+  .loc-mode .loc-panel,
+  .loc-mode.loc-metro .loc-panel,
+  .loc-mode.loc-station .loc-panel,
+  .screen.immersive.loc-mode .loc-panel,
+  .shot-mode .loc-mode .loc-panel{
+    bottom: 124px !important;
+    max-height: calc(100dvh - 124px - 56px) !important;
+  }
+}
+
+/* PASS 34: stage bleed, rug-centre feet, top nav brackets, currency size */
+.screen.immersive.home-mode .stage-bleed,
+.screen.immersive.loc-mode .stage-bleed,
+.screen.immersive.loc-metro .stage-bleed,
+.screen.immersive.loc-cafe .stage-bleed,
+.screen.immersive.loc-park .stage-bleed,
+.screen.immersive.loc-station .stage-bleed,
+.stage-bleed.floor-room,
+.stage-bleed.floor-metro,
+.stage-bleed.floor-cafe,
+.stage-bleed.floor-park,
+.stage-bleed.floor-station{
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+}
+.stage-bleed .bg{
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center bottom !important;
+}
+
+/* Feet ON rug centre (~y 560-590 at 915) → bottom ~36-38% of stage */
+.stage-bleed.floor-room .char-wrap,
+.screen.immersive.home-mode .char-wrap,
+.screen.immersive.home-mode .stage-bleed .char-wrap{
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 36% !important;
+  width: 36% !important;
+  height: 28% !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  z-index: 5 !important;
+}
+.stage-bleed.floor-room .char-wrap .char,
+.screen.immersive.home-mode .char-wrap .char{
+  height: 100% !important;
+  width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: bottom center !important;
+  filter: drop-shadow(0 8px 6px rgba(0,0,0,.5)) !important;
+}
+.stage-bleed.floor-room .char-wrap .char-shadow,
+.screen.immersive.home-mode .char-wrap .char-shadow{
+  display: block !important;
+  opacity: .7 !important;
+  width: 72% !important;
+  height: 16% !important;
+  bottom: -3% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1 !important;
+  filter: blur(2px) !important;
+}
+@media (max-height: 820px){
+  .stage-bleed.floor-room .char-wrap,
+  .screen.immersive.home-mode .char-wrap{
+    bottom: 34% !important;
+    height: 30% !important;
+    width: 38% !important;
+  }
+}
+
+/* Nav: ornate pink brackets at TOP corners (mock) + bottom */
+.nav-dock .nav-ornament{
+  position: absolute !important;
+  width: 40px !important;
+  height: 32px !important;
+  pointer-events: none !important;
+  z-index: 4 !important;
+  object-fit: contain !important;
+  image-rendering: pixelated !important;
+  opacity: 1 !important;
+}
+.nav-dock .nav-ornament.tl{
+  top: -2px !important; left: 2px !important; bottom: auto !important;
+  transform: scaleY(-1) !important;
+}
+.nav-dock .nav-ornament.tr{
+  top: -2px !important; right: 2px !important; bottom: auto !important;
+  transform: scaleX(-1) scaleY(-1) !important;
+}
+.nav-dock .nav-ornament.bl{
+  bottom: 2px !important; left: 2px !important; top: auto !important;
+  transform: none !important;
+}
+.nav-dock .nav-ornament.br{
+  bottom: 2px !important; right: 2px !important; top: auto !important;
+  transform: scaleX(-1) !important;
+}
+
+/* Currency chips — mock size */
+.hud-res-box .hud-chip .pxico,
+.hud-chip .pxico,
+.feed-currency .hud-chip .pxico{
+  width: 26px !important;
+  height: 26px !important;
+}
+.hud-res-box .hud-chip.xp .pxico{ width: 24px !important; height: 24px !important; }
+.hud-res-box .hud-chip{
+  gap: 7px !important;
+  padding: 6px 10px !important;
+  min-height: 38px !important;
+  font-size: 15px !important;
+}
+
+/* PASS 34b: currency chips no wrap; HUD vitals denser like mock */
+.hud-res-box .hud-chip,
+.feed-currency .hud-chip{
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+}
+.hud-res-box .hud-chip,
+.hud-chip{
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: 0 !important;
+}
+@media (max-width: 380px){
+  .hud-res-box .hud-chip{
+    font-size: 13px !important;
+    padding: 5px 7px !important;
+    gap: 5px !important;
+    min-height: 34px !important;
+  }
+  .hud-res-box .hud-chip .pxico,
+  .hud-chip .pxico{ width: 22px !important; height: 22px !important; }
+  .hud-res-box .hud-chip.xp .pxico{ width: 20px !important; height: 20px !important; }
+}
+.hud-stat{
+  border: 1.5px solid #ff4d9a !important;
+  border-radius: 8px !important;
+  background: #0c0a10ee !important;
+  padding: 4px 6px !important;
+  box-shadow: inset 0 0 0 1px #1a1218 !important;
+}
+.hud-stat .lab{ gap: 4px !important; }
+.hud-stat .lab .pxico{ width: 16px !important; height: 16px !important; }
+.hud-stat .bar{ height: 8px !important; margin-top: 3px !important; }
+
+/* ===== PASS 35: close remaining mock diffs ===== */
+
+/* MAP HUD — large avatar + name layout */
+.map-screen .map-head.map-head-v2,
+.map-screen .map-head{
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  padding: 10px 10px 8px !important;
+  background: linear-gradient(180deg,#0a0810f2 0%,#0a0810aa 70%,transparent 100%) !important;
+  border: 0 !important;
+}
+.map-head .map-id{
+  display: flex !important;
+  gap: 10px !important;
+  align-items: center !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+.map-head .map-av{
+  width: 72px !important;
+  height: 72px !important;
+  border-radius: 50% !important;
+  border: 3px solid #c44dff !important;
+  box-shadow: 0 0 12px #c44dff88 !important;
+  object-fit: cover !important;
+  flex-shrink: 0 !important;
+}
+.map-head .map-name{
+  font-family: 'EGTitle','Oswald',sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  
+  color: #d9a0ff !important;
+  line-height: 1.1 !important;
+  letter-spacing: .02em !important;
+}
+.map-head .map-lv{
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12px !important;
+  color: #c9a0ff !important;
+  margin-top: 2px !important;
+}
+.map-head .map-lv .pxico{ width: 14px !important; height: 14px !important; }
+.map-head .map-xp{
+  margin-top: 6px !important;
+  width: min(200px, 48vw) !important;
+}
+.map-head .map-xp .xpbar{
+  position: relative !important;
+  height: 14px !important;
+  border-radius: 8px !important;
+  background: #1a1222 !important;
+  border: 1px solid #6b3a9a !important;
+  overflow: hidden !important;
+}
+.map-head .map-xp .xpbar > i{
+  display: block !important; height: 100% !important;
+  background: linear-gradient(90deg,#7b3dff,#c44dff) !important;
+}
+.map-head .map-xp .xpbar > span{
+  position: absolute !important; inset: 0 !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  font-size: 10px !important; color: #fff !important; font-weight: 700 !important;
+}
+.map-head .map-cur{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  align-items: stretch !important;
+}
+.map-head .map-cur .hud-chip{
+  min-width: 110px !important;
+  white-space: nowrap !important;
+}
+.map-head .map-cur .hud-gear{ align-self: flex-end !important; }
+
+/* CHAT — textured bg, bubble tails, packed list, batwing active */
+.chat-v2{
+  position: relative !important;
+  background: #0a0810 !important;
+}
+.chat-v2 .chat-bg{
+  position: absolute !important; inset: 0 !important;
+  background:
+    url('../img/ui/chrome/chat_splatter.webp') center/cover no-repeat,
+    url('../img/ui/chrome/bg_grunge.webp') center/cover no-repeat,
+    #0a0810 !important;
+  opacity: .55 !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+.chat-v2 > *:not(.chat-bg){ position: relative !important; z-index: 1 !important; }
+.chat-v2 .chat-title{ flex-shrink: 0 !important; padding: 8px 0 4px !important; }
+.chat-v2 .chat-title img{ width: 58% !important; max-width: 260px !important; }
+.chat-v2{
+  display: flex !important;
+  flex-direction: column !important;
+}
+.chat-v2 .chat-list{
+  flex: 0 1 auto !important;
+  max-height: 42vh !important;
+  overflow: auto !important;
+  padding: 2px 10px 0 !important;
+  gap: 6px !important;
+  min-height: 0 !important;
+}
+.chat-v2 .chat-div{ flex: 0 0 auto !important; padding: 2px 4px !important; margin: 0 !important; }
+.chat-v2 .quick{ flex: 0 0 auto !important; padding: 2px 8px 6px !important; gap: 6px !important; margin: 0 !important; }
+.chat-v2 .chat-spacer{ flex: 1 1 auto !important; min-height: 0 !important; }
+.chat-v2 .msg .av-wrap{
+  width: 52px !important; height: 52px !important;
+  border-radius: 50% !important;
+  border: 2px solid #ff2d78 !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 0 0 1px #3a1028 !important;
+}
+.chat-v2 .msg .av{ width: 100% !important; height: 100% !important; object-fit: cover !important; border-radius: 50% !important; }
+.chat-v2 .msg .bubble{
+  position: relative !important;
+  border: 2px solid #ff2d78 !important;
+  border-radius: 12px 12px 12px 4px !important;
+  background: #120a16ee !important;
+  padding: 8px 12px 14px !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+.chat-v2 .msg .bubble::before{
+  content: '' !important;
+  position: absolute !important;
+  left: -8px !important; top: 16px !important;
+  width: 0 !important; height: 0 !important;
+  border-top: 7px solid transparent !important;
+  border-bottom: 7px solid transparent !important;
+  border-right: 8px solid #ff2d78 !important;
+}
+.chat-v2 .msg .bubble::after{
+  content: '' !important;
+  position: absolute !important;
+  left: -5px !important; top: 17px !important;
+  width: 0 !important; height: 0 !important;
+  border-top: 6px solid transparent !important;
+  border-bottom: 6px solid transparent !important;
+  border-right: 6px solid #120a16 !important;
+}
+.chat-v2 .msg .bubble-heart{
+  position: absolute !important;
+  right: 8px !important; bottom: 4px !important;
+  color: #ff2d78 !important; font-size: 12px !important;
+  opacity: .9 !important;
+}
+.nav-dock button.chat-bat .pxico,
+.nav-dock button.on.chat-bat .pxico{
+  width: 64px !important; height: 64px !important;
+  filter: drop-shadow(0 0 6px #ff2d7888) !important;
+}
+
+/* FOOD — dense art filling cards */
+.feed-screen .food-card{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  padding: 4px 4px 6px !important;
+  gap: 0 !important;
+  min-height: 196px !important;
+}
+.feed-screen .food-card .food-art{
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 148px !important;
+  min-height: 148px !important;
+  max-height: 160px !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  image-rendering: auto !important;
+  flex: 0 0 148px !important;
+}
+.feed-screen .food-card b{
+  font-size: 14px !important;
+  margin: 0 !important;
+  line-height: 1.1 !important;
+}
+.feed-screen .food-card .sub{
+  font-size: 12px !important;
+  margin: 0 !important;
+}
+.feed-screen .food-grid{
+  gap: 8px !important;
+  padding: 4px 8px 6px !important;
+}
+.feed-screen .feed-body{
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+}
+
+/* WARDROBE — check/lock badges */
+.ward-card{ position: relative !important; }
+.ward-card .ward-badge{
+  position: absolute !important;
+  top: 6px !important; right: 6px !important;
+  z-index: 2 !important;
+  width: 26px !important; height: 26px !important;
+  border-radius: 50% !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  font-size: 14px !important; font-weight: 800 !important;
+  pointer-events: none !important;
+}
+.ward-card .ward-badge.check{
+  background: #ff2d78 !important; color: #fff !important;
+  box-shadow: 0 0 0 2px #1a0a12 !important;
+}
+.ward-card .ward-badge.lock{
+  background: transparent !important; font-size: 22px !important;
+  width: auto !important; height: auto !important;
+}
+.ward-card.on::after, .ward-card.locked::after{ display: none !important; content: none !important; }
+.ward-grid{ gap: 8px !important; }
+
+/* METRO header snowflake + battery */
+.loc-head .loc-head-right{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 2px !important;
+  flex-shrink: 0 !important;
+}
+.loc-head .metro-wx, .loc-head .metro-bat{
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  color: #ff8fb8 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  font-family: 'EGTitle','Oswald',sans-serif !important;
+}
+.loc-head .metro-wx .pxico, .loc-head .metro-bat .pxico{
+  width: 18px !important; height: 18px !important;
+}
+
+/* CAFE/PARK mock HUD + seated */
+.loc-hud-mock{
+  position: absolute !important;
+  left: 8px !important; right: 8px !important;
+  top: max(8px, env(safe-area-inset-top)) !important;
+  z-index: 12 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  pointer-events: none !important;
+}
+.loc-hud-mock .lh-top{
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+}
+.loc-hud-mock .lh-user, .loc-hud-mock .lh-phase{
+  display: flex !important;
+  gap: 8px !important;
+  align-items: center !important;
+  background: #0c0a10ee !important;
+  border: 1.5px solid #ff2d78 !important;
+  border-radius: 10px !important;
+  padding: 6px 8px !important;
+}
+.loc-hud-mock .lh-name{
+  font-family: 'EGTitle','Oswald',sans-serif !important;
+  color: #ff8fb8 !important;
+  font-size: 14px !important;
+}
+.loc-hud-mock .lh-hearts{ display: flex !important; gap: 1px !important; margin-top: 2px !important; }
+.loc-hud-mock .lh-hearts .hrt{ color: #3a2030 !important; font-size: 11px !important; }
+.loc-hud-mock .lh-hearts .hrt.on{ color: #ff2d78 !important; }
+.loc-hud-mock .lh-phase b{ display: block !important; color: #fff !important; font-size: 14px !important; }
+.loc-hud-mock .lh-phase span{ color: #ffb0d0 !important; font-size: 11px !important; }
+.loc-hud-mock .lh-stats{
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 4px !important;
+}
+.loc-hud-mock .lh-stat{
+  background: #0c0a10ee !important;
+  border: 1.5px solid #ff2d78 !important;
+  border-radius: 8px !important;
+  padding: 4px 5px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 2px !important;
+  font-size: 10px !important;
+  color: #ff8fb8 !important;
+}
+.loc-hud-mock .lh-stat .pxico{ width: 14px !important; height: 14px !important; }
+.loc-hud-mock .seg{ display: flex !important; gap: 2px !important; width: 100% !important; }
+.loc-hud-mock .seg > i{
+  flex: 1 !important; height: 6px !important;
+  background: #2a1a24 !important; border-radius: 2px !important;
+}
+.loc-hud-mock .seg > i.on{ background: #ff2d78 !important; }
+.loc-badge{
+  position: absolute !important;
+  top: 118px !important; left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 11 !important;
+  background: #ff2d78 !important; color: #fff !important;
+  font-family: 'EGTitle','Oswald',sans-serif !important;
+  font-weight: 800 !important; font-size: 14px !important;
+  padding: 4px 14px !important; border-radius: 999px !important;
+  box-shadow: 0 0 12px #ff2d7888 !important;
+  pointer-events: none !important;
+}
+.loc-mode.loc-cafe .loc-panel,
+.loc-mode.loc-park .loc-panel,
+.loc-mode.loc-bookcafe .loc-panel{
+  max-height: 96px !important;
+}
+/* Seated cafe character — lower, denser on floor near table */
+.stage-bleed.floor-cafe .char-wrap,
+.screen.immersive.loc-cafe .char-wrap,
+.screen.immersive.loc-bookcafe .char-wrap{
+  bottom: 28% !important;
+  height: 42% !important;
+  width: 48% !important;
+  left: 42% !important;
+  transform: translateX(-50%) !important;
+}
+.stage-bleed.floor-cafe .char-wrap .char,
+.screen.immersive.loc-cafe .char-wrap .char{
+  object-fit: contain !important;
+  object-position: bottom center !important;
+  filter: drop-shadow(0 8px 6px rgba(0,0,0,.55)) !important;
+}
+.stage-bleed.floor-park .char-wrap,
+.screen.immersive.loc-park .char-wrap{
+  bottom: 30% !important;
+  height: 34% !important;
+  width: 32% !important;
+}
+@media (max-height: 820px){
+  .chat-v2 .chat-list{ max-height: 42vh !important; }
+  .map-head .map-av{ width: 60px !important; height: 60px !important; }
+  .map-head .map-name{ font-size: 18px !important; }
+  .loc-badge{ top: 108px !important; font-size: 12px !important; }
+  .stage-bleed.floor-cafe .char-wrap{ bottom: 26% !important; height: 40% !important; }
+}
+
+
+/* ===== PASS 36 — transparent titles, chat dock, feed tabs ===== */
+.chat-v2 .chat-title,
+.feed-head,
+.ward-screen .ward-head{
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.chat-v2 .chat-title img,
+.feed-head .feed-title-art,
+.ward-title-art{
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+  filter: drop-shadow(0 2px 6px #000a) !important;
+  image-rendering: auto !important;
+}
+.feed-head h1,
+.feed-title-oswald{
+  display: none !important;
+}
+.chat-v2 .chat-title{
+  flex: 0 0 auto !important;
+  padding: 6px 8px 2px !important;
+  padding-top: max(8px, env(safe-area-inset-top)) !important;
+}
+.chat-v2 .chat-title img{
+  display: block !important;
+  width: 72% !important;
+  max-width: 300px !important;
+  height: auto !important;
+  margin: 0 auto !important;
+}
+.chat-v2 .chat-title::before,
+.chat-v2 .chat-title::after{
+  content: none !important;
+  display: none !important;
+}
+.feed-head .feed-title-art{
+  display: block !important;
+  width: 70% !important;
+  max-width: 300px !important;
+  margin: 8px auto 2px !important;
+}
+.ward-title-art{
+  width: 68% !important;
+  max-width: 280px !important;
+}
+
+/* Chat: messages fill; dock (drip+quick+upsell) just above nav — no void */
+.chat-v2{
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 100% !important;
+}
+.chat-v2 .chat-list{
+  flex: 1 1 auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+  padding: 4px 10px 6px !important;
+  gap: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+}
+.chat-v2 .chat-dock{
+  flex: 0 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  padding: 0 0 4px !important;
+  background: linear-gradient(180deg, transparent, #0a0810ee 18%) !important;
+  z-index: 2 !important;
+}
+.chat-v2 .chat-div{
+  flex: 0 0 auto !important;
+  padding: 2px 4px !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
+.chat-v2 .chat-div img{ width: 28px !important; height: auto !important; }
+.chat-v2 .quick{
+  flex: 0 0 auto !important;
+  padding: 2px 8px 4px !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+.chat-v2 .chat-spacer{ display: none !important; height: 0 !important; }
+.chat-v2 .nav-dock{ flex: 0 0 auto !important; }
+
+.chat-upsell{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin: 0 8px 4px !important;
+  padding: 8px 10px !important;
+  border: 2px solid #ff2d7888 !important;
+  border-radius: 12px !important;
+  background: #120a16f0 !important;
+  box-shadow: 0 0 12px #ff2d7833 !important;
+}
+.chat-upsell .cu-copy{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+.chat-upsell .cu-copy b{
+  color: #ff8fb8 !important;
+  font-family: 'EGTitle','Oswald',sans-serif !important;
+  font-size: 13px !important;
+}
+.chat-upsell .cu-copy span{ color: #b9a0b0 !important; font-size: 11px !important; }
+.chat-upsell .cu-btn{
+  flex-shrink: 0 !important;
+  border: 2px solid #ff2d78 !important;
+  background: #ff2d78 !important;
+  color: #1a0810 !important;
+  font-family: 'EGTitle','Oswald',sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+  border-radius: 10px !important;
+}
+.chat-upsell.on{ padding: 6px 8px !important; }
+.chat-upsell .cu-row{
+  display: flex !important;
+  width: 100% !important;
+  gap: 6px !important;
+  align-items: center !important;
+}
+.chat-upsell #chatFree{
+  flex: 1 !important;
+  min-width: 0 !important;
+  background: #0a0810 !important;
+  border: 1px solid #ff2d7866 !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  font-size: 13px !important;
+}
+.chat-upsell .cu-send{
+  width: 42px !important; height: 42px !important;
+  border-radius: 12px !important;
+  border: 2px solid #ff2d78 !important;
+  background: #2a1020 !important;
+  color: #ff8fb8 !important;
+  font-size: 16px !important;
+}
+
+/* Food tabs Еда / Напитки */
+.feed-tabs{
+  display: flex !important;
+  gap: 8px !important;
+  padding: 4px 12px 8px !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+}
+.feed-tab{
+  flex: 1 1 0 !important;
+  max-width: 160px !important;
+  padding: 8px 10px !important;
+  border: 2px solid #ff2d7866 !important;
+  border-radius: 12px !important;
+  background: #120a16 !important;
+  color: #b9a0b0 !important;
+  font-family: 'EGTitle','Oswald',sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+.feed-tab.on{
+  border-color: #ff2d78 !important;
+  color: #ff8fb8 !important;
+  box-shadow: 0 0 10px #ff2d7844 !important;
+  background: #1a0e18 !important;
+}
+.feed-screen{
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+.feed-screen .feed-body{
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+}
+@media (max-height: 820px){
+  .chat-v2 .chat-list{ max-height: none !important; }
+  .chat-v2 .chat-title img{ width: 64% !important; max-width: 240px !important; }
+  .feed-head .feed-title-art{ width: 62% !important; max-width: 240px !important; }
+}
+
+.chat-v2 .chat-list .msg{ flex: 0 0 auto !important; }

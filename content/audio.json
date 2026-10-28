@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "base": "assets/audio/",
+  "formats": [
+    "ogg",
+    "mp3"
+  ],
+  "sfx": {
+    "ui_tap": {
+      "file": "sfx/ui_tap",
+      "vol": 0.55
+    },
+    "sheet_open": {
+      "file": "sfx/sheet_open",
+      "vol": 0.6
+    },
+    "sheet_close": {
+      "file": "sfx/sheet_close",
+      "vol": 0.55
+    },
+    "tab": {
+      "file": "sfx/tab",
+      "vol": 0.5
+    },
+    "coin": {
+      "file": "sfx/coin",
+      "vol": 0.7
+    },
+    "gem": {
+      "file": "sfx/gem",
+      "vol": 0.7
+    },
+    "level_up": {
+      "file": "sfx/level_up",
+      "vol": 0.85
+    },
+    "achievement": {
+      "file": "sfx/achievement",
+      "vol": 0.8
+    },
+    "gift_open": {
+      "file": "sfx/gift_open",
+      "vol": 0.75
+    },
+    "gift_receive": {
+      "file": "sfx/gift_receive",
+      "vol": 0.75
+    },
+    "eat": {
+      "file": "sfx/eat",
+      "vol": 0.7
+    },
+    "drink": {
+      "file": "sfx/drink",
+      "vol": 0.65
+    },
+    "sleep": {
+      "file": "sfx/sleep",
+      "vol": 0.55
+    },
+    "snore": {
+      "file": "sfx/snore",
+      "vol": 0.45
+    },
+    "wake": {
+      "file": "sfx/wake",
+      "vol": 0.6
+    },
+    "clean": {
+      "file": "sfx/clean",
+      "vol": 0.65
+    },
+    "trash": {
+      "file": "sfx/trash",
+      "vol": 0.6
+    },
+    "laundry": {
+      "file": "sfx/laundry",
+      "vol": 0.6
+    },
+    "dishes": {
+      "file": "sfx/dishes",
+      "vol": 0.6
+    },
+    "shower": {
+      "file": "sfx/shower",
+      "vol": 0.55
+    },
+    "happy": {
+      "file": "sfx/happy",
+      "vol": 0.65
+    },
+    "sad": {
+      "file": "sfx/sad",
+      "vol": 0.6
+    },
+    "hungry": {
+      "file": "sfx/hungry",
+      "vol": 0.55
+    },
+    "error": {
+      "file": "sfx/error",
+      "vol": 0.6
+    },
+    "notification": {
+      "file": "sfx/notification",
+      "vol": 0.7
+    },
+    "chat_send": {
+      "file": "sfx/chat_send",
+      "vol": 0.55
+    },
+    "chat_receive": {
+      "file": "sfx/chat_receive",
+      "vol": 0.6
+    },
+    "purchase": {
+      "file": "sfx/purchase",
+      "vol": 0.75
+    },
+    "travel": {
+      "file": "sfx/travel",
+      "vol": 0.65
+    },
+    "door": {
+      "file": "sfx/door",
+      "vol": 0.6
+    },
+    "cat_meow": {
+      "file": "sfx/cat_meow",
+      "vol": 0.65
+    },
+    "cat_purr": {
+      "file": "sfx/cat_purr",
+      "vol": 0.5
+    },
+    "metro_arrive": {
+      "file": "sfx/metro_arrive",
+      "vol": 0.7
+    },
+    "footsteps": {
+      "file": "sfx/footsteps",
+      "vol": 0.45
+    }
+  },
+  "ambience": {
+    "cafe": {
+      "file": "sfx/amb_cafe",
+      "vol": 0.5,
+      "loop": true
+    },
+    "cemetery": {
+      "file": "sfx/amb_cemetery",
+      "vol": 0.5,
+      "loop": true
+    },
+    "concert": {
+      "file": "sfx/amb_concert",
+      "vol": 0.5,
+      "loop": true
+    },
+    "metro": {
+      "file": "sfx/amb_metro",
+      "vol": 0.5,
+      "loop": true
+    },
+    "park": {
+      "file": "sfx/amb_park",
+      "vol": 0.5,
+      "loop": true
+    },
+    "rain": {
+      "file": "sfx/amb_rain",
+      "vol": 0.5,
+      "loop": true
+    },
+    "snow": {
+      "file": "sfx/amb_snow",
+      "vol": 0.5,
+      "loop": true
+    }
+  },
+  "music": {
+    "home_day": {
+      "file": "music/home_day",
+      "vol": 0.45
+    },
+    "home_night": {
+      "file": "music/home_night",
+      "vol": 0.4
+    },
+    "map": {
+      "file": "music/map",
+      "vol": 0.4
+    },
+    "concert": {
+      "file": "music/concert",
+      "vol": 0.5
+    },
+    "cafe": {
+      "file": "music/cafe",
+      "vol": 0.4
+    },
+    "dark": {
+      "file": "music/dark",
+      "vol": 0.38
+    },
+    "menu": {
+      "file": "music/menu",
+      "vol": 0.42
+    }
+  },
+  "screenMusic": {
+    "home": "home_day",
+    "sleep": "home_night",
+    "map": "map",
+    "create": "menu",
+    "onboardCare": "menu",
+    "consent": "menu",
+    "consentSet": "menu",
+    "feed": "home_day",
+    "wardrobe": "home_day",
+    "gifts": "home_day",
+    "chat": "home_day",
+    "shop": "home_day",
+    "account": "menu"
+  },
+  "locMusic": {
+    "room": "home_day",
+    "metro": "dark",
+    "cemetery": "dark",
+    "cafe": "cafe",
+    "bookcafe": "cafe",
+    "park": "home_day",
+    "concert": "concert",
+    "club": "concert",
+    "records": "cafe",
+    "skate": "home_day",
+    "arcade": "concert",
+    "karaoke": "concert"
+  },
+  "phaseMusicOverride": {
+    "night": {
+      "home_day": "home_night",
+      "home": "home_night"
+    }
+  },
+  "weatherAmbience": {
+    "rain": "rain",
+    "storm": "rain",
+    "snow": "snow"
+  },
+  "locAmbience": {
+    "metro": "metro",
+    "cemetery": "cemetery",
+    "cafe": "cafe",
+    "bookcafe": "cafe",
+    "park": "park",
+    "concert": "concert",
+    "club": "concert"
+  }
+}

@@ -23,7 +23,7 @@ const A={
       else val=S[stat]|0;
       if(val>=need){
         S.ach=S.ach||{}; S.ach[a.id]=Date.now();
-        const r=a.reward||{}; S.coins=(S.coins|0)+(r.coins|0); S.gems=(S.gems|0)+(r.gems|0);
+        const r=a.reward||{}; S.coins=(S.coins|0)+(r.coins|0); S.gems=(S.gems|0)+(r.gems|0); try{ if((r.gems|0)>0 && window.EGAudio) EGAudio.emit('gem'); }catch(e){}
         unlocked.push(a);
       }
     }

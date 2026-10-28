@@ -5,10 +5,10 @@ const Content={
   get(name){ return store[name]; },
   async load(){
     const base='content/';
-    let pack; try{ pack=await (await fetch(base+'pack.json')).json(); }catch(e){ pack={files:[]}; }
+    let pack; try{ pack=await (await fetch(base+'pack.json?v=0.7.9',{cache:'no-cache'})).json(); }catch(e){ pack={files:[]}; }
     this.pack=pack;
     const EG=window.EG=window.EG||{};
-    const loadOne=async(name)=>{ try{ return await (await fetch(base+name+'.json')).json(); }catch(e){ return null; } };
+    const loadOne=async(name)=>{ try{ return await (await fetch(base+name+'.json?v=0.7.9',{cache:'no-cache'})).json(); }catch(e){ return null; } };
     const files=pack.files||[];
     for(const f of files){
       const data=await loadOne(f); if(data==null) continue;
@@ -24,6 +24,7 @@ const Content={
       else if(f==='events') EG.EVENTS_DEF=data;
       else if(f==='unlocks') EG.UNLOCKS=data;
       else if(f==='anims') EG.ANIMS=data;
+      else if(f==='audio') EG.AUDIO=data;
     }
     try{
       if(window.EGRC&&EGRC.bool('content_remote',true)&&pack.remoteUrl){

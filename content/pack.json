@@ -21,7 +21,8 @@
     "collections",
     "weather",
     "pet",
-    "diary"
+    "diary",
+    "audio"
   ],
   "modules": [
     "care",

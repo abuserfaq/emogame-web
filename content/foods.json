@@ -4,7 +4,7 @@
     "name": "Рамен",
     "hunger": 32,
     "mood": 9,
-    "cost": 140,
+    "cost": 120,
     "img": "img/food/ramen.webp",
     "unlockLevel": 1,
     "minLevel": 1

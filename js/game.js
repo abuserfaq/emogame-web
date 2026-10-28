@@ -8,6 +8,7 @@ if(SHOT) document.documentElement.classList.add('shot-mode','shot-hide-ads');
 let S, EG, cur='';
 const save=()=>EGSave.persist(S);
 const clamp=(v,a,b)=>EG.clamp(v,a,b);
+const egA=(ev,p)=>{ try{ if(window.EGAudio) EGAudio.emit(ev,p||{}); }catch(e){} };
 const ico=(k,c)=>window.EGUI?EGUI.icon(k,c):'';
 window.toast=function(t){ const e=document.createElement('div'); e.className='toast'; e.textContent=t; app.appendChild(e);
   setTimeout(()=>e.style.opacity=0,1600); setTimeout(()=>e.remove(),2100); };
@@ -20,11 +21,11 @@ function tickNeeds(){
     S.lastTick=now; save();
   }
 }
-function phase(){ return EG.phaseOf(new Date().getHours()); }
+function phase(){ const q=new URLSearchParams(location.search); const o=q.get('phase')||window.__EG_PHASE; if(o&&['morning','day','evening','night'].includes(o)) return o; return EG.phaseOf(new Date().getHours()); }
 function xpNeed(lv){ return 80+lv*40; }
 function addXp(n){ S.xp+=n; const prev=S.level;
-  while(S.xp>=xpNeed(S.level)){ S.xp-=xpNeed(S.level); S.level++; toast('Уровень '+S.level+'!'); }
-  if(S.level>prev){ if(window.EGUnlocks) EGUnlocks.onLevel(S,prev); if(window.EGAch){ const u=EGAch.check(S); u.forEach(a=>toast('Ачивка: '+a.name)); } } }
+  while(S.xp>=xpNeed(S.level)){ S.xp-=xpNeed(S.level); S.level++; toast('Уровень '+S.level+'!'); egA('level_up'); }
+  if(S.level>prev){ if(window.EGUnlocks) EGUnlocks.onLevel(S,prev); if(window.EGAch){ const u=EGAch.check(S); u.forEach(a=>{toast('Ачивка: '+a.name); egA('achievement');}); } } }
 
 function clear(){ app.innerHTML=''; }
 function setPhaseClass(){ app.className='phase-'+phase(); }
@@ -53,7 +54,7 @@ function bindClean(){
     walkCharTo('.'+({trash:'hot-trash',dishes:'hot-dishes',laundry:'hot-laundry'}[kind]||'hot-trash'), 'clean');
     setTimeout(()=>{
       EGCare.clean(S,kind); S.cleans++; qAdd('cleans',1); addXp(6); save();
-      toast('Чисто!'); go(cur==='home'?'home':cur);
+      egA(kind==='trash'?'trash':kind==='dishes'?'dishes':kind==='laundry'?'laundry':'clean'); toast('Чисто!'); go(cur==='home'?'home':cur);
     }, 800);
   });
 }
@@ -73,15 +74,18 @@ function peerAvatar(name){
   return `img/ui/avatars/${k}.webp`;
 }
 
+function fmtNum(n){ n=Math.round(+n||0); return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' '); }
 function hudHTML(){
   const rows=[['Голод',S.hunger,'hunger'],['Жажда',S.thirst,'thirst'],['Энергия',S.energy,'energy'],['Настрой',S.mood,'mood']];
   const need=xpNeed(S.level); const pct=Math.round(clamp((S.xp/need)*100,0,100));
   return `<div class="hud">
     <div class="hud-stats">${rows.map(([l,v,i])=>`<div class="hud-stat"><div class="lab">${ico(i)}<span class="lab-t">${l}</span></div><div class="bar"><i style="width:${clamp(v,0,100)}%"></i></div></div>`).join('')}</div>
     <div class="hud-res">
-      <div class="hud-chip">${ico('coins')} ${S.coins}</div>
-      <div class="hud-chip">${ico('gems')} ${S.gems}</div>
-      <div class="hud-chip xp">${ico('level')} ${S.level}<div class="xpbar"><i style="width:${pct}%"></i><span>${pct}%</span></div></div>
+      <div class="hud-res-box">
+        <div class="hud-chip">${ico('coins')} ${fmtNum(S.coins)}</div>
+        <div class="hud-chip">${ico('gems')} ${fmtNum(S.gems)}</div>
+        <div class="hud-chip xp">${ico('level')} ${S.level}<div class="xpbar"><i style="width:${pct}%"></i><span>${pct}%</span></div></div>
+      </div>
       <button class="hud-gear" id="hudGear" type="button">${ico('settings')}</button>
     </div>
   </div>`;
@@ -91,9 +95,26 @@ function statRow(){
   return hudHTML().replace('class="hud"','class="hud" style="position:relative;padding-bottom:8px"');
 }
 function nav(active){
-  const inbox=(S.gifts&&S.gifts.inbox||[]).some(m=>!m.seen);
-  const items=[['home','home','Дом'],['feed','food','Еда'],['map','map','Карта'],['gifts','gifts','Подарки'],['chat','chat','Чат']];
-  return `<div class="nav-dock">${items.map(([id,ic,lab])=>`<button data-go="${id}" class="${active===id?'on':''}"><span class="ic">${ico(ic)}</span><span class="lab">${lab}${id==='chat'&&inbox?' ·':''}</span></button>`).join('')}</div>`;
+  const inboxN=(S.gifts&&S.gifts.inbox||[]).filter(m=>!m.seen).length;
+  // icon key uses nav_*_mock for larger mock-matched glyphs; sub = heart|x|dots|none
+  const items=[
+    ['home','nav_home_mock','Дом','heart'],
+    ['feed','nav_food_mock','Еда',''],
+    ['map','nav_map_mock','Карта','x'],
+    ['gifts','nav_gifts_mock','Подарки','heart'],
+    ['chat','nav_chat_mock','Чат','dots']
+  ];
+  const subSvg={
+    heart:'<svg class="nav-sub" viewBox="0 0 12 10" aria-hidden="true"><path fill="#ff2d78" d="M6 9.2L1.2 4.6C.2 3.6.3 2 1.5 1.3 2.5.7 3.8.9 4.5 1.8L6 3.5l1.5-1.7C8.2.9 9.5.7 10.5 1.3c1.2.7 1.3 2.3.3 3.3L6 9.2z"/></svg>',
+    x:'<svg class="nav-sub" viewBox="0 0 10 10" aria-hidden="true"><path stroke="#ff8fb8" stroke-width="1.8" d="M2 2l6 6M8 2L2 8"/></svg>',
+    dots:'<svg class="nav-sub" viewBox="0 0 14 6" aria-hidden="true"><circle cx="2" cy="3" r="1.5" fill="#ff8fb8"/><circle cx="7" cy="3" r="1.5" fill="#ff8fb8"/><circle cx="12" cy="3" r="1.5" fill="#ff8fb8"/></svg>',
+    '':''
+  };
+  return `<div class="nav-dock"><img class="nav-ornament tl" src="img/ui/chrome/nav_bracket_bl.webp" alt=""><img class="nav-ornament tr" src="img/ui/chrome/nav_bracket_br.webp" alt=""><img class="nav-ornament bl" src="img/ui/chrome/nav_bracket_bl.webp" alt=""><img class="nav-ornament br" src="img/ui/chrome/nav_bracket_br.webp" alt="">${items.map(([id,ic,lab,sub])=>{
+    const badge=(id==='chat'&&inboxN)?`<span class="nav-badge">${inboxN}</span>`:'';
+    const icUse=(id==='chat'&&active==='chat')?'nav_chat_batwing':ic;
+    return `<button data-go="${id}" class="${active===id?'on':''}${id==='chat'&&active==='chat'?' chat-bat':''}" type="button"><span class="ic">${ico(icUse)}</span><span class="lab">${lab}</span>${subSvg[sub]||''}${badge}</button>`;
+  }).join('')}</div>`;
 }
 function dirtHotspots(){
   const d=S.dirt||{trash:0,dishes:0,laundry:0};
@@ -118,16 +139,16 @@ function bindRoomInteract(){
     const [sel,anim]=map[kind]||['.hot-bed','idle'];
     walkCharTo(sel, anim);
     setTimeout(()=>{
-      if(kind==='bed'){ S.energy=Math.min(100,(S.energy||0)+12); toast('Сладких снов'); }
-      else if(kind==='fridge'||kind==='table'){ S.hunger=Math.min(100,(S.hunger||0)+8); S.thirst=Math.min(100,(S.thirst||0)+6); toast(kind==='fridge'?'Перекус':'Глоток'); }
-      else { S.mood=Math.min(100,(S.mood||0)+5); toast('У окна…'); }
+      if(kind==='bed'){ S.energy=Math.min(100,(S.energy||0)+12); egA('sleep'); toast('Сладких снов'); }
+      else if(kind==='fridge'||kind==='table'){ S.hunger=Math.min(100,(S.hunger||0)+8); S.thirst=Math.min(100,(S.thirst||0)+6); egA(kind==='fridge'?'eat':'drink'); toast(kind==='fridge'?'Перекус':'Глоток'); }
+      else { S.mood=Math.min(100,(S.mood||0)+5); egA('happy'); toast('У окна…'); }
       save();
     }, 900);
   });
 }
-function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go))); }
+function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{ egA('tab'); go(b.dataset.go); })); }
 
-function go(n,a){ tickNeeds(); clear(); setPhaseClass(); cur=n;
+function go(n,a){ tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap'); cur=n; try{ const ph=phase(); const loc=(n==='loc'&&a)?a:(n==='home'?'room':(S&&S.loc)); egA('scene',{screen:n,loc:loc,phase:ph,weather:S&&S.weather}); }catch(e){} 
   const bannerOn=S.consent!=null && n!=='consent' && n!=='consentSet' && n!=='onboardCare' && n!=='create' && !SHOT;
   const nativeAds=!!(window.AdBridge); // Android Yandex banner lives outside WebView
   if(nativeAds) document.documentElement.classList.add('eg-native-ads');
@@ -166,19 +187,32 @@ SCR.consent=()=>{
   $('#set').onclick=()=>go('consentSet');
 };
 SCR.consentSet=()=>{
+  const ap=(window.EGAudio&&EGAudio.getPrefs())||{musicOn:S.musicOn!==false,sfxOn:S.sfx!==false,musicVol:0.7,sfxVol:0.85,muted:false};
   app.innerHTML=`<div class="screen consent">
     <h1>Настройки</h1>
     <p>Можно отключить необязательную аналитику и персонализацию рекламы.</p>
     <label class="card" style="display:block;margin-bottom:8px"><input type="checkbox" id="st" ${S.stats?'checked':''}> Аналитика</label>
-    <label class="card" style="display:block;margin-bottom:16px"><input type="checkbox" id="pe" ${S.pers?'checked':''}> Персонализация рекламы</label>
+    <label class="card" style="display:block;margin-bottom:8px"><input type="checkbox" id="pe" ${S.pers?'checked':''}> Персонализация рекламы</label>
+    <label class="card" style="display:block;margin-bottom:8px"><input type="checkbox" id="auMusic" ${ap.musicOn&&!ap.muted?'checked':''}> Музыка</label>
+    <label class="card" style="display:block;margin-bottom:8px"><input type="checkbox" id="auSfx" ${ap.sfxOn&&!ap.muted?'checked':''}> Звуки</label>
+    <label class="card" style="display:block;margin-bottom:8px">Громкость музыки <input type="range" id="auMv" min="0" max="100" value="${Math.round((ap.musicVol||0.7)*100)}"></label>
+    <label class="card" style="display:block;margin-bottom:16px">Громкость звуков <input type="range" id="auSv" min="0" max="100" value="${Math.round((ap.sfxVol||0.85)*100)}"></label>
     <button class="btn" id="ok">Хорошо</button>
   </div>`;
-  $('#ok').onclick=()=>{ S.consent=Date.now(); S.stats=!!$('#st').checked; S.pers=!!$('#pe').checked; save(); PL.setConsent(S.stats,S.pers); afterConsent(); };
+  const applyAu=()=>{
+    const musicOn=!!$('#auMusic').checked; const sfxOn=!!$('#auSfx').checked;
+    const musicVol=($('#auMv').value|0)/100; const sfxVol=($('#auSv').value|0)/100;
+    S.musicOn=musicOn; S.sfx=sfxOn;
+    if(window.EGAudio) EGAudio.setPrefs({musicOn,sfxOn,musicVol,sfxVol,muted:false});
+    egA('tap');
+  };
+  ['auMusic','auSfx','auMv','auSv'].forEach(id=>{ const el=$('#'+id); if(el) el.onchange=applyAu; if(el) el.oninput=applyAu; });
+  $('#ok').onclick=()=>{ S.consent=Date.now(); S.stats=!!$('#st').checked; S.pers=!!$('#pe').checked; applyAu(); save(); PL.setConsent(S.stats,S.pers); afterConsent(); };
 };
 function afterConsent(){
   if(!localStorage.getItem('eg_care_onboard')) go('onboardCare');
   else if(!localStorage.getItem('eg_created')) go('create');
-  else { EGCare&&EGCare.onLogin(S); EGWeather&&EGWeather.sync(S); EGAch&&EGAch.check(S); save(); go('home'); Net.register().then(()=>Net.sync().then(applyServer)).catch(()=>{}); }
+  else { EGCare&&EGCare.onLogin(S); EGWeather&&EGWeather.sync(S); EGAch&&EGAch.check(S); save(); go('home'); Net.register().then(()=>Net.sync().then(j=>{applyServer(j);return Net.registerPush();})).catch(()=>{}); }
 }
 function applyServer(res){
   if(res&&res.j&&res.j.config&&res.j.config.remote) EGRC.apply(res.j.config.remote);
@@ -244,7 +278,7 @@ function stageHTML(locId, bleed){
     ${bleed?'':`<div class="loc-title">${loc.name||locId}</div>`}
     ${decorHTML()}
     ${ambient}
-    <div class="char-wrap" id="charWrap"><img class="char-shadow" src="img/chars/shadow.webp" alt=""><img class="char" id="charSpr" src="${(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})()}" alt=""></div></div>`;
+    <div class="char-wrap" id="charWrap"><img class="char-shadow" src="img/chars/shadow.webp" alt=""><img class="char" id="charSpr" src="${(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];const sit=(locId==='cafe'||locId==='bookcafe')?(`img/chars/frames/${k}/sit.webp`):''; if(sit) return sit; return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})()}" alt=""></div></div>`;
 }
 function ambientHTML(locId){
   const ph=phase();
@@ -268,43 +302,36 @@ function walkCharTo(sel, thenPlay){
   const nb=100-((tr.top+tr.height)-ar.top)/ar.height*100;
   wrap.classList.add('walking');
   wrap.style.left=nx+'%'; wrap.style.bottom=Math.max(12, Math.min(40, nb-2))+'%';
-  if(EGAnim) EGAnim.play('walk');
+  if(EGAnim) EGAnim.play('walk'); egA('footsteps');
   setTimeout(()=>{ wrap.classList.remove('walking'); if(EGAnim) EGAnim.play(thenPlay||'happy'); }, 750);
 }
 
-function mountAnim(){
+function mountAnim(opts){
   const el=$('#charSpr'); if(!el||!window.EGAnim) return;
+  opts=opts||{};
   (function(){ let st=S.style,g=S.gender; const fs=EG.ANIMS&&EG.ANIMS.frameSets;
       if(!(fs&&fs[st+'_'+g])){ if(st==='goth'){st='goth';g='girl';} else if(st==='punk'){st='punk';g='guy';} else if(st==='skater'){st='skater';g='girl';} }
-      EGAnim.mount(el,st,g); EGAnim.fromNeeds(S); })();
+      EGAnim.mount(el,st,g);
+      if(opts.pose==='sit'){ EGAnim.play('sit'); }
+      else { EGAnim.fromNeeds(S); }
+  })();
 }
 
 SCR.home=()=>{
   S.loc='room'; save();
   const stN=(S.streak&&S.streak.n)||0;
-  app.innerHTML=`<div class="screen immersive">
+  app.innerHTML=`<div class="screen immersive home-mode">
     ${stageHTML('room', true)}
     ${dirtHotspots()}
     ${roomInteract()}
-    <div class="scene-overlays">
-      <button class="scene-ov" id="quests" type="button" title="Квесты">${ico('quests')}</button>
-      <button class="scene-ov" id="freeze" type="button" title="Серия">${ico('streak')}<span class="badge">${stN}</span></button>
-      <button class="scene-ov" id="shop" type="button" title="Магазин">${ico('shop')}</button>
-    </div>
-    <button class="scene-fab" id="wardrobe" type="button" aria-label="Гардероб"><img src="img/ui/chrome/fab_wardrobe.webp" alt="ГАРДЕРОБ"></button>
+    <button class="scene-fab" id="wardrobe" type="button" aria-label="Гардероб"><span class="fab-ring"><img class="fab-hanger" src="img/ui/icons/wardrobe.png" alt=""><span class="fab-lab">ГАРДЕРОБ</span></span></button>
     ${hudHTML()}
     ${nav('home')}
   </div>`;
-  bindNav(); bindClean(); bindRoomInteract(); mountAnim();
+  bindNav(); bindClean(); bindRoomInteract(); mountAnim(); if(EGAnim) EGAnim.play('idle');
   const g=$('#hudGear'); if(g) g.onclick=()=>go('consentSet');
   $('#wardrobe').onclick=()=>go('wardrobe');
-  $('#quests').onclick=()=>openQuests();
-  $('#shop').onclick=()=>openShop();
-  $('#freeze').onclick=()=>{
-    if(!PL.ads.rewardedAvail()){ if(EGCare.freezeStreak(S)){ save(); toast('Серия заморожена (демо)'); go('home'); } return; }
-    W.__adResult=(k,ok)=>{ if(ok&&EGCare.freezeStreak(S)){ save(); toast('Серия заморожена'); go('home'); } };
-    PL.ads.showRewarded('streak_freeze');
-  };
+  
 };
 
 function ensureQuests(){
@@ -326,17 +353,29 @@ SCR.wardrobe=()=>{
   const slotRu={top:'Верх',bottom:'Низ',shoes:'Обувь',acc:'Аксессуар',hair:'Волосы'};
   S.equip=S.equip||{};
   const previewSrc=(function(){const k=(S.style||'emo')+'_'+(S.gender||'guy');const fs=EG.ANIMS&&EG.ANIMS.frameSets&&EG.ANIMS.frameSets[k];return (fs&&fs.idle)||EG.charImg(S.style,S.gender);})();
-  const cards=(EG.SHOP||[]).map(it=>{
+  const g=S.gender||'guy';
+  S.wardrobe=S.wardrobe||{}; S.equip=S.equip||{};
+  // Seed a few owned+equipped for checkmarks; high-unlock items stay locked for padlock badges
+  [['hoodie','top'],['boots','shoes'],['choker','acc']].forEach(([id,slot])=>{
+    if(!S.wardrobe[id]) S.wardrobe[id]=1;
+    if(!S.equip[slot]) S.equip[slot]=id;
+  });
+  const cards=(EG.SHOP||[]).filter(it=>{
+    const gg=it.gender||'any';
+    return gg==='any'||gg===g;
+  }).map(it=>{
     const owned=!!S.wardrobe[it.id]; const eq=S.equip[it.slot]===it.id;
     const need=it.unlockLevel||it.minLevel||1; const locked=(S.level|0)<need && !owned;
+    const badge=locked?'<span class="ward-badge lock" aria-hidden="true">🔒</span>':(eq?'<span class="ward-badge check" aria-hidden="true">✓</span>':'');
     return `<button class="card food-card ward-card ${eq?'on':''} ${locked?'locked':''}" data-w="${it.id}" data-slot="${it.slot}" ${locked?'disabled':''}>
+      ${badge}
       <img class="food-art" src="${EG.shopImg(it)}" alt="">
       <b>${it.name}</b>
-      <span class="sub">${locked?('🔒 ур.'+need):(owned?(eq?'✓ надет':'есть'):'купить')} · <img class="coin" src="img/ui/icons/coins.png" alt=""> ${it.cost}</span>
+      <span class="sub">${locked?('ур.'+need):(owned?(eq?'надет':'есть'):(it.cost+''))}</span>
     </button>`;
   }).join('');
   app.innerHTML=`<div class="screen ward-screen">
-    <div class="ward-head">Гардероб<div class="ward-heart hud-chip">${ico('mood')} ${Math.round(S.styleStat||0)}</div></div>
+    <div class="ward-head"><img class="ward-title-art" src="img/ui/chrome/ward_title_oswald.webp" alt="Гардероб"><div class="ward-heart hud-chip">${ico('mood')} ${Math.round(S.styleStat||0)}</div></div>
     <div class="ward-preview"><img id="wardPrev" src="${previewSrc}" alt=""></div>
     <div class="ward-body eg-scroll"><div class="grid ward-grid">${cards}</div>
       ${giftWear.length?`<h3 style="margin-top:10px;color:#ff4d9a;font-size:14px">Подарки</h3><div class="grid">${giftWear.map(g=>`<button class="card food-card" data-gw="${g.id}"><img class="food-art" src="${EG.giftImg(g)}" alt=""><b>${g.name}</b></button>`).join('')}</div>`:''}
@@ -347,7 +386,7 @@ SCR.wardrobe=()=>{
   app.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{
     const it=EG.SHOP.find(x=>x.id===b.dataset.w); if(!it)return;
     if(!S.wardrobe[it.id]){
-      if(S.coins<it.cost){ toast('Мало монет'); return; }
+      if(S.coins<it.cost){ egA('error'); egA('error'); toast('Мало монет'); return; }
       S.coins-=it.cost; S.wardrobe[it.id]=1; S.styleStat=clamp(S.styleStat+it.style,0,100);
       toast('Куплено: '+it.name);
     }
@@ -355,12 +394,12 @@ SCR.wardrobe=()=>{
     go('wardrobe');
   });
   app.querySelectorAll('[data-gw]').forEach(b=>b.onclick=()=>{
-    const r=EGGifts.wear(S,b.dataset.gw); if(r.ok){ save(); toast('Надето'); go('home'); EGAnim&&EGAnim.play('happy'); }
+    const r=EGGifts.wear(S,b.dataset.gw); if(r.ok){ save(); egA('happy'); toast('Надето'); go('home'); EGAnim&&EGAnim.play('happy'); }
   });
 };
 function openWardrobe(){ go('wardrobe'); }
 
-window.openQuests=function openQuests(){
+window.openQuests=function openQuests(){ egA('sheet_open');
   ensureQuests();
   const body=`<div class="sheet-grid">${(EG.QUESTS||[]).map(q=>{
     const st=S.quest[q.id]||{p:0};
@@ -373,7 +412,7 @@ window.openQuests=function openQuests(){
   }).join('')||'<p style="color:#888">Нет квестов</p>'}</div>`;
   EGUI.openSheet({title:'Квесты дня', icon:EGUI.iconSrc('quests'), bodyHtml:body});
 }
-window.openShop=function openShop(){
+window.openShop=function openShop(){ egA('sheet_open');
   const items=(PL.pay&&PL.pay.items?PL.pay.items():(PL.social&&PL.social.items)||[]);
   const packArt=id=>{
     const s=String(id||'').toLowerCase();
@@ -404,40 +443,52 @@ window.openShop=function openShop(){
 }
 
 SCR.feed=()=>{
+  const tab0=(S.feedTab==='drinks')?'drinks':'food';
   const foodCard=(f,kind)=>{
     const need=f.unlockLevel||f.minLevel||1; const locked=(S.level|0)<need;
     return `<button class="card food-card ${locked?'locked':''}" data-${kind==='food'?'f':'d'}="${f.id}" ${locked?'disabled':''}>
       <img class="food-art" src="${kind==='food'?EG.foodImg(f):EG.drinkImg(f)}" alt="">
       <b>${f.name}</b>
-      <span class="sub">${locked?('🔒 ур.'+need):('+'+ (kind==='food'?f.hunger:(f.thirst||0))+' '+(kind==='food'?'голод':'жажда')+' · ')} <img class="coin" src="img/ui/icons/coins.png" alt=""> ${f.cost}</span>
+      <span class="sub">${locked?('🔒 ур.'+need):`<img class="coin" src="img/ui/icons/coins.webp" alt=""> ${f.cost}`}</span>
     </button>`;
   };
-  app.innerHTML=`<div class="screen feed-screen">
-    <div class="feed-head"><img class="feed-title-art" src="img/ui/chrome/feed_title.webp" alt="Еда"><h1>Еда</h1></div>
-    <div class="feed-currency">
-      <div class="hud-chip">${ico('coins')} ${S.coins} <b style="color:#ff4d9a">+</b></div>
-      <div class="hud-chip">${ico('gems')} ${S.gems} <b style="color:#ff4d9a">+</b></div>
-    </div>
-    <div class="feed-body eg-scroll">
-      <div class="grid food-grid">${(EG.FOOD||[]).map(f=>foodCard(f,'food')).join('')}</div>
-      <h3 style="margin:14px 0 8px;color:#ff4d9a">Напитки</h3>
-      <div class="grid food-grid">${(EG.DRINKS||[]).map(f=>foodCard(f,'drink')).join('')}</div>
-    </div>
-    ${nav('feed')}
-  </div>`;
-  bindNav();
-  app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
-    const f=EG.FOOD.find(x=>x.id===b.dataset.f); if(!f||S.coins<f.cost)return toast('Мало монет');
-    S.coins-=f.cost; S.hunger=clamp(S.hunger+f.hunger,0,100); S.mood=clamp(S.mood+(f.mood||0),0,100);
-    S.dirt.dishes=clamp((S.dirt.dishes||0)+12,0,100); S.dirt.trash=clamp((S.dirt.trash||0)+6,0,100);
-    S.feeds++; qAdd('feeds',1); addXp(5); save(); toast('Вкусно'); if(EGAnim) EGAnim.play('eat'); setTimeout(()=>go('feed'),500);
-  });
-  app.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{
-    const f=EG.DRINKS.find(x=>x.id===b.dataset.d); if(!f||S.coins<f.cost)return toast('Мало монет');
-    S.coins-=f.cost; S.thirst=clamp(S.thirst+f.thirst,0,100); S.energy=clamp(S.energy+(f.energy||0),0,100);
-    S.mood=clamp(S.mood+(f.mood||0),0,100); S.dirt.dishes=clamp((S.dirt.dishes||0)+8,0,100);
-    S.drinks++; qAdd('drinks',1); addXp(4); save(); toast('Бульк'); if(EGAnim) EGAnim.play('drink'); setTimeout(()=>go('feed'),500);
-  });
+  const foods=(EG.FOOD||[]).slice(0,6);
+  const drinks=(EG.DRINKS||[]).slice(0,6);
+  const paint=(tab)=>{
+    S.feedTab=tab; try{save();}catch(e){}
+    const items=tab==='drinks'?drinks:foods;
+    const grid=items.map(f=>foodCard(f,tab==='drinks'?'drink':'food')).join('');
+    app.innerHTML=`<div class="screen feed-screen">
+      <div class="feed-head"><img class="feed-title-art" src="img/ui/chrome/feed_title.webp" alt="Еда"></div>
+      <div class="feed-currency">
+        <div class="hud-chip">${ico('coins')} ${fmtNum(S.coins)} <b class="plus">+</b></div>
+        <div class="hud-chip">${ico('skull')} ${fmtNum(S.gems)} <b class="plus">+</b></div>
+      </div>
+      <div class="feed-tabs" role="tablist">
+        <button type="button" class="feed-tab ${tab==='food'?'on':''}" data-tab="food" role="tab">🍽 Еда</button>
+        <button type="button" class="feed-tab ${tab==='drinks'?'on':''}" data-tab="drinks" role="tab">☕ Напитки</button>
+      </div>
+      <div class="feed-body eg-scroll">
+        <div class="grid food-grid">${grid}</div>
+      </div>
+      ${nav('feed')}
+    </div>`;
+    bindNav();
+    app.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>paint(b.dataset.tab));
+    app.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
+      const f=EG.FOOD.find(x=>x.id===b.dataset.f); if(!f||S.coins<f.cost)return toast('Мало монет');
+      S.coins-=f.cost; S.hunger=clamp(S.hunger+f.hunger,0,100); S.mood=clamp(S.mood+(f.mood||0),0,100);
+      S.dirt.dishes=clamp((S.dirt.dishes||0)+12,0,100); S.dirt.trash=clamp((S.dirt.trash||0)+6,0,100);
+      S.feeds++; qAdd('feeds',1); addXp(5); save(); toast('Вкусно'); egA('eat'); if(EGAnim) EGAnim.play('eat'); setTimeout(()=>paint('food'),500);
+    });
+    app.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{
+      const f=EG.DRINKS.find(x=>x.id===b.dataset.d); if(!f||S.coins<f.cost)return toast('Мало монет');
+      S.coins-=f.cost; S.thirst=clamp(S.thirst+f.thirst,0,100); S.energy=clamp(S.energy+(f.energy||0),0,100);
+      S.mood=clamp(S.mood+(f.mood||0),0,100); S.dirt.dishes=clamp((S.dirt.dishes||0)+8,0,100);
+      S.drinks++; qAdd('drinks',1); addXp(4); save(); toast('Бульк'); egA('drink'); if(EGAnim) EGAnim.play('drink'); setTimeout(()=>paint('drinks'),500);
+    });
+  };
+  paint(tab0);
 };
 
 SCR.sleep=()=>{
@@ -448,37 +499,39 @@ SCR.sleep=()=>{
   $('#sl').onclick=()=>{
     S.energy=clamp(S.energy+55,0,100); S.mood=clamp(S.mood+10,0,100); S.hunger=clamp(S.hunger-8,0,100);
     S.dirt.laundry=clamp((S.dirt.laundry||0)+15,0,100);
-    S.sleeps++; qAdd('sleeps',1); addXp(8); save(); toast('Спокойной ночи'); go('home');
+    S.sleeps++; qAdd('sleeps',1); addXp(8); save(); toast('Спокойной ночи'); egA('sleep'); go('home');
   };
 };
 
 SCR.map=()=>{
   const ph=phase();
   const pins=[
-    {id:'metro',lab:'Метро',x:'22%',y:'36%'},
-    {id:'cafe',lab:'Кафе',x:'58%',y:'30%'},
-    {id:'skate',lab:'Скейтпарк',x:'74%',y:'48%'},
-    {id:'concert',lab:'Концерт',x:'38%',y:'68%'},
-    {id:'mall',lab:'Магазин',x:'72%',y:'72%'}
+    {id:'metro',lab:'Метро',x:'22%',y:'38%'},
+    {id:'cafe',lab:'Кафе',x:'62%',y:'30%'},
+    {id:'park',lab:'Парк',x:'74%',y:'48%'},
+    {id:'room',lab:'Дом',x:'40%',y:'62%'}
   ];
   const av=avatarSrc(S.style,S.gender);
   const need=xpNeed(S.level); const xp=Math.round(clamp(S.xp,0,need));
-  app.innerHTML=`<div class="screen immersive">
+  app.innerHTML=`<div class="screen immersive map-screen">
     <div class="map-bleed"><img class="mapbg" src="img/loc/city_map.webp" alt=""></div>
     <div class="map-pins">${pins.map(p=>{
       const loc=(EG.LOCS||[]).find(l=>l.id===p.id)||{id:p.id,minLevel:1};
       const ok=unlockOk(loc)&&(!loc.phases||loc.phases.includes(ph));
       return `<button class="map-pin" style="left:${p.x};top:${p.y}" data-l="${p.id}" ${ok?'':'disabled'}><img class="pin-art" src="img/ui/pins/${p.id}.webp" alt=""><span class="pin-lab">${p.lab}</span></button>`;
     }).join('')}</div>
-    <div class="map-head">
-      <img class="map-av" src="${av}" alt="">
-      <div class="map-meta"><div class="map-name">${S.name||'Пустышка'}</div>
-        <div class="map-lv">${ico('hunger')} УРОВЕНЬ ${S.level}</div>
-        <div class="hud-chip xp" style="margin-top:4px;width:100%"><div class="xpbar"><i style="width:${Math.round(xp/need*100)}%"></i><span>${xp} / ${need}</span></div></div>
+    <div class="map-head map-head-v2">
+      <div class="map-id">
+        <img class="map-av" src="${av}" alt="">
+        <div class="map-meta">
+          <div class="map-name">${S.name||'Пустышка'}</div>
+          <div class="map-lv">${ico('skull')} УРОВЕНЬ ${S.level}</div>
+          <div class="map-xp"><div class="xpbar"><i style="width:${Math.round(xp/need*100)}%"></i><span>${xp} / ${need}</span></div></div>
+        </div>
       </div>
       <div class="map-cur">
-        <div class="hud-chip">${ico('coins')} ${S.coins}</div>
-        <div class="hud-chip">${ico('gems')} ${S.gems}</div>
+        <div class="hud-chip">${ico('coins')} ${fmtNum(S.coins)} <b class="plus">+</b></div>
+        <div class="hud-chip">${ico('gems')} ${fmtNum(S.gems)} <b class="plus">+</b></div>
         <button class="hud-gear" id="hudGear" type="button">${ico('settings')}</button>
       </div>
     </div>
@@ -492,9 +545,9 @@ SCR.map=()=>{
 SCR.loc=(id)=>{
   const loc=(EG.LOCS||[]).find(l=>l.id===id)||{id:'room',name:'Комната'};
   if(loc.id!=='room'){
-    if(!unlockOk(loc)){ toast('Нужен уровень '+loc.minLevel); return go('map'); }
-    if(S.energy<(loc.energy||5)){ toast('Мало энергии — покорми и выспись'); return go('map'); }
-    S.energy=clamp(S.energy-(loc.energy||5),0,100);
+    if(!unlockOk(loc)){ egA('error'); toast('Нужен уровень '+loc.minLevel); return go('map'); }
+    if(!SHOT && S.energy<(loc.energy||5)){ egA('hungry'); toast('Мало энергии — покорми и выспись'); return go('map'); }
+    if(!SHOT) S.energy=clamp(S.energy-(loc.energy||5),0,100);
     S.mood=clamp(S.mood+(loc.mood||0),0,100);
     S.social=clamp(S.social+(loc.social||0),0,100);
     S.fame=clamp((S.fame||0)+(loc.fame||0),0,100);
@@ -506,41 +559,80 @@ SCR.loc=(id)=>{
     if(window.EGWeather) EGWeather.applyVisit(S,loc.id);
     const npcHere=(window.EGNpc?EGNpc.list():[]).find(n=>n.loc===loc.id);
     if(npcHere){ EGNpc.meet(S,npcHere.id); toast(npcHere.name+' здесь'); }
-    addXp(10); if(window.EGAch) EGAch.check(S); save();
+    egA('travel'); egA('door'); if((loc&&loc.id)==='metro'||S.loc==='metro') egA('metro_arrive'); addXp(10); if(window.EGAch) EGAch.check(S); save();
   } else { S.loc='room'; save(); return go('home'); }
   const wtxt=(EG.weatherText&&EG.weatherText(S))||S.weatherText||((S.weather||'')+' · '+(S.season||''));
   const isMetro=loc.id==='metro'||loc.id==='station';
-  app.innerHTML=`<div class="screen immersive loc-mode">
+  const isCafe=loc.id==='cafe'||loc.id==='bookcafe';
+  const isPark=loc.id==='park';
+  const clock=new Date(); const hh=String(clock.getHours()).padStart(2,'0'); const mm=String(clock.getMinutes()).padStart(2,'0');
+  const headTitle=isMetro?'СТАНЦИЯ: СЕВЕРНАЯ':(loc.name||loc.id).toUpperCase();
+  const headSub=isMetro?'ЛИНИЯ 1 · МОСКВА':(wtxt||'');
+  const locTitle=isMetro?'МЕТРО · СЕВЕРНАЯ':(loc.name||'');
+  const locSub=isMetro?'Подземная станция':(wtxt||'');
+    const weatherLine=isMetro?'❄ Снег · Зима · −6°C · Ощущается как −9°C':(isPark?'🌧 ВЕЧЕР · 14°C':(isCafe?'☕ УТРО · кафе':(wtxt||'—')));
+  const locCls='loc-mode loc-'+(loc.id||'x');
+  const showHud=isCafe||isPark;
+  const seg=(v)=>{ const n=Math.max(0,Math.min(4, Math.round((v||0)/25))); return `<span class="seg">${[0,1,2,3].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`; };
+  const cafeParkHud=()=>{
+    const nm=S.name||'×_МРАЧКА_×';
+    const hearts=Math.round(clamp((S.mood||0)/10,0,10));
+    const heartRow=[...Array(10)].map((_,i)=>`<i class="hrt ${i<hearts?'on':''}">♥</i>`).join('');
+    const phaseLab=isCafe?'УТРО':'ВЕЧЕР';
+    const phaseIc=isCafe?'☀':'🌧';
+    return `<div class="loc-hud-mock ${isCafe?'cafe-hud':'park-hud'}">
+      <div class="lh-top">
+        <div class="lh-user">${ico('skull')}<div><b class="lh-name">${nm}</b><div class="lh-hearts">${heartRow}</div></div></div>
+        <div class="lh-phase">${ico('energy')}<div><b>${hh}:${mm}</b><span>${phaseIc} ${phaseLab}</span></div></div>
+      </div>
+      <div class="lh-stats">
+        ${[['Голод',S.hunger,'hunger'],['Жажда',S.thirst,'thirst'],['Энергия',S.energy,'energy'],['Настрой',S.mood,'mood']].map(([n,v,i])=>`
+          <div class="lh-stat">${ico(i)}<span>${n}</span>${seg(v)}</div>`).join('')}
+      </div>
+    </div>
+    <div class="loc-badge">${isCafe?'☕ КАФЕ':'🌳 ПАРК'}</div>`;
+  };
+  const statusCard=`<div class="lp-card">
+        <div class="lp-status-h"><span>СТАТУС</span><span>♡ ${Math.round(S.mood||0)}/100</span></div>
+        <div class="lp-bars">
+          ${[['Голод',S.hunger,'#e53935'],['Жажда',S.thirst,'#1e88e5'],['Энергия',S.energy,'#8e24aa'],['Настрой',S.mood,'#ff2d78']].map(([n,v,c])=>`
+            <div class="lp-row"><span class="nm">${n}</span><div class="bar"><i style="width:${clamp(v,0,100)}%;background:${c}"></i></div><span class="val">${Math.round(v)}/100</span></div>`).join('')}
+        </div>
+      </div>`;
+  app.innerHTML=`<div class="screen immersive ${locCls}">
     ${stageHTML(loc.id, true)}
-    <div class="loc-head"><div><div class="mt">${isMetro?'СТАНЦИЯ: СЕВЕРНАЯ':(loc.name||loc.id).toUpperCase()}</div>
-      <div class="ms">${isMetro?'ЛИНИЯ 1 · МОСКВА':(wtxt||'')}</div></div>
-      <button class="btn ghost" id="back" style="margin-left:auto;width:auto;padding:6px 10px;font-size:11px">← Карта</button></div>
+    ${showHud?cafeParkHud():''}
+    <div class="loc-head ${isMetro?'metro-head':''} ${isCafe?'cafe-head':''} ${isPark?'park-head':''}">${isMetro?'<div class="metro-m" aria-hidden="true">M</div>':''}<div style="flex:1;min-width:0"><div class="mt">${headTitle}</div>
+      <div class="ms">${headSub}</div></div>
+      <div class="loc-head-right">${isMetro?`<span class="metro-wx">${ico('snowflake')}<b>${hh}:${mm}</b></span><span class="metro-bat">${ico('battery')}<b>36%</b></span>`:`<b class="loc-clock">${hh}:${mm}</b>`}</div>
+      ${(!isMetro)?`<button class="btn ghost" id="back" style="margin-left:8px;width:auto;padding:8px 10px;font-size:12px">←</button>`:''}</div>
     <div class="loc-panel" id="locPanel">
-      <button class="lp-toggle" id="lpToggle" type="button">СТАТУС ▴</button>
-      <div class="lp-top">
-        <img class="lp-pin" src="img/ui/pins/${isMetro?'metro':(loc.id||'metro')}.webp" alt="" onerror="this.src='img/ui/chrome/map_pin_generic.webp'">
-        <div><div class="lp-title">${isMetro?'МЕТРО · СЕВЕРНАЯ':(loc.name||'')}</div>
-        <div class="lp-sub">${isMetro?'Подземная станция':(wtxt||'')}</div></div>
+      <div class="lp-card">
+        <div class="lp-top">
+          <img class="lp-pin" src="img/ui/pins/${isMetro?'metro':(loc.id||'metro')}.webp" alt="" onerror="this.src='img/ui/chrome/map_pin_generic.webp'">
+          <div><div class="lp-title">${locTitle|| (isCafe?'КАФЕ':isPark?'ПАРК':(loc.name||''))}</div><div class="lp-sub">${locSub}</div></div>
+        </div>
+        <div class="lp-weather">${weatherLine}</div>
+        ${isMetro?`<div class="lp-status-h"><span>СТАТУС</span><span>♡ ${Math.round(S.mood||0)}/100</span></div>
+        <div class="lp-bars">
+          ${[['Голод',S.hunger,'#e53935'],['Жажда',S.thirst,'#1e88e5'],['Энергия',S.energy,'#8e24aa'],['Настрой',S.mood,'#ff2d78']].map(([n,v,c])=>`
+            <div class="lp-row"><span class="nm">${n}</span><div class="bar"><i style="width:${clamp(v,0,100)}%;background:${c}"></i></div><span class="val">${Math.round(v)}/100</span></div>`).join('')}
+        </div>`:''}
       </div>
-      <div class="lp-weather">${isMetro?'❄ Снег · Зима · −6°C':(wtxt||'—')}</div>
-      <div class="lp-status-h"><span>СТАТУС</span><span>♡ ${Math.round(S.mood||0)}/100</span></div>
-      <div class="lp-bars">
-        ${[['Голод',S.hunger],['Жажда',S.thirst],['Энергия',S.energy],['Настрой',S.mood]].map(([n,v])=>`
-          <div class="lp-row"><span class="nm">${n}</span><div class="bar"><i style="width:${clamp(v,0,100)}%"></i></div><span class="val">${Math.round(v)}/100</span></div>`).join('')}
-      </div>
-      <div class="lp-actions">
-        <button class="btn" id="chat">Чат</button>
-        ${['concert','karaoke','arcade','skate','garage','idol_stage','nightclub','records'].includes(loc.id)?`<button class="btn" id="mini">Мини-игра</button>`:''}
-        ${loc.id==='garage'||loc.id==='nightclub'||loc.id==='festival'?`<button class="btn" id="gig">Гиги</button>`:''}
-      </div>
+      <div class="lp-actions" style="${(isMetro||isCafe||isPark)?'display:none':''}">
+          <button class="btn" id="chat">Чат</button>
+          ${['concert','karaoke','arcade','skate','garage','idol_stage','nightclub','records'].includes(loc.id)?`<button class="btn" id="mini">Мини-игра</button>`:''}
+          ${loc.id==='garage'||loc.id==='nightclub'||loc.id==='festival'?`<button class="btn" id="gig">Гиги</button>`:''}
+        </div>
     </div>
     ${nav('map')}
   </div>`;
-  bindNav(); mountAnim(); if(EGAnim) EGAnim.play('walk');
-  const lp=$('#locPanel'), tg=$('#lpToggle');
-  if(tg&&lp) tg.onclick=()=>{ lp.classList.toggle('compact'); tg.textContent=lp.classList.contains('compact')?'СТАТУС ▾':'СТАТУС ▴'; };
-  $('#back').onclick=()=>go('map');
-  $('#chat').onclick=()=>go('chat');
+  bindNav();
+  if(isCafe) mountAnim({pose:'sit'});
+  else { mountAnim(); if(EGAnim) EGAnim.play('idle'); }
+  const gBtn=$('#hudGear'); if(gBtn) gBtn.onclick=()=>go('consentSet');
+  const back=$('#back'); if(back) back.onclick=()=>go('map');
+  const chatBtn=$('#chat'); if(chatBtn) chatBtn.onclick=()=>go('chat');
   const m=$('#mini'); if(m) m.onclick=()=>go(loc.id==='skate'?'mg_skate':loc.id==='arcade'?'mg_arcade':loc.id==='karaoke'?'mg_karaoke':loc.id==='records'?'mg_music':'minigame');
   const g=$('#gig'); if(g) g.onclick=()=>go('band');
 };
@@ -577,9 +669,9 @@ SCR.gifts=()=>{
       <button class="btn ghost" id="npc" style="margin-top:10px">Получить демо-подарок от NPC</button>
     </div>${nav('gifts')}</div>`;
   bindNav();
-  $('#free').onclick=()=>{ const r=G.takeFree(S); if(r.ok){ save(); toast('Бесплатно: '+r.item.name); go('gifts'); } else toast('Через '+r.days+' дн.'); };
+  $('#free').onclick=()=>{ const r=G.takeFree(S); if(r.ok){ save(); egA('gift_receive'); toast('Бесплатно: '+r.item.name); go('gifts'); } else toast('Через '+r.days+' дн.'); };
   $('#rad').onclick=()=>{
-    const finish=()=>{ const r=G.fromRewarded(S); if(r.ok){ save(); toast('За рекламу: '+r.item.name); go('gifts'); } };
+    const finish=()=>{ const r=G.fromRewarded(S); if(r.ok){ save(); egA('gift_receive'); toast('За рекламу: '+r.item.name); go('gifts'); } };
     if(!PL.ads.rewardedAvail()){ finish(); return; }
     W.__adResult=(k,ok)=>{ if(ok) finish(); };
     PL.ads.showRewarded('gift');
@@ -588,11 +680,11 @@ SCR.gifts=()=>{
     const it=G.byId(b.dataset.buy); if(!it)return;
     if((it.sources||[]).includes('paid')){
       const paid=PL.pay?await PL.pay.purchase('gift_'+it.id):false;
-      if(paid){ G.addInv(S,it.id,1); save(); toast('Куплено'); go('gifts'); } else toast('Оплата недоступна / отмена');
+      if(paid){ G.addInv(S,it.id,1); save(); egA('purchase'); egA('gift_open'); toast('Куплено'); go('gifts'); } else toast('Оплата недоступна / отмена');
       return;
     }
     if((it.sources||[]).includes('coins')){
-      const r=G.buyCoins(S,it.id); if(r.ok){ save(); toast('Куплено: '+it.name); go('gifts'); } else toast('Мало монет');
+      const r=G.buyCoins(S,it.id); if(r.ok){ save(); egA('purchase'); egA('coin'); toast('Куплено: '+it.name); go('gifts'); } else toast('Мало монет');
     } else toast('Смотри кнопки бесплатно / реклама');
   });
   app.querySelectorAll('[data-use]').forEach(b=>b.onclick=()=>{
@@ -666,14 +758,10 @@ SCR.coop=()=>{
 
 SCR.chat=()=>{
   const peers=[
-    {name:'Лила', t:'Наконец-то пятница... Мир такой скучный без вас', av:'lila'},
-    {name:'ДемонX', t:'Согласен... Спасает только музыка', av:'demonx'},
-    {name:'Кошмарик', t:'Кто со мной в заброшку сегодня?', av:'koshmarik'},
-    {name:'raven', t:'Я с вами! Берите фонарики', av:'raven'},
-    {name:'Лила', t:'Кто что слушает сегодня? Киньте трек 💔', av:'lila'},
-    {name:'ДемонX', t:'Новый дроп на ночь — пишите в лс', av:'demonx'},
-    {name:'Кошмарик', t:'Я уже у выхода из метро 👀', av:'koshmarik'},
-    {name:'raven', t:'Не опаздывайте, там темно 🖤', av:'raven'}
+    {name:'Лила', t:'Наконец-то пятница... Мир такой скучный без вас 😞', av:'lila', tm:'21:30'},
+    {name:'ДемонX', t:'Согласен... Спасает только музыка 💔', av:'demonx', tm:'21:32'},
+    {name:'Кошмарик', t:'Кто со мной в заброшку сегодня? 👀', av:'koshmarik', tm:'21:35'},
+    {name:'raven', t:'Я с вами! Берите фонарики 🖤', av:'raven', tm:'21:36'}
   ];
   const quick=[['Привет','qr_heart'],['Как дела','qr_broken'],['Идём гулять','qr_bat']];
   const myAv=avatarSrc(S.style,S.gender);
@@ -684,7 +772,7 @@ SCR.chat=()=>{
     return t||'…';
   };
   // Always seed demo thread so the middle isn't empty; append user history after
-  const demo=peers.map(p=>({me:false,t:p.t,name:p.name,av:p.av,demo:true}));
+  const demo=peers.map(p=>({me:false,t:p.t,name:p.name,av:p.av,tm:p.tm,demo:true}));
   let hist=[];
   if(S.chat&&S.chat.length){
     S.chat=S.chat.map(m=>Object.assign({},m,{t:scrubChat(m&&m.t)}));
@@ -699,26 +787,46 @@ SCR.chat=()=>{
   const paint=()=>{
     const list=msgs.map(m=>{
       const src=m.me?myAv:(`img/ui/avatars/${m.av||'lila'}.webp`);
-      return `<div class="msg"><span class="av-wrap"><img class="av" src="${src}" alt="" width="58" height="58" decoding="async"></span><div class="bubble"><div><span class="nm">${m.name}</span><span class="tm">сейчас</span></div><div class="tx">${m.t}</div></div></div>`;
+      return `<div class="msg"><span class="av-wrap"><img class="av" src="${src}" alt="" width="58" height="58" decoding="async"></span><div class="bubble"><div class="bh"><span class="nm">${m.name}</span><span class="tm">${m.tm||'сейчас'}</span></div><div class="tx">${m.t}</div><span class="bubble-heart" aria-hidden="true">♥</span></div></div>`;
     }).join('');
+    const freeOn=!!(S.sub&&S.sub.freeChat);
+    const upsell=freeOn
+      ? `<div class="chat-upsell on"><div class="cu-row"><input id="chatFree" type="text" maxlength="80" placeholder="Свободный чат — напиши…" autocomplete="off"><button type="button" id="chatSend" class="cu-send">➤</button></div></div>`
+      : `<div class="chat-upsell"><div class="cu-copy"><b>Свободный чат</b><span>Пиши что угодно · без пресетов</span></div><button type="button" id="chatUpsell" class="cu-btn">Открыть · 199 ₽</button></div>`;
     app.innerHTML=`<div class="screen chat-v2">
-      <div class="chat-title"><img src="img/ui/chrome/chat_title.webp" alt="Чат"><span class="hrt">♡</span></div>
+      <div class="chat-bg" aria-hidden="true"></div>
+      <div class="chat-title"><img src="img/ui/chrome/chat_title.webp" alt="Чат"></div>
       <div class="chat-list eg-scroll" id="bub">${list}</div>
-      <div class="chat-div"><img src="img/ui/chrome/drip_heart.webp" alt=""></div>
-      <div class="quick">${quick.map(([q,ic])=>`<button data-p="${q}"><img src="img/ui/chrome/${ic}.webp" alt="">${q}</button>`).join('')}</div>
+      <div class="chat-dock">
+        <div class="chat-div"><img src="img/ui/chrome/drip_heart.webp" alt=""></div>
+        <div class="quick">${quick.map(([q,ic])=>`<button data-p="${q}"><img src="img/ui/chrome/${ic}.webp" alt="">${q}</button>`).join('')}</div>
+        ${upsell}
+      </div>
       ${nav('chat')}
     </div>`;
     bindNav();
     const bub=app.querySelector('#bub'); if(bub) bub.scrollTop=bub.scrollHeight;
-    app.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{
-      const txt=b.dataset.p;
+    const sendTxt=(txt)=>{
+      txt=scrubChat(txt); if(!txt||txt==='…') return;
       const peer=peers[Math.floor(Math.random()*peers.length)];
-      S.chat=(S.chat||[]).concat([{me:true,t:txt,name:'Ты'}]);
+      S.chat=(S.chat||[]).concat([{me:true,t:txt,name:'Ты'}]); egA('chat_send');
       const replyTxt=peer.t.split('...')[0]||peer.t;
-      S.chat.push({me:false,t:scrubChat(replyTxt),name:peer.name,av:peer.av});
+      S.chat.push({me:false,t:scrubChat(replyTxt),name:peer.name,av:peer.av}); egA('chat_receive');
       if(S.chat.length>40) S.chat=S.chat.slice(-40);
       S.chats++; S.social=clamp(S.social+2,0,100); qAdd('chats',1); addXp(2); save(); SCR.chat();
-    });
+    };
+    app.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>sendTxt(b.dataset.p));
+    const up=app.querySelector('#chatUpsell');
+    if(up) up.onclick=async()=>{
+      const ok=PL.pay?await PL.pay.purchase('sub_freechat'):true;
+      if(ok){ S.sub={freeChat:true,until:Date.now()+30*864e5}; save(); toast('Свободный чат открыт'); SCR.chat(); }
+    };
+    const send=app.querySelector('#chatSend');
+    const inp=app.querySelector('#chatFree');
+    if(send&&inp){
+      send.onclick=()=>sendTxt(inp.value);
+      inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); sendTxt(inp.value); } };
+    }
   };
   paint();
 };
@@ -917,7 +1025,7 @@ SCR.pet=()=>{
       <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
     </div>${nav('hub')}</div>`;
   bindNav();
-  app.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{ const r=EGPet.act(S,b.dataset.a); if(!r.ok)return toast('Нельзя'); EGAch&&EGAch.check(S); save(); toast('Мяу'); go('pet'); });
+  app.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{ const r=EGPet.act(S,b.dataset.a); if(!r.ok){ egA('error'); return toast('Нельзя'); } egA(b.dataset.a==='pet'||b.dataset.a==='stroke'?'cat_purr':'cat_meow'); EGAch&&EGAch.check(S); save(); toast('Мяу'); go('pet'); });
   $('#back').onclick=()=>go('hub');
 };
 
@@ -985,6 +1093,7 @@ SCR.mg_karaoke=()=>{
 async function boot(){
   if(window.EGRC) EGRC.apply({});
   EG=await EGContent.load();
+  try{ if(window.EGAudio) await EGAudio.init(); }catch(e){}
   window.EG=EG;
   S=EGSave.load(); window.S=S;
   if(window.EGEvents) EGEvents.fromPack();
@@ -994,13 +1103,28 @@ async function boot(){
   const q=new URLSearchParams(location.search);
   const shotGo=SHOT && q.get('go');
   if(shotGo){
-    S.consent=S.consent||Date.now(); S.name=S.name||'xShadow_666';
-    S.hunger=72; S.thirst=65; S.energy=80; S.mood=70; S.coins=Math.max(S.coins,1200); S.gems=Math.max(S.gems,40);
-    S.level=Math.max(S.level,5); S.streak=S.streak||{n:3,last:'',freeze:0}; S.streak.n=Math.max(S.streak.n,3);
-    S.dirt={trash:28,dishes:22,laundry:16};
+    const live=q.get('live')==='1' || q.get('proof')==='1';
+    S.consent=S.consent||Date.now(); S.name=S.name||'Пустышка';
+    S.style=q.get('style')||(live?'goth':'emo'); S.gender=q.get('gender')||(live?'girl':'guy');
+    S.char={style:S.style,gender:S.gender};
+    S.hunger=q.get('hunger')!=null?+q.get('hunger'):(live?20:8);
+    S.thirst=q.get('thirst')!=null?+q.get('thirst'):(live?30:25);
+    S.energy=q.get('energy')!=null?+q.get('energy'):(live?50:60);
+    S.mood=q.get('mood')!=null?+q.get('mood'):(live?85:10);
+    S.coins=q.get('coins')!=null?+q.get('coins'):(live?999:12450);
+    S.gems=q.get('gems')!=null?+q.get('gems'):320;
+    S.level=q.get('level')!=null?+q.get('level'):24;
+    S.xp=Math.round(xpNeed(S.level)*0.65);
+    S.streak=S.streak||{n:3,last:'',freeze:0}; S.streak.n=Math.max(S.streak.n||0,3);
+    S.dirt=live?{trash:42,dishes:18,laundry:25}:{trash:0,dishes:0,laundry:0};
+    S.styleStat=125; S.wardrobe=S.wardrobe||{};
+    S.gifts=S.gifts||{inbox:[{id:'p1',seen:false},{id:'p2',seen:false}],outbox:[]};
+    if(q.get('phase')) window.__EG_PHASE=q.get('phase');
+    else if(live) window.__EG_PHASE='night';
     localStorage.setItem('eg_created','1'); localStorage.setItem('eg_care_onboard','1');
     save();
-    if(shotGo==='metro'){ go('loc','metro'); return; }
+    if(shotGo==='metro'||shotGo==='cafe'||shotGo==='park'||shotGo==='station'){ go('loc', shotGo); return; }
+    if(shotGo==='loc'){ go('loc', q.get('loc')||q.get('a')||'metro'); return; }
     if(shotGo==='more'){ go('hub'); return; }
     if(shotGo==='quests'){ go('home'); requestAnimationFrame(()=>openQuests()); return; }
     if(shotGo==='shop'){ go('home'); requestAnimationFrame(()=>openShop()); return; }
@@ -1009,7 +1133,7 @@ async function boot(){
   if(S.consent==null) go('consent');
   else if(!localStorage.getItem('eg_care_onboard')) go('onboardCare');
   else if(!localStorage.getItem('eg_created')) go('create');
-  else { EGCare&&EGCare.onLogin(S); save(); go('home'); Net.register().then(()=>Net.sync().then(applyServer)).catch(()=>{}); }
+  else { EGCare&&EGCare.onLogin(S); save(); go('home'); Net.register().then(()=>Net.sync().then(j=>{applyServer(j);return Net.registerPush();})).catch(()=>{}); }
   W.__egMaybeInterstitial=()=>{
     if(SHOT) return;
     if(!EGRC.bool('ads_interstitial_enabled', false)) return;

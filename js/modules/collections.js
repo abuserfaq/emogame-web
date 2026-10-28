@@ -15,7 +15,7 @@ const Col={
     S.colClaimed=S.colClaimed||{}; if(S.colClaimed[sid]) return {ok:false,err:'claimed'};
     const p=this.progress(S,set); if(!p.done) return {ok:false,err:'incomplete'};
     S.colClaimed[sid]=1; S.collections=(S.collections|0)+1;
-    const r=set.reward||{}; S.coins=(S.coins|0)+(r.coins|0); S.gems=(S.gems|0)+(r.gems|0);
+    const r=set.reward||{}; S.coins=(S.coins|0)+(r.coins|0); S.gems=(S.gems|0)+(r.gems|0); try{ if((r.gems|0)>0 && window.EGAudio) EGAudio.emit('gem'); }catch(e){}
     S.fame=(S.fame|0)+(r.fame|0); S.mood=Math.min(100,(S.mood|0)+(r.mood|0)); S.styleStat=(S.styleStat|0)+(r.style|0);
     return {ok:true,r};
   },

@@ -8,7 +8,8 @@
     "unlockLevel": 1,
     "mood": 5,
     "style": 5,
-    "minLevel": 1
+    "minLevel": 1,
+    "gender": "any"
   },
   {
     "id": "heart_jacket",
@@ -19,7 +20,8 @@
     "unlockLevel": 3,
     "mood": 8,
     "style": 8,
-    "minLevel": 3
+    "minLevel": 3,
+    "gender": "any"
   },
   {
     "id": "fishnet",
@@ -30,7 +32,8 @@
     "unlockLevel": 2,
     "mood": 6,
     "style": 6,
-    "minLevel": 2
+    "minLevel": 2,
+    "gender": "girl"
   },
   {
     "id": "boots",
@@ -41,7 +44,8 @@
     "unlockLevel": 1,
     "mood": 5,
     "style": 5,
-    "minLevel": 1
+    "minLevel": 1,
+    "gender": "any"
   },
   {
     "id": "choker",
@@ -52,7 +56,8 @@
     "unlockLevel": 1,
     "mood": 4,
     "style": 4,
-    "minLevel": 1
+    "minLevel": 1,
+    "gender": "any"
   },
   {
     "id": "beanie",
@@ -60,10 +65,11 @@
     "slot": "hair",
     "cost": 200,
     "img": "img/wardrobe/beanie.webp",
-    "unlockLevel": 2,
+    "unlockLevel": 28,
     "mood": 5,
     "style": 5,
-    "minLevel": 2
+    "minLevel": 28,
+    "gender": "any"
   },
   {
     "id": "skirt",
@@ -74,7 +80,8 @@
     "unlockLevel": 2,
     "mood": 6,
     "style": 6,
-    "minLevel": 2
+    "minLevel": 2,
+    "gender": "girl"
   },
   {
     "id": "leather_jacket",
@@ -82,10 +89,11 @@
     "slot": "top",
     "cost": 450,
     "img": "img/wardrobe/leather_jacket.webp",
-    "unlockLevel": 4,
+    "unlockLevel": 30,
     "mood": 9,
     "style": 9,
-    "minLevel": 4
+    "minLevel": 30,
+    "gender": "any"
   },
   {
     "id": "crop_top",
@@ -96,7 +104,8 @@
     "unlockLevel": 3,
     "mood": 6,
     "style": 6,
-    "minLevel": 3
+    "minLevel": 3,
+    "gender": "girl"
   },
   {
     "id": "sneakers",
@@ -107,7 +116,8 @@
     "unlockLevel": 2,
     "mood": 5,
     "style": 5,
-    "minLevel": 2
+    "minLevel": 2,
+    "gender": "any"
   },
   {
     "id": "backpack",
@@ -115,10 +125,11 @@
     "slot": "acc",
     "cost": 320,
     "img": "img/wardrobe/backpack.webp",
-    "unlockLevel": 4,
+    "unlockLevel": 30,
     "mood": 7,
     "style": 7,
-    "minLevel": 4
+    "minLevel": 30,
+    "gender": "any"
   },
   {
     "id": "paint_jacket",
@@ -126,9 +137,10 @@
     "slot": "top",
     "cost": 500,
     "img": "img/wardrobe/paint_jacket.webp",
-    "unlockLevel": 5,
+    "unlockLevel": 30,
     "mood": 10,
     "style": 10,
-    "minLevel": 5
+    "minLevel": 30,
+    "gender": "any"
   }
 ]

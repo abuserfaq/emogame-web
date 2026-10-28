@@ -14,7 +14,8 @@
       "hungry": "img/chars/frames/emo_guy/hungry.webp",
       "sick": "img/chars/frames/emo_guy/sick.webp",
       "dance": "img/chars/frames/emo_guy/dance.webp",
-      "clean": "img/chars/frames/emo_guy/clean.webp"
+      "clean": "img/chars/frames/emo_guy/clean.webp",
+      "sit": "img/chars/frames/emo_guy/sit.webp"
     },
     "emo_girl": {
       "idle": "img/chars/frames/emo_girl/idle.webp",
@@ -29,7 +30,8 @@
       "sleep": "img/chars/frames/emo_girl/sleep.webp",
       "hungry": "img/chars/frames/emo_girl/hungry.webp",
       "sick": "img/chars/frames/emo_girl/sick.webp",
-      "dance": "img/chars/frames/emo_girl/dance.webp"
+      "dance": "img/chars/frames/emo_girl/dance.webp",
+      "sit": "img/chars/frames/emo_girl/sit.webp"
     },
     "alt_guy": {
       "idle": "img/chars/frames/alt_guy/idle.webp",
@@ -44,7 +46,8 @@
       "sleep": "img/chars/frames/alt_guy/sleep.webp",
       "hungry": "img/chars/frames/alt_guy/hungry.webp",
       "sick": "img/chars/frames/alt_guy/sick.webp",
-      "dance": "img/chars/frames/alt_guy/dance.webp"
+      "dance": "img/chars/frames/alt_guy/dance.webp",
+      "sit": "img/chars/frames/alt_guy/sit.webp"
     },
     "alt_girl": {
       "idle": "img/chars/frames/alt_girl/idle.webp",
@@ -59,7 +62,8 @@
       "sleep": "img/chars/frames/alt_girl/sleep.webp",
       "hungry": "img/chars/frames/alt_girl/hungry.webp",
       "sick": "img/chars/frames/alt_girl/sick.webp",
-      "dance": "img/chars/frames/alt_girl/dance.webp"
+      "dance": "img/chars/frames/alt_girl/dance.webp",
+      "sit": "img/chars/frames/alt_girl/sit.webp"
     },
     "idol_guy": {
       "idle": "img/chars/frames/idol_guy/idle.webp",
@@ -74,7 +78,8 @@
       "sleep": "img/chars/frames/idol_guy/sleep.webp",
       "hungry": "img/chars/frames/idol_guy/hungry.webp",
       "sick": "img/chars/frames/idol_guy/sick.webp",
-      "dance": "img/chars/frames/idol_guy/dance.webp"
+      "dance": "img/chars/frames/idol_guy/dance.webp",
+      "sit": "img/chars/frames/idol_guy/sit.webp"
     },
     "idol_girl": {
       "idle": "img/chars/frames/idol_girl/idle.webp",
@@ -89,7 +94,8 @@
       "sleep": "img/chars/frames/idol_girl/sleep.webp",
       "hungry": "img/chars/frames/idol_girl/hungry.webp",
       "sick": "img/chars/frames/idol_girl/sick.webp",
-      "dance": "img/chars/frames/idol_girl/dance.webp"
+      "dance": "img/chars/frames/idol_girl/dance.webp",
+      "sit": "img/chars/frames/idol_girl/sit.webp"
     },
     "goth_girl": {
       "idle": "img/chars/frames/goth_girl/idle.webp",
@@ -104,7 +110,8 @@
       "sleep": "img/chars/frames/goth_girl/sleep.webp",
       "hungry": "img/chars/frames/goth_girl/hungry.webp",
       "sick": "img/chars/frames/goth_girl/sick.webp",
-      "dance": "img/chars/frames/goth_girl/dance.webp"
+      "dance": "img/chars/frames/goth_girl/dance.webp",
+      "sit": "img/chars/frames/goth_girl/sit.webp"
     },
     "punk_guy": {
       "idle": "img/chars/frames/punk_guy/idle.webp",
@@ -119,7 +126,8 @@
       "sleep": "img/chars/frames/punk_guy/sleep.webp",
       "hungry": "img/chars/frames/punk_guy/hungry.webp",
       "sick": "img/chars/frames/punk_guy/sick.webp",
-      "dance": "img/chars/frames/punk_guy/dance.webp"
+      "dance": "img/chars/frames/punk_guy/dance.webp",
+      "sit": "img/chars/frames/punk_guy/sit.webp"
     },
     "skater_girl": {
       "idle": "img/chars/frames/skater_girl/idle.webp",
@@ -134,7 +142,8 @@
       "sleep": "img/chars/frames/skater_girl/sleep.webp",
       "hungry": "img/chars/frames/skater_girl/hungry.webp",
       "sick": "img/chars/frames/skater_girl/sick.webp",
-      "dance": "img/chars/frames/skater_girl/dance.webp"
+      "dance": "img/chars/frames/skater_girl/dance.webp",
+      "sit": "img/chars/frames/skater_girl/sit.webp"
     },
     "punk_girl": {
       "idle": "img/chars/frames/punk_girl/idle.webp",
@@ -149,7 +158,8 @@
       "sleep": "img/chars/frames/punk_girl/sleep.webp",
       "hungry": "img/chars/frames/punk_girl/hungry.webp",
       "sick": "img/chars/frames/punk_girl/sick.webp",
-      "dance": "img/chars/frames/punk_girl/dance.webp"
+      "dance": "img/chars/frames/punk_girl/dance.webp",
+      "sit": "img/chars/frames/punk_girl/sit.webp"
     },
     "skater_guy": {
       "idle": "img/chars/frames/skater_guy/idle.webp",
@@ -164,7 +174,8 @@
       "sleep": "img/chars/frames/skater_guy/sleep.webp",
       "hungry": "img/chars/frames/skater_guy/hungry.webp",
       "sick": "img/chars/frames/skater_guy/sick.webp",
-      "dance": "img/chars/frames/skater_guy/dance.webp"
+      "dance": "img/chars/frames/skater_guy/dance.webp",
+      "sit": "img/chars/frames/skater_guy/sit.webp"
     },
     "goth_guy": {
       "idle": "img/chars/frames/goth_guy/idle.webp",
@@ -179,7 +190,8 @@
       "sleep": "img/chars/frames/goth_guy/sleep.webp",
       "hungry": "img/chars/frames/goth_guy/hungry.webp",
       "sick": "img/chars/frames/goth_guy/sick.webp",
-      "dance": "img/chars/frames/goth_guy/dance.webp"
+      "dance": "img/chars/frames/goth_guy/dance.webp",
+      "sit": "img/chars/frames/goth_guy/sit.webp"
     }
   },
   "sequences": {
@@ -259,6 +271,9 @@
       "blink",
       "idle2",
       "idle"
+    ],
+    "sit": [
+      "sit"
     ]
   },
   "fps": {
@@ -274,6 +289,7 @@
     "clean": 5,
     "react": 5,
     "hungry": 3,
-    "sick": 3
+    "sick": 3,
+    "sit": 1
   }
 }

@@ -16,7 +16,7 @@ const Anim={
       } else {
         this.el.style.maxWidth=''; this.el.style.height='';
       }
-      this.el.style.imageRendering='pixelated';
+      this.el.style.imageRendering='auto';
     }
     this.play('idle');
   },

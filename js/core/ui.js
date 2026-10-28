@@ -20,7 +20,7 @@ const UI={
       </div>`;
     (document.querySelector('#app')||document.body).appendChild(root);
     const sheet=root.querySelector('.eg-sheet');
-    const close=()=>{ root.classList.add('out'); setTimeout(()=>root.remove(),180); };
+    const close=()=>{ try{ if(window.EGAudio) EGAudio.emit('sheet_close'); }catch(e){} root.classList.add('out'); setTimeout(()=>root.remove(),180); };
     root.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',e=>{ if(e.target.dataset.close||e.currentTarget.dataset.close) close(); }));
     // swipe down
     let y0=null, dy=0;

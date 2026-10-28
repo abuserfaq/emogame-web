@@ -10,7 +10,7 @@ const U={
     const levels=this.data().levels||{};
     for(let lv=(prev|0)+1; lv<=(S.level|0); lv++){
       const r=levels[String(lv)]; if(!r) continue;
-      S.coins=(S.coins|0)+(r.coins|0); S.gems=(S.gems|0)+(r.gems|0);
+      S.coins=(S.coins|0)+(r.coins|0); S.gems=(S.gems|0)+(r.gems|0); try{ if((r.gems|0)>0 && window.EGAudio) EGAudio.emit('gem'); }catch(e){}
     }
   },
 };
