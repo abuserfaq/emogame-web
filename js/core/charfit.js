@@ -24,8 +24,16 @@ function coverAt(x,y,stage,w){
 }
 window.EGCharCover=coverAt; window.EGVisual=visual;
 let busy=0;
+/* 0.8.4b: the character stays hidden until the backgrounds/HUD art are loaded and charfit has placed it (no ~1 s overlap of the status panel on cold start) */
+function settled(){ const app=document.getElementById('app')||document.body; for(const i of app.querySelectorAll('img')){ if(i.closest('#charWrap')) continue; if(!i.complete) return false; } return true; }
+function uncovered(w){ const stage=stageOf(w); if(!stage) return true; const ci=w.querySelector('.char')||w; const c=ci.getBoundingClientRect(); if(!c.height) return false;
+  for(let y=c.top+4;y<c.bottom-2;y+=8) for(const dx of[-0.3,0,0.3]) if(coverAt(c.left+c.width*(0.5+dx),y,stage,w)) return false; return true; }
+function markPlaced(w){ if(!w||w.dataset.placed) return; if(!w.__t0) w.__t0=Date.now();
+  const ok=settled()&&uncovered(w)&&Date.now()-w.__t0>250; const key=w.style.bottom+'|'+w.style.height;
+  if((ok&&w.__lastKey===key)||Date.now()-w.__t0>3000){ w.dataset.placed='1'; return; }
+  w.__lastKey=ok?key:null; clearTimeout(w.__pt); w.__pt=setTimeout(()=>{ fit(); markPlaced(w); },150); }
 function fit(){
-  const w=document.getElementById('charWrap'); if(!w||busy) return; const stage=stageOf(w); if(!stage) return;
+  const w=document.getElementById('charWrap'); if(!w||busy) return; const stage=stageOf(w); if(!stage){ markPlaced(w); return; }
   busy=1;
   try{
     // reset to stylesheet placement first (unless walking to the bed / sleeping)
@@ -57,11 +65,11 @@ function fit(){
     w.style.setProperty('height',Math.max(40,h*kH)/k+'px','important');
     w.style.setProperty('bottom',(pr.bottom-footY-dB*(h/Math.max(1,want)))/k+'px','important');
     w.dataset.fit='moved'; w.dataset.fitLoc=(stage.dataset.loc||location.search);
-  } finally { busy=0; }
+  } finally { busy=0; markPlaced(w); }
 }
 let t=null; function sched(){ clearTimeout(t); t=setTimeout(fit,60); }
 window.EGCharFit=fit;
 document.addEventListener('DOMContentLoaded',()=>{ const app=document.getElementById('app')||document.body;
   try{ new MutationObserver(m=>{ if(m.some(x=>!(x.target.closest&&x.target.closest('#charWrap')))) sched(); }).observe(app,{childList:true,subtree:true}); }catch(e){}
-  window.addEventListener('resize',sched); window.addEventListener('orientationchange',sched); setInterval(fit,8000); });
+  window.addEventListener('resize',sched); document.addEventListener('load',e=>{ if(e.target&&e.target.tagName==='IMG'&&!(e.target.closest&&e.target.closest('#charWrap'))) sched(); },true); window.addEventListener('orientationchange',sched); setInterval(fit,8000); });
 })();

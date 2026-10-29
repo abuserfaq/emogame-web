@@ -737,7 +737,7 @@ SCR.loc=(id)=>{
 function bindActs(locId){
   if(!window.EGAct) return;
   const rer=()=>{ const l=$('#actLayer'); if(l) l.innerHTML=EGAct.spotsHTML(S,locId); const p=$('#actPanel'); if(p){ const t=document.createElement('div'); t.innerHTML=EGAct.panelHTML(S,locId); p.replaceWith(t.firstElementChild); } const vals=[S.hunger,S.thirst,S.energy,S.mood]; app.querySelectorAll('.lp-bars .lp-row').forEach((r,i)=>{ const v=Math.round(vals[i]||0); const b=r.querySelector('.bar i'); if(b) b.style.width=clamp(v,0,100)+'%'; const t=r.querySelector('.val'); if(t) t.textContent=v+'/100'; }); bindActs(locId); setTimeout(()=>{ if(window.EGAnim&&!EGAct.busy) window.EGAnim.play(locId==='cafe'||locId==='bookcafe'?'sit':'idle'); },1600); };
-  app.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ egA('tap'); EGAct.run(S,locId,b.dataset.act,{act:(n,ms)=>window.EGAnim?window.EGAnim.act(n,ms,()=>{ if(window.EGAnim) window.EGAnim.play(locId==='cafe'||locId==='bookcafe'?'sit':'idle'); }):ms,egA,toast,addXp,save,clamp,rerender:rer}); });
+  app.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ egA('tap'); EGAct.run(S,locId,b.dataset.act,{act:(n,ms)=>window.EGAnim?window.EGAnim.act(n,ms,()=>{ if(!window.EGAnim) return; const sit=locId==='cafe'||locId==='bookcafe'; if(sit){ const w=document.getElementById('charWrap'); if(w){ w.classList.remove('eg-resit'); void w.offsetWidth; w.classList.add('eg-resit'); setTimeout(()=>w.classList.remove('eg-resit'),500); } } window.EGAnim.play(sit?'sit':'idle'); }):ms,egA,toast,addXp,save,clamp,rerender:rer}); });
 }
 
 SCR.gifts=()=>{

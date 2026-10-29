@@ -93,3 +93,11 @@ html:root body #app .screen.home-v-night .dirt-hotspots{transform:translateY(-12
 html:root body #app .screen.home-v-night .scene-fab{bottom:auto!important;top:78px!important;transform:scale(.8);transform-origin:right top}
 #app .v4-cafe-h b.long{font-size:26px!important;letter-spacing:1px!important;text-align:center;flex:1}
 html:root body #app .screen.sleeping .hv-cards,html:root body #app .screen.sleeping .hv-side,html:root body #app .screen.sleeping .hv-status{display:none!important}
+
+/* 0.8.4b: hide the character until charfit placed it after backgrounds load; smooth fade in */
+html:root body #app .char-wrap:not([data-placed]),html:root body #app .char-wrap:not([data-placed]) img.char,html:root body #app .char-wrap:not([data-placed]) .char-shadow{visibility:hidden!important}
+.char-wrap[data-placed]{animation:egCharIn .25s ease-out}
+@keyframes egCharIn{from{opacity:0}to{opacity:1}}
+.char-wrap .char{transition:opacity .2s}
+.char-wrap.eg-resit .char{animation:egResit .45s ease-out}
+@keyframes egResit{0%{opacity:.35;transform:translateY(6px)}100%{opacity:1;transform:none}}
