@@ -36,7 +36,7 @@ html:root body #app .screen.home-v-evening .scene-fab{display:none!important}
 #app .hv-xp.n{flex:1;max-width:110px;height:10px;border:1px solid #6a5a8a;background:#241a36}
 #app .hv-xp.n i{background:#8b4fe0}
 #app .hv-lv small{color:#c8b8e0;font-size:11px}
-#app .hv-gear{width:40px;height:40px;border:2px solid #4a3a6a;border-radius:6px;background:#1c1530}
+#app .hv-gear{width:52px;height:52px;border:2px solid #4a3a6a;border-radius:6px;background:#1c1530}
 #app .hv-gear img,#app .hv-gear svg{width:24px;height:24px}
 #app .hv-status{position:absolute;left:8px;right:8px;bottom:182px;z-index:12;border:2px solid #4a3a6a;border-radius:6px;background:#120d1ef0;padding:6px 12px 8px;color:#ddd;font-family:var(--egui,sans-serif)}
 #app .hv-sh{display:flex;justify-content:center;position:relative;font:700 19px/1.4 var(--egui,sans-serif);letter-spacing:2px;color:#e8e0f0;border-bottom:1px solid #4a3a6a;margin-bottom:5px}
