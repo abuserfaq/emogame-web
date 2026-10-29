@@ -171,7 +171,7 @@ function startSleep(){
   at(800,()=>{
     scr.classList.add('sleeping'); wrap.style.removeProperty('left'); wrap.style.removeProperty('bottom'); wrap.classList.add('on-bed');
     if(EGAnim) EGAnim.play('sleep'); egA('sleep');
-    const ov=document.createElement('div'); ov.className='sleep-dim'; ov.innerHTML='<div class="zzz"><i>z</i><i>z</i><i>Z</i></div><div class="sleep-card"><b>Сон</b><span>+'+(S.energy-g0.e)+' энергии · +'+(S.mood-g0.m)+' настрой</span><button class="btn" id="wakeBtn" type="button">Проснуться</button></div>';
+    const ov=document.createElement('div'); ov.className='sleep-dim'; ov.innerHTML='<div class="zzz"><i>z</i><i>z</i><i>Z</i></div><div class="sleep-card"><b>Сон</b><span>+'+Math.round(S.energy-g0.e)+' энергии · +'+Math.round(S.mood-g0.m)+' настрой</span><button class="btn" id="wakeBtn" type="button">Проснуться</button></div>';
     scr.appendChild(ov); ov.querySelector('#wakeBtn').onclick=()=>wakeUp();
     egA('snore'); T.push(setInterval(()=>{ if(cur==='home') egA('snore'); },2600));
     at(10000,()=>wakeUp());
