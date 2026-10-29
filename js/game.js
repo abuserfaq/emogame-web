@@ -14,7 +14,9 @@ window.toast=function(t){ [...document.querySelectorAll('body>.toast')].forEach(
   const e=document.createElement('div'); e.className='toast eg-toast'; e.textContent=t;
   Object.assign(e.style,{position:'fixed',zIndex:'9999',left:'0',top:'0',bottom:'auto',transform:'none',visibility:'hidden',boxSizing:'border-box'});
   document.body.appendChild(e); window.EGToastPlace(e);
-  e.style.visibility='visible'; setTimeout(()=>e.style.opacity=0,1600); setTimeout(()=>e.remove(),2100); };
+  e.style.visibility='visible'; setTimeout(()=>e.style.opacity=0,1600); setTimeout(()=>e.remove(),2100);
+  /* 0.8.4: layout can change after the toast appears (character placed after load) -> re-place if it now overlaps anything */
+  const iv=setInterval(()=>{ if(!e.isConnected){ clearInterval(iv); return; } const r=e.getBoundingClientRect(); if(window.EGToastBlockers().some(b=>Math.min(r.right,b.right)>Math.max(r.left,b.left)&&Math.min(r.bottom,b.bottom)>Math.max(r.top,b.top))) window.EGToastPlace(e); },120); };
 // 0.8.2: place transient popups only in free scene area (never over HUD/panels/nav/banner/controls)
 window.EGToastBlockers=function(){ const out=[]; const add=el=>{ if(!el||el.classList.contains('toast')) return; const cs=getComputedStyle(el); if(cs.display==='none'||cs.visibility==='hidden'||+cs.opacity===0) return; const r=el.getBoundingClientRect(); if(r.width>2&&r.height>2) out.push(r); };
   const scr=document.querySelector('#app .screen')||document.querySelector('#app');
@@ -25,8 +27,8 @@ window.EGToastBlockers=function(){ const out=[]; const add=el=>{ if(!el||el.clas
 window.EGToastPlace=function(e){ const W=innerWidth,H=innerHeight,M=8,B=window.EGToastBlockers(); const ban=document.getElementById('bannerStrip'); const lim=ban?Math.min(H,ban.getBoundingClientRect().top||H):H;
   let best=null;
   for(let y=M;y<lim-30;y+=4){ // free horizontal intervals for band [y, y+hEst]
-    for(const hEst of [36,56]){ const iv=[[M,W-M]]; B.forEach(r=>{ if(r.bottom<=y-M/2||r.top>=y+hEst+M/2) return; for(let k=iv.length-1;k>=0;k--){ const [a,b]=iv[k]; const L=r.left-M/2,R=r.right+M/2; if(R<=a||L>=b) continue; const n=[]; if(L>a) n.push([a,L]); if(R<b) n.push([R,b]); iv.splice(k,1,...n);} });
-      iv.forEach(([a,b])=>{ const w=Math.min(b-a,320); if(w<150) return; const sc=Math.min(w,260)*2-Math.abs((y+hEst/2)-H*0.42)*0.6; if(!best||sc>best.sc) best={sc,a,b,w,y,hEst}; }); } }
+    for(const hEst of [36,56,76,96]){ const iv=[[M,W-M]]; B.forEach(r=>{ if(r.bottom<=y-M/2||r.top>=y+hEst+M/2) return; for(let k=iv.length-1;k>=0;k--){ const [a,b]=iv[k]; const L=r.left-M/2,R=r.right+M/2; if(R<=a||L>=b) continue; const n=[]; if(L>a) n.push([a,L]); if(R<b) n.push([R,b]); iv.splice(k,1,...n);} });
+      iv.forEach(([a,b])=>{ const w=Math.min(b-a,320); if(w<(hEst>56?118:150)) return; const sc=Math.min(w,260)*2-Math.abs((y+hEst/2)-H*0.42)*0.6-(hEst>56?hEst*3:0); if(!best||sc>best.sc) best={sc,a,b,w,y,hEst}; }); } }
   if(!best){ e.style.left=M+'px'; e.style.top=M+'px'; e.style.maxWidth=(W-2*M)+'px'; return; }
   e.style.width=best.w+'px'; e.style.maxWidth=best.w+'px'; e.style.fontSize=''; let h=e.getBoundingClientRect().height;
   let fs=parseFloat(getComputedStyle(e).fontSize)||14; while(h>best.hEst&&fs>10){ fs-=1; e.style.fontSize=fs+'px'; h=e.getBoundingClientRect().height; }
@@ -724,6 +726,8 @@ SCR.loc=(id)=>{
     </div>
     ${nav('map')}
   </div>`;
+  /* 0.8.4c: no empty boxes (cards whose content is hidden by the screen variant) */
+  app.querySelectorAll('#locPanel .lp-card').forEach(c=>{ if(!(c.innerText||'').trim()&&![...c.querySelectorAll('img,button')].some(x=>x.offsetWidth>2)) c.classList.add('lp-empty'); });
   bindNav();
   if(isCafe) mountAnim({pose:'sit'});
   else { mountAnim(); if(window.EGAnim) window.EGAnim.play('idle'); }

@@ -1,0 +1,98 @@
+[
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "home",
+  "covered_visible_samples": 0,
+  "first_visible": 8,
+  "neverplaced": false,
+  "errs": []
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "cafe",
+  "covered_visible_samples": 0,
+  "first_visible": 8,
+  "neverplaced": false,
+  "errs": [],
+  "mid": "cafe_latte2.webp",
+  "end": "sit.webp"
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "bookcafe",
+  "covered_visible_samples": 0,
+  "first_visible": 10,
+  "neverplaced": false,
+  "errs": [],
+  "mid": "bookcafe_tea2.webp",
+  "end": "sit.webp"
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "metro",
+  "covered_visible_samples": 0,
+  "first_visible": 8,
+  "neverplaced": false,
+  "errs": []
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "home",
+  "covered_visible_samples": 0,
+  "first_visible": 8,
+  "neverplaced": false,
+  "errs": []
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "cafe",
+  "covered_visible_samples": 0,
+  "first_visible": 8,
+  "neverplaced": false,
+  "errs": [],
+  "mid": "cafe_latte2.webp",
+  "end": "sit.webp"
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "bookcafe",
+  "covered_visible_samples": 0,
+  "first_visible": 7,
+  "neverplaced": false,
+  "errs": [],
+  "mid": "bookcafe_tea2.webp",
+  "end": "sit.webp"
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "metro",
+  "covered_visible_samples": 0,
+  "first_visible": 9,
+  "neverplaced": false,
+  "errs": []
+ }
+]

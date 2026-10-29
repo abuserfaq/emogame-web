@@ -101,3 +101,58 @@ html:root body #app .char-wrap:not([data-placed]),html:root body #app .char-wrap
 .char-wrap .char{transition:opacity .2s}
 .char-wrap.eg-resit .char{animation:egResit .45s ease-out}
 @keyframes egResit{0%{opacity:.35;transform:translateY(6px)}100%{opacity:1;transform:none}}
+
+/* ===== 0.8.4c short screens (design H<880, e.g. 720x1600 -> 360x626): slim location bar, compact activity bar, big character ===== */
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel{bottom:6px!important;max-height:none!important;overflow:visible!important;padding:0!important;gap:4px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-card{display:flex!important;align-items:center;gap:8px;padding:5px 8px!important;min-height:0!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-card[style*="display:none"]{display:none!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-top{flex:0 1 auto;min-width:0;gap:6px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-pin{width:20px!important;height:26px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-title{font-size:13px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-sub,
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-weather,
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-status-h,
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .pd-sh{display:none!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-bars{flex:1;display:grid!important;grid-template-columns:1fr 1fr;gap:2px 8px!important;padding:0!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-row{gap:4px!important;font-size:9px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-row .nm{width:auto!important;min-width:0!important;font-size:9px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-row .bar{height:6px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-row .val{display:none!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .pd-status{display:grid!important;grid-template-columns:1fr 1fr 1fr;gap:6px}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .pd-row{font-size:9px!important;gap:3px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-actions{padding:0!important}
+html[data-egshort="1"] body #app .screen.loc-mode .loc-panel .lp-actions .btn{min-height:34px!important;padding:4px!important;font-size:12px!important;margin:0!important}
+html[data-egshort="1"] body #app .screen.loc-mode .act-panel{padding:3px 5px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .act-panel .ap-h{display:none!important}
+html[data-egshort="1"] body #app .screen.loc-mode .act-panel .ap-row{flex-wrap:nowrap!important;gap:4px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .act-panel .ap-item{flex:1 1 0!important;min-height:0!important;padding:3px!important;grid-template-columns:22px 1fr!important}
+html[data-egshort="1"] body #app .screen.loc-mode .act-panel .ap-item img{width:22px!important;height:22px!important}
+html[data-egshort="1"] body #app .screen.loc-mode .act-panel .ap-c{display:none!important}
+html[data-egshort="1"] body #app .screen.loc-mode .act-panel .ap-n{font-size:9px!important;line-height:1.05;white-space:normal;max-height:2.1em;overflow:hidden}
+html[data-egshort="1"] body #app .screen.loc-mode .stage-bleed .char-wrap{height:300px!important;bottom:150px!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel.loc-panel{bottom:180px!important;top:auto!important;height:auto!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card{height:auto!important;flex-direction:row!important;flex-wrap:nowrap!important;max-height:40px!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card .lp-top{border:0!important;padding:0!important;margin:0!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel{flex-direction:column!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card::before,html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card::after{display:none!important;content:none!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card > *{position:static!important;width:auto!important;height:auto!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card{position:relative!important;background:#0d070cf0!important;border:2px solid #ff5fa8b3!important;border-radius:10px!important;box-shadow:0 0 10px #ff3d8e33!important;left:auto!important;right:auto!important;width:auto!important;margin:0!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card .lp-title{font-size:13px!important;line-height:16px!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-bars{flex:1 1 auto!important;display:grid!important;flex-direction:initial!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-row{height:auto!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-row .nm{font-size:9px!important;width:44px!important;min-width:44px!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel.loc-panel{bottom:180px!important;top:auto!important;height:auto!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card{height:auto!important;flex-direction:row!important;flex-wrap:nowrap!important;max-height:40px!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card .lp-top{border:0!important;padding:0!important;margin:0!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel{flex-direction:column!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card::before,html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card::after{display:none!important;content:none!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card > *{position:static!important;width:auto!important;height:auto!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card{position:relative!important;background:#0d070cf0!important;border:2px solid #ff5fa8b3!important;border-radius:10px!important;box-shadow:0 0 10px #ff3d8e33!important;left:auto!important;right:auto!important;width:auto!important;margin:0!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-card .lp-title{font-size:13px!important;line-height:16px!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-bars{flex:1 1 auto!important;display:grid!important;flex-direction:initial!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-row{height:auto!important}
+html[data-egshort="1"] body #app .screen.loc-mode #locPanel .lp-row .nm{font-size:9px!important;width:44px!important;min-width:44px!important}
+html body #app .screen.loc-mode #locPanel .lp-card.lp-empty{display:none!important}
+/* 0.8.4c: on normal screens too the character in a location is at least ~260 design px tall (>=220 px on a 360-wide phone) */
+html[data-egshort="0"] body #app .screen.loc-mode .stage-bleed .char-wrap{height:262px!important;width:170px!important}
+html[data-egshort="0"] body #app .screen.loc-metro .act-panel{top:96px!important}

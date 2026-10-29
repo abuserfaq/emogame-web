@@ -28,9 +28,12 @@ let busy=0;
 function settled(){ const app=document.getElementById('app')||document.body; for(const i of app.querySelectorAll('img')){ if(i.closest('#charWrap')) continue; if(!i.complete) return false; } return true; }
 function uncovered(w){ const stage=stageOf(w); if(!stage) return true; const ci=w.querySelector('.char')||w; const c=ci.getBoundingClientRect(); if(!c.height) return false;
   for(let y=c.top+4;y<c.bottom-2;y+=8) for(const dx of[-0.3,0,0.3]) if(coverAt(c.left+c.width*(0.5+dx),y,stage,w)) return false; return true; }
+/* 0.8.4c: on cold start only (first placement, until the first user input), for 6 s after placing, if late layout (panel/fonts) covers the character, hide it again and refit */
+let userTouched=false; ['pointerdown','keydown','touchstart','click'].forEach(ev=>document.addEventListener(ev,()=>{userTouched=true; /* user acts before cold-start placement finished -> show the character now (actions must be visible) */ setTimeout(()=>{ const w=document.getElementById('charWrap'); if(w&&!w.dataset.placed){ fit(); w.dataset.placed='1'; window.__egPlacedOnce=1; } },0); },true));
+function guard(w){ if(userTouched||window.__egGuarded) return; window.__egGuarded=1; const t1=Date.now(); const iv=setInterval(()=>{ if(userTouched||!w.isConnected||Date.now()-t1>6000){ clearInterval(iv); return; } if(w.classList.contains('walking')||w.classList.contains('on-bed')||w.classList.contains('acting')) return; if(!uncovered(w)){ clearInterval(iv); delete w.dataset.placed; w.__t0=Date.now(); w.__lastKey=null; fit(); markPlaced(w); } },50); }
 function markPlaced(w){ if(!w||w.dataset.placed) return; if(!w.__t0) w.__t0=Date.now();
   const ok=settled()&&uncovered(w)&&Date.now()-w.__t0>250; const key=w.style.bottom+'|'+w.style.height;
-  if((ok&&w.__lastKey===key)||Date.now()-w.__t0>3000){ w.dataset.placed='1'; return; }
+  const age=Date.now()-w.__t0; if((ok&&w.__lastKey===key)||age>3000||(window.__egPlacedOnce&&uncovered(w))){ w.dataset.placed='1'; window.__egPlacedOnce=1; guard(w); return; }
   w.__lastKey=ok?key:null; clearTimeout(w.__pt); w.__pt=setTimeout(()=>{ fit(); markPlaced(w); },150); }
 function fit(){
   const w=document.getElementById('charWrap'); if(!w||busy) return; const stage=stageOf(w); if(!stage){ markPlaced(w); return; }
@@ -67,7 +70,7 @@ function fit(){
     w.dataset.fit='moved'; w.dataset.fitLoc=(stage.dataset.loc||location.search);
   } finally { busy=0; markPlaced(w); }
 }
-let t=null; function sched(){ clearTimeout(t); t=setTimeout(fit,60); }
+let t=null; function sched(){ clearTimeout(t); t=setTimeout(fit,60); /* re-rendered wrap after the first placement: place before paint (no blink after actions) */ const w=document.getElementById('charWrap'); if(window.__egPlacedOnce&&w&&!w.dataset.placed) fit(); }
 window.EGCharFit=fit;
 document.addEventListener('DOMContentLoaded',()=>{ const app=document.getElementById('app')||document.body;
   try{ new MutationObserver(m=>{ if(m.some(x=>!(x.target.closest&&x.target.closest('#charWrap')))) sched(); }).observe(app,{childList:true,subtree:true}); }catch(e){}
