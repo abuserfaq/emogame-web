@@ -374,6 +374,28 @@ function mountAnim(opts){
   })();
 }
 
+/* 0.8.4: home evening/night follow their own mocks (profile header / status panel), panels never over the character (charfit) */
+function homeVariantHTML(){
+  const ph=phase(); const need=xpNeed(S.level); const pct=Math.round(clamp((S.xp/need)*100,0,100));
+  const nm=(S.name||'Эмо').slice(0,12); const k=(S.style||'emo')+'_'+(S.gender||'girl');
+  const bar=(v,c)=>`<div class="hv-bar"><i style="width:${clamp(v,0,100)}%;background:${c}"></i></div>`;
+  if(ph==='evening') return `<div class="hv-eve-top">
+      <div class="hv-ava"><img src="img/chars/frames/${k}/idle.webp" alt=""></div>
+      <div class="hv-who"><b>${nm.toUpperCase()}</b><small>УР ${S.level}</small><div class="hv-xp"><i style="width:${pct}%"></i><span>${Math.round(S.xp)} / ${need}</span></div></div>
+      <div class="hv-cur"><div>${ico('coins')}<b>${fmtNum(S.coins)}</b><span>+</span></div><div>${ico('gems')}<b>${fmtNum(S.gems)}</b><span>+</span></div></div>
+    </div>
+    <div class="hv-title"><i></i><b>✦ ДОМ ✦</b><i></i><button class="hv-menu" id="hudGear" type="button" aria-label="меню">☰</button></div>
+    <div class="hv-side"><button data-hv="ach" type="button">${ico('mood')}<span>СТАТЫ</span></button><button data-hv="diary" type="button">${ico('level')}<span>ЦЕЛИ</span></button><button data-hv="consentSet" type="button">${ico('settings')}<span>НАСТР.</span></button></div>
+    <div class="hv-cards">${[['НАСТРОЙ',S.mood,'mood','#ff4f9a'],['ЭНЕРГИЯ',S.energy,'energy','#8e5cff'],['ГОЛОД',S.hunger,'hunger','#ff6f91']].map(([n,v,i,c])=>`<div class="hv-card"><div class="hv-cl">${ico(i)}<span>${n}</span></div>${bar(v,c)}<small>${Math.round(v)} / 100</small></div>`).join('')}</div>`;
+  if(ph==='night') return `<div class="hv-night-top">
+      <div class="hv-sk">${ico('skull')}</div><div class="hv-who"><b>${nm}</b><div class="hv-lv"><div class="hv-xp n"><i style="width:${pct}%"></i></div><small>УРОВЕНЬ ${S.level}</small></div></div>
+      <button class="hv-gear" id="hudGear" type="button" aria-label="настройки">${ico('settings')}</button>
+    </div>
+    <div class="hv-status"><div class="hv-sh"><span>СТАТУС</span><span>⌄</span></div>
+      ${[['ГОЛОД',S.hunger,'hunger','#d84a4a'],['ЖАЖДА',S.thirst,'thirst','#3f7fe0'],['ЭНЕРГИЯ',S.energy,'energy','#e9a62c'],['НАСТРОЙ',S.mood,'mood','#9b5cff']].map(([n,v,i,c])=>`<div class="hv-row">${ico(i)}<span>${n}</span>${bar(v,c)}<em>${Math.round(v)} / 100</em></div>`).join('')}
+    </div>`;
+  return hudHTML();
+}
 SCR.home=()=>{
   S.loc='room'; save();
   { const low=Math.min(S.hunger||0,S.thirst||0,S.mood||0); if(low<20&&!W.__sadPlayed){ W.__sadPlayed=1; setTimeout(()=>egA('sad'),600); } else if(low>=30) W.__sadPlayed=0; }
@@ -383,9 +405,11 @@ SCR.home=()=>{
     ${dirtHotspots()}
     ${roomInteract()}
     <button class="scene-fab" id="wardrobe" type="button" aria-label="Гардероб"><span class="fab-ring"><img class="fab-hanger" src="img/ui/icons/wardrobe.png" alt=""><span class="fab-lab">ГАРДЕРОБ</span></span></button>
-    ${hudHTML()}
+    ${homeVariantHTML()}
     ${nav('home')}
   </div>`;
+  { const sc=app.querySelector('.screen'); const ph=phase(); if(ph==='evening'||ph==='night') sc.classList.add('home-v-'+ph); }
+  app.querySelectorAll('[data-hv]').forEach(b=>b.onclick=()=>{ egA('tap'); go(b.dataset.hv); });
   bindNav(); bindClean(); bindRoomInteract(); mountAnim(); if(EGAnim) EGAnim.play('idle');
   const g=$('#hudGear'); if(g) g.onclick=()=>go('hub');
   $('#wardrobe').onclick=()=>go('wardrobe');
@@ -630,10 +654,17 @@ SCR.loc=(id)=>{
   const locTitle=isMetro?'МЕТРО · СЕВЕРНАЯ':(loc.name||'');
   const locSub=isMetro?'Подземная станция':(wtxt||'');
     const weatherLine=isMetro?'Снег · Зима · −6°C · Ощущается как −9°C':(isPark?(({morning:'УТРО',day:'ДЕНЬ',evening:'ВЕЧЕР',night:'НОЧЬ'})[phase()]+' · 14°C'):(isCafe?(({morning:'УТРО',day:'ДЕНЬ',evening:'ВЕЧЕР',night:'НОЧЬ'})[phase()]+' · кафе'):(wtxt||'—')));
-  const locCls='loc-mode loc-'+(loc.id||'x');
+  const locCls='loc-mode loc-'+(loc.id||'x')+' ph-'+phase();
   const isParkDay=isPark&&phase()==='day';
   const isCem=loc.id==='cemetery';
-  const showHud=isCafe||(isPark&&!isParkDay);
+  const phN=phase(); const cafeEve=isCafe&&(phN==='evening'||phN==='night'); const parkNight=isPark&&phN==='night';
+  const showHud=(isCafe&&!cafeEve)||(isPark&&!isParkDay&&!parkNight);
+  const segBar=(v,c)=>`<span class="v4-seg">${[...Array(10)].map((_,k)=>`<i style="${k<Math.round(clamp(v,0,100)/10)?'background:'+c:''}"></i>`).join('')}</span>`;
+  const v4Hud=cafeEve?`<div class="v4-cafe-h"><span class="v4-cup">☕</span><b class="${loc.id==='cafe'?'':'long'}">${loc.id==='cafe'?'КАФЕ':String(loc.name||'КАФЕ').toUpperCase()}</b><button class="v4-x" id="back" type="button" aria-label="назад">♥</button></div>
+    <div class="v4-cafe-st"><div class="v4-sh">● СТАТУС</div>${[['НАСТРОЕНИЕ',S.mood,'mood','#ff4f9a'],['ЭНЕРГИЯ',S.energy,'energy','#f0a030'],['ЖАЖДА',S.thirst,'thirst','#4f7fff']].map(([n,v,i,c])=>`<div class="v4-r">${ico(i)}<span>${n}</span>${segBar(v,c)}<em style="color:${c}">${Math.round(v)}%</em></div>`).join('')}</div>`
+    :parkNight?`<div class="v4-park-h"><div class="v4-pa"><img src="img/chars/frames/${(S.style||'emo')+'_'+(S.gender||'girl')}/idle.webp" alt=""></div><div class="v4-pst"><b>СТАТУС</b>${[['ГОЛОД',S.hunger,'hunger','#c8323c'],['ЭНЕРГИЯ',S.energy,'energy','#2f7fe0'],['НАСТРОЙ',S.mood,'mood','#8b4fe0']].map(([n,v,i,c])=>`<div class="v4-r">${ico(i)}<span>${n}</span><div class="v4-b"><i style="width:${clamp(v,0,100)}%;background:${c}"></i></div></div>`).join('')}</div>
+      <div class="v4-pr"><div>${ico('coins')}<b>${fmtNum(S.coins)}</b></div><div>☾<b>${hh}:${mm}</b></div></div><button class="v4-back" id="back" type="button" aria-label="назад">←</button></div>
+      <div class="v4-rain"><span>☂</span><div>${String(wtxt||'НОЧЬ · 14°C').toUpperCase()}<br><small>НОЧЬ В ПАРКЕ · ВИДИМОСТЬ ПОНИЖЕНА</small></div></div>`:'';
   const seg=(v)=>{ const n=Math.max(0,Math.min(4, Math.round((v||0)/25))); return `<span class="seg">${[0,1,2,3].map(i=>`<i class="${i<n?'on':''}"></i>`).join('')}</span>`; };
   const cafeParkHud=()=>{
     const nm=S.name||'×_МРАЧКА_×';
@@ -662,15 +693,15 @@ SCR.loc=(id)=>{
       </div>`;
   app.innerHTML=`<div class="screen immersive ${locCls}">
     ${stageHTML(loc.id, true)}
-    ${showHud?cafeParkHud():''}
+    ${showHud?cafeParkHud():''}${v4Hud}
     ${window.EGAct?`<div class="act-layer" id="actLayer">${EGAct.spotsHTML(S,loc.id)}</div>${EGAct.panelHTML(S,loc.id)}`:''}
     ${isParkDay?`<div class="loc-head pd-head"><button class="pd-ic" id="back" aria-label="назад">${ico('skull')}</button><div class="pd-t">ПАРК</div><button class="pd-ic" id="hudGear" aria-label="настройки">${ico('gear')}</button></div>`:''}
     ${isCem?`<div class="loc-head cem-head"><div class="cem-p"><img src="img/chars/frames/${(S.style||'emo')+'_'+(S.gender||'girl')}/idle.webp" alt=""><div><b>${(S.name||'ЭМО').slice(0,8)} ♥</b><div class="cem-bar"><i style="width:${clamp(S.mood,0,100)}%"></i></div><small>${Math.round(S.mood||0)}/100</small></div></div><div class="cem-t"><small>ЛОКАЦИЯ</small><b>✦ КЛАДБИЩЕ ✦</b><span>прогулка</span></div><button class="btn ghost" id="back" style="width:auto;padding:6px 10px;font-size:12px">←</button></div>`:''}
-    <div class="loc-head ${(isParkDay||isCem)?'pd-hidden':''} ${isMetro?'metro-head':''} ${isCafe?'cafe-head':''} ${isPark?'park-head':''}">${isMetro?'<div class="metro-m" aria-hidden="true">M</div>':''}<div style="flex:1;min-width:0"><div class="mt">${headTitle}</div>
+    <div class="loc-head ${(isParkDay||isCem||cafeEve||parkNight)?'pd-hidden':''} ${isMetro?'metro-head':''} ${isCafe?'cafe-head':''} ${isPark?'park-head':''}">${isMetro?'<div class="metro-m" aria-hidden="true">M</div>':''}<div style="flex:1;min-width:0"><div class="mt">${headTitle}</div>
       <div class="ms">${headSub}</div></div>
       <div class="loc-head-right">${isMetro?`<span class="metro-wx">${ico('snowflake')}<b>${hh}:${mm}</b></span><span class="metro-bat">${ico('battery')}<b>36%</b></span>`:`<b class="loc-clock">${hh}:${mm}</b>`}</div>
-      ${(!isMetro&&!isParkDay&&!isCem)?`<button class="btn ghost" id="back" style="margin-left:8px;width:auto;padding:8px 10px;font-size:12px">←</button>`:''}</div>
-    <div class="loc-panel ${isParkDay?'pd-panel':''} ${isCem?'cem-panel':''}" id="locPanel">
+      ${(!isMetro&&!isParkDay&&!isCem&&!cafeEve&&!parkNight)?`<button class="btn ghost" id="back" style="margin-left:8px;width:auto;padding:8px 10px;font-size:12px">←</button>`:''}</div>
+    <div class="loc-panel ${isParkDay?'pd-panel':''} ${parkNight?'v4-hidden':''} ${isCem?'cem-panel':''}" id="locPanel">
       ${isParkDay?`<div class="lp-card pd-status"><div class="pd-sh">СТАТУС ▲</div>${[['Голод',S.hunger,'hunger','#ff6f91'],['Энергия',S.energy,'energy','#f5c518'],['Настроение',S.mood,'mood','#9b5cff']].map(([n,v,i,c])=>`<div class="pd-row">${ico(i)}<span>${n.toUpperCase()}</span><div class="pd-bar">${[...Array(10)].map((_,k)=>`<i style="${k<Math.round(clamp(v,0,100)/10)?'background:'+c:''}"></i>`).join('')}</div></div>`).join('')}</div>`:''}
       ${isCem?`<div class="lp-card cem-np">${ico('music')}<span><b>СЕЙЧАС ИГРАЕТ:</b> кладбищенский эмбиент</span><span class="cem-play">▶</span></div>`:''}
       <div class="lp-card" style="${(isParkDay||isCem)?'display:none':''}">

@@ -1,0 +1,95 @@
+/* 0.8.4 mock-style HUD variants: home evening/night, cafe evening/night, park night. Character never covered (charfit). */
+html:root body #app .screen.home-v-evening .hud,html:root body #app .screen.home-v-night .hud{display:none!important}
+#app .hv-eve-top{position:absolute;left:8px;right:8px;top:8px;height:78px;z-index:12;display:flex;align-items:center;gap:8px;font-family:var(--egui,sans-serif);color:#fff}
+#app .hv-ava{width:70px;height:70px;border:2px solid #ff4f9a;border-radius:6px;background:#1a0f1f;overflow:hidden;flex:none;box-shadow:0 0 8px #ff4f9a66}
+#app .hv-ava img{width:100%;height:170%;object-fit:cover;object-position:50% 0}
+#app .hv-who{flex:1;min-width:0}
+#app .hv-who b{display:block;font:700 21px/1.05 var(--egui,sans-serif);letter-spacing:1px;text-shadow:0 2px 0 #000}
+#app .hv-who small{color:#ff6fa8;font:700 13px/1.4 var(--egui,sans-serif)}
+#app .hv-xp{position:relative;height:14px;border:2px solid #ff4f9a;border-radius:3px;background:#2a1020;max-width:150px}
+#app .hv-xp i{display:block;height:100%;background:linear-gradient(#ff7fb6,#e0337a)}
+#app .hv-xp span{position:absolute;inset:0;font:700 9px/10px var(--egui,sans-serif);text-align:center;color:#fff}
+#app .hv-cur{display:flex;flex-direction:column;gap:6px;flex:none}
+#app .hv-cur>div{display:flex;align-items:center;gap:5px;font:700 16px/1 var(--egui,sans-serif);text-shadow:0 2px 0 #000}
+#app .hv-cur img,#app .hv-cur svg{width:22px;height:22px}
+#app .hv-cur span{width:20px;height:20px;border:2px solid #ff4f9a;border-radius:4px;color:#ff4f9a;display:grid;place-items:center;font-size:15px;background:#1a0f1f}
+#app .hv-title{position:absolute;left:8px;right:8px;top:92px;height:40px;z-index:12;display:flex;align-items:center;gap:8px}
+#app .hv-title i{flex:1;height:2px;background:#ff4f9a}
+#app .hv-title b{color:#ff6fa8;font:700 26px/1 var(--egui,sans-serif);letter-spacing:2px;text-shadow:0 0 8px #ff4f9a88,0 2px 0 #000}
+#app .hv-menu{width:36px;height:36px;border:2px solid #ff4f9a;border-radius:6px;background:#1a0f1f;color:#ff6fa8;font-size:20px}
+#app .hv-side{position:absolute;right:8px;top:420px;z-index:12;display:flex;flex-direction:column;gap:10px}
+#app .hv-side button{width:58px;height:58px;border:2px solid #ff4f9a;border-radius:7px;background:#160b1acc;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:700 9px/1 var(--egui,sans-serif)}
+#app .hv-side img,#app .hv-side svg{width:26px;height:26px}
+html:root body #app .screen.home-v-evening .scene-fab{display:none!important}
+#app .hv-cards{position:absolute;left:8px;right:8px;bottom:182px;z-index:12;display:flex;gap:7px}
+#app .hv-card{flex:1;border:2px solid #ff4f9a99;border-radius:7px;background:#140a18e6;padding:7px 8px;color:#fff;font-family:var(--egui,sans-serif)}
+#app .hv-cl{display:flex;align-items:center;gap:5px;font:700 13px/1 var(--egui,sans-serif);margin-bottom:6px}
+#app .hv-cl img,#app .hv-cl svg{width:18px;height:18px}
+#app .hv-bar{height:11px;border:1px solid #ffffff44;border-radius:2px;background:#2a1a2e;overflow:hidden}
+#app .hv-bar i{display:block;height:100%}
+#app .hv-card small{display:block;text-align:center;font:700 12px/1.6 var(--egui,sans-serif)}
+/* night */
+#app .hv-night-top{position:absolute;left:8px;right:8px;top:8px;height:60px;z-index:12;display:flex;align-items:center;gap:10px;padding:0 10px;border:2px solid #4a3a6a;border-radius:6px;background:#120d1ef0;color:#ddd;font-family:var(--egui,sans-serif)}
+#app .hv-sk img,#app .hv-sk svg{width:34px;height:34px}
+#app .hv-night-top .hv-who b{font-size:17px;color:#e8e0f0}
+#app .hv-lv{display:flex;align-items:center;gap:8px}
+#app .hv-xp.n{flex:1;max-width:110px;height:10px;border:1px solid #6a5a8a;background:#241a36}
+#app .hv-xp.n i{background:#8b4fe0}
+#app .hv-lv small{color:#c8b8e0;font-size:11px}
+#app .hv-gear{width:40px;height:40px;border:2px solid #4a3a6a;border-radius:6px;background:#1c1530}
+#app .hv-gear img,#app .hv-gear svg{width:24px;height:24px}
+#app .hv-status{position:absolute;left:8px;right:8px;bottom:182px;z-index:12;border:2px solid #4a3a6a;border-radius:6px;background:#120d1ef0;padding:6px 12px 8px;color:#ddd;font-family:var(--egui,sans-serif)}
+#app .hv-sh{display:flex;justify-content:center;position:relative;font:700 19px/1.4 var(--egui,sans-serif);letter-spacing:2px;color:#e8e0f0;border-bottom:1px solid #4a3a6a;margin-bottom:5px}
+#app .hv-sh span+span{position:absolute;right:0;color:#a898c8}
+#app .hv-row{display:flex;align-items:center;gap:8px;height:27px;font:700 13px/1 var(--egui,sans-serif)}
+#app .hv-row img,#app .hv-row svg{width:20px;height:20px}
+#app .hv-row>span{width:86px}
+#app .hv-row .hv-bar{flex:1;height:13px;border-color:#4a3a6a;background:#1e1830}
+#app .hv-row em{font-style:normal;width:62px;text-align:right;color:#c8b8e0}
+html:root body #app .screen.home-v-night .scene-fab{bottom:330px!important}
+/* cafe evening/night */
+html:root body #app .screen.loc-cafe.ph-evening .loc-badge,html:root body #app .screen.loc-cafe.ph-night .loc-badge{display:none!important}
+#app .v4-cafe-h{position:absolute;left:8px;right:8px;top:8px;height:78px;z-index:12;display:flex;align-items:center;justify-content:space-between;padding:0 14px;border:2px solid #4a3a6a;border-radius:6px;background:#140d20f0}
+#app .v4-cafe-h b{color:#c86bff;font:700 44px/1 var(--egui,sans-serif);letter-spacing:3px;text-shadow:0 0 10px #a040ff88,0 3px 0 #000}
+#app .v4-cup{font-size:34px;color:#c86bff;filter:drop-shadow(0 0 6px #a040ff)}
+#app .v4-x{background:none;border:0;color:#9b5cff;font-size:26px;width:40px;height:40px}
+#app .v4-cafe-st{position:absolute;left:8px;right:8px;top:92px;z-index:12;border:2px solid #4a3a6a;border-radius:6px;background:#140d20f0;padding:6px 12px;font-family:var(--egui,sans-serif);color:#ddd}
+#app .v4-sh{font:700 14px/1.6 var(--egui,sans-serif);color:#b8a8d8;letter-spacing:1px}
+#app .v4-r{display:flex;align-items:center;gap:8px;height:25px;font:700 13px/1 var(--egui,sans-serif)}
+#app .v4-r img,#app .v4-r svg{width:18px;height:18px}
+#app .v4-r>span{width:100px}
+#app .v4-seg{flex:1;display:flex;gap:3px}
+#app .v4-seg i{flex:1;height:13px;background:#2a2238}
+#app .v4-r em{font-style:normal;width:42px;text-align:right}
+html:root body #app .screen.loc-cafe.ph-evening .act-panel,html:root body #app .screen.loc-cafe.ph-night .act-panel,
+html:root body #app .screen.loc-bookcafe.ph-evening .act-panel,html:root body #app .screen.loc-bookcafe.ph-night .act-panel{top:212px!important}
+/* park night */
+#app .v4-park-h{position:absolute;left:6px;right:6px;top:6px;height:124px;z-index:12;display:flex;gap:8px;align-items:stretch;padding:6px;border:2px solid #3a3058;border-radius:6px;background:#0e0b1af2;font-family:var(--egui,sans-serif);color:#ddd}
+#app .v4-pa{width:66px;border:2px solid #3a3058;border-radius:4px;overflow:hidden;background:#1a1528}
+#app .v4-pa img{width:100%;height:190%;object-fit:cover;object-position:50% 0}
+#app .v4-pst{flex:1;min-width:0}
+#app .v4-pst b{font:700 20px/1.3 var(--egui,sans-serif);letter-spacing:1px;color:#e8e0f0}
+#app .v4-pst .v4-r>span{width:72px;font-size:12px}
+#app .v4-b{flex:1;height:12px;background:#1e1830}
+#app .v4-b i{display:block;height:100%}
+#app .v4-pr{width:96px;border-left:2px solid #3a3058;display:flex;flex-direction:column;justify-content:space-around;padding-left:8px;font:700 16px/1 var(--egui,sans-serif)}
+#app .v4-pr>div{display:flex;align-items:center;gap:6px;color:#f0e8ff}
+#app .v4-pr img,#app .v4-pr svg{width:22px;height:22px}
+#app .v4-back{position:absolute;right:6px;bottom:-34px;width:auto;padding:4px 10px;border:2px solid #3a3058;border-radius:5px;background:#0e0b1af2;color:#ddd}
+#app .v4-rain{position:absolute;left:10px;right:10px;bottom:182px;height:72px;z-index:12;display:flex;align-items:center;gap:12px;padding:0 12px;border:2px solid #3a3058;border-radius:6px;background:#0e0b1ae8;color:#e0d8f0;font:700 15px/1.4 var(--egui,sans-serif);letter-spacing:1px}
+#app .v4-rain span{font-size:28px;width:46px;height:46px;display:grid;place-items:center;border:2px solid #3a3058;border-radius:5px;color:#7fa8ff}
+#app .v4-rain small{font-size:11px;color:#a898c8}
+.v4-hidden{display:none!important}
+html:root body #app .screen.loc-park.ph-night .act-panel{top:168px!important}
+html:root body #app .screen.loc-park.ph-night .loc-panel{display:none!important}
+/* hotspots stay tappable above the variant panels */
+#app .hv-side{top:140px!important;gap:8px!important}
+#app .hv-side button{width:52px!important;height:52px!important}
+html:root body #app .screen.home-v-evening .dirt-hotspots{transform:translateY(-84px)}
+html:root body #app .screen.home-v-night .dirt-hotspots{transform:translateY(-104px)}
+#app .hv-row{height:22px!important}
+#app .hv-sh{font-size:16px!important;line-height:1.3!important}
+html:root body #app .screen.home-v-night .dirt-hotspots{transform:translateY(-124px)}
+html:root body #app .screen.home-v-night .scene-fab{bottom:auto!important;top:78px!important;transform:scale(.8);transform-origin:right top}
+#app .v4-cafe-h b.long{font-size:26px!important;letter-spacing:1px!important;text-align:center;flex:1}
+html:root body #app .screen.sleeping .hv-cards,html:root body #app .screen.sleeping .hv-side,html:root body #app .screen.sleeping .hv-status{display:none!important}
