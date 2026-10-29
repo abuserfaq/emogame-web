@@ -62,9 +62,9 @@ function careBanner(){
 function bindClean(){
   app.querySelectorAll('[data-clean]').forEach(b=>b.onclick=()=>{
     const kind=b.dataset.clean;
-    if(EGAnim&&EGAnim.busy()){ egA('tap'); riFlash(b); toast('Сначала доделаю начатое'); return; }
+    if(window.EGAnim&&window.EGAnim.busy()){ egA('tap'); riFlash(b); toast('Сначала доделаю начатое'); return; }
     /* 0.8.4: clean IN PLACE with its own AI animation (no walking off), natural speed */
-    const ms=EGAnim?EGAnim.act('clean_'+kind, 3200, ()=>{}):3200;
+    const ms=window.EGAnim?window.EGAnim.act('clean_'+kind, 3200, ()=>{}):3200;
     egA(kind==='trash'?'trash':kind==='dishes'?'dishes':kind==='laundry'?'laundry':'clean');
     setTimeout(()=>{
       EGCare.clean(S,kind); qAdd('cleans',1); addXp(6); save();
@@ -166,7 +166,7 @@ function startSleep(){
   const T=W.__sleepT=[]; const at=(ms,f)=>T.push(setTimeout(()=>{ if(cur==='home'&&scr.isConnected) f(); },ms));
   at(1500,()=>{
     scr.classList.add('sleeping'); wrap.style.removeProperty('left'); wrap.style.removeProperty('bottom'); wrap.classList.add('on-bed');
-    if(EGAnim) EGAnim.play('sleep'); egA('sleep');
+    if(window.EGAnim) window.EGAnim.play('sleep'); egA('sleep');
     const ov=document.createElement('div'); ov.className='sleep-dim'; ov.innerHTML='<div class="zzz"><i>z</i><i>z</i><i>Z</i></div><div class="sleep-card"><b>Сон</b><span>+'+Math.round(S.energy-g0.e)+' энергии · +'+Math.round(S.mood-g0.m)+' настрой</span><button class="btn" id="wakeBtn" type="button">Проснуться</button></div>';
     scr.appendChild(ov); ov.querySelector('#wakeBtn').onclick=()=>wakeUp();
     egA('snore'); T.push(setInterval(()=>{ if(cur==='home') egA('snore'); },2600));
@@ -174,7 +174,7 @@ function startSleep(){
   });
   function wakeUp(){ (W.__sleepT||[]).forEach(x=>{clearTimeout(x);clearInterval(x);}); W.__sleepT=[]; if(cur!=='home'||!scr.isConnected) return;
     egA('wake'); const ov=scr.querySelector('.sleep-dim'); if(ov) ov.classList.add('out');
-    setTimeout(()=>{ if(cur!=='home') return; scr.classList.remove('sleeping'); wrap.classList.remove('on-bed'); if(ov) ov.remove(); if(EGAnim) EGAnim.play('happy'); toast('Доброе утро! Энергия '+Math.round(S.energy)); setTimeout(()=>{ if(cur==='home'&&EGAnim) EGAnim.fromNeeds(S); },1500); },600);
+    setTimeout(()=>{ if(cur!=='home') return; scr.classList.remove('sleeping'); wrap.classList.remove('on-bed'); if(ov) ov.remove(); if(window.EGAnim) window.EGAnim.play('happy'); toast('Доброе утро! Энергия '+Math.round(S.energy)); setTimeout(()=>{ if(cur==='home'&&window.EGAnim) window.EGAnim.fromNeeds(S); },1500); },600);
   }
 }
 function bindRoomInteract(){
@@ -182,9 +182,9 @@ function bindRoomInteract(){
     const kind=b.dataset.ri; riFlash(b); egA('tap');
     if(app.querySelector('.screen.sleeping')) return;
     if(kind==='bed') return startSleep();
-    if(EGAnim&&EGAnim.busy()) return;
+    if(window.EGAnim&&window.EGAnim.busy()) return;
     /* 0.8.4: each room action has its own AI animation, performed in place */
-    if(EGAnim) EGAnim.act(kind, 3000, ()=>{ if(cur==='home') EGAnim.fromNeeds(S); });
+    if(window.EGAnim) window.EGAnim.act(kind, 3000, ()=>{ if(cur==='home') window.EGAnim.fromNeeds(S); });
     setTimeout(()=>{
       if(kind==='fridge'||kind==='table'){ S.hunger=Math.min(100,(S.hunger||0)+8); S.thirst=Math.min(100,(S.thirst||0)+6); egA(kind==='fridge'?'eat':'drink'); toast(kind==='fridge'?'Перекус':'Глоток'); }
       else { S.mood=Math.min(100,(S.mood||0)+5); egA('happy'); toast('У окна…'); }
@@ -353,14 +353,14 @@ function ambientHTML(locId){
 }
 function walkCharTo(sel, thenPlay){
   const wrap=$('#charWrap'); const el=$('#charSpr'); if(!wrap||!el) return;
-  const t=app.querySelector(sel); if(!t){ if(EGAnim) EGAnim.play(thenPlay||'idle'); return; }
+  const t=app.querySelector(sel); if(!t){ if(window.EGAnim) window.EGAnim.play(thenPlay||'idle'); return; }
   const sr=wrap.getBoundingClientRect(); const tr=t.getBoundingClientRect(); const ar=app.getBoundingClientRect();
   const nx=((tr.left+tr.width/2)-ar.left)/ar.width*100;
   const nb=100-((tr.top+tr.height)-ar.top)/ar.height*100;
   wrap.classList.add('walking'); wrap.classList.toggle('face-left', (tr.left+tr.width/2) < (sr.left+sr.width/2));
   wrap.style.setProperty('left',Math.max(14,Math.min(86,nx))+'%','important'); wrap.style.setProperty('bottom',Math.max(12, Math.min(40, nb-2))+'%','important'); /* 0.8.3: inline !important — stylesheet pinned left/bottom with !important so the walk never moved */
-  if(EGAnim) EGAnim.play('walk'); egA('footsteps');
-  setTimeout(()=>{ wrap.classList.remove('walking','face-left'); if(EGAnim) EGAnim.play(thenPlay||'happy'); }, 1450); /* 0.8.4: slower natural walk */
+  if(window.EGAnim) window.EGAnim.play('walk'); egA('footsteps');
+  setTimeout(()=>{ wrap.classList.remove('walking','face-left'); if(window.EGAnim) window.EGAnim.play(thenPlay||'happy'); }, 1450); /* 0.8.4: slower natural walk */
 }
 
 function mountAnim(opts){
@@ -368,9 +368,9 @@ function mountAnim(opts){
   opts=opts||{};
   (function(){ let st=S.style,g=S.gender; const fs=EG.ANIMS&&EG.ANIMS.frameSets;
       if(!(fs&&fs[st+'_'+g])){ if(st==='goth'){st='goth';g='girl';} else if(st==='punk'){st='punk';g='guy';} else if(st==='skater'){st='skater';g='girl';} }
-      EGAnim.mount(el,st,g);
-      if(opts.pose==='sit'){ EGAnim.play('sit'); }
-      else { EGAnim.fromNeeds(S); }
+      window.EGAnim.mount(el,st,g);
+      if(opts.pose==='sit'){ window.EGAnim.play('sit'); }
+      else { window.EGAnim.fromNeeds(S); }
   })();
 }
 
@@ -410,7 +410,7 @@ SCR.home=()=>{
   </div>`;
   { const sc=app.querySelector('.screen'); const ph=phase(); if(ph==='evening'||ph==='night') sc.classList.add('home-v-'+ph); }
   app.querySelectorAll('[data-hv]').forEach(b=>b.onclick=()=>{ egA('tap'); go(b.dataset.hv); });
-  bindNav(); bindClean(); bindRoomInteract(); mountAnim(); if(EGAnim) EGAnim.play('idle');
+  bindNav(); bindClean(); bindRoomInteract(); mountAnim(); if(window.EGAnim) window.EGAnim.play('idle');
   const g=$('#hudGear'); if(g) g.onclick=()=>go('hub');
   $('#wardrobe').onclick=()=>go('wardrobe');
   
@@ -477,7 +477,7 @@ SCR.wardrobe=()=>{
     go('wardrobe');
   });
   app.querySelectorAll('[data-gw]').forEach(b=>b.onclick=()=>{
-    const r=EGGifts.wear(S,b.dataset.gw); if(r.ok){ save(); egA('happy'); toast('Надето'); go('home'); EGAnim&&EGAnim.play('happy'); }
+    const r=EGGifts.wear(S,b.dataset.gw); if(r.ok){ save(); egA('happy'); toast('Надето'); go('home'); window.EGAnim&&window.EGAnim.play('happy'); }
   });
 };
 function openWardrobe(){ go('wardrobe'); }
@@ -562,13 +562,13 @@ SCR.feed=()=>{
       const f=EG.FOOD.find(x=>x.id===b.dataset.f); if(!f||S.coins<f.cost)return toast('Мало монет');
       S.coins-=f.cost; S.hunger=clamp(S.hunger+f.hunger,0,100); S.mood=clamp(S.mood+(f.mood||0),0,100);
       S.dirt.dishes=clamp((S.dirt.dishes||0)+12,0,100); S.dirt.trash=clamp((S.dirt.trash||0)+6,0,100);
-      S.feeds++; qAdd('feeds',1); addXp(5); save(); toast('Вкусно'); egA('eat'); if(EGAnim) EGAnim.act('food',3000,()=>EGAnim.fromNeeds(S)); setTimeout(()=>paint('food'),500);
+      S.feeds++; qAdd('feeds',1); addXp(5); save(); toast('Вкусно'); egA('eat'); if(window.EGAnim) window.EGAnim.act('food',3000,()=>window.EGAnim.fromNeeds(S)); setTimeout(()=>paint('food'),500);
     });
     app.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{
       const f=EG.DRINKS.find(x=>x.id===b.dataset.d); if(!f||S.coins<f.cost)return toast('Мало монет');
       S.coins-=f.cost; S.thirst=clamp(S.thirst+f.thirst,0,100); S.energy=clamp(S.energy+(f.energy||0),0,100);
       S.mood=clamp(S.mood+(f.mood||0),0,100); S.dirt.dishes=clamp((S.dirt.dishes||0)+8,0,100);
-      S.drinks++; qAdd('drinks',1); addXp(4); save(); toast('Бульк'); egA('drink'); if(EGAnim) EGAnim.act('drinks',3000,()=>EGAnim.fromNeeds(S)); setTimeout(()=>paint('drinks'),500);
+      S.drinks++; qAdd('drinks',1); addXp(4); save(); toast('Бульк'); egA('drink'); if(window.EGAnim) window.EGAnim.act('drinks',3000,()=>window.EGAnim.fromNeeds(S)); setTimeout(()=>paint('drinks'),500);
     });
   };
   paint(tab0);
@@ -726,7 +726,7 @@ SCR.loc=(id)=>{
   </div>`;
   bindNav();
   if(isCafe) mountAnim({pose:'sit'});
-  else { mountAnim(); if(EGAnim) EGAnim.play('idle'); }
+  else { mountAnim(); if(window.EGAnim) window.EGAnim.play('idle'); }
   const gBtn=$('#hudGear'); if(gBtn) gBtn.onclick=()=>go('consentSet');
   const back=$('#back'); if(back) back.onclick=()=>go('map');
   const chatBtn=$('#chat'); if(chatBtn) chatBtn.onclick=()=>go('chat');
@@ -736,8 +736,8 @@ SCR.loc=(id)=>{
 };
 function bindActs(locId){
   if(!window.EGAct) return;
-  const rer=()=>{ const l=$('#actLayer'); if(l) l.innerHTML=EGAct.spotsHTML(S,locId); const p=$('#actPanel'); if(p){ const t=document.createElement('div'); t.innerHTML=EGAct.panelHTML(S,locId); p.replaceWith(t.firstElementChild); } const vals=[S.hunger,S.thirst,S.energy,S.mood]; app.querySelectorAll('.lp-bars .lp-row').forEach((r,i)=>{ const v=Math.round(vals[i]||0); const b=r.querySelector('.bar i'); if(b) b.style.width=clamp(v,0,100)+'%'; const t=r.querySelector('.val'); if(t) t.textContent=v+'/100'; }); bindActs(locId); setTimeout(()=>{ if(EGAnim&&!EGAct.busy) EGAnim.play(locId==='cafe'||locId==='bookcafe'?'sit':'idle'); },1600); };
-  app.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ egA('tap'); EGAct.run(S,locId,b.dataset.act,{act:(n,ms)=>EGAnim?EGAnim.act(n,ms,()=>{ if(EGAnim) EGAnim.play(locId==='cafe'||locId==='bookcafe'?'sit':'idle'); }):ms,egA,toast,addXp,save,clamp,rerender:rer}); });
+  const rer=()=>{ const l=$('#actLayer'); if(l) l.innerHTML=EGAct.spotsHTML(S,locId); const p=$('#actPanel'); if(p){ const t=document.createElement('div'); t.innerHTML=EGAct.panelHTML(S,locId); p.replaceWith(t.firstElementChild); } const vals=[S.hunger,S.thirst,S.energy,S.mood]; app.querySelectorAll('.lp-bars .lp-row').forEach((r,i)=>{ const v=Math.round(vals[i]||0); const b=r.querySelector('.bar i'); if(b) b.style.width=clamp(v,0,100)+'%'; const t=r.querySelector('.val'); if(t) t.textContent=v+'/100'; }); bindActs(locId); setTimeout(()=>{ if(window.EGAnim&&!EGAct.busy) window.EGAnim.play(locId==='cafe'||locId==='bookcafe'?'sit':'idle'); },1600); };
+  app.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ egA('tap'); EGAct.run(S,locId,b.dataset.act,{act:(n,ms)=>window.EGAnim?window.EGAnim.act(n,ms,()=>{ if(window.EGAnim) window.EGAnim.play(locId==='cafe'||locId==='bookcafe'?'sit':'idle'); }):ms,egA,toast,addXp,save,clamp,rerender:rer}); });
 }
 
 SCR.gifts=()=>{
@@ -985,7 +985,7 @@ SCR.minigame=()=>{
     <p style="margin-top:16px">Очки: <b id="sc">0</b></p>
     <button class="btn ghost" id="done" style="margin-top:20px;max-width:200px">Готово</button>
   </div>`;
-  let last=0; if(EGAnim) EGAnim.play('dance');
+  let last=0; if(window.EGAnim) window.EGAnim.play('dance');
   $('#tap').onclick=()=>{
     const now=Date.now(); if(now-last<280) return; last=now;
     left--; score+=10; $('#n').textContent=left; $('#sc').textContent=score;
@@ -1154,7 +1154,7 @@ SCR.pet=()=>{
       <button class="btn ghost" id="back" style="margin-top:10px">Назад</button>
     </div>${nav('hub')}</div>`;
   bindNav();
-  app.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{ const r=EGPet.act(S,b.dataset.a); if(!r.ok){ egA('error'); return toast('Нельзя'); } egA(b.dataset.a==='pet'||b.dataset.a==='stroke'?'cat_purr':'cat_meow'); EGAch&&EGAch.check(S); save(); toast('Мяу'); const pa=b.dataset.a; if(pa==='pet'||pa==='play'){ go('home'); setTimeout(()=>{ if(cur==='home'&&EGAnim) EGAnim.act(pa,3000,()=>EGAnim.fromNeeds(S)); },60); } else go('pet'); });
+  app.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{ const r=EGPet.act(S,b.dataset.a); if(!r.ok){ egA('error'); return toast('Нельзя'); } egA(b.dataset.a==='pet'||b.dataset.a==='stroke'?'cat_purr':'cat_meow'); EGAch&&EGAch.check(S); save(); toast('Мяу'); const pa=b.dataset.a; if(pa==='pet'||pa==='play'){ go('home'); setTimeout(()=>{ if(cur==='home'&&window.EGAnim) window.EGAnim.act(pa,3000,()=>window.EGAnim.fromNeeds(S)); },60); } else go('pet'); });
   $('#back').onclick=()=>go('hub');
 };
 
