@@ -685,11 +685,11 @@ html:not(.eg-native-ads) .nav-dock{bottom:52px!important}
 
 /* room interact hotspots (invisible hit areas over furniture) */
 .room-interact{position:absolute;inset:0;z-index:5;pointer-events:none}
-.room-interact .ri{pointer-events:auto;position:absolute;border:0;background:transparent;padding:0;opacity:0}
-.room-interact .hot-bed{right:8%;top:38%;width:28%;height:22%}
-.room-interact .hot-fridge{left:4%;top:42%;width:18%;height:26%}
-.room-interact .hot-window{left:32%;top:18%;width:36%;height:22%}
-.room-interact .hot-table{left:10%;bottom:28%;width:22%;height:16%}
+.room-interact .ri{pointer-events:auto;position:absolute;border:0;background:transparent;padding:0;border-radius:14px;-webkit-tap-highlight-color:transparent;cursor:pointer}
+.room-interact .hot-bed{left:1%;top:37%;width:35%;height:22%}
+.room-interact .hot-fridge{left:81%;top:45%;width:17%;height:12%}
+.room-interact .hot-window{left:48%;top:15%;width:21%;height:16%}
+.room-interact .hot-table{left:58%;top:30%;width:23%;height:13%}
 .ambient .fx-flicker{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,#ffb34722,transparent 50%);animation:egFlicker 1.6s steps(2) infinite;opacity:.5;pointer-events:none}
 .ambient .fx-candle{position:absolute;left:14%;bottom:36%;width:6px;height:10px;background:#ffcc66;border-radius:2px;box-shadow:0 0 10px 3px #ff884466;animation:egCandle 1.2s ease-in-out infinite}
 .ambient .fx-candle.c2{left:auto;right:18%;bottom:42%}
@@ -896,7 +896,7 @@ html:not(.eg-native-ads) .nav-dock{bottom:52px!important}
 .hud-gear{border:0!important;background:transparent!important;width:36px!important;height:36px!important;margin-left:4px}
 .hud-stat{border-width:2px!important;border-radius:8px!important}
 /* hide non-mock chrome */
-.room-interact,.eg-extra-fab,#hubFab,.float-tools,[data-fab]:not(#wardrobe){display:none!important}
+.eg-extra-fab,#hubFab,.float-tools,[data-fab]:not(#wardrobe){display:none!important}
 .scene-fab{z-index:12!important}
 
 /* mock fidelity pass 5 — force Oswald everywhere UI */
@@ -3355,3 +3355,24 @@ html[data-egshort="1"] body #app .screen.loc-metro .act-layer .act-spot:nth-chil
 html[data-egshort="1"] body #app .screen.loc-metro .act-layer .act-spot:nth-child(2){left:348px!important}
 html[data-egshort="1"] body #app .screen.loc-metro .act-layer .act-spot:nth-child(3){left:72px!important}
 html[data-egshort="1"] body #app .screen.loc-metro .act-layer .act-spot:nth-child(4){left:284px!important}
+
+/* 0.8.3 room hotspots: visible tap response + full sleep flow */
+.room-interact{z-index:6!important}
+.room-interact .ri.tapped,.room-interact .ri:active{box-shadow:0 0 0 2px #ff5fa2,0 0 18px 4px rgba(255,61,140,.55),inset 0 0 22px rgba(255,95,162,.35);background:rgba(255,95,162,.12);animation:riPulse .9s ease-out}
+@keyframes riPulse{0%{transform:scale(.96);opacity:.4}35%{transform:scale(1.03);opacity:1}100%{transform:scale(1);opacity:1}}
+#charWrap.walking{transition:left .7s ease-in-out,bottom .7s ease-in-out!important}
+.screen.immersive.home-mode #charWrap.on-bed{left:21%!important;bottom:47%!important;width:44%!important;height:27%!important;transition:opacity .4s!important;z-index:5!important}
+.screen.immersive.home-mode #charWrap.on-bed .char-shadow{display:none!important}
+.screen.sleeping .dirt-hotspots,.screen.sleeping #wardrobe,.screen.sleeping .scene-fab{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+.screen.sleeping .room-interact,.screen.sleeping .dirt-hotspots,.screen.sleeping #wardrobe{pointer-events:none}
+.sleep-dim{position:absolute;inset:0;z-index:7;pointer-events:none;background:radial-gradient(ellipse at 18% 46%,rgba(20,8,30,.15) 0,rgba(8,4,20,.62) 45%,rgba(4,2,12,.8) 100%);animation:sdIn 1s ease forwards}
+.sleep-dim.out{animation:sdOut .6s ease forwards}
+@keyframes sdIn{from{opacity:0}to{opacity:1}}@keyframes sdOut{from{opacity:1}to{opacity:0}}
+.sleep-dim .zzz{position:absolute;left:24%;top:31%;font-family:Oswald,sans-serif;font-weight:700;color:#ff8fb8;text-shadow:0 0 8px #ff2d78}
+.sleep-dim .zzz i{position:absolute;font-style:normal;opacity:0;animation:zz 2.4s ease-in-out infinite}
+.sleep-dim .zzz i:nth-child(1){font-size:16px;animation-delay:0s}.sleep-dim .zzz i:nth-child(2){font-size:22px;animation-delay:.8s}.sleep-dim .zzz i:nth-child(3){font-size:30px;animation-delay:1.6s}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}25%{opacity:1}100%{opacity:0;transform:translate(26px,-48px)}}
+.sleep-card{pointer-events:auto;position:absolute;left:50%;bottom:calc(var(--nav-h,150px) + 24px);transform:translateX(-50%);width:min(78%,300px);display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 14px;border:2px solid #ff3d8c;border-radius:14px;background:rgba(10,4,12,.92);box-shadow:0 0 16px rgba(255,45,120,.45);font-family:Oswald,sans-serif;color:#fff}
+.sleep-card b{font-size:20px;color:#ff5fa2;letter-spacing:1px;text-transform:uppercase}
+.sleep-card span{font-size:14px;color:#ffd0e2}
+.sleep-card .btn{width:100%;margin-top:4px}

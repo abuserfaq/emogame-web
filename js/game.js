@@ -152,15 +152,45 @@ function roomInteract(){
     <button class="ri hot-table" data-ri="table" type="button" title="Стол"></button>
   </div>`;
 }
+const SLEEP_CD=4*3600*1000; /* 0.8.3: full sleep every 4h (daily engagement: 3-4 naps a day) */
+function sleepLeft(){ return Math.max(0,(S.sleepNext||0)-Date.now()); }
+function fmtLeft(ms){ const m=Math.ceil(ms/60000),h=Math.floor(m/60); return h?(h+' ч '+(m%60)+' мин'):(m+' мин'); }
+function riFlash(b){ if(!b) return; b.classList.remove('tapped'); void b.offsetWidth; b.classList.add('tapped'); setTimeout(()=>b.classList.remove('tapped'),900); }
+function startSleep(){
+  if(cur!=='home') return;
+  const scr=app.querySelector('.screen.home-mode'); const wrap=$('#charWrap'); if(!scr||!wrap) return;
+  if(scr.classList.contains('sleeping')) return;
+  const left=sleepLeft();
+  walkCharTo('.hot-bed','idle');
+  if(left>0){ setTimeout(()=>{ if(cur==='home') toast('Пока не хочется спать · приходи через '+fmtLeft(left)); },800); return; }
+  const g0={e:S.energy,m:S.mood};
+  S.energy=clamp((S.energy||0)+55,0,100); S.mood=clamp((S.mood||0)+10,0,100); S.hunger=clamp((S.hunger||0)-8,0,100);
+  S.dirt=S.dirt||{}; S.dirt.laundry=clamp((S.dirt.laundry||0)+15,0,100);
+  S.sleeps=(S.sleeps||0)+1; qAdd('sleeps',1); addXp(8); S.sleepNext=Date.now()+SLEEP_CD; save();
+  const T=W.__sleepT=[]; const at=(ms,f)=>T.push(setTimeout(()=>{ if(cur==='home'&&scr.isConnected) f(); },ms));
+  at(800,()=>{
+    scr.classList.add('sleeping'); wrap.style.removeProperty('left'); wrap.style.removeProperty('bottom'); wrap.classList.add('on-bed');
+    if(EGAnim) EGAnim.play('sleep'); egA('sleep');
+    const ov=document.createElement('div'); ov.className='sleep-dim'; ov.innerHTML='<div class="zzz"><i>z</i><i>z</i><i>Z</i></div><div class="sleep-card"><b>Сон</b><span>+'+(S.energy-g0.e)+' энергии · +'+(S.mood-g0.m)+' настрой</span><button class="btn" id="wakeBtn" type="button">Проснуться</button></div>';
+    scr.appendChild(ov); ov.querySelector('#wakeBtn').onclick=()=>wakeUp();
+    egA('snore'); T.push(setInterval(()=>{ if(cur==='home') egA('snore'); },2600));
+    at(10000,()=>wakeUp());
+  });
+  function wakeUp(){ (W.__sleepT||[]).forEach(x=>{clearTimeout(x);clearInterval(x);}); W.__sleepT=[]; if(cur!=='home'||!scr.isConnected) return;
+    egA('wake'); const ov=scr.querySelector('.sleep-dim'); if(ov) ov.classList.add('out');
+    setTimeout(()=>{ if(cur!=='home') return; scr.classList.remove('sleeping'); wrap.classList.remove('on-bed'); if(ov) ov.remove(); if(EGAnim) EGAnim.play('happy'); toast('Доброе утро! Энергия '+Math.round(S.energy)); setTimeout(()=>{ if(cur==='home'&&EGAnim) EGAnim.fromNeeds(S); },1500); },600);
+  }
+}
 function bindRoomInteract(){
   app.querySelectorAll('[data-ri]').forEach(b=>b.onclick=()=>{
-    const kind=b.dataset.ri;
-    const map={bed:['.hot-bed','sleep'],fridge:['.hot-fridge','eat'],window:['.hot-window','react'],table:['.hot-table','drink']};
+    const kind=b.dataset.ri; riFlash(b); egA('tap');
+    if(app.querySelector('.screen.sleeping')) return;
+    if(kind==='bed') return startSleep();
+    const map={fridge:['.hot-fridge','eat'],window:['.hot-window','happy'],table:['.hot-table','drink']};
     const [sel,anim]=map[kind]||['.hot-bed','idle'];
     walkCharTo(sel, anim);
     setTimeout(()=>{
-      if(kind==='bed'){ S.energy=Math.min(100,(S.energy||0)+12); egA('sleep'); setTimeout(()=>egA('snore'),900); setTimeout(()=>egA('wake'),2600); toast('Сладких снов'); }
-      else if(kind==='fridge'||kind==='table'){ S.hunger=Math.min(100,(S.hunger||0)+8); S.thirst=Math.min(100,(S.thirst||0)+6); egA(kind==='fridge'?'eat':'drink'); toast(kind==='fridge'?'Перекус':'Глоток'); }
+      if(kind==='fridge'||kind==='table'){ S.hunger=Math.min(100,(S.hunger||0)+8); S.thirst=Math.min(100,(S.thirst||0)+6); egA(kind==='fridge'?'eat':'drink'); toast(kind==='fridge'?'Перекус':'Глоток'); }
       else { S.mood=Math.min(100,(S.mood||0)+5); egA('happy'); toast('У окна…'); }
       save();
     }, 900);
@@ -168,7 +198,7 @@ function bindRoomInteract(){
 }
 function bindNav(){ app.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{ egA('tab'); go(b.dataset.go); })); }
 
-function go(n,a){ if(typeof SCR[n]!=='function'){ if(n==='room') n='home'; else if(EG.LOCS&&EG.LOCS.some(l=>l.id===n)){ a=n; n='loc'; } else n='home'; } tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap'); cur=n; try{ const ph=phase(); const sm=(W.EGAudio&&EGAudio.map&&EGAudio.map.screenMusic)||{}; const loc=(n==='loc'&&a)?a:(n==='home'?'room':(sm[n]?null:(S&&S.loc))); egA('scene',{screen:n,loc:loc,phase:ph,weather:S&&S.weather}); }catch(e){} 
+function go(n,a){ if(n!==cur) document.querySelectorAll('body>.toast').forEach(x=>x.remove()); /* 0.8.3: toasts never leak onto the next screen */ (W.__sleepT||[]).forEach(x=>{clearTimeout(x);clearInterval(x);}); W.__sleepT=[]; if(typeof SCR[n]!=='function'){ if(n==='room') n='home'; else if(EG.LOCS&&EG.LOCS.some(l=>l.id===n)){ a=n; n='loc'; } else n='home'; } tickNeeds(); clear(); setPhaseClass(); if(n!==cur) egA('tap'); cur=n; try{ const ph=phase(); const sm=(W.EGAudio&&EGAudio.map&&EGAudio.map.screenMusic)||{}; const loc=(n==='loc'&&a)?a:(n==='home'?'room':(sm[n]?null:(S&&S.loc))); egA('scene',{screen:n,loc:loc,phase:ph,weather:S&&S.weather}); }catch(e){} 
   const bannerOn=S.consent!=null && n!=='consent' && n!=='consentSet' && n!=='onboardCare' && n!=='create' && !SHOT;
   const nativeAds=!!(window.AdBridge); // Android Yandex banner lives outside WebView
   if(nativeAds) document.documentElement.classList.add('eg-native-ads');
@@ -200,7 +230,7 @@ function go(n,a){ if(typeof SCR[n]!=='function'){ if(n==='room') n='home'; else 
 
 const SCR={};
 
-if(!window.__hudGearDelegate){ window.__hudGearDelegate=1; document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('#hudGear'); if(b&&!b.onclick) go('consentSet'); }); }
+if(!window.__hudGearDelegate){ window.__hudGearDelegate=1; document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('#hudGear'); if(b&&!b.onclick) go('hub'); }); }
 SCR.consent=()=>{
   app.innerHTML=`<div class="screen consent">
     <h1>Emogame</h1>
@@ -332,7 +362,7 @@ function walkCharTo(sel, thenPlay){
   const nx=((tr.left+tr.width/2)-ar.left)/ar.width*100;
   const nb=100-((tr.top+tr.height)-ar.top)/ar.height*100;
   wrap.classList.add('walking'); wrap.classList.toggle('face-left', (tr.left+tr.width/2) < (sr.left+sr.width/2));
-  wrap.style.left=nx+'%'; wrap.style.bottom=Math.max(12, Math.min(40, nb-2))+'%';
+  wrap.style.setProperty('left',Math.max(14,Math.min(86,nx))+'%','important'); wrap.style.setProperty('bottom',Math.max(12, Math.min(40, nb-2))+'%','important'); /* 0.8.3: inline !important — stylesheet pinned left/bottom with !important so the walk never moved */
   if(EGAnim) EGAnim.play('walk'); egA('footsteps');
   setTimeout(()=>{ wrap.classList.remove('walking','face-left'); if(EGAnim) EGAnim.play(thenPlay||'happy'); }, 750);
 }
@@ -361,7 +391,7 @@ SCR.home=()=>{
     ${nav('home')}
   </div>`;
   bindNav(); bindClean(); bindRoomInteract(); mountAnim(); if(EGAnim) EGAnim.play('idle');
-  const g=$('#hudGear'); if(g) g.onclick=()=>go('consentSet');
+  const g=$('#hudGear'); if(g) g.onclick=()=>go('hub');
   $('#wardrobe').onclick=()=>go('wardrobe');
   
 };
@@ -523,17 +553,7 @@ SCR.feed=()=>{
   paint(tab0);
 };
 
-SCR.sleep=()=>{
-  app.innerHTML=`<div class="screen">${statRow()}${stageHTML('room')}
-    <div style="padding:12px"><button class="btn" id="sl">Спать (восстановить энергию)</button>
-    <p style="color:#888;font-size:12px;margin-top:8px;text-align:center">Сон восстанавливает энергию. Нужды всё равно тикают офлайн — заходи каждый день.</p></div>${nav('sleep')}</div>`;
-  bindNav(); mountAnim(); if(EGAnim) EGAnim.play('sleep');
-  $('#sl').onclick=()=>{
-    S.energy=clamp(S.energy+55,0,100); S.mood=clamp(S.mood+10,0,100); S.hunger=clamp(S.hunger-8,0,100);
-    S.dirt.laundry=clamp((S.dirt.laundry||0)+15,0,100);
-    S.sleeps++; qAdd('sleeps',1); addXp(8); save(); toast('Спокойной ночи'); egA('sleep'); go('home');
-  };
-};
+SCR.sleep=()=>{ SCR.home(); cur='home'; setTimeout(startSleep,300); };
 
 SCR.map=()=>{
   const ph=phase();
@@ -571,7 +591,7 @@ SCR.map=()=>{
     ${nav('map')}
   </div>`;
   bindNav();
-  const g=$('#hudGear'); if(g) g.onclick=()=>go('consentSet');
+  const g=$('#hudGear'); if(g) g.onclick=()=>go('hub');
   $('#mapAll').onclick=()=>{
     const L=(EG.LOCS||[]).filter(l=>l.id!=='room').slice().sort((a,b)=>(a.minLevel||1)-(b.minLevel||1));
     const body=`<div class="sheet-grid loc-grid">${L.map(l=>{ const ok=unlockOk(l);
@@ -940,7 +960,7 @@ SCR.minigame=()=>{
 SCR.more=()=>SCR.hub();
 SCR.hub=()=>{
   const items=[
-    ['sleep','sleep','Сон'],['band','fame','Группа / гиги'],['mg_music','energy','Музыка'],
+    ['consentSet','settings','Настройки'],['sleep','energy','Сон'],['band','fame','Группа / гиги'],['mg_music','energy','Музыка'],
     ['selfie','fame','Селфи'],['npc','hub','Знакомые'],['diary','quests','Дневник'],
     ['collections','gifts','Коллекции'],['decor','home','Декор'],['pet','mood','Чёрный кот'],
     ['jobs','coins','Работа'],['ach','fame','Ачивки'],['minigame','mood','Танцы'],

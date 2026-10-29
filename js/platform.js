@@ -8,7 +8,7 @@ const SHOT=!!Q.get('scr'); // store screenshots: no ads
 
 const android={
   id:'android',
-  version:()=>tryf(()=>B&&B.version?B.version():'0.8.2','0.8.2'),
+  version:()=>tryf(()=>B&&B.version?B.version():'0.8.3','0.8.3'),
   canSign:()=>!!(B&&B.gsig),
   sign:p=>tryf(()=>B.gsig(p),''),
   event:(n,o)=>tryf(()=>B&&B.event&&B.event(n,JSON.stringify(o||{}))),
@@ -54,7 +54,7 @@ const android={
 };
 
 const web={
-  id:'web', version:()=>'0.8.2', canSign:()=>false, sign:()=>'',
+  id:'web', version:()=>'0.8.3', canSign:()=>false, sign:()=>'',
   event:(n,o)=>{}, setConsent:()=>{}, rcInt:(k,d)=>d, rcBool:(k,d)=>d,
   ads:{slot:()=>0, banner:()=>{}, rewardedAvail:()=>!SHOT, showRewarded:k=>{ setTimeout(()=>W.__adResult&&W.__adResult(k,true),400); },
        interstitialOn:()=>false, showInterstitial:()=>{}},
@@ -75,7 +75,7 @@ const VK_ITEMS=[['gems_80','80 кристаллов',3,'gem'],['gems_250','250 �
 const OK_ITEMS=[['gems_80','80 кристаллов',20,'gem'],['gems_250','250 кристаллов',55,'gem'],['coins_5000','5 000 монет',35,'coin']];
 
 const vk={
-  id:onOK?'ok':'vk', version:()=>'0.8.2', canSign:()=>false, sign:()=>'',
+  id:onOK?'ok':'vk', version:()=>'0.8.3', canSign:()=>false, sign:()=>'',
   user:null, launch:Object.fromEntries(Q.entries()), launchQS:location.search.slice(1),
   social:{
     name:onOK?'ОК':'VK', cur:onOK?'ОК':'голосов', onOK,
@@ -125,7 +125,7 @@ const fsLoad=()=>fsP||(fsP=new Promise(res=>{
 const FS_IMG=(W.FS_CFG&&W.FS_CFG.imgBase)||'';
 const FS_ITEMS=[['gems_80','80 кристаллов',20,'gem',1],['gems_250','250 кристаллов',55,'gem',2],['coins_5000','5 000 монет',35,'coin',3]];
 const fs={
-  id:'fs', version:()=>'0.8.2', canSign:()=>false, sign:()=>'',
+  id:'fs', version:()=>'0.8.3', canSign:()=>false, sign:()=>'',
   user:null, launch:Object.fromEntries(Q.entries()), launchQS:location.search.slice(1),
   social:{
     name:'ФОТОСТРАНА', cur:'ФМ', noFriends:true, items:FS_ITEMS.slice(),
