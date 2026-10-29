@@ -30,10 +30,15 @@ function uncovered(w){ const stage=stageOf(w); if(!stage) return true; const ci=
   for(let y=c.top+4;y<c.bottom-2;y+=8) for(const dx of[-0.3,0,0.3]) if(coverAt(c.left+c.width*(0.5+dx),y,stage,w)) return false; return true; }
 /* 0.8.4c: on cold start only (first placement, until the first user input), for 6 s after placing, if late layout (panel/fonts) covers the character, hide it again and refit */
 let userTouched=false; ['pointerdown','keydown','touchstart','click'].forEach(ev=>document.addEventListener(ev,()=>{userTouched=true; /* user acts before cold-start placement finished -> show the character now (actions must be visible) */ setTimeout(()=>{ const w=document.getElementById('charWrap'); if(w&&!w.dataset.placed){ fit(); w.dataset.placed='1'; window.__egPlacedOnce=1; } },0); },true));
-function guard(w){ if(userTouched||window.__egGuarded) return; window.__egGuarded=1; const t1=Date.now(); const iv=setInterval(()=>{ if(userTouched||!w.isConnected||Date.now()-t1>6000){ clearInterval(iv); return; } if(w.classList.contains('walking')||w.classList.contains('on-bed')||w.classList.contains('acting')) return; if(!uncovered(w)){ clearInterval(iv); delete w.dataset.placed; w.__t0=Date.now(); w.__lastKey=null; fit(); markPlaced(w); } },50); }
+/* 0.8.4d: checked every animation frame (before paint) for 10 s; never stops after the first hit, so a covered character is never painted on cold start */
+function guard(w){ if(userTouched||window.__egGuarded) return; window.__egGuarded=1; const t1=Date.now();
+  const tick=()=>{ if(userTouched||!w.isConnected||Date.now()-t1>10000) return; requestAnimationFrame(tick);
+    if(!w.dataset.placed||w.classList.contains('walking')||w.classList.contains('on-bed')||w.classList.contains('acting')) return;
+    if(!uncovered(w)){ delete w.dataset.placed; w.__t0=Date.now(); w.__lastKey=null; window.__egRehide=(window.__egRehide||0)+1; fit(); } };
+  requestAnimationFrame(tick); }
 function markPlaced(w){ if(!w||w.dataset.placed) return; if(!w.__t0) w.__t0=Date.now();
   const ok=settled()&&uncovered(w)&&Date.now()-w.__t0>250; const key=w.style.bottom+'|'+w.style.height;
-  const age=Date.now()-w.__t0; if((ok&&w.__lastKey===key)||age>3000||(window.__egPlacedOnce&&uncovered(w))){ w.dataset.placed='1'; window.__egPlacedOnce=1; guard(w); return; }
+  const age=Date.now()-w.__t0; if((ok&&w.__lastKey===key)||(age>3000&&uncovered(w))||age>9000||(window.__egPlacedOnce&&uncovered(w))){ w.dataset.placed='1'; window.__egPlacedOnce=1; guard(w); return; }
   w.__lastKey=ok?key:null; clearTimeout(w.__pt); w.__pt=setTimeout(()=>{ fit(); markPlaced(w); },150); }
 function fit(){
   const w=document.getElementById('charWrap'); if(!w||busy) return; const stage=stageOf(w); if(!stage){ markPlaced(w); return; }

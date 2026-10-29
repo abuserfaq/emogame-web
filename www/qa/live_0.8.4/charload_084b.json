@@ -6,7 +6,7 @@
   ],
   "loc": "home",
   "covered_visible_samples": 0,
-  "first_visible": 8,
+  "first_visible": 6,
   "neverplaced": false,
   "errs": []
  },
@@ -17,10 +17,10 @@
   ],
   "loc": "cafe",
   "covered_visible_samples": 0,
-  "first_visible": 8,
+  "first_visible": 7,
   "neverplaced": false,
   "errs": [],
-  "mid": "cafe_latte2.webp",
+  "mid": "cafe_latte1.webp",
   "end": "sit.webp"
  },
  {
@@ -30,10 +30,10 @@
   ],
   "loc": "bookcafe",
   "covered_visible_samples": 0,
-  "first_visible": 10,
+  "first_visible": 7,
   "neverplaced": false,
   "errs": [],
-  "mid": "bookcafe_tea2.webp",
+  "mid": "bookcafe_tea1.webp",
   "end": "sit.webp"
  },
  {
@@ -43,7 +43,7 @@
   ],
   "loc": "metro",
   "covered_visible_samples": 0,
-  "first_visible": 8,
+  "first_visible": 7,
   "neverplaced": false,
   "errs": []
  },
@@ -54,7 +54,7 @@
   ],
   "loc": "home",
   "covered_visible_samples": 0,
-  "first_visible": 8,
+  "first_visible": 6,
   "neverplaced": false,
   "errs": []
  },
@@ -65,10 +65,10 @@
   ],
   "loc": "cafe",
   "covered_visible_samples": 0,
-  "first_visible": 8,
+  "first_visible": 7,
   "neverplaced": false,
   "errs": [],
-  "mid": "cafe_latte2.webp",
+  "mid": "cafe_latte1.webp",
   "end": "sit.webp"
  },
  {
@@ -78,7 +78,7 @@
   ],
   "loc": "bookcafe",
   "covered_visible_samples": 0,
-  "first_visible": 7,
+  "first_visible": 6,
   "neverplaced": false,
   "errs": [],
   "mid": "bookcafe_tea2.webp",
@@ -91,7 +91,7 @@
   ],
   "loc": "metro",
   "covered_visible_samples": 0,
-  "first_visible": 9,
+  "first_visible": 7,
   "neverplaced": false,
   "errs": []
  }

@@ -1,0 +1,1322 @@
+[
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "arcade",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "beach",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "bookcafe",
+  "h": 232,
+  "top": 214,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "cafe",
+  "h": 235,
+  "top": 236,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "cemetery",
+  "h": 235,
+  "top": 211,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "concert",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "embankment",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "factory",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "festival",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "garage",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "idol_stage",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "karaoke",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "mall",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "metro",
+  "h": 235,
+  "top": 222,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "nightclub",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "park",
+  "h": 235,
+  "top": 187,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "records",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "rooftop",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "school",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "skate",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "station",
+  "h": 235,
+  "top": 222,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   626
+  ],
+  "loc": "tattoo",
+  "h": 235,
+  "top": 181,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 626,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "arcade",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "beach",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "bookcafe",
+  "h": 240,
+  "top": 218,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "cafe",
+  "h": 240,
+  "top": 242,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "cemetery",
+  "h": 240,
+  "top": 218,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "concert",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "embankment",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "factory",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "festival",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "garage",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "idol_stage",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "karaoke",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "mall",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "metro",
+  "h": 240,
+  "top": 227,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "nightclub",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "park",
+  "h": 238,
+  "top": 190,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "records",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "rooftop",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "school",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "skate",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "station",
+  "h": 240,
+  "top": 227,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   640
+  ],
+  "loc": "tattoo",
+  "h": 240,
+  "top": 188,
+  "cov": 0,
+  "n": 72,
+  "empty": 0,
+  "vh": 640,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "arcade",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "beach",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "bookcafe",
+  "h": 229,
+  "top": 299,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "cafe",
+  "h": 229,
+  "top": 262,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "cemetery",
+  "h": 229,
+  "top": 299,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "concert",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "embankment",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "factory",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "festival",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "garage",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "idol_stage",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "karaoke",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "mall",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "metro",
+  "h": 229,
+  "top": 154,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "nightclub",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "park",
+  "h": 229,
+  "top": 258,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "records",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "rooftop",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "school",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "skate",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "station",
+  "h": 229,
+  "top": 211,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   360,
+   800
+  ],
+  "loc": "tattoo",
+  "h": 229,
+  "top": 283,
+  "cov": 0,
+  "n": 69,
+  "empty": 0,
+  "vh": 800,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "arcade",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "beach",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "bookcafe",
+  "h": 262,
+  "top": 342,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "cafe",
+  "h": 262,
+  "top": 300,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "cemetery",
+  "h": 262,
+  "top": 342,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "concert",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "embankment",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "factory",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "festival",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "garage",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "idol_stage",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "karaoke",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "mall",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "metro",
+  "h": 262,
+  "top": 178,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "nightclub",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "park",
+  "h": 262,
+  "top": 295,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "records",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "rooftop",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "school",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "skate",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "station",
+  "h": 262,
+  "top": 244,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ },
+ {
+  "vp": [
+   412,
+   915
+  ],
+  "loc": "tattoo",
+  "h": 262,
+  "top": 328,
+  "cov": 0,
+  "n": 78,
+  "empty": 0,
+  "vh": 915,
+  "errs": [],
+  "ok": true
+ }
+]
