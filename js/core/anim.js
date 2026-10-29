@@ -3,6 +3,7 @@
 const Anim={
   state:'idle', el:null, timer:null, key:'emo_guy', i:0, seq:[],
   mount(imgEl, style, gender){
+    clearTimeout(this._actT); this.lockUntil=0;
     this.el=imgEl; this.key=(style||'emo')+'_'+(gender||'guy');
     if(this.el){
       this.el.classList.remove('char-sheet');
@@ -41,6 +42,7 @@ const Anim={
     im.onload=()=>{ (im.decode?im.decode():Promise.resolve()).catch(()=>{}).then(()=>{c.ok=true;}); }; im.onerror=()=>{c.ok=false;}; im.src=u; },
   preloadAll(){ const fs=this.frames(); if(fs) Object.values(fs).forEach(u=>typeof u==='string'&&this.preload(u)); },
   play(state){
+    if(!this._force && this.busy() && state!==this.state) return; /* never cut an action short */
     this.state=state||'idle';
     if(!this.el) return;
     clearInterval(this.timer);
@@ -64,13 +66,31 @@ const Anim={
       const u=this.url(name);
       /* 0.8.2: never swap to a frame that is not decoded yet (cold cache on web showed an empty/transparent character) */
       if(this.ready(u)){ if(this.el.getAttribute('src')!==u) this.el.src=u; } else this.preload(u);
-      this.el.classList.add('anim-bob');
+      if(!this.busy()) this.el.classList.add('anim-bob'); else this.el.classList.remove('anim-bob');
       this.i++;
     };
     show();
-    const fps=((window.EG&&EG.ANIMS&&EG.ANIMS.fps)||{})[this.state]||3;
+    const fps=((window.EG&&EG.ANIMS&&EG.ANIMS.fps)||{})[this.state]||8;
     this.timer=setInterval(show, Math.max(90, 1000/fps));
   },
+  /** 0.8.4: play one action's own AI frames IN PLACE for ms (>= minActionMs), then go back to needs/idle. */
+  act(name, ms, after){
+    const A=(window.EG&&EG.ANIMS)||{}; const st=(A.actions&&A.actions[name])||name;
+    const d=Math.max(A.minActionMs||2500, ms||A.actionMs||3000);
+    clearTimeout(this._actT); clearTimeout(this._actW); this.lockUntil=Date.now()+d+1600; this.lastAct={name, state:st, ms:d, t:Date.now()};
+    /* 0.8.4: decode the action's own frames first so it never starts on an idle/blink frame */
+    const urls=[...new Set(this.seqFor(st))].map(n=>this.url(n)); urls.forEach(u=>{ if(!this.ready(u)) this.preload(u); });
+    const t0=Date.now();
+    const begin=()=>{ if(!urls.every(u=>this.ready(u)) && Date.now()-t0<1500){ this._actW=setTimeout(begin,40); return; }
+      this.lockUntil=Date.now()+d; this._force=1; this.play(st); this._force=0;
+    if(this.el){ const w=this.el.closest&&this.el.closest('.char-wrap'); if(w){ w.classList.add('acting'); w.dataset.act=st; } }
+    this._actT=setTimeout(()=>{ this.lockUntil=0; if(this.el){ const w=this.el.closest&&this.el.closest('.char-wrap'); if(w){ w.classList.remove('acting'); delete w.dataset.act; } }
+      if(after) after(); else if(window.EG&&EG.S) this.fromNeeds(EG.S); else this.play('idle'); }, d);
+    };
+    begin();
+    return d;
+  },
+  busy(){ return Date.now()<(this.lockUntil||0); },
   fromNeeds(S){
     if(S.hunger<20||S.thirst<20) return this.play('hungry');
     if(S.mood<25) return this.play('sad');

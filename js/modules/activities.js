@@ -22,13 +22,14 @@ const A={
     if(a.rw.energy<0&&(S.energy||0)<-a.rw.energy){ h.egA('error'); h.toast('Мало энергии'); return {ok:false,why:'energy'}; }
     if(A.busy) return {ok:false,why:'busy'}; A.busy=1;
     const ss=st(S); ss.n[a.loc+'.'+a.id]=(ss.n[a.loc+'.'+a.id]||0)+1;
-    h.walk('.act-spot[data-act="'+a.id+'"]', a.anim);
+    /* 0.8.4: performed IN PLACE with this activity's own AI animation (no walking into scenery) */
+    const ms=h.act?h.act(a.loc+'_'+a.id, 3000):3000;
     setTimeout(()=>{ try{
       for(const [k,v] of Object.entries(a.rw)){ if(k==='xp') h.addXp(v); else if(k==='coins') S.coins=Math.max(0,(S.coins||0)+v); else S[k]=h.clamp((S[k]||0)+v,0,100); }
       S.actsDone=(S.actsDone||0)+1; h.egA(a.sfx); h.save();
       h.toast(a.name+': '+Object.entries(a.rw).map(([k,v])=>(v>0?'+':'')+v+' '+(LBL[k]||k)).join(' · '));
       const sp=document.querySelector('.act-spot[data-act="'+a.id+'"]'); if(sp){ sp.classList.add('pop'); }
-      h.rerender&&h.rerender(); } finally { A.busy=0; } }, 900);
+      h.rerender&&h.rerender(); } finally { A.busy=0; } }, ms);
     return {ok:true}; }
 };
 window.EGAct=A;
