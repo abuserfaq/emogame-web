@@ -10,7 +10,7 @@ function saveCred(){ tryf(()=>localStorage.setItem(LS,JSON.stringify({pid,secret
 function nonce(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
 function appVer(){
   const v=tryf(()=>PL()&&PL().version&&PL().version(),'');
-  return (v&&String(v))||window.__EG_VER||'0.8.4';
+  return (v&&String(v))||window.__EG_VER||'0.8.4.1';
 }
 /** Player-secret HMAC (Web Crypto). Never use native gsig here — that is game-key only. */
 async function hmacPlayer(key,msg){
@@ -35,7 +35,7 @@ async function post(action,d,useGameKey){
   }else{
     s=await hmacPlayer(secret,p);
   }
-  const r=await fetch(BASE+'/v2/'+action,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({p,s})});
+  const r=await fetch(BASE+'/v2/'+action,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({p,s}),cache:'no-store'});
   const j=await r.json().catch(()=>({}));
   if(r.status===401&&j&&j.now){ skew=j.now-Math.floor(Date.now()/1000); }
   return {ok:r.ok,status:r.status,j};
@@ -46,12 +46,70 @@ async function registerPush(tok,on){
   const token=(tok!=null?tok:tryf(()=>PL().push&&PL().push.token&&PL().push.token(),''))||'';
   if(!token) return {ok:false,reason:'no_token'};
   if(token===_lastPush&&on!==false) return {ok:true,cached:true};
-  const r=await post('push_token',{token,on:on!==false});
+  const plat=tryf(()=>PL().id,'web')||'web';
+  const r=await post('push_token',{token,on:on!==false,platform:plat==='android'?'android':plat,ver:appVer(),tz:-new Date().getTimezoneOffset()});
   if(r.ok) _lastPush=token;
   return r;
 }
+/* 0.8.4.1 online: register once, queue stats, submit level score */
+const QK='eg_online_q';
+const STATS={feeds:1,sleeps:1,chats:1,park:1,concerts:1,play_sec:1,ads_watched:1,best_level:1};
+let q=tryf(()=>JSON.parse(localStorage.getItem(QK)||'{}'),{})||{};
+function saveQ(){ tryf(()=>localStorage.setItem(QK,JSON.stringify(q))); }
+let regP=null, bootP=null, flushing=false, regNext=0;
+function consented(){ return tryf(()=>!!JSON.parse(localStorage.getItem('eg_save')||'{}').consent,false); }
+async function ensure(){
+  if(pid&&secret) return true;
+  if(Date.now()<regNext) return false;
+  if(!regP) regP=Net.register().then(r=>{ regP=null; if(!(pid&&secret)) regNext=Date.now()+600000; return !!(pid&&secret); },e=>{ regP=null; regNext=Date.now()+120000; throw e; });
+  return regP;
+}
+function addStat(name,n){
+  if(!STATS[name]) return;
+  n=Math.floor(Number(n)||0); if(n<=0) return;
+  q.stats=q.stats||{};
+  if(name==='best_level') q.stats[name]=Math.max(q.stats[name]||0,n); else q.stats[name]=(q.stats[name]||0)+n;
+  saveQ();
+}
+async function flush(){
+  if(flushing||!consented()) return {ok:false,reason:'busy_or_no_consent'};
+  flushing=true;
+  try{
+    if(!await ensure()) return {ok:false,reason:'no_cred'};
+    let res={ok:true};
+    const st=q.stats;
+    if(st&&Object.keys(st).length){
+      const r=await post('progress',{stats:st});
+      if(r.ok||r.status===422||r.status===400){ if(q.stats===st) delete q.stats; saveQ(); }
+      res.progress=r.status;
+    }
+    if(q.level&&q.level>(q.levelSent||0)){
+      const lv=q.level, r=await post('score',{board:'level',score:lv});
+      if(r.ok||r.status===422) { q.levelSent=lv; saveQ(); }
+      res.score=r.status;
+    }
+    return res;
+  }catch(e){ return {ok:false,reason:String(e&&e.message||e)}; }
+  finally{ flushing=false; }
+}
 const Net={
   ready:()=>!!pid&&!!secret,
+  ensure,
+  stat(name,n){ addStat(name,n); },
+  level(lv){ lv=Math.floor(Number(lv)||0); if(lv<1) return; if(lv>(q.level||0)){ q.level=lv; saveQ(); } addStat('best_level',lv); },
+  flush,
+  /** One online start per session: register (once ever), sync, push token, flush. */
+  boot(){
+    if(!consented()) return Promise.resolve({ok:false,reason:'no_consent'});
+    if(!bootP) bootP=(async()=>{
+      if(!await ensure()) throw new Error('register failed');
+      const s=await Net.sync();
+      await registerPush().catch(()=>{});
+      await flush();
+      return s;
+    })().catch(e=>{ bootP=null; return {ok:false,error:String(e&&e.message||e)}; });
+    return bootP;
+  },
   pid:()=>pid,
   ver:appVer,
   async register(){
@@ -59,7 +117,8 @@ const Net={
     const body={platform:plat&&plat.id==='android'?'android':(plat&&plat.id)||'web'};
     if(plat&&(plat.id==='vk'||plat.id==='ok')) body.platform=plat.id, body.vk=plat.launchQS||'';
     if(plat&&plat.id==='fs') body.platform='fotostrana', body.fs=plat.launchQS||'';
-    const {ok,j}=await post('register',body,true);
+    const {ok,status,j}=await post('register',body,true);
+    if(!ok) tryf(()=>console.warn('[net] register',status,j&&j.error));
     if(ok&&j&&j.player_id){ pid=j.player_id; secret=j.secret||secret; saveCred(); }
     if(ok&&j&&j.config&&window.__setShop) window.__setShop(j.config.shop||j.shop);
     return {ok,j};
@@ -86,10 +145,20 @@ const Net={
 
 /* 0.8.1 net timeout */
 Object.keys(Net).forEach(function(k){ var f=Net[k]; if(typeof f!=='function')return;
+  if(k==='boot'||k==='flush'||k==='ensure') return;
   Net[k]=function(){ var r=f.apply(Net,arguments); if(!r||typeof r.then!=='function')return r;
     return Promise.race([r,new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'))},5000);})]); }; });
 window.Net=Net;
-window.__EG_VER='0.8.4';
+window.__EG_VER='0.8.4.1';
+/* periodic flush + play time (visible only) */
+let lastT=Date.now();
+setInterval(function(){
+  const now=Date.now(); if(document.visibilityState==='visible'){ const d=Math.round((now-lastT)/1000); if(d>0&&d<120) addStat('play_sec',d); }
+  lastT=now;
+},15000);
+setInterval(function(){ if(consented()) Net.boot().then(()=>flush()).catch(()=>{}); },60000);
+document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden'&&pid&&secret) flush().catch(()=>{}); else lastT=Date.now(); });
+window.__pushPerm=(function(prev){ return function(ok){ try{ prev&&prev(ok); }catch(e){} if(ok) registerPush().catch(()=>{}); }; })(window.__pushPerm);
 /** RuStore Push token refresh → backend push_token */
 window.__pushToken=function(t){
   try{

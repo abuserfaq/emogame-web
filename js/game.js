@@ -44,9 +44,12 @@ function tickNeeds(){
 }
 function phase(){ const q=new URLSearchParams(location.search); const o=q.get('phase')||window.__EG_PHASE; if(o&&['morning','day','evening','night'].includes(o)) return o; return EG.phaseOf(new Date().getHours()); }
 function xpNeed(lv){ return 80+lv*40; }
+/* notification permission: only after the first real care action (feeding), once, never at first launch */
+function askPushOnce(){ try{ if(localStorage.getItem('eg_push_asked')) return; const P=window.Platform; if(!P||P.id!=='android'||!P.push||!P.push.ask) return;
+  localStorage.setItem('eg_push_asked','1'); setTimeout(()=>{ try{ P.push.ask(); }catch(e){} },2500); }catch(e){} }
 function addXp(n){ S.xp+=n; const prev=S.level;
   while(S.xp>=xpNeed(S.level)){ S.xp-=xpNeed(S.level); S.level++; toast('Уровень '+S.level+'!'); egA('level_up'); }
-  if(S.level>prev){ if(window.EGUnlocks) EGUnlocks.onLevel(S,prev); if(window.EGAch){ const u=EGAch.check(S); u.forEach(a=>{toast('Ачивка: '+a.name); egA('achievement');}); } } }
+  if(S.level>prev){ try{ window.Net&&Net.level(S.level); }catch(e){} if(window.EGUnlocks) EGUnlocks.onLevel(S,prev); if(window.EGAch){ const u=EGAch.check(S); u.forEach(a=>{toast('Ачивка: '+a.name); egA('achievement');}); } } }
 
 function clear(){ app.innerHTML=''; }
 function setPhaseClass(){ app.className='phase-'+phase(); }
@@ -265,7 +268,7 @@ SCR.consentSet=()=>{
 function afterConsent(){
   if(!localStorage.getItem('eg_care_onboard')) go('onboardCare');
   else if(!localStorage.getItem('eg_created')) go('create');
-  else { EGCare&&EGCare.onLogin(S); EGWeather&&EGWeather.sync(S); EGAch&&EGAch.check(S); save(); go('home'); Net.register().then(()=>Net.sync().then(j=>{applyServer(j);return Net.registerPush();})).catch(()=>{}); }
+  else { EGCare&&EGCare.onLogin(S); EGWeather&&EGWeather.sync(S); EGAch&&EGAch.check(S); save(); go('home'); try{Net.level(S.level)}catch(e){} Net.boot().then(j=>applyServer(j)).catch(()=>{}); }
 }
 function applyServer(res){
   if(res&&res.j&&res.j.config&&res.j.config.remote) EGRC.apply(res.j.config.remote);
@@ -305,7 +308,7 @@ SCR.create=()=>{
     app.querySelectorAll('[data-s],[data-pick]').forEach(b=>b.onclick=()=>{style=b.dataset.s||b.dataset.pick;paint();});
     $('#go').onclick=()=>{
       S.style=style; S.gender=gender; S.name=($('#nm').value||'').trim().slice(0,16);
-      localStorage.setItem('eg_created','1'); EGCare&&EGCare.onLogin(S); save(); go('home'); toast('Добро пожаловать — заглядывай каждый день');
+      localStorage.setItem('eg_created','1'); EGCare&&EGCare.onLogin(S); save(); go('home'); try{Net.level(S.level);Net.boot().then(j=>applyServer(j)).catch(()=>{});}catch(e){} toast('Добро пожаловать — заглядывай каждый день');
     };
   };
   paint();
@@ -423,6 +426,7 @@ function ensureQuests(){
   if(S.questDay!==d){ S.questDay=d; S.quest={}; (EG.QUESTS||[]).forEach(q=>S.quest[q.id]={p:0,done:false}); save(); }
 }
 function qAdd(stat,n){
+  try{ if(window.Net){ Net.stat(stat,n); if(stat==='feeds') askPushOnce(); } }catch(e){}
   ensureQuests();
   (EG.QUESTS||[]).filter(q=>q.stat===stat).forEach(q=>{
     const st=S.quest[q.id]; if(!st||st.done)return;
@@ -517,7 +521,7 @@ window.openShop=function openShop(){ egA('sheet_open');
   const root=EGUI.openSheet({title:'Магазин', icon:EGUI.iconSrc('shop'), bodyHtml:body});
   root.querySelector('#rw').onclick=()=>{
     if(!PL.ads.rewardedAvail()){ S.energy=clamp(S.energy+40,0,100); save(); toast('+40 энергии'); root._close(); return; }
-    W.__adResult=(k,ok)=>{ if(ok){ S.energy=clamp(S.energy+40,0,100); save(); toast('+40 энергии'); } };
+    W.__adResult=(k,ok)=>{ if(ok){ try{Net.stat('ads_watched',1)}catch(e){} S.energy=clamp(S.energy+40,0,100); save(); toast('+40 энергии'); } };
     PL.ads.showRewarded('energy');
   };
   const au=root.querySelector('#auth'); if(au) au.onclick=()=>{ root._close(); go('account'); };
@@ -785,7 +789,7 @@ SCR.gifts=()=>{
   if($('#rad')) $('#rad').onclick=()=>{
     const finish=()=>{ const r=G.fromRewarded(S); if(r.ok){ save(); egA('gift_receive'); toast('За рекламу: '+r.item.name); go('gifts'); } };
     if(!PL.ads.rewardedAvail()){ finish(); return; }
-    W.__adResult=(k,ok)=>{ if(ok) finish(); };
+    W.__adResult=(k,ok)=>{ if(ok){ try{Net.stat('ads_watched',1)}catch(e){} finish(); } };
     PL.ads.showRewarded('gift');
   };
   app.querySelectorAll('[data-buy]').forEach(b=>b.onclick=async()=>{
@@ -1267,7 +1271,7 @@ async function boot(){
   if(S.consent==null) go('consent');
   else if(!localStorage.getItem('eg_care_onboard')) go('onboardCare');
   else if(!localStorage.getItem('eg_created')) go('create');
-  else { EGCare&&EGCare.onLogin(S); save(); go('home'); Net.register().then(()=>Net.sync().then(j=>{applyServer(j);return Net.registerPush();})).catch(()=>{}); }
+  else { EGCare&&EGCare.onLogin(S); save(); go('home'); try{Net.level(S.level)}catch(e){} Net.boot().then(j=>applyServer(j)).catch(()=>{}); }
   W.__egMaybeInterstitial=()=>{
     if(SHOT) return;
     if(!EGRC.bool('ads_interstitial_enabled', false)) return;
