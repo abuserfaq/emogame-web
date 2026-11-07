@@ -117,6 +117,7 @@ const Net={
     const body={platform:plat&&plat.id==='android'?'android':(plat&&plat.id)||'web'};
     if(plat&&(plat.id==='vk'||plat.id==='ok')) body.platform=plat.id, body.vk=plat.launchQS||'';
     if(plat&&plat.id==='fs') body.platform='fotostrana', body.fs=plat.launchQS||'';
+    if(plat&&plat.id==='telegram') body.platform='telegram', body.tg=plat.initData||'';
     const {ok,status,j}=await post('register',body,true);
     if(!ok) tryf(()=>console.warn('[net] register',status,j&&j.error));
     if(ok&&j&&j.player_id){ pid=j.player_id; secret=j.secret||secret; saveCred(); }

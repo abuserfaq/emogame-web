@@ -7,6 +7,15 @@ if(SHOT) document.documentElement.classList.add('shot-mode','shot-hide-ads');
 
 let S, EG, cur='';
 const save=()=>EGSave.persist(S);
+/* Telegram BackButton helper (no-op outside Mini App) */
+W.__egBack=()=>{ try{
+  if(!cur||cur==='home'||cur==='consent'||cur==='create'||cur==='onboardCare'){
+    if(W.Telegram&&Telegram.WebApp&&Telegram.WebApp.close){ Telegram.WebApp.close(); return; }
+    return;
+  }
+  if(cur==='consentSet'){ go(S&&S.consent==null?'consent':'home'); return; }
+  go('home');
+}catch(e){} };
 const clamp=(v,a,b)=>EG.clamp(v,a,b);
 const egA=(ev,p)=>{ try{ if(window.EGAudio) EGAudio.emit(ev,p||{}); }catch(e){} };
 const ico=(k,c)=>window.EGUI?EGUI.icon(k,c):'';
