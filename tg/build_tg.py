@@ -26,12 +26,8 @@ shutil.copy2(src_tg, os.path.join(OUT, 'js', 'platform_tg.js'))
 h = open(os.path.join(OUT, 'index.html'), encoding='utf-8').read()
 assert 'js/platform.js' in h
 # Inject Telegram SDK + platform_tg after platform.js
-h = h.replace(
-  '<script src="js/platform.js?v=0.8.4.1"></script>',
-  '<script src="https://telegram.org/js/telegram-web-app.js"></script>\n'
-  '<script src="js/platform.js?v=0.8.4.1"></script>\n'
-  '<script src="js/platform_tg.js?v=0.8.4.1"></script>'
-)
+h = re.sub(r'<script src="js/platform\.js(\?v=[^"]*)?"></script>',
+  lambda m: '<script src="https://telegram.org/js/telegram-web-app.js"></script>\n' + m.group(0) + '\n<script src="js/platform_tg.js%s"></script>' % (m.group(1) or ''), h, count=1)
 # Also match unversioned form
 if 'telegram-web-app.js' not in h:
   h = h.replace(

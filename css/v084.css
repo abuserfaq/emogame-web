@@ -156,3 +156,5 @@ html body #app .screen.loc-mode #locPanel .lp-card.lp-empty{display:none!importa
 /* 0.8.4c: on normal screens too the character in a location is at least ~260 design px tall (>=220 px on a 360-wide phone) */
 html[data-egshort="0"] body #app .screen.loc-mode .stage-bleed .char-wrap{height:262px!important;width:170px!important}
 html[data-egshort="0"] body #app .screen.loc-metro .act-panel{top:96px!important}
+/* 0.8.5 web: real Yandex RTB banner lives in the reserved bottom slot (below #app → never over controls or the character) */
+html.ad-on.eg-web-ads #bannerStrip.on{display:flex!important;pointer-events:auto}
